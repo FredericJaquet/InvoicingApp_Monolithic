@@ -5,21 +5,21 @@
 package invoicingapp_monolithic;
 
 import com.invoicingapp.bbdd.Database;
-/*import javafx.application.Application;
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;*/
+import javafx.stage.Stage;
 
 
 /**
  *
  * @author frederic
  */
-public class Main {
+public class Main extends Application{
 
 
-    /*@Override
+    @Override
     public void init(){
         Database.createUser();
         Database.createDataBase();
@@ -37,21 +37,21 @@ public class Main {
     @Override
     public void stop(){
         
-    }*/
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
-        //launch();
-        Database.createUser();
+        launch();
+        /*Database.createUser();
         Database.createDataBase();
         Database.createTables();
         
         Tests test=new Tests();
         
-        test.start();
+        test.start();*/
         
         //PHONE
         /*Phone phone= new Phone();

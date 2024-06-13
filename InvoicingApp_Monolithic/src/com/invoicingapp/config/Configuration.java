@@ -61,7 +61,7 @@ public class Configuration {
 	if(!file.exists()) {
             try {
                 file.createNewFile();
-                writeFiles(file,"[]");			
+                writeFiles(file,"");			
                 } catch (IOException e1) {
                     e1.printStackTrace();
             }
