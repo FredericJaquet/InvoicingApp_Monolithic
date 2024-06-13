@@ -27,3 +27,5 @@ replay_pid*
 *.txt
 /dist/
 /build/
+/InvoicingApp_Monolithic/nbproject/private/
+/InvoicingApp_Monolithic/build/
