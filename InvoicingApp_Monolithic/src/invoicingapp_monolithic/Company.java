@@ -37,33 +37,52 @@ public class Company {
     */
     protected void addToDB(){
         ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
         String queryInsert=null;
         String queryGetId="SELECT MAX(idCompany) FROM Company";
-        ResultSet result=null;
+        String queryGetIds="SELECT idCompnay FROM Comapny;";
+        boolean exists=false;
         
         address.addToDB();
         
         queryInsert="INSERT INTO Company (vatNumber, comName, legalName, email, web, idAddress) VALUES('"+vatNumber+"','"+comName+"','"+legalName+"','"+email+"','"+web+"',"+address.getIdAddress()+")";
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
-        result=con.getResultSet(queryGetId);
-        try {
-            result.next();
-            idCompany=result.getInt(1);
-        } catch (SQLException ex) {
+        
+        //verify the company does not already exist in DB
+        result=con.getResultSet(queryGetIds);
+        
+        try{
+            while(result.next()){
+                if(idCompany==result.getInt(1)){
+                    exists=true;
+                }
+            }
+        }catch (SQLException ex) {
             Logger.getLogger(Company.class.getName()).log(Level.SEVERE, null, ex);
         }
-        con.closeConnection();
+        //If company does not exist in DB, insert the company in DB
+        if(!exists){
+            con.noReturnQuery(queryInsert);
+            result=con.getResultSet(queryGetId);
+            try {
+                result.next();
+                idCompany=result.getInt(1);
+            } catch (SQLException ex) {
+                Logger.getLogger(Company.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         
-        for(int i=0;i<phones.size();i++){
-            phones.get(i).setIdCompany(idCompany);
-            phones.get(i).addToDB();
+            for(int i=0;i<phones.size();i++){
+                phones.get(i).setIdCompany(idCompany);
+                phones.get(i).addToDB();
+            }
+            for(int i=0;i<contacts.size();i++){
+                contacts.get(i).setIdCompany(idCompany);
+                contacts.get(i).addToDB();
+            }
         }
-        for(int i=0;i<contacts.size();i++){
-            contacts.get(i).setIdCompany(idCompany);
-            contacts.get(i).addToDB();
-        }
+        con.closeConnection();
     }
     
     /**
