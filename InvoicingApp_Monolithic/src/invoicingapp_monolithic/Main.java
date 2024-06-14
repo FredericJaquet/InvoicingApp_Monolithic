@@ -29,7 +29,7 @@ public class Main extends Application{
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root= FXMLLoader.load(getClass().getResource("/com/invoicingapp/javafx/viewLogin.fxml"));
+        Parent root= FXMLLoader.load(getClass().getResource("/com/invoicingapp/javafx/viewCreateUser.fxml"));
         Scene scene=new Scene(root);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("../com/invoicingapp/img/Icon.png"))); 
         stage.setScene(scene);

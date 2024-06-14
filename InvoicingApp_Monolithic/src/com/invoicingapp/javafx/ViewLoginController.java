@@ -19,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-
 /**
  * FXML Controller class
  *
@@ -89,6 +88,7 @@ public class ViewLoginController implements Initializable {
     
     @FXML protected void onActionCreate(){
         labelInfo.setText("Create New User");
+        //InvoicingApp.setRoot("");
     }
     
     @FXML protected void onPressedSeePW(){
