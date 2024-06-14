@@ -3,5 +3,19 @@
  */
 
 .mainFxmlClass {
+    
 
+}
+
+.loginRight{
+    -fx-background-color: #FFF5E2;
+}
+
+.seePD{
+    -fx-background-image: url(../img/seePW.png);
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 20px 20px;
+    -fx-padding: 5;
+    -fx-background-color: transparent;
 }

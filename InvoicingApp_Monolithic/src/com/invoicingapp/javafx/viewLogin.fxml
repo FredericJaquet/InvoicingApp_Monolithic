@@ -2,18 +2,22 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewLoginController">
+<HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="750.0" styleClass="mainFxmlClass" stylesheets="@viewlogin.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewLoginController">
    <children>
       <VBox fx:id="vBoxLeft" alignment="CENTER" minWidth="-Infinity" prefWidth="370.0" HBox.hgrow="ALWAYS">
          <children>
@@ -25,47 +29,68 @@
                   <Font name="Arial" size="25.0" />
                </font>
             </Label>
-            <VBox fx:id="vboxLogin" alignment="BOTTOM_LEFT">
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="275.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <Label fx:id="labelUser" text="Usuario" VBox.vgrow="ALWAYS">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
+                  <Label fx:id="labelUser" text="Usuario">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="fieldUser" promptText="Introduzca el usuario">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label fx:id="labelPasswd" text="Contraseña">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
+                  <TextField fx:id="fieldUser" promptText="Introduzca el usuario" GridPane.rowIndex="1" />
+                  <Label fx:id="labelPasswd" text="Contraseña" GridPane.rowIndex="2">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="fieldPasswd" promptText="Introduzca la contraseña">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </PasswordField>
+                  <Button fx:id="BtnSeePD" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMousePressed="#onPressedSeePW" onMouseReleased="#onReleaseSeePW" prefHeight="25.0" prefWidth="25.0" styleClass="seePD" stylesheets="@viewlogin.css" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                     <GridPane.margin>
+                        <Insets left="5.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="3">
+                     <children>
+                        <PasswordField fx:id="fieldPasswd" promptText="Introduzca la contraseña" />
+                        <TextField fx:id="textFieldPW" />
+                     </children>
+                  </StackPane>
                </children>
                <VBox.margin>
                   <Insets left="25.0" right="25.0" />
                </VBox.margin>
-            </VBox>
-            <HBox fx:id="hBoxRemindme" alignment="CENTER_LEFT">
+            </GridPane>
+            <VBox>
                <children>
-                  <CheckBox fx:id="checkRemindme" mnemonicParsing="false" text="Recordarme" />
+                  <CheckBox fx:id="checkRemindme" mnemonicParsing="false" text="Recordarme">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </CheckBox>
+                  <Label fx:id="labelInfo" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
                </children>
                <VBox.margin>
-                  <Insets left="25.0" right="25.0" top="20.0" />
+                  <Insets left="25.0" right="25.0" top="15.0" />
                </VBox.margin>
-            </HBox>
+            </VBox>
             <Button fx:id="buttonLogin" mnemonicParsing="false" onAction="#onActionEnter" text="Entrar">
                <VBox.margin>
                   <Insets top="20.0" />
@@ -74,13 +99,26 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Button>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="¿No tienes usuario?">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#onActionCreate" text="Crear" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </VBox.margin>
+            </HBox>
          </children>
       </VBox>
-      <VBox fx:id="vBoxRight" alignment="CENTER" minWidth="-Infinity" prefWidth="370.0" HBox.hgrow="ALWAYS">
+      <VBox fx:id="vBoxRight" alignment="CENTER" minWidth="-Infinity" prefWidth="370.0" styleClass="loginRight" stylesheets="@viewlogin.css" HBox.hgrow="ALWAYS">
          <children>
             <ImageView fitHeight="370.0" fitWidth="370.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                <image>
-                  <Image url="file:/C:/Users/frede/OneDrive/Documentos/GitHub/InvoicingApp/InvoicingApp_monolithic/src/com/invoicingapp/img/Logo.png" />
+                  <Image url="@../img/Logo.png" />
                </image></ImageView>
          </children>
          <effect>

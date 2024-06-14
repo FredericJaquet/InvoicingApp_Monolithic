@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -30,6 +31,7 @@ public class Main extends Application{
     public void start(Stage stage) throws Exception {
         Parent root= FXMLLoader.load(getClass().getResource("/com/invoicingapp/javafx/viewLogin.fxml"));
         Scene scene=new Scene(root);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("../com/invoicingapp/img/Icon.png"))); 
         stage.setScene(scene);
         stage.show();
     }
