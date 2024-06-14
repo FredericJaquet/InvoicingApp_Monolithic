@@ -5,6 +5,7 @@
 package invoicingapp_monolithic;
 
 import com.invoicingapp.bbdd.Database;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application{
 
+    private static Scene scene;
 
     @Override
     public void init(){
@@ -29,8 +31,8 @@ public class Main extends Application{
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root= FXMLLoader.load(getClass().getResource("/com/invoicingapp/javafx/viewCreateUser.fxml"));
-        Scene scene=new Scene(root);
+        Parent root= FXMLLoader.load(getClass().getResource("/com/invoicingapp/javafx/viewLogin.fxml"));
+        scene=new Scene(root);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("../com/invoicingapp/img/Icon.png"))); 
         stage.setScene(scene);
         stage.show();
@@ -39,6 +41,16 @@ public class Main extends Application{
     @Override
     public void stop(){
         
+    }
+    
+    public static void setRoot(String fxml)throws IOException{
+        scene.setRoot(loadFXML(fxml));
+    }
+    
+    public static Parent loadFXML(String fxml)throws IOException{
+        Parent root= FXMLLoader.load(Main.class.getResource(fxml));
+        
+        return root;
     }
 
     /**
