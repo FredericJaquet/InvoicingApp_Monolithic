@@ -34,7 +34,7 @@
       </Label>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <GridPane fx:id="paneUser" visible="false">
+            <GridPane fx:id="paneUser">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="315.0" prefWidth="315.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -48,14 +48,23 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Nombre de Usuario" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER" />
+                  <Label text="Nombre de Usuario" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin></Label>
                   <TextField fx:id="fieldUsername" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </TextField>
-                  <Label text="Contraseña" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER" />
-                  <Label text="Repite la contraseña" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="NEVER" />
+                  <Label text="Contraseña" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin></Label>
+                  <Label text="Repite la contraseña" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="NEVER">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin></Label>
                   <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
                         <PasswordField fx:id="fieldPasswd1" />
@@ -75,7 +84,7 @@
                   </Button>
                </children>
             </GridPane>
-            <GridPane fx:id="paneCompany" vgap="25.0">
+            <GridPane fx:id="paneCompany" vgap="25.0" visible="false">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -98,17 +107,17 @@
                   <ComboBox fx:id="comboBoxcompany" prefWidth="375.0" GridPane.columnIndex="1" />
                   <Label text="CIF" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="10.0" top="30.0" />
+                        <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="fieldVAT" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                        <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
                   <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" text="Nombre Comercial" GridPane.rowIndex="3">
                      <GridPane.margin>
-                        <Insets bottom="10.0" top="30.0" />
+                        <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="fieldComName" GridPane.rowIndex="4">
@@ -118,19 +127,19 @@
                   </TextField>
                   <Label text="Email" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets bottom="10.0" top="30.0" />
+                        <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="fieldEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Web" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <GridPane.margin>
-                        <Insets bottom="10.0" top="30.0" />
+                        <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="fieldWeb" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="Nombre Fiscal" GridPane.rowIndex="5">
                      <GridPane.margin>
-                        <Insets bottom="10.0" top="30.0" />
+                        <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="fieldLegalName" GridPane.rowIndex="6">
@@ -146,6 +155,78 @@
                   <Insets />
                </StackPane.margin>
             </GridPane>
+            <GridPane fx:id="paneAddress" vgap="25.0" visible="false">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Calle">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldStreet" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Número" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldStNumber" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Piso" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldApt" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="CP" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldCP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Ciudad" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldCity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Provincia" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldState" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="País" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldCountry" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+               </children>
+            </GridPane>
          </children>
          <VBox.margin>
             <Insets right="25.0" top="25.0" />
@@ -153,32 +234,47 @@
       </StackPane>
       <StackPane>
          <children>
-            <HBox fx:id="paneFoot1" alignment="BOTTOM_RIGHT" prefHeight="250.0">
+            <HBox fx:id="paneFootUser" alignment="BOTTOM_RIGHT" prefHeight="250.0">
                <children>
-                  <Button fx:id="btnCancel1" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">
+                  <Button fx:id="btnCancelUser" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnNext1" mnemonicParsing="false" onAction="#onClicNext1" text="Siguiente" />
+                  <Button fx:id="btnNextUser" mnemonicParsing="false" onAction="#onClicNextFromUser" text="Siguiente" />
                </children>
                <StackPane.margin>
                   <Insets />
                </StackPane.margin>
             </HBox>
-            <HBox fx:id="paneFoot2" alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" visible="false">
+            <HBox fx:id="paneFootCompany" alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" visible="false">
                <children>
-                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#onClicBack2" text="Volver">
+                  <Button fx:id="btnBackCompany" mnemonicParsing="false" onAction="#onClicBackFromCompany" text="Volver">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnCancel2" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">
+                  <Button fx:id="btnCancelCompany" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnNext2" mnemonicParsing="false" text="Siguiente" />
+                  <Button fx:id="btnNextCompany" mnemonicParsing="false" onAction="#onClicNextFromCompany" text="Siguiente" />
+               </children>
+            </HBox>
+            <HBox fx:id="paneFootAddress" alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" visible="false">
+               <children>
+                  <Button fx:id="btnBackAddress" mnemonicParsing="false" onAction="#onClicBackFromAddress" text="Volver">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnCancelAddress" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnNextAddress" mnemonicParsing="false" onAction="#onClicNextFromAddress" text="Siguiente" />
                </children>
             </HBox>
          </children>

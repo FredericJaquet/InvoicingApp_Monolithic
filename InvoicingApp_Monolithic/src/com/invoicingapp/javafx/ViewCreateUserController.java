@@ -26,14 +26,20 @@ import javafx.stage.Stage;
 public class ViewCreateUserController implements Initializable {
 
     Users user=new Users();
+    String introUser="Aquí, puedes crear un nombre de usuario y su contraseña";
+    String introCompany="Aquí, puedes crear una Empresa nueva o seleccionar una existente";
+    String introAddress="Aquí, puedes crear una dirección para la Empresa nueva";
+            
     
     @FXML private PasswordField fieldPasswd1,fieldPasswd2 ;
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
                             fieldVAT,fieldComName,fieldLegalName,
-                            fieldEmail,fieldWeb;
+                            fieldEmail,fieldWeb,fieldStreet,
+                            fieldStNumber,fieldApt,fieldCP,
+                            fieldCity,fieldState,fieldCountry;
     @FXML private Label labelIntro;
-    @FXML private GridPane paneUser, paneCompany;
-    @FXML private HBox paneFoot1, paneFoot2;
+    @FXML private GridPane paneUser, paneCompany, paneAddress;
+    @FXML private HBox paneFootUser, paneFootCompany, paneFootAddress;
     
     /**
      * Initializes the controller class.
@@ -42,7 +48,7 @@ public class ViewCreateUserController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         textFieldPW1.setVisible(false);
         textFieldPW2.setVisible(false);
-        labelIntro.setText("Aquí, puedes crear un nombre de usuario y su contraseña");
+        labelIntro.setText(introUser);
     }
     
     @FXML protected void onPressedSeePW(){
@@ -67,32 +73,54 @@ public class ViewCreateUserController implements Initializable {
         stage.close();
     }
     
-    @FXML protected void onClicNext1(){
-        labelIntro.setText("Aquí, puedes crear una Empresa nueva o seleccionar una existente");
+    @FXML protected void onClicNextFromUser(){
+        labelIntro.setText(introCompany);
         user.setUserName(fieldUsername.getText());
         user.setPasswd(fieldPasswd1.getText());
         paneUser.setVisible(false);
         paneCompany.setVisible(true);
-        paneFoot1.setVisible(false);
-        paneFoot2.setVisible(true);
+        paneFootUser.setVisible(false);
+        paneFootCompany.setVisible(true);
     }
     
-    @FXML protected void onClicNext2(){
-        labelIntro.setText("Aquí, puedes crear una dirección para la Mepresa nueva");
+    @FXML protected void onClicNextFromCompany(){
+        labelIntro.setText(introAddress);
         user.setVatNumber(fieldVAT.getText());
         user.setComName(fieldComName.getText());
         user.setLegalName(fieldLegalName.getText());
         user.setEmail(fieldEmail.getText());
         user.setWeb(fieldWeb.getText());
         paneCompany.setVisible(false);
+        paneFootCompany.setVisible(false);
+        
+        paneAddress.setVisible(true);
+        paneFootAddress.setVisible(true);
     }
     
-    @FXML protected void onClicBack2(){
-        labelIntro.setText("Aquí, puedes crear un nombre de usuario y su contraseña");
+    @FXML protected void onClicNextFromAddress(){
+        user.getAddress().setStreet(fieldStreet.getText());
+        user.getAddress().setStNumber(fieldStNumber.getText());
+        user.getAddress().setApt(fieldApt.getText());
+        user.getAddress().setCp(fieldCP.getText());
+        user.getAddress().setCity(fieldCity.getText());
+        user.getAddress().setState(fieldState.getText());
+        user.getAddress().setCountry(fieldCountry.getText());
+    }
+    
+    @FXML protected void onClicBackFromCompany(){
+        labelIntro.setText(introUser);
         paneUser.setVisible(true);
         paneCompany.setVisible(false);
-        paneFoot1.setVisible(true);
-        paneFoot2.setVisible(false);
+        paneFootUser.setVisible(true);
+        paneFootCompany.setVisible(false);
+    }
+    
+    @FXML protected void onClicBackFromAddress(){
+        labelIntro.setText(introCompany);
+        paneCompany.setVisible(true);
+        paneAddress.setVisible(false);
+        paneFootCompany.setVisible(true);
+        paneFootAddress.setVisible(false);
     }
     
 }
