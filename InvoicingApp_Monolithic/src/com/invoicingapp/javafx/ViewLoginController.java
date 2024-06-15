@@ -13,16 +13,19 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -41,6 +44,7 @@ public class ViewLoginController implements Initializable {
     @FXML private PasswordField fieldPasswd;
     @FXML private CheckBox checkRemindme;
     @FXML private Label labelInfo;
+    @FXML private HBox paneMain;
     
     /**
      * Initializes the controller class.
@@ -103,7 +107,13 @@ public class ViewLoginController implements Initializable {
         Stage stage=new Stage();
         stage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
         stage.setScene(scene);
+        
+        stage.setOnHiding(event -> {
+                paneMain.setDisable(false);
+            });
+        
         stage.show();
+        paneMain.setDisable(true);
     }
     
     @FXML protected void onPressedSeePW(){
