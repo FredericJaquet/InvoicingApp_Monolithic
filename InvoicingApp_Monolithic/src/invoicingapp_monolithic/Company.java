@@ -40,7 +40,7 @@ public class Company {
         ResultSet result=null;
         String queryInsert=null;
         String queryGetId="SELECT MAX(idCompany) FROM Company";
-        String queryGetIds="SELECT idCompnay FROM Comapny;";
+        String queryGetIds="SELECT idCompany FROM Company;";
         boolean exists=false;
         
         address.addToDB();
