@@ -122,9 +122,12 @@ public class ViewLoginController implements Initializable {
         textFieldPW.setVisible(true);
         
     }
+    
     @FXML protected void onReleaseSeePW(){
         textFieldPW.setVisible(false);
         fieldPasswd.setVisible(true);
     }
+    
+    
     
 }

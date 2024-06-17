@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Users;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,17 +30,18 @@ public class ViewCreateUserController implements Initializable {
     String introUser="Aquí, puedes crear un nombre de usuario y su contraseña";
     String introCompany="Aquí, puedes crear una Empresa nueva o seleccionar una existente";
     String introAddress="Aquí, puedes crear una dirección para la Empresa nueva";
+    String introContact="Aquí, puedes añadir una persona de contacto";
             
     
     @FXML private PasswordField fieldPasswd1,fieldPasswd2 ;
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
-                            fieldVAT,fieldComName,fieldLegalName,
-                            fieldEmail,fieldWeb,fieldStreet,
-                            fieldStNumber,fieldApt,fieldCP,
-                            fieldCity,fieldState,fieldCountry;
+            fieldVAT,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb,
+            fieldStreet,fieldStNumber,fieldApt,fieldCP,fieldCity,
+            fieldState,fieldCountry,fieldFirstname,fieldMiddlename,
+            fieldLastname,fieldRole,fieldContactEmail;
     @FXML private Label labelIntro;
-    @FXML private GridPane paneUser, paneCompany, paneAddress;
-    @FXML private HBox paneFootUser, paneFootCompany, paneFootAddress;
+    @FXML private GridPane paneUser, paneCompany, paneAddress, paneContact;
+    @FXML private HBox paneFootUser, paneFootCompany, paneFootAddress, paneFootContact;
     
     /**
      * Initializes the controller class.
@@ -88,7 +90,7 @@ public class ViewCreateUserController implements Initializable {
         user.setVatNumber(fieldVAT.getText());
         user.setComName(fieldComName.getText());
         user.setLegalName(fieldLegalName.getText());
-        user.setEmail(fieldEmail.getText());
+        user.setEmail(fieldEmailCompany.getText());
         user.setWeb(fieldWeb.getText());
         paneCompany.setVisible(false);
         paneFootCompany.setVisible(false);
@@ -97,7 +99,7 @@ public class ViewCreateUserController implements Initializable {
         paneFootAddress.setVisible(true);
     }
     
-    @FXML protected void onClicNextFromAddress(){
+    @FXML protected void onClicSaveFromAddress(){
         user.getAddress().setStreet(fieldStreet.getText());
         user.getAddress().setStNumber(fieldStNumber.getText());
         user.getAddress().setApt(fieldApt.getText());
@@ -105,6 +107,7 @@ public class ViewCreateUserController implements Initializable {
         user.getAddress().setCity(fieldCity.getText());
         user.getAddress().setState(fieldState.getText());
         user.getAddress().setCountry(fieldCountry.getText());
+        user.addToDB();
     }
     
     @FXML protected void onClicBackFromCompany(){
@@ -123,4 +126,46 @@ public class ViewCreateUserController implements Initializable {
         paneFootAddress.setVisible(false);
     }
     
+    @FXML protected void onClicAddContact(){
+        labelIntro.setText(introContact);
+        paneCompany.setVisible(false);
+        paneFootCompany.setVisible(false);
+        
+        paneContact.setVisible(true);
+        paneFootContact.setVisible(true);
+    }
+    
+    @FXML protected void onClicCancelFromContact(){
+        labelIntro.setText(introCompany);
+        paneCompany.setVisible(true);
+        paneFootCompany.setVisible(true);
+        
+        paneContact.setVisible(false);
+        paneFootContact.setVisible(false);
+        
+        fieldFirstname.clear();
+        fieldMiddlename.clear();
+        fieldLastname.clear();
+        fieldRole.clear();
+        fieldContactEmail.clear();
+    }
+    
+    @FXML protected void onClicSaveFromContact(){
+        ContactPerson contact=new ContactPerson();
+        
+        contact.setFirstname(fieldFirstname.getText());
+        contact.setMiddlename(fieldMiddlename.getText());
+        contact.setLastname(fieldLastname.getText());
+        contact.setRole(fieldRole.getText());
+        contact.setEmail(fieldContactEmail.getText());
+        
+        user.addContactPerson(contact);
+        
+        labelIntro.setText(introCompany);
+        paneCompany.setVisible(true);
+        paneFootCompany.setVisible(true);
+        
+        paneContact.setVisible(false);
+        paneFootContact.setVisible(false);
+    }
 }
