@@ -150,7 +150,7 @@
                      </GridPane.margin>
                   </TextField>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClicAddContact" text="Añadir Contacto" GridPane.rowIndex="8" />
-                  <Button mnemonicParsing="false" text="Añadir Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Button mnemonicParsing="false" onAction="#onClicAddPhone" text="Añadir Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -281,6 +281,37 @@
                   </TextField>
                </children>
             </GridPane>
+            <GridPane fx:id="panePhone" layoutX="10.0" layoutY="10.0" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="Teléfono" />
+                  <TextField fx:id="fieldPhoneNumber" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Descripción" GridPane.columnIndex="1" />
+                  <TextField fx:id="fieldPhoneKind" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
+               </children>
+            </GridPane>
          </children>
          <VBox.margin>
             <Insets right="25.0" top="25.0" />
@@ -339,6 +370,16 @@
                      </HBox.margin>
                   </Button>
                   <Button fx:id="btnSaveContact" mnemonicParsing="false" onAction="#onClicSaveFromContact" text="Guardar" />
+               </children>
+            </HBox>
+            <HBox fx:id="paneFootPhone" alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="250.0" visible="false">
+               <children>
+                  <Button fx:id="btnCancelPhone" mnemonicParsing="false" onAction="#onClicCancelFromPhone" text="Cancelar">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnSavePhone" mnemonicParsing="false" onAction="#onClicSaveFromPhone" text="Guardar" />
                </children>
             </HBox>
          </children>

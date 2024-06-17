@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import invoicingapp_monolithic.ContactPerson;
+import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Users;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,17 +32,18 @@ public class ViewCreateUserController implements Initializable {
     String introCompany="Aquí, puedes crear una Empresa nueva o seleccionar una existente";
     String introAddress="Aquí, puedes crear una dirección para la Empresa nueva";
     String introContact="Aquí, puedes añadir una persona de contacto";
-            
+    String introPhone="Aquí, puedes añadir un número de teléfono";
     
     @FXML private PasswordField fieldPasswd1,fieldPasswd2 ;
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
             fieldVAT,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb,
             fieldStreet,fieldStNumber,fieldApt,fieldCP,fieldCity,
-            fieldState,fieldCountry,fieldFirstname,fieldMiddlename,
-            fieldLastname,fieldRole,fieldContactEmail;
+            fieldState,fieldCountry,
+            fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
+            fieldPhoneNumber, fieldPhoneKind;
     @FXML private Label labelIntro;
-    @FXML private GridPane paneUser, paneCompany, paneAddress, paneContact;
-    @FXML private HBox paneFootUser, paneFootCompany, paneFootAddress, paneFootContact;
+    @FXML private GridPane paneUser,paneCompany,paneAddress,paneContact,panePhone;
+    @FXML private HBox paneFootUser,paneFootCompany,paneFootAddress,paneFootContact,paneFootPhone;
     
     /**
      * Initializes the controller class.
@@ -135,6 +137,15 @@ public class ViewCreateUserController implements Initializable {
         paneFootContact.setVisible(true);
     }
     
+    @FXML protected void onClicAddPhone(){
+        labelIntro.setText(introPhone);
+        paneCompany.setVisible(false);
+        paneFootCompany.setVisible(false);
+        
+        panePhone.setVisible(true);
+        paneFootPhone.setVisible(true);
+    }
+    
     @FXML protected void onClicCancelFromContact(){
         labelIntro.setText(introCompany);
         paneCompany.setVisible(true);
@@ -148,6 +159,18 @@ public class ViewCreateUserController implements Initializable {
         fieldLastname.clear();
         fieldRole.clear();
         fieldContactEmail.clear();
+    }
+    
+    @FXML protected void onClicCancelFromPhone(){
+        labelIntro.setText(introCompany);
+        paneCompany.setVisible(true);
+        paneFootCompany.setVisible(true);
+        
+        panePhone.setVisible(false);
+        paneFootPhone.setVisible(false);
+        
+        fieldPhoneNumber.clear();
+        fieldPhoneKind.clear();
     }
     
     @FXML protected void onClicSaveFromContact(){
@@ -167,5 +190,28 @@ public class ViewCreateUserController implements Initializable {
         
         paneContact.setVisible(false);
         paneFootContact.setVisible(false);
+        fieldFirstname.clear();
+        fieldMiddlename.clear();
+        fieldLastname.clear();
+        fieldRole.clear();
+        fieldContactEmail.clear();
+    }
+    
+    @FXML protected void onClicSaveFromPhone(){
+        Phone phone=new Phone();
+        
+        phone.setPhoneNumber(fieldPhoneNumber.getText());
+        phone.setKind(fieldPhoneKind.getText());
+        
+        user.addPhone(phone);
+        
+        labelIntro.setText(introCompany);
+        paneCompany.setVisible(true);
+        paneFootCompany.setVisible(true);
+        
+        panePhone.setVisible(false);
+        paneFootPhone.setVisible(false);
+        fieldPhoneNumber.clear();
+        fieldPhoneKind.clear();
     }
 }
