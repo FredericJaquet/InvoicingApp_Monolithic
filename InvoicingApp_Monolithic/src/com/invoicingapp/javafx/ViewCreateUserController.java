@@ -41,7 +41,7 @@ public class ViewCreateUserController implements Initializable {
             fieldState,fieldCountry,
             fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
             fieldPhoneNumber, fieldPhoneKind;
-    @FXML private Label labelIntro;
+    @FXML private Label labelIntro, labelPassword;
     @FXML private GridPane paneUser,paneCompany,paneAddress,paneContact,panePhone;
     @FXML private HBox paneFootUser,paneFootCompany,paneFootAddress,paneFootContact,paneFootPhone;
     
@@ -79,12 +79,20 @@ public class ViewCreateUserController implements Initializable {
     
     @FXML protected void onClicNextFromUser(){
         labelIntro.setText(introCompany);
-        user.setUserName(fieldUsername.getText());
-        user.setPasswd(fieldPasswd1.getText());
-        paneUser.setVisible(false);
-        paneCompany.setVisible(true);
-        paneFootUser.setVisible(false);
-        paneFootCompany.setVisible(true);
+        
+        if(fieldPasswd1.getText().equals(fieldPasswd2.getText())){
+            user.setUserName(fieldUsername.getText());
+            user.setPasswd(fieldPasswd1.getText());
+        
+            paneUser.setVisible(false);
+            paneCompany.setVisible(true);
+            paneFootUser.setVisible(false);
+            paneFootCompany.setVisible(true);
+            labelPassword.setText("");
+        }else{
+            labelPassword.setText("Las contraseñas no coinciden");
+        }
+        
     }
     
     @FXML protected void onClicNextFromCompany(){

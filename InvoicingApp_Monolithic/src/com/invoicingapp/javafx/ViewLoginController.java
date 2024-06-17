@@ -74,7 +74,6 @@ public class ViewLoginController implements Initializable {
             config.setIdUser(idUser);
             passwd=fieldPasswd.getText();
             try {
-                System.out.println(user.getPasswd().getHashed());
                 if(Password.checkPassword(passwd,user.getPasswd().getHashed())){
                     labelInfo.setText("Password is correct");
                     control=true;
