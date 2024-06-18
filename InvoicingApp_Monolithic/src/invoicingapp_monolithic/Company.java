@@ -118,6 +118,36 @@ public class Company {
         con.closeConnection();
     }
     
+    public static ArrayList<Company> getAllFromDB(){
+        ArrayList<Company> list=new ArrayList();
+        String query="SELECT * FROM Company;";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Company company=new Company();
+       
+        con.openConnection();
+        result=con.getResultSet(query);
+       
+        try{
+            while (result.next()){
+                company=new Company();
+                company.setIdCompany(result.getInt(1));
+                company.setVatNumber(result.getString(2));
+                company.setComName(result.getString(3));
+                company.setLegalName(result.getString(4));
+                company.setEmail(result.getString(5));
+                company.setWeb(result.getString(6));
+                company.setAddress(result.getInt(7));
+                list.add(company);
+            }
+        }catch (SQLException ex) {
+             Logger.getLogger(Company.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        con.closeConnection();
+        
+        return list;
+    }
+    
     /**
     * Cleans the table Company in the DB.
     * Cleans the table CustomProv in the DB.
@@ -367,6 +397,12 @@ public class Company {
     public void setAddress(String street, String stNumber, String apt, String cp, String city, String state, String country) {
         this.address = new Address(street, stNumber, apt, cp, city, state, country);
     }
+    
+    public void setAddress(int idAddress){
+        this.address=new Address();
+        address.getFromDB(idAddress);
+    }
+    
     public void setAddress(){
         this.address=new Address();
     }

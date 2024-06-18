@@ -4,21 +4,29 @@
  */
 package com.invoicingapp.javafx;
 
+import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Users;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -33,6 +41,7 @@ public class ViewCreateUserController implements Initializable {
     String introAddress="Aquí, puedes crear una dirección para la Empresa nueva";
     String introContact="Aquí, puedes añadir una persona de contacto";
     String introPhone="Aquí, puedes añadir un número de teléfono";
+    ArrayList<Company> companies=new ArrayList();
     
     @FXML private PasswordField fieldPasswd1,fieldPasswd2 ;
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
@@ -41,6 +50,7 @@ public class ViewCreateUserController implements Initializable {
             fieldState,fieldCountry,
             fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
             fieldPhoneNumber, fieldPhoneKind;
+    @FXML ComboBox cbCompany;
     @FXML private Label labelIntro, labelPassword;
     @FXML private GridPane paneUser,paneCompany,paneAddress,paneContact,panePhone;
     @FXML private HBox paneFootUser,paneFootCompany,paneFootAddress,paneFootContact,paneFootPhone;
@@ -50,6 +60,8 @@ public class ViewCreateUserController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        companies=Company.getAllFromDB();
+        
         textFieldPW1.setVisible(false);
         textFieldPW2.setVisible(false);
         labelIntro.setText(introUser);
@@ -92,7 +104,6 @@ public class ViewCreateUserController implements Initializable {
         }else{
             labelPassword.setText("Las contraseñas no coinciden");
         }
-        
     }
     
     @FXML protected void onClicNextFromCompany(){
@@ -221,5 +232,39 @@ public class ViewCreateUserController implements Initializable {
         paneFootPhone.setVisible(false);
         fieldPhoneNumber.clear();
         fieldPhoneKind.clear();
+    }
+    
+    @FXML protected void populateComboBox(){
+        ObservableList<Company> companyObs =FXCollections.observableArrayList(companies);
+        cbCompany.setItems(companyObs);
+        
+        cbCompany.setCellFactory(new Callback<ListView<Company>, ListCell<Company>>() {
+            @Override
+            public ListCell<Company> call(ListView<Company> p) {
+                return new ListCell<Company>() {
+                    @Override
+                    protected void updateItem(Company item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item.getComName());
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+        
+        cbCompany.setButtonCell(new ListCell<Company>() {
+            @Override
+            protected void updateItem(Company item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item.getComName());
+                } else {
+                    setText(null);
+                }
+            }
+        });
     }
 }

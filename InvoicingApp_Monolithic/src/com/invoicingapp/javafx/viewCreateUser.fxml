@@ -103,12 +103,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Seleccionar una Empresa" GridPane.rowIndex="6">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </Label>
-                  <ComboBox fx:id="comboBoxcompany" prefWidth="375.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Label text="CIF">
                      <GridPane.margin>
                         <Insets top="15.0" />
@@ -129,6 +123,16 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
+                  <Label text="Nombre Fiscal" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldLegalName" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
                   <Label text="Email" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets top="15.0" />
@@ -141,16 +145,12 @@
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="fieldWeb" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Nombre Fiscal" GridPane.rowIndex="4">
+                  <Label text="Seleccionar una Empresa" GridPane.rowIndex="6">
                      <GridPane.margin>
-                        <Insets top="15.0" />
+                        <Insets />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldLegalName" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
+                  <ComboBox fx:id="cbCompany" onShowing="#populateComboBox" prefWidth="375.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClicAddContact" text="Añadir Contacto" GridPane.rowIndex="8" />
                   <Button mnemonicParsing="false" onAction="#onClicAddPhone" text="Añadir Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                </children>
