@@ -38,16 +38,34 @@ public class Address {
         ConnectionDB con=new ConnectionDB();
         String queryInsert="INSERT INTO Address (street, stNumber, apt, cp, city, state, country) values('"+street+"','"+stNumber+"','"+apt+"','"+cp+"','"+city+"','"+state+"','"+country+"')";
         String queryGetId="SELECT MAX(idAddress) FROM Address";
+        String queryGetIds="SELECT idAddress FROM Address;";
         ResultSet result=null;
+        boolean exists=false;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
-        result=con.getResultSet(queryGetId);
-        try {
-            result.next();
-            idAddress=result.getInt(1);
-        } catch (SQLException ex) {
-            Logger.getLogger(Address.class.getName()).log(Level.SEVERE, null, ex);
+        
+        //verify the address does not already exist in DB
+        result=con.getResultSet(queryGetIds);
+        try{
+            while(result.next()){
+                if(idAddress==result.getInt(1)){
+                    exists=true;
+                }
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(Company.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //If company does not exist in DB, insert the company in DB
+        if(!exists){
+            con.noReturnQuery(queryInsert);
+            result=con.getResultSet(queryGetId);
+            try {
+                result.next();
+                idAddress=result.getInt(1);
+            } catch (SQLException ex) {
+                Logger.getLogger(Address.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         con.closeConnection();
     }

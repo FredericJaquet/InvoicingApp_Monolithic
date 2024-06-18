@@ -113,22 +113,11 @@ public class ViewCreateUserController implements Initializable {
         user.setLegalName(fieldLegalName.getText());
         user.setEmail(fieldEmailCompany.getText());
         user.setWeb(fieldWeb.getText());
+        
         paneCompany.setVisible(false);
         paneFootCompany.setVisible(false);
-        
         paneAddress.setVisible(true);
         paneFootAddress.setVisible(true);
-    }
-    
-    @FXML protected void onClicSaveFromAddress(){
-        user.getAddress().setStreet(fieldStreet.getText());
-        user.getAddress().setStNumber(fieldStNumber.getText());
-        user.getAddress().setApt(fieldApt.getText());
-        user.getAddress().setCp(fieldCP.getText());
-        user.getAddress().setCity(fieldCity.getText());
-        user.getAddress().setState(fieldState.getText());
-        user.getAddress().setCountry(fieldCountry.getText());
-        user.addToDB();
     }
     
     @FXML protected void onClicBackFromCompany(){
@@ -234,6 +223,22 @@ public class ViewCreateUserController implements Initializable {
         fieldPhoneKind.clear();
     }
     
+    @FXML protected void onClicSaveFromAddress(ActionEvent e){
+        Button source=(Button)e.getSource();
+        Stage stage=(Stage)source.getScene().getWindow();
+        
+        user.getAddress().setStreet(fieldStreet.getText());
+        user.getAddress().setStNumber(fieldStNumber.getText());
+        user.getAddress().setApt(fieldApt.getText());
+        user.getAddress().setCp(fieldCP.getText());
+        user.getAddress().setCity(fieldCity.getText());
+        user.getAddress().setState(fieldState.getText());
+        user.getAddress().setCountry(fieldCountry.getText());
+        user.addToDB();
+        
+        stage.close();
+    }
+    
     @FXML protected void populateComboBox(){
         ObservableList<Company> companyObs =FXCollections.observableArrayList(companies);
         cbCompany.setItems(companyObs);
@@ -266,5 +271,26 @@ public class ViewCreateUserController implements Initializable {
                 }
             }
         });
+    }
+    
+    @FXML protected void getSelectionComboBox(){
+        Company company=(Company) cbCompany.getSelectionModel().getSelectedItem();
+        
+        fieldVAT.setText(company.getVatNumber());
+        fieldComName.setText(company.getComName());
+        fieldLegalName.setText(company.getLegalName());
+        fieldEmailCompany.setText(company.getEmail());
+        fieldWeb.setText(company.getWeb());
+        fieldStreet.setText(company.getAddress().getStreet());
+        fieldStNumber.setText(company.getAddress().getStNumber());
+        fieldApt.setText(company.getAddress().getApt());
+        fieldCP.setText(company.getAddress().getCp());
+        fieldCity.setText(company.getAddress().getCity());
+        fieldState.setText(company.getAddress().getState());
+        fieldCountry.setText(company.getAddress().getCountry());
+        
+        user.setIdCompany(company.getIdCompany());
+        user.getAddress().setIdAddress(company.getAddress().getIdAddress());
+        
     }
 }

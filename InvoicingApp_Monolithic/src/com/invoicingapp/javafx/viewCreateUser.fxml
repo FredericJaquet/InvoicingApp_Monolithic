@@ -150,7 +150,7 @@
                         <Insets />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="cbCompany" onShowing="#populateComboBox" prefWidth="375.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <ComboBox fx:id="cbCompany" onAction="#getSelectionComboBox" onShowing="#populateComboBox" prefWidth="375.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClicAddContact" text="Añadir Contacto" GridPane.rowIndex="8" />
                   <Button mnemonicParsing="false" onAction="#onClicAddPhone" text="Añadir Teléfono" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                </children>

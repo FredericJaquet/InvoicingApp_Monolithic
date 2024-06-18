@@ -51,7 +51,6 @@ public class Company {
         
         //verify the company does not already exist in DB
         result=con.getResultSet(queryGetIds);
-        
         try{
             while(result.next()){
                 if(idCompany==result.getInt(1)){
@@ -61,6 +60,7 @@ public class Company {
         }catch (SQLException ex) {
             Logger.getLogger(Company.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         //If company does not exist in DB, insert the company in DB
         if(!exists){
             con.noReturnQuery(queryInsert);
@@ -71,16 +71,16 @@ public class Company {
             } catch (SQLException ex) {
                 Logger.getLogger(Company.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+        }
         
-            for(int i=0;i<phones.size();i++){
+        for(int i=0;i<phones.size();i++){
                 phones.get(i).setIdCompany(idCompany);
                 phones.get(i).addToDB();
-            }
-            for(int i=0;i<contacts.size();i++){
-                contacts.get(i).setIdCompany(idCompany);
-                contacts.get(i).addToDB();
-            }
+        }
+            
+        for(int i=0;i<contacts.size();i++){
+            contacts.get(i).setIdCompany(idCompany);
+            contacts.get(i).addToDB();
         }
         con.closeConnection();
     }
