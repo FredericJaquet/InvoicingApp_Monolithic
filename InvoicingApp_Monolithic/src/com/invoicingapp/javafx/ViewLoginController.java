@@ -86,12 +86,24 @@ public class ViewLoginController implements Initializable {
         }
         
         if(control){
-            labelInfo.setText("Next Window");
             config.setReminder(checkRemindme.isSelected());
             config.save();
+            
+            Parent root=null;
+            try {
+                root = FXMLLoader.load(getClass().getResource("viewHome.fxml"));
+            } catch (IOException ex) {
+                Logger.getLogger(ViewLoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Scene scene=new Scene(root);
+            Stage stageHome=new Stage();
+            stageHome.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
+            stageHome.setScene(scene);
+            stageHome.show();
+            
+            Stage stageLogin = (Stage) paneMain.getScene().getWindow();
+            stageLogin.close();
         }
-        
-        
     }
     
     @FXML protected void onActionCreate(){

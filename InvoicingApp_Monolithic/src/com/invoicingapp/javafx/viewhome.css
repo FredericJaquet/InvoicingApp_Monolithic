@@ -1,0 +1,38 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+
+.btnMenu{
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
+    -fx-min-width: 70px;
+    
+}
+
+.btnLogout{
+    -fx-background-radius: 25px;
+    -fx-background-image: url(../img/user.png);
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 50px 50px;
+    -fx-padding: 5;
+    -fx-background-color: transparent;
+}
+
+.borders{
+    -fx-background-color: #FFF5E2;
+}
+
+.labelMenu{
+    -fx-font-weight: bold;
+}
+
+.btnFocused{
+    -fx-background-color: #F5BA3D;
+}
