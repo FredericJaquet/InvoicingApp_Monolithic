@@ -91,6 +91,29 @@ public class Customer extends CustomProv {
         con.closeConnection();
     }
     
+    public static ArrayList<Customer> getAllCustomersFromDB(){
+        ArrayList<Customer> list=new ArrayList();
+        String query="SELECT idCustomer FROM Customer;";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Customer customer=new Customer();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                customer=new Customer();
+                customer.getFromDB(result.getInt(1));
+                System.out.println(customer.getLegalName());
+                list.add(customer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     /**
     * Cleans the table Customer in the DB.
     */

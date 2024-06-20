@@ -4,17 +4,25 @@
  */
 package com.invoicingapp.javafx;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -23,10 +31,11 @@ import javafx.scene.layout.GridPane;
  */
 public class ViewHomeController implements Initializable {
 
-    private int imgSize=80;
+    private int imgSize=100;
     
-    @FXML private GridPane paneCentral;
-    @FXML private Button btnCreateCustomer,btnCreateProvider,btnCreateOrder,
+    @FXML private VBox PaneCenterHome;
+    @FXML private BorderPane mainPane;
+    @FXML private Button btnCustomers,btnCreateProvider,btnCreateOrder,
             btnCreateInvoiceCustomer,btnCreateInvoiceProvider,btnCreateQuote, 
             btnCreatePo,btnReportIncomes,btnReportOutcomes,
             btnReportPendings,btnGrafIncomes,btnGrafOutcomes;
@@ -36,58 +45,18 @@ public class ViewHomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        paneCentral.setAlignment(Pos.CENTER);
-        InputStream inputStream;
-        Image img;
-        
-        inputStream=getClass().getResourceAsStream("../img/customers.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnCreateCustomer.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/providers.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);        
-        btnCreateProvider.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/orders.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnCreateOrder.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/invoiceCustomers.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnCreateInvoiceCustomer.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/invoiceProviders.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnCreateInvoiceProvider.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/quotes.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnCreateQuote.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/po.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnCreatePo.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/reportIncomes.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnReportIncomes.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/reportOutcomes.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnReportOutcomes.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/reportPendings.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnReportPendings.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/grafIncomes.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnGrafIncomes.setGraphic(new ImageView(img));
-        
-        inputStream=getClass().getResourceAsStream("../img/grafOutcomes.png");
-        img=new Image(inputStream, imgSize, imgSize, true, true);
-        btnGrafOutcomes.setGraphic(new ImageView(img));
-        
+        setImageButton(btnCustomers,"../img/customers.png");
+        setImageButton(btnCreateProvider,"../img/providers.png");
+        setImageButton(btnCreateOrder,"../img/orders.png");
+        setImageButton(btnCreateInvoiceCustomer,"../img/invoiceCustomers.png");
+        setImageButton(btnCreateInvoiceProvider,"../img/invoiceProviders.png");
+        setImageButton(btnCreateQuote,"../img/quotes.png");
+        setImageButton(btnCreatePo,"../img/po.png");
+        setImageButton(btnReportIncomes,"../img/reportIncomes.png");
+        setImageButton(btnReportOutcomes,"../img/reportOutcomes.png");
+        setImageButton(btnReportPendings,"../img/reportPendings.png");
+        setImageButton(btnGrafIncomes,"../img/grafIncomes.png");
+        setImageButton(btnGrafOutcomes,"../img/grafOutcomes.png");
     }
 
     @FXML protected void onFocus(MouseEvent e){
@@ -102,6 +71,41 @@ public class ViewHomeController implements Initializable {
         
         button.getStyleClass().clear();
         button.getStyleClass().add("btnMenu");
+    }
+    @FXML protected void onHome(){
+        mainPane.setCenter(PaneCenterHome);
+    }
+    
+    @FXML protected void onItemCentralMenu(ActionEvent e){
+        Button button=(Button) e.getSource();
+        String idBtn=button.getId().substring(3);
+        String window="View"+idBtn+".fxml";
+        Parent customersView;
+        try {
+            customersView=FXMLLoader.load(getClass().getResource(window));
+            mainPane.setCenter(customersView);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    @FXML protected void onItemLatMenu(ActionEvent e){
+        Button button=(Button) e.getSource();
+        String idBtn=button.getId().substring(1);
+        String window="View"+idBtn+".fxml";
+        Parent customersView;
+        try {
+            customersView=FXMLLoader.load(getClass().getResource(window));
+            mainPane.setCenter(customersView);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    private void setImageButton(Button button, String path){
+        InputStream inputStream=getClass().getResourceAsStream(path);
+        Image img=new Image(inputStream, imgSize, imgSize, true, true);
+        button.setGraphic(new ImageView(img));
     }
     
 }

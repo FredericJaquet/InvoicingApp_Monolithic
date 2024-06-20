@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewHomeController">
+<BorderPane fx:id="mainPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewHomeController">
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" stylesheets="@viewhome.css" BorderPane.alignment="CENTER">
          <children>
@@ -107,7 +107,7 @@
                         <Image url="@../img/home.png" />
                      </image>
                   </ImageView>
-                  <Button mnemonicParsing="false" stylesheets="@viewhome.css" text="Inicio" GridPane.columnIndex="1">
+                  <Button fx:id="bHome" mnemonicParsing="false" onAction="#onHome" stylesheets="@viewhome.css" text="Inicio" GridPane.columnIndex="1">
                      <effect>
                         <ColorAdjust />
                      </effect>
@@ -130,7 +130,7 @@
                      </image>
                   </ImageView>
                   <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Empresas" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Clientes" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Button fx:id="bCustomers" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Clientes" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <effect>
                         <ColorAdjust />
                      </effect>
@@ -249,13 +249,9 @@
       </VBox>
    </left>
    <center>
-      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+      <VBox fx:id="PaneCenterHome" alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label text="INICIO">
-               <font>
-                  <Font size="48.0" />
-               </font></Label>
-            <GridPane fx:id="paneCentral" alignment="CENTER" hgap="10.0" maxWidth="500.0" vgap="10.0">
+            <GridPane fx:id="paneCentral" alignment="CENTER" hgap="10.0" maxWidth="700.0" vgap="10.0">
               <columnConstraints>
                 <ColumnConstraints />
                 <ColumnConstraints />
@@ -272,62 +268,51 @@
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </VBox.margin>
                <children>
-                  <Button fx:id="btnCreateCustomer" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" />
-                     </GridPane.margin>
-                     <graphic>
-                        <Label text="Clientes">
-                           <padding>
-                              <Insets top="75.0" />
-                           </padding>
-                        </Label>
-                     </graphic></Button>
-                  <Button fx:id="btnCreateProvider" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" />
-                     </GridPane.margin>
-                     <graphic>
-                        <Label text="Proveedores">
-                           <padding>
-                              <Insets top="75.0" />
-                           </padding>
-                        </Label>
-                     </graphic></Button>
-                  <Button fx:id="btnCreateOrder" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnCustomers" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onItemCentralMenu" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnCreateInvoiceCustomer" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnCreateProvider" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnCreateInvoiceProvider" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin></Button>
-                  <Button fx:id="btnCreateQuote" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnCreateOrder" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnCreatePo" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnCreateInvoiceCustomer" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnReportIncomes" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnCreateInvoiceProvider" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnReportOutcomes" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnCreateQuote" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnReportPendings" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <Button fx:id="btnGrafIncomes" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnCreatePo" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin></Button>
-                  <Button fx:id="btnGrafOutcomes" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="70.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnReportIncomes" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="btnReportOutcomes" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="btnReportPendings" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="btnGrafIncomes" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin></Button>
+                  <Button fx:id="btnGrafOutcomes" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" styleClass="centralMenu" stylesheets="@viewhome.css" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin></Button>

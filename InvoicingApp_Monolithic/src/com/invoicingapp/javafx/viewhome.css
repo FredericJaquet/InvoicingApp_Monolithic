@@ -31,7 +31,7 @@
     -fx-background-position: center;
     -fx-background-size: 50px 50px;
     -fx-padding: 5;
-    -fx-background-color: transparent;
+    
 }
 
 .borders{
@@ -43,8 +43,8 @@
 }
 
 .centralMenu{
-    -fx-pref-width: 100px;
-    -fx-pref-height: 100px;
+    -fx-pref-width: 130px;
+    -fx-pref-height: 130px;
 }
 
 .verticalBorder{
