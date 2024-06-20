@@ -8,11 +8,20 @@
 
 .btnMenu{
     -fx-background-color: transparent;
-    -fx-padding: 10px;
+    -fx-padding: 0 0 0 5;
     -fx-border-insets: 10px;
     -fx-background-insets: 10px;
-    -fx-min-width: 70px;
-    
+    -fx-pref-width: 150px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-radius: 25px;
+}
+
+.btnFocused{
+    -fx-background-color: #F5BA3D;
+    -fx-padding: 2 0 2 5;
+    -fx-pref-width: 150px;
+    -fx-text-align: left;
+    -fx-background-radius: 5px;
 }
 
 .btnLogout{
@@ -33,6 +42,11 @@
     -fx-font-weight: bold;
 }
 
-.btnFocused{
-    -fx-background-color: #F5BA3D;
+.centralMenu{
+    -fx-pref-width: 100px;
+    -fx-pref-height: 100px;
+}
+
+.verticalBorder{
+    -fx-pref-width: 10%;
 }
