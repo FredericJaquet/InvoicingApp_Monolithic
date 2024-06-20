@@ -107,6 +107,29 @@ public class CustomProv extends Company{
         con.closeConnection();
     }
     
+    public static ArrayList<CustomProv> getAllCustomProvFromDB(){
+        ArrayList<CustomProv> list=new ArrayList();
+        String query="SELECT idCustomProv FROM CustomProv;";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        CustomProv customProv=new CustomProv();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                customProv=new CustomProv();
+                customProv.getFromDB(result.getInt(1));
+                list.add(customProv);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return list;
+    }
+    
     /**
     * Cleans the table CustomProv in the DB.
     * Cleans the table Customer in the DB.

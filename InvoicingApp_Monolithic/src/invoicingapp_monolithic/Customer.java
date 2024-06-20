@@ -105,7 +105,6 @@ public class Customer extends CustomProv {
             while(result.next()){
                 customer=new Customer();
                 customer.getFromDB(result.getInt(1));
-                System.out.println(customer.getLegalName());
                 list.add(customer);
             }
         } catch (SQLException ex) {
