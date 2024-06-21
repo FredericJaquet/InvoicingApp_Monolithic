@@ -5,3 +5,9 @@
 .mainFxmlClass {
 
 }
+
+-table{
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+}
