@@ -285,7 +285,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldDefaultVAT" GridPane.rowIndex="1">
+                  <TextField fx:id="fieldDefaultVAT" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -295,7 +295,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldDefaultWithholding" GridPane.rowIndex="3">
+                  <TextField fx:id="fieldDefaultWithholding" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -317,7 +317,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldDuedate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="fieldDuedate" stylesheets="@viewcreatecustomer.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6" />
                   <CheckBox fx:id="cbEurope" mnemonicParsing="false" selected="true" text="Es Europeo" GridPane.rowIndex="4">
                      <GridPane.margin>
@@ -328,6 +328,11 @@
                   <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
                      <children>
                         <Button mnemonicParsing="false" text="Crear Esquema" />
+                     </children>
+                  </FlowPane>
+                  <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                     <children>
+                        <Label fx:id="labelError" text="Uno de los datos introducidos no es correcto." textFill="RED" visible="false" />
                      </children>
                   </FlowPane>
                </children>

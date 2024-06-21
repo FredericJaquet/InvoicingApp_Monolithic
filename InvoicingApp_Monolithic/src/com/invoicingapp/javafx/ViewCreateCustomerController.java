@@ -11,7 +11,6 @@ import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Phone;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,7 +40,7 @@ public class ViewCreateCustomerController implements Initializable {
     Customer customer=new Customer();
     ArrayList<CustomProv> companies=new ArrayList();
     
-    @FXML private Label labelIntro;
+    @FXML private Label labelIntro, labelError;
     @FXML private TextField fieldVAT,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
     @FXML private TextField fieldStreet,fieldStNumber,fieldApt,fieldCP,fieldCity,fieldState,fieldCountry;
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,fieldDuedate;
@@ -149,12 +148,7 @@ public class ViewCreateCustomerController implements Initializable {
         }
         
         if(!control){
-            try {
-                Thread.sleep(3*1000);
-            } catch (InterruptedException ex) {
-                System.out.println(e);
-            }
-            fieldDefaultVAT.getStyleClass().remove("error");
+            labelError.setVisible(true);
         }else{
             customer.setDefaultVAT(defaultVAT);
             customer.setDefaultWithholding(defaultWithholding);

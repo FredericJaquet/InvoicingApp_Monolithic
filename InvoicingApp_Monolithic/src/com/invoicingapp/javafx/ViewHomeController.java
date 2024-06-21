@@ -33,7 +33,7 @@ public class ViewHomeController implements Initializable {
     
     @FXML private VBox PaneCenterHome;
     @FXML private BorderPane mainPane;
-    @FXML private Button btnCustomers,btnCreateProvider,btnCreateOrder,
+    @FXML private Button btnCustomers,btnProviders,btnCreateOrder,
             btnCreateInvoiceCustomer,btnCreateInvoiceProvider,btnCreateQuote, 
             btnCreatePo,btnReportIncomes,btnReportOutcomes,
             btnReportPendings,btnGrafIncomes,btnGrafOutcomes;
@@ -44,7 +44,7 @@ public class ViewHomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setImageButton(btnCustomers,"../img/customers.png");
-        setImageButton(btnCreateProvider,"../img/providers.png");
+        setImageButton(btnProviders,"../img/providers.png");
         setImageButton(btnCreateOrder,"../img/orders.png");
         setImageButton(btnCreateInvoiceCustomer,"../img/invoiceCustomers.png");
         setImageButton(btnCreateInvoiceProvider,"../img/invoiceProviders.png");
@@ -70,6 +70,7 @@ public class ViewHomeController implements Initializable {
         button.getStyleClass().clear();
         button.getStyleClass().add("btnMenu");
     }
+    
     @FXML protected void onHome(){
         mainPane.setCenter(PaneCenterHome);
     }
@@ -77,7 +78,7 @@ public class ViewHomeController implements Initializable {
     @FXML protected void onItemCentralMenu(ActionEvent e){
         Button button=(Button) e.getSource();
         String idBtn=button.getId().substring(3);
-        String window="View"+idBtn+".fxml";
+        String window="view"+idBtn+".fxml";
         Parent customersView;
         try {
             customersView=FXMLLoader.load(getClass().getResource(window));

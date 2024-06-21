@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import invoicingapp_monolithic.Customer;
+import invoicingapp_monolithic.Provider;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,25 +25,28 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * FXML Controller class
+ *
+ * @author frede
+ */
+public class ViewProvidersController implements Initializable {
 
-public class ViewCustomersController implements Initializable {
-    
-    @FXML private TableView<Customer> tableCustomers;
-    @FXML private TableColumn<Customer, String> columnComName, columnVATNbr, columnEmail, ColumnWeb;
-    @FXML private VBox paneCustomers;
+    @FXML private TableView<Provider> tableProviders;
+    @FXML private TableColumn<Provider, String> columnComName, columnVATNbr, columnEmail, ColumnWeb;
+    @FXML private VBox paneProviders;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        createTableCustomers();
+        createTableProviders();
     }
     
-    @FXML protected void onCreateCustomer(){
+    @FXML protected void onCreateProvider(){
             Parent root=null;
         try {
-            root = FXMLLoader.load(getClass().getResource("viewCreateCustomer.fxml"));
+            root = FXMLLoader.load(getClass().getResource("viewCreateProvider.fxml"));
         } catch (IOException ex) {
-            Logger.getLogger(ViewCustomersController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewProvidersController.class.getName()).log(Level.SEVERE, null, ex);
         }
         Scene scene=new Scene(root);
         Stage stage=new Stage();
@@ -50,23 +54,23 @@ public class ViewCustomersController implements Initializable {
         stage.setScene(scene);
         
         stage.setOnHiding(event -> {
-                paneCustomers.getParent().setDisable(false);
-                createTableCustomers();
+                paneProviders.getParent().setDisable(false);
+                createTableProviders();
             });
         
         stage.show();
-        paneCustomers.getParent().setDisable(true);
+        paneProviders.getParent().setDisable(true);
     }
     
-    private void createTableCustomers(){
-        ObservableList<Customer> customers=FXCollections.observableArrayList(Customer.getAllCustomersFromDB());
+    private void createTableProviders(){
+        ObservableList<Provider> providers=FXCollections.observableArrayList(Provider.getAllProvidersFromDB());
         
-        columnComName.setCellValueFactory(new PropertyValueFactory<Customer, String>("comName"));
-        columnVATNbr.setCellValueFactory(new PropertyValueFactory<Customer, String>("vatNumber"));;
-        columnEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));;
-        ColumnWeb.setCellValueFactory(new PropertyValueFactory<Customer, String>("web"));;
+        columnComName.setCellValueFactory(new PropertyValueFactory<Provider, String>("comName"));
+        columnVATNbr.setCellValueFactory(new PropertyValueFactory<Provider, String>("vatNumber"));;
+        columnEmail.setCellValueFactory(new PropertyValueFactory<Provider, String>("email"));;
+        ColumnWeb.setCellValueFactory(new PropertyValueFactory<Provider, String>("web"));;
                 
-        tableCustomers.setItems(customers);
+        tableProviders.setItems(providers);
     }
     
 }
