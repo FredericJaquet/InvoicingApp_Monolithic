@@ -37,6 +37,8 @@ public class ViewCustomersController implements Initializable {
         createTableCustomers();
     }
     
+    //Para cambiar a vista de detalles del Cliente ver (https://www.youtube.com/watch?v=Wc1a2KshJ4w&list=PLoodc-fmtJNYbs-gYCdd5MYS4CKVbGHv2&index=11)
+    
     @FXML protected void onCreateCustomer(){
             Parent root=null;
         try {

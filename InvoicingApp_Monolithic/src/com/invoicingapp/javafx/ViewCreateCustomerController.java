@@ -32,13 +32,13 @@ import javafx.util.Callback;
 
 public class ViewCreateCustomerController implements Initializable {
 
-    String introCompany="Datos de la Empresa";
-    String introAddress="Dirección";
-    String introContact="Persona de contacto";
-    String introPhone="Teléfono de contacto";
-    String introFiscalData="Datos fiscales";
-    Customer customer=new Customer();
-    ArrayList<CustomProv> companies=new ArrayList();
+    private String introCompany="Datos de la Empresa";
+    private String introAddress="Dirección";
+    private String introContact="Persona de contacto";
+    private String introPhone="Teléfono de contacto";
+    private String introFiscalData="Datos fiscales";
+    private Customer customer=new Customer();
+    private ArrayList<CustomProv> companies=new ArrayList();
     
     @FXML private Label labelIntro, labelError;
     @FXML private TextField fieldVAT,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
