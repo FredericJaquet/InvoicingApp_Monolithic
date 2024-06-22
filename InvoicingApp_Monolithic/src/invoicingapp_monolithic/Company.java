@@ -276,6 +276,7 @@ public class Company {
         result=con.getResultSet(query);
         try{
             while(result.next()){
+                contactPerson=new ContactPerson();
                 idContactPerson=result.getInt(1);
                 contactPerson.getFromDB(idContactPerson);
                 contacts.add(contactPerson);
@@ -419,6 +420,20 @@ public class Company {
      */
     public void setIdCompany(int id) {
         this.idCompany = id;
+    }
+
+    /**
+     * @return the contacts
+     */
+    public ArrayList<ContactPerson> getContacts() {
+        return contacts;
+    }
+
+    /**
+     * @param contacts the contacts to set
+     */
+    public void setContacts(ArrayList<ContactPerson> contacts) {
+        this.contacts = contacts;
     }
     
 }
