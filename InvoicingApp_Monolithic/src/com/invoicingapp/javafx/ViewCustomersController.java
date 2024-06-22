@@ -36,6 +36,11 @@ public class ViewCustomersController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         createTableCustomers();
+        tableCustomers.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                onSeeDetails();
+            }
+        });
     }
     
     //Para cambiar a vista de detalles del Cliente ver (https://www.youtube.com/watch?v=Wc1a2KshJ4w&list=PLoodc-fmtJNYbs-gYCdd5MYS4CKVbGHv2&index=11)
@@ -79,6 +84,24 @@ public class ViewCustomersController implements Initializable {
         home=(BorderPane)paneCustomers.getParent();
         home.setCenter(detailsCustomerView);
     }
+    
+    /*private void openCustomerDetails(Customer customer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("viewDetailscustomer.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller of the details view and pass the customer data to it
+            ViewDetailsCustomerController controller = loader.getController();
+            controller.setCustomerData(customer);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Customer Details");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
     
     private void createTableCustomers(){
         ObservableList<Customer> customers=FXCollections.observableArrayList(Customer.getAllCustomersFromDB());
