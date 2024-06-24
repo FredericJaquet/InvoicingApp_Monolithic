@@ -394,7 +394,7 @@
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="fieldFieldName" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="5" />
-                  <FlowPane alignment="CENTER" columnHalignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="3">
+                  <FlowPane fx:id="PaneTableScheme" alignment="CENTER" columnHalignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="3">
                      <children>
                         <TableView fx:id="tableSchemeLine" editable="true" prefHeight="100.0" prefWidth="350.0">
                           <columns>
@@ -404,6 +404,9 @@
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
+                           <padding>
+                              <Insets bottom="5.0" />
+                           </padding>
                         </TableView>
                      </children>
                   </FlowPane>
@@ -414,6 +417,23 @@
             <Insets right="25.0" top="25.0" />
          </VBox.margin>
       </StackPane>
+      <HBox fx:id="boxLines" prefHeight="100.0" prefWidth="200.0" visible="false">
+         <children>
+            <TextField fx:id="fieldDescription" prefWidth="270.0" promptText="Description">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TextField>
+            <TextField fx:id="fieldDiscount" onKeyPressed="#commitLine" prefWidth="75.0" promptText="Descuento">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin>
+      </HBox>
       <StackPane>
          <children>
             <HBox fx:id="paneFootCompany" alignment="BOTTOM_RIGHT" prefHeight="250.0">
@@ -483,7 +503,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Guardar" />
+                  <Button mnemonicParsing="false" onAction="#onClicSaveFromScheme" text="Guardar" />
                </children>
             </HBox>
          </children>

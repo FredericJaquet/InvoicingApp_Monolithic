@@ -9,6 +9,7 @@ import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Phone;
+import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,15 +29,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.converter.DoubleStringConverter;
 
 
 public class ViewCreateCustomerController implements Initializable {
@@ -50,6 +48,7 @@ public class ViewCreateCustomerController implements Initializable {
     private Customer customer=new Customer();
     private ArrayList<CustomProv> companies=new ArrayList();
     private ObservableList<SchemeLine> schemeLines=FXCollections.observableArrayList();
+    private Scheme scheme=new Scheme();
     private SchemeLine line=new SchemeLine();
     
     @FXML private Label labelIntro, labelError;
@@ -58,11 +57,11 @@ public class ViewCreateCustomerController implements Initializable {
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,fieldDuedate;
     @FXML private TextField fieldPhoneNumber,fieldPhoneKind;
     @FXML private TextField fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail;
-    @FXML private TextField fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,fieldPrice,fieldFieldName;
+    @FXML private TextField fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,fieldPrice,fieldFieldName,fieldDescription, fieldDiscount;
     @FXML private CheckBox cbEurope,cbEnabled;
     @FXML private ComboBox cbCompany;
     @FXML private GridPane paneCompany, paneAddress,paneFiscalData,panePhone,paneContact,paneScheme;
-    @FXML private HBox paneFootCompany,paneFootAddress,paneFootFiscalData,paneFootPhone,paneFootContact,paneFootScheme;
+    @FXML private HBox paneFootCompany,paneFootAddress,paneFootFiscalData,paneFootPhone,paneFootContact,paneFootScheme,boxLines;
     @FXML TableView<SchemeLine> tableSchemeLine;
     @FXML TableColumn<SchemeLine,String>columnDescription;
     @FXML TableColumn<SchemeLine,Double>columnDiscount;
@@ -114,6 +113,7 @@ public class ViewCreateCustomerController implements Initializable {
         paneFiscalData.setVisible(true);
         paneFootFiscalData.setVisible(true);
         paneScheme.setVisible(false);
+        boxLines.setVisible(false);
         paneFootScheme.setVisible(false);
         
         fieldSchemeName.clear();
@@ -219,7 +219,9 @@ public class ViewCreateCustomerController implements Initializable {
         paneFootFiscalData.setVisible(false);
         
         paneScheme.setVisible(true);
+        boxLines.setVisible(true);
         paneFootScheme.setVisible(true);
+        
     }
     
     @FXML protected void onClicSaveFromPhone(){
@@ -262,6 +264,38 @@ public class ViewCreateCustomerController implements Initializable {
         fieldLastname.clear();
         fieldRole.clear();
         fieldContactEmail.clear();
+    }
+    
+    @FXML protected void onClicSaveFromScheme(){
+        customer.addScheme(scheme);
+        double price=0;
+        boolean control=true;
+        
+        scheme.setName(fieldSchemeName.getText());
+        try{
+                price=Double.parseDouble(fieldDiscount.getText());
+                scheme.setPrice(price);
+            }catch(NumberFormatException ex){
+                fieldDiscount.getStyleClass().add("error");
+                control=false;
+            }
+        scheme.setUnits(fieldUnits.getText());
+        scheme.setField(fieldFieldName.getText());
+        scheme.setSourceLanguage(fieldSourceLanguage.getText());
+        scheme.setTargetLanguage(fieldTargetLanguage.getText());
+        
+        fieldDescription.clear();
+        fieldDiscount.clear();
+        scheme=new Scheme();
+        line=new SchemeLine();
+        
+        paneScheme.setVisible(false);
+        boxLines.setVisible(false);
+        paneFootScheme.setVisible(false);
+        
+        labelIntro.setText(introCompany);
+        paneCompany.setVisible(true);
+        paneFootCompany.setVisible(true);
     }
     
     @FXML protected void onClicBackFromAddress(){
@@ -336,46 +370,32 @@ public class ViewCreateCustomerController implements Initializable {
 
     private void createTableSchemeLines(){
         
-        columnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnDescription.setOnEditCommit(event -> {
-            line = new SchemeLine();
-            line.setDescription(event.getNewValue());
-        });
-        
-        columnDiscount.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        columnDiscount.setOnEditCommit(event -> {
-            line.setDiscount(event.getNewValue());
-        });
-        
-        schemeLines.add(new SchemeLine("",0.0));
+        columnDescription.setCellValueFactory(new PropertyValueFactory<SchemeLine, String>("description"));
+        columnDiscount.setCellValueFactory(new PropertyValueFactory<SchemeLine,Double>("discount"));
         
         tableSchemeLine.setItems(schemeLines);
-        tableSchemeLine.setOnKeyPressed(event -> handleKeyEvent(event));
     }
     
-    private void handleKeyEvent(KeyEvent event) {
-        if (event.getCode() == KeyCode.TAB) {
-            int columnIndex = tableSchemeLine.getFocusModel().getFocusedCell().getColumn();
-            int rowIndex = tableSchemeLine.getFocusModel().getFocusedCell().getRow();
-            int newColumnIndex = (columnIndex + 1) % tableSchemeLine.getColumns().size();
-
-            tableSchemeLine.getSelectionModel().clearAndSelect(rowIndex, tableSchemeLine.getColumns().get(newColumnIndex));
-            tableSchemeLine.edit(rowIndex, tableSchemeLine.getColumns().get(newColumnIndex));
-            event.consume();
-        }else if (event.getCode() == KeyCode.ENTER) {
-            int rowIndex = tableSchemeLine.getFocusModel().getFocusedCell().getRow();
-            if (rowIndex < tableSchemeLine.getItems().size() - 1) {
-                tableSchemeLine.getSelectionModel().clearAndSelect(rowIndex + 1, tableSchemeLine.getColumns().get(0));
-                tableSchemeLine.edit(rowIndex + 1, tableSchemeLine.getColumns().get(0));
-            } else {
-                schemeLines.add(new SchemeLine("",0.0));
-                tableSchemeLine.getSelectionModel().clearAndSelect(rowIndex + 1, tableSchemeLine.getColumns().get(0));
-                tableSchemeLine.edit(rowIndex + 1, tableSchemeLine.getColumns().get(0));
+    @FXML private void commitLine(KeyEvent event) {
+        double discount=0;
+        boolean control=true;
+        if (event.getCode() == KeyCode.ENTER) {
+            try{
+                discount=Double.parseDouble(fieldDiscount.getText());
+            }catch(NumberFormatException ex){
+                fieldDiscount.getStyleClass().add("error");
+                control=false;
             }
-            tableSchemeLine.getSelectionModel().clearAndSelect(rowIndex + 1, tableSchemeLine.getColumns().get(0));
-            tableSchemeLine.edit(rowIndex + 1, tableSchemeLine.getColumns().get(0));
-            schemeLines.add(new SchemeLine("",0.0));
-            event.consume();
+            if(control){
+                line=new SchemeLine(fieldDescription.getText(),discount);
+                schemeLines.add(line);
+                scheme.addLine(line);
+                
+                fieldDescription.clear();
+                fieldDiscount.clear();
+                fieldDescription.requestFocus();
+            }
+            
         }
     }
 }

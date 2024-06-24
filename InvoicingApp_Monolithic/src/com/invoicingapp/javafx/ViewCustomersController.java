@@ -89,9 +89,9 @@ public class ViewCustomersController implements Initializable {
         ObservableList<Customer> customers=FXCollections.observableArrayList(Customer.getAllCustomersFromDB());
         
         columnComName.setCellValueFactory(new PropertyValueFactory<Customer, String>("comName"));
-        columnVATNbr.setCellValueFactory(new PropertyValueFactory<Customer, String>("vatNumber"));;
-        columnEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));;
-        ColumnWeb.setCellValueFactory(new PropertyValueFactory<Customer, String>("web"));;
+        columnVATNbr.setCellValueFactory(new PropertyValueFactory<Customer, String>("vatNumber"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));
+        ColumnWeb.setCellValueFactory(new PropertyValueFactory<Customer, String>("web"));
                 
         tableCustomers.setItems(customers);
     }

@@ -59,7 +59,7 @@ public class CustomProv extends Company{
     protected void addToDB(){
         ConnectionDB con=new ConnectionDB();
         String queryInsert;
-        String queryGetId="SELECT MAX(idCustomProv) FROM CustomProv";;
+        String queryGetId="SELECT MAX(idCustomProv) FROM CustomProv";
         ResultSet result=null;
         
         super.addToDB();
@@ -76,6 +76,11 @@ public class CustomProv extends Company{
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+        
+        for(int i=0;i<schemes.size();i++){
+            schemes.get(i).setIdCustomProv(idCustomProv);
+            schemes.get(i).addToDB();
+        }
         
     }
     
