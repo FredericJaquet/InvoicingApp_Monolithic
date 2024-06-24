@@ -85,24 +85,6 @@ public class ViewCustomersController implements Initializable {
         home.setCenter(detailsCustomerView);
     }
     
-    /*private void openCustomerDetails(Customer customer) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("viewDetailscustomer.fxml"));
-            Parent root = loader.load();
-
-            // Get the controller of the details view and pass the customer data to it
-            ViewDetailsCustomerController controller = loader.getController();
-            controller.setCustomerData(customer);
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Customer Details");
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-    
     private void createTableCustomers(){
         ObservableList<Customer> customers=FXCollections.observableArrayList(Customer.getAllCustomersFromDB());
         

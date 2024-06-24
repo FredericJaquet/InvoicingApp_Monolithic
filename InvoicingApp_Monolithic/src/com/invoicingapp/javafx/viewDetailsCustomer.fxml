@@ -250,7 +250,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <CheckBox fx:id="cbEurope" mnemonicParsing="false" text="CheckBox" visible="false" />
+                        <CheckBox fx:id="cbEurope" mnemonicParsing="false" visible="false" />
                      </children>
                   </StackPane>
                   <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
@@ -260,7 +260,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <CheckBox fx:id="cbEnabled" mnemonicParsing="false" text="CheckBox" visible="false" />
+                        <CheckBox fx:id="cbEnabled" mnemonicParsing="false" visible="false" />
                      </children>
                   </StackPane>
                   <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">

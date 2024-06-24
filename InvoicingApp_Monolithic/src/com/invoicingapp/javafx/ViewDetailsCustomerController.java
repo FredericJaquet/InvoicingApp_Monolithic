@@ -96,8 +96,8 @@ public class ViewDetailsCustomerController implements Initializable {
         makeLabelEditable(lbDefaultWithholding, fieldDefaultWithholding);
         makeLabelEditable(lbInvoicingMethod, fieldInvoicingMethod);
         makeLabelEditable(lbPayMethod, fieldPayMethod);
-        //makeLabelEditable(lbEurope, fieldEurope);
-        //makeLabelEditable(lbEnabled, fieldEnabled);
+        makeLabelEditable(lbEurope, cbEurope);
+        makeLabelEditable(lbEnabled, cbEnabled);
         makeLabelEditable(lbStreet, fieldStreet);
         makeLabelEditable(lbStNumber, fieldStNumber);
         makeLabelEditable(lbCity, fieldCity);
@@ -196,6 +196,22 @@ public class ViewDetailsCustomerController implements Initializable {
         });
     }
     
+    private void makeLabelEditable(Label label, CheckBox checkBox) {
+        checkBox.setVisible(false);
+
+        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                switchToCheckBox(label, checkBox);
+            }
+        });
+
+        checkBox.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                switchToLabel(label, checkBox);
+            }
+        });
+    }
+    
     private void switchToTextField(Label label, TextField textField) {
         textField.setText(label.getText());
         textField.setVisible(true);
@@ -203,10 +219,32 @@ public class ViewDetailsCustomerController implements Initializable {
         label.setVisible(false);
     }
     
+    private void switchToCheckBox(Label label, CheckBox checkBox) {
+        if(label.getText().equals("Sí")){
+            checkBox.setSelected(true);
+        }else{
+            checkBox.setSelected(false);
+        }
+        checkBox.requestFocus();
+        checkBox.setVisible(true);
+        label.setVisible(false);
+    }
+    
     private void switchToLabel(Label label, TextField textField) {
         label.setText(textField.getText());
         label.setVisible(true);
         textField.setVisible(false);
+    }
+    
+    private void switchToLabel(Label label, CheckBox checkBox) {
+        if(checkBox.isSelected()){
+            label.setText("Sí");
+        }else{
+            label.setText("No");
+        }
+        
+        label.setVisible(true);
+        checkBox.setVisible(false);
     }
 
 }

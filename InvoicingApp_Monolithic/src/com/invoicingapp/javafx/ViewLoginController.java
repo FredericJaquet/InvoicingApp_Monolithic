@@ -99,6 +99,7 @@ public class ViewLoginController implements Initializable {
             Stage stageHome=new Stage();
             stageHome.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
             stageHome.setScene(scene);
+            stageHome.setMaximized(true);
             stageHome.show();
             
             Stage stageLogin = (Stage) paneMain.getScene().getWindow();
