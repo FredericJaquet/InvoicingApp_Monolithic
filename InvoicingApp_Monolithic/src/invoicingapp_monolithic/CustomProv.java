@@ -110,6 +110,8 @@ public class CustomProv extends Company{
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+        
+        getSchemesFromDB();
     }
     
     public static ArrayList<CustomProv> getAllCustomProvFromDB(){
@@ -324,6 +326,26 @@ public class CustomProv extends Company{
     */
     public void addScheme(Scheme scheme){
         schemes.add(scheme);
+    }
+    
+    public void getSchemesFromDB(){
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        String query="SELECT idScheme FROM SchemeCustomProv WHERE idCustomProv="+idCustomProv;
+        Scheme scheme=new Scheme();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                scheme=new Scheme();
+                scheme.getFromDB(result.getInt(1));
+                schemes.add(scheme);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**

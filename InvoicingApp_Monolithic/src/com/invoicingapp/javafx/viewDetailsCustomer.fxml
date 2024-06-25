@@ -370,6 +370,26 @@
                               <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
+                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label fx:id="lbSchemeName" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="fieldSchemeName" visible="false" />
+                                 </children>
+                              </StackPane>
+                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <TextField fx:id="fieldSourceLanguage" visible="false" />
+                                    <Label fx:id="lbSourceLanguage" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
                               <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
                                     <TextField fx:id="fieldTargetlanguage" visible="false" />
@@ -410,46 +430,15 @@
                                     </Label>
                                  </children>
                               </StackPane>
-                              <TableView fx:id="TableSchemeLines" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="3" GridPane.rowSpan="4">
+                              <TableView fx:id="tableSchemeLines" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="3" GridPane.rowSpan="4">
                                 <columns>
                                   <TableColumn fx:id="columnDescription" prefWidth="250.0" text="Description" />
-                                  <TableColumn fx:id="ColumnDiscount" prefWidth="75.0" text="Discount" />
+                                  <TableColumn fx:id="columnDiscount" prefWidth="75.0" text="Discount" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                                 <children>
-                                    <Button fx:id="btnSchemeLeft" layoutX="95.0" layoutY="1.0" mnemonicParsing="false" text="&lt;" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets right="5.0" />
-                                 </GridPane.margin>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
-                                 <children>
-                                    <Button fx:id="btnSchemeRight" layoutX="2.0" layoutY="1.0" mnemonicParsing="false" text="&gt;" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets left="5.0" />
-                                 </GridPane.margin>
-                              </AnchorPane>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <TextField fx:id="fieldSourceLanguage" visible="false" />
-                                    <Label fx:id="lbSourceLanguage" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <Label fx:id="lbSchemeName" text="Label" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
                               <Label text="Nombre Esquema">
                                  <GridPane.margin>
                                     <Insets left="15.0" />
@@ -485,6 +474,26 @@
                         <Button fx:id="btnNewScheme" mnemonicParsing="false" text="Crear Esquema" visible="false" />
                      </children>
                   </StackPane>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="btnSchemeLeft" layoutX="95.0" layoutY="1.0" mnemonicParsing="false" onAction="#onPrevScheme" text="&lt;" />
+                           </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </AnchorPane>
+                        <AnchorPane>
+                           <children>
+                              <Button fx:id="btnSchemeRight" layoutX="2.0" layoutY="1.0" mnemonicParsing="false" onAction="#onNextScheme" text="&gt;" />
+                           </children>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox>

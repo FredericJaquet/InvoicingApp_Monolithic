@@ -12,13 +12,17 @@ import invoicingapp_monolithic.SchemeLine;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -48,7 +52,9 @@ public class ViewDetailsCustomerController implements Initializable {
     @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
             btnSchemeLeft,btnSchemeRight, btnNewScheme;
     @FXML GridPane gridContacts,gridPhones,gridScheme;
-    @FXML TableView<SchemeLine> TableSchemeLines;
+    @FXML TableView<SchemeLine> tableSchemeLines;
+    @FXML TableColumn<SchemeLine,String> columnDescription;
+    @FXML TableColumn<SchemeLine,Double> columnDiscount;
     
     public void initData(Customer customer){
         this.customer=customer;
@@ -124,6 +130,16 @@ public class ViewDetailsCustomerController implements Initializable {
         makeLabelEditable(lbContactEmail, fieldContactEmail);
         makeLabelEditable(lbPhoneNumber, fieldPhoneNumber);
         makeLabelEditable(lbKind, fieldKind);
+    }
+    
+    @FXML private void onNextScheme(){
+        iSchemes++;
+        showSchemes();
+    }
+    
+    @FXML private void onPrevScheme(){
+        iSchemes--;
+        showSchemes();
     }
     
     @FXML protected void onNextContact(){
@@ -203,17 +219,28 @@ public class ViewDetailsCustomerController implements Initializable {
         if(iSchemes<schemes.size()){
             gridScheme.setDisable(false);
             btnNewScheme.setVisible(false);
-            fieldSchemeName.setText(schemes.get(iSchemes).getName());
-            fieldSourceLanguage.setText(schemes.get(iSchemes).getSourceLanguage());
-            fieldTargetLanguage.setText(schemes.get(iSchemes).getTargetLanguage());
-            fieldPrice.setText(String.valueOf(schemes.get(iSchemes).getPrice()));
-            fieldUnits.setText(schemes.get(iSchemes).getUnits());
-            fieldFieldName.setText(schemes.get(iSchemes).getField());
+            lbSchemeName.setText(schemes.get(iSchemes).getName());
+            lbSourceLanguage.setText(schemes.get(iSchemes).getSourceLanguage());
+            lbTargetLanguage.setText(schemes.get(iSchemes).getTargetLanguage());
+            lbPrice.setText(String.valueOf(schemes.get(iSchemes).getPrice()));
+            lbUnits.setText(schemes.get(iSchemes).getUnits());
+            lbFieldName.setText(schemes.get(iSchemes).getField());
+            createTableSchemeLines(schemes.get(iSchemes));
         }else{
             gridScheme.setDisable(true);
             btnNewScheme.setVisible(true);
             btnSchemeRight.setVisible(false);
         }
+    }
+    
+    private void createTableSchemeLines(Scheme scheme){
+        ObservableList<SchemeLine> lines=FXCollections.observableArrayList(scheme.getLines());
+        
+        columnDescription.setCellValueFactory(new PropertyValueFactory<SchemeLine, String>("description"));
+        columnDiscount.setCellValueFactory(new PropertyValueFactory<SchemeLine,Double>("discount"));
+        
+        tableSchemeLines.setItems(lines);
+        
     }
 
     private void makeLabelEditable(Label label, TextField textField) {
