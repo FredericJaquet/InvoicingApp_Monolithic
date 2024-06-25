@@ -7,6 +7,8 @@ package com.invoicingapp.javafx;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Phone;
+import invoicingapp_monolithic.Scheme;
+import invoicingapp_monolithic.SchemeLine;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -15,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -26,26 +29,32 @@ public class ViewDetailsCustomerController implements Initializable {
     private Customer customer=new Customer();
     private ArrayList<Phone> phones=new ArrayList();
     private ArrayList<ContactPerson> contacts=new ArrayList();
-    private int iContacts=0,iPhones=0;
+    private ArrayList<Scheme> schemes=new ArrayList();
+    private int iContacts=0,iPhones=0,iSchemes=0;
     
     @FXML Label lbComName,lbLegalName,lbWeb,lbCompEmail,lbVATNumber,lbDefaultVAT,
             lbDuedate,lbDefaultWithholding,lbInvoicingMethod,lbPayMethod,lbEurope,
             lbEnabled,lbStreet,lbStNumber,lbCity,lbState,lbApt,lbCP,lbCountry,
             lbFirstname,lbMiddlename,lbLastname,lbRole,lbContactEmail,
-            lbPhoneNumber,lbKind;
+            lbPhoneNumber,lbKind,lbSchemeName,lbSourceLanguage,lbTargetLanguage,
+            lbPrice,lbUnits,lbFieldName;
     @FXML TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
             fieldDuedate,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,
             fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
             fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
-            fieldPhoneNumber,fieldKind;
+            fieldPhoneNumber,fieldKind,fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,
+            fieldPrice,fieldUnits,fieldFieldName;
     @FXML CheckBox cbEurope,cbEnabled;
-    @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone;
-    @FXML GridPane gridContacts,gridPhones;
+    @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
+            btnSchemeLeft,btnSchemeRight, btnNewScheme;
+    @FXML GridPane gridContacts,gridPhones,gridScheme;
+    @FXML TableView<SchemeLine> TableSchemeLines;
     
     public void initData(Customer customer){
         this.customer=customer;
         contacts=customer.getContacts();
         phones=customer.getPhones();
+        schemes=customer.getSchemes();
         
         //Company data
         lbComName.setText(customer.getComName());
@@ -82,6 +91,9 @@ public class ViewDetailsCustomerController implements Initializable {
         
         //Phone data
         showPhones();
+        
+        //Scheme
+        showSchemes();
     }
     
     @Override
@@ -177,6 +189,30 @@ public class ViewDetailsCustomerController implements Initializable {
             gridPhones.setDisable(true);
             btnNewPhone.setVisible(true);
             btnPhoneRight.setVisible(false);
+        }
+    }
+    
+    private void showSchemes(){
+        btnSchemeLeft.setVisible(true);
+        btnSchemeRight.setVisible(true);
+        
+        if(iSchemes==0){
+            btnSchemeLeft.setVisible(false);
+        }
+        
+        if(iSchemes<schemes.size()){
+            gridScheme.setDisable(false);
+            btnNewScheme.setVisible(false);
+            fieldSchemeName.setText(schemes.get(iSchemes).getName());
+            fieldSourceLanguage.setText(schemes.get(iSchemes).getSourceLanguage());
+            fieldTargetLanguage.setText(schemes.get(iSchemes).getTargetLanguage());
+            fieldPrice.setText(String.valueOf(schemes.get(iSchemes).getPrice()));
+            fieldUnits.setText(schemes.get(iSchemes).getUnits());
+            fieldFieldName.setText(schemes.get(iSchemes).getField());
+        }else{
+            gridScheme.setDisable(true);
+            btnNewScheme.setVisible(true);
+            btnSchemeRight.setVisible(false);
         }
     }
 

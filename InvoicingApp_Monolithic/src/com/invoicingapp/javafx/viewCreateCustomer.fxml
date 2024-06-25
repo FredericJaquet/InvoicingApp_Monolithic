@@ -37,7 +37,7 @@
       </Label>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <GridPane fx:id="paneCompany" vgap="25.0">
+            <GridPane fx:id="paneCompany" vgap="25.0" visible="false">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -339,7 +339,7 @@
                   </FlowPane>
                </children>
             </GridPane>
-            <GridPane fx:id="paneScheme" layoutX="10.0" layoutY="10.0" vgap="25.0" visible="false">
+            <GridPane fx:id="paneScheme" layoutX="10.0" layoutY="10.0" vgap="25.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -366,6 +366,12 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
+                  <Label text="Precio Base" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldPrice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Idioma Origen" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets top="15.0" />
@@ -376,12 +382,6 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label text="Precio Base" GridPane.columnIndex="1">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldPrice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Idioma Destino" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets top="15.0" />
@@ -393,7 +393,15 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldFieldName" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="5" />
+                  <TextField fx:id="fieldFieldName" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin></TextField>
+                  <Label text="Unidades" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
                   <FlowPane fx:id="PaneTableScheme" alignment="CENTER" columnHalignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="3">
                      <children>
                         <TableView fx:id="tableSchemeLine" editable="true" prefHeight="100.0" prefWidth="350.0">
@@ -410,6 +418,7 @@
                         </TableView>
                      </children>
                   </FlowPane>
+                  <TextField fx:id="fieldUnits" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
             </GridPane>
          </children>

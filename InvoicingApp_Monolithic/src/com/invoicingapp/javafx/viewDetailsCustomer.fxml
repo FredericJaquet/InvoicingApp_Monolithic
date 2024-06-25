@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -20,321 +22,471 @@
    <content>
       <HBox spacing="50.0">
          <children>
-            <GridPane>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="130.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="250.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="25.0" prefWidth="100.0" />
-                  <ColumnConstraints />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+            <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label text="Nombre comercial">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Nombre fiscal" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="CIF" GridPane.columnIndex="2">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Email" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Web" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="IVA" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Calle" GridPane.rowIndex="7">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Número" GridPane.rowIndex="8">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Piso" GridPane.columnIndex="2" GridPane.rowIndex="8">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="CP" GridPane.columnIndex="2" GridPane.rowIndex="9">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Ciudad" GridPane.rowIndex="9">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Provincia" GridPane.rowIndex="10">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="País" GridPane.columnIndex="2" GridPane.rowIndex="10">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Retención" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                     <padding>
-                        <Insets left="15.0" />
-                     </padding>
-                  </Label>
-                  <Label prefHeight="28.0" prefWidth="45.0" text="Europa" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Habilitado" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6">
-                     <GridPane.margin>
-                        <Insets left="15.0" right="15.0" />
-                     </GridPane.margin>
-                  </Separator>
-                  <Label text="Envío de la factura" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Método de pago" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label text="Plazo de pago" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets left="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                  <GridPane>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="125.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="250.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="125.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <Label fx:id="lbComName" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
+                        <Label text="Nombre comercial">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
                         </Label>
-                        <TextField fx:id="fieldComName" visible="false" />
+                        <Label text="Nombre fiscal" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="CIF" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Email" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Web" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="IVA" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Calle" GridPane.rowIndex="7">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Número" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Piso" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="CP" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Ciudad" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Provincia" GridPane.rowIndex="10">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="País" GridPane.columnIndex="2" GridPane.rowIndex="10">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Retención" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="28.0" prefWidth="45.0" text="Europa" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Habilitado" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </Separator>
+                        <Label text="Envío de la factura" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Método de pago" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Plazo de pago" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <Label fx:id="lbComName" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldComName" visible="false" />
+                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="lbLegalName" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="fieldLegalName" visible="false" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label fx:id="lbWeb" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldWeb" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <Label fx:id="lbCompEmail" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldCompEmail" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
+                           <children>
+                              <Label fx:id="lbVATNumber" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldVATNumber" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <children>
+                              <Label fx:id="lbDefaultVAT" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldDefaultVAT" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <children>
+                              <Label fx:id="lbDuedate" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldDuedate" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <children>
+                              <Label fx:id="lbDefaultWithholding" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldDefaultWithholding" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <Label fx:id="lbInvoicingMethod" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldInvoicingMethod" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <children>
+                              <Label fx:id="lbPayMethod" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldPayMethod" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <children>
+                              <Label fx:id="lbEurope" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox fx:id="cbEurope" mnemonicParsing="false" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                           <children>
+                              <Label fx:id="lbEnabled" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox fx:id="cbEnabled" mnemonicParsing="false" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                           <children>
+                              <Label fx:id="lbStreet" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldStreet" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <children>
+                              <Label fx:id="lbStNumber" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldStNumber" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <children>
+                              <Label fx:id="lbCity" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldCity" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                           <children>
+                              <Label fx:id="lbState" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldState" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                           <children>
+                              <Label fx:id="lbApt" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldApt" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                           <children>
+                              <Label fx:id="lbCP" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldCP" visible="false" />
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="10">
+                           <children>
+                              <Label fx:id="lbCountry" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldCountry" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Separator prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="11" />
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label fx:id="lbFiscalName" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldFiscalName" visible="false" />
+                           </children>
+                        </StackPane>
                      </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  </GridPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="lbLegalName" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldLegalName" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <children>
-                        <Label fx:id="lbWeb" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldWeb" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <children>
-                        <Label fx:id="lbCompEmail" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldCompEmail" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
-                     <children>
-                        <Label fx:id="lbVATNumber" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldVATNumber" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <children>
-                        <Label fx:id="lbDefaultVAT" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldDefaultVAT" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                     <children>
-                        <Label fx:id="lbDuedate" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldDuedate" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <children>
-                        <Label fx:id="lbDefaultWithholding" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldDefaultWithholding" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <children>
-                        <Label fx:id="lbInvoicingMethod" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldInvoicingMethod" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <children>
-                        <Label fx:id="lbPayMethod" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldPayMethod" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                     <children>
-                        <Label fx:id="lbEurope" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <CheckBox fx:id="cbEurope" mnemonicParsing="false" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                     <children>
-                        <Label fx:id="lbEnabled" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <CheckBox fx:id="cbEnabled" mnemonicParsing="false" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7">
-                     <children>
-                        <Label fx:id="lbStreet" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldStreet" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                     <children>
-                        <Label fx:id="lbStNumber" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldStNumber" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                     <children>
-                        <Label fx:id="lbCity" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldCity" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                     <children>
-                        <Label fx:id="lbState" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldState" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
-                     <children>
-                        <Label fx:id="lbApt" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldApt" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
-                     <children>
-                        <Label fx:id="lbCP" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldCP" visible="false" />
-                     </children>
-                  </StackPane>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="10">
-                     <children>
-                        <Label fx:id="lbCountry" text="Label">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="fieldCountry" visible="false" />
+                        <GridPane fx:id="gridScheme">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <TextField fx:id="fieldTargetlanguage" visible="false" />
+                                    <Label fx:id="lbTargetLanguage" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
+                                 <children>
+                                    <TextField fx:id="fieldPrice" visible="false" />
+                                    <Label fx:id="lbPrice" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                 <children>
+                                    <TextField fx:id="fieldUnits" visible="false" />
+                                    <Label fx:id="lbUnits" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                 <children>
+                                    <TextField fx:id="fieldFieldName" visible="false" />
+                                    <Label fx:id="lbFieldName" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                              <TableView fx:id="TableSchemeLines" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="3" GridPane.rowSpan="4">
+                                <columns>
+                                  <TableColumn fx:id="columnDescription" prefWidth="250.0" text="Description" />
+                                  <TableColumn fx:id="ColumnDiscount" prefWidth="75.0" text="Discount" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                                 <children>
+                                    <Button fx:id="btnSchemeLeft" layoutX="95.0" layoutY="1.0" mnemonicParsing="false" text="&lt;" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets right="5.0" />
+                                 </GridPane.margin>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                                 <children>
+                                    <Button fx:id="btnSchemeRight" layoutX="2.0" layoutY="1.0" mnemonicParsing="false" text="&gt;" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin>
+                              </AnchorPane>
+                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <TextField fx:id="fieldSourceLanguage" visible="false" />
+                                    <Label fx:id="lbSourceLanguage" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                              <Label fx:id="lbSchemeName" text="Label" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Nombre Esquema">
+                                 <GridPane.margin>
+                                    <Insets left="15.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Idioma Origen" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="15.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Idioma Destino" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="15.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Precio Base" GridPane.columnIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="15.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Unidades" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="15.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Sector" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="15.0" />
+                                 </GridPane.margin>
+                              </Label>
+                           </children>
+                        </GridPane>
+                        <Button fx:id="btnNewScheme" mnemonicParsing="false" text="Crear Esquema" visible="false" />
                      </children>
                   </StackPane>
                </children>
-            </GridPane>
+            </VBox>
             <VBox>
                <children>
                   <StackPane>

@@ -57,7 +57,7 @@ public class ViewCreateCustomerController implements Initializable {
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,fieldDuedate;
     @FXML private TextField fieldPhoneNumber,fieldPhoneKind;
     @FXML private TextField fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail;
-    @FXML private TextField fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,fieldPrice,fieldFieldName,fieldDescription, fieldDiscount;
+    @FXML private TextField fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,fieldPrice,fieldFieldName,fieldDescription, fieldDiscount,fieldUnits;
     @FXML private CheckBox cbEurope,cbEnabled;
     @FXML private ComboBox cbCompany;
     @FXML private GridPane paneCompany, paneAddress,paneFiscalData,panePhone,paneContact,paneScheme;
