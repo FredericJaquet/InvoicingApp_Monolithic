@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="paneDetailCustomer" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewDetailsCustomerController">
+<ScrollPane fx:id="paneDetailsCustomer" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewDetailsCustomerController">
    <content>
       <HBox spacing="50.0">
          <children>
@@ -128,11 +128,6 @@
                               <Insets left="15.0" />
                            </GridPane.margin>
                         </Label>
-                        <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </Separator>
                         <Label text="Envío de la factura" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets left="15.0" />
@@ -148,6 +143,11 @@
                               <Insets left="15.0" />
                            </GridPane.margin>
                         </Label>
+                        <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </Separator>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <Label fx:id="lbComName" text="Label">
@@ -156,16 +156,16 @@
                                  </font>
                               </Label>
                               <TextField fx:id="fieldComName" visible="false" />
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Label fx:id="lbLegalName" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldLegalName" visible="false" />
-                                 </children>
-                              </StackPane>
+                           </children>
+                        </StackPane>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label fx:id="lbLegalName" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldLegalName" visible="false" />
                            </children>
                         </StackPane>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -339,16 +339,6 @@
                            </children>
                         </StackPane>
                         <Separator prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="11" />
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <Label fx:id="lbFiscalName" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldFiscalName" visible="false" />
-                           </children>
-                        </StackPane>
                      </children>
                   </GridPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -392,7 +382,7 @@
                               </StackPane>
                               <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <TextField fx:id="fieldTargetlanguage" visible="false" />
+                                    <TextField fx:id="fieldTargetLanguage" visible="false" />
                                     <Label fx:id="lbTargetLanguage" text="Label">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
@@ -471,7 +461,7 @@
                               </Label>
                            </children>
                         </GridPane>
-                        <Button fx:id="btnNewScheme" mnemonicParsing="false" text="Crear Esquema" visible="false" />
+                        <Button fx:id="btnNewScheme" mnemonicParsing="false" onAction="#onClicAddScheme" text="Crear Esquema" visible="false" />
                      </children>
                   </StackPane>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
@@ -611,7 +601,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </StackPane.margin>
                         </GridPane>
-                        <Button fx:id="btnNewContact" mnemonicParsing="false" text="Crear Contacto" visible="false" />
+                        <Button fx:id="btnNewContact" mnemonicParsing="false" onAction="#onClicAddContact" text="Crear Contacto" visible="false" />
                      </children>
                   </StackPane>
                   <HBox>
@@ -684,7 +674,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </GridPane>
-                        <Button fx:id="btnNewPhone" mnemonicParsing="false" text="Crear Teléfono" visible="false" />
+                        <Button fx:id="btnNewPhone" mnemonicParsing="false" onAction="#onClicAddPhone" text="Crear Teléfono" visible="false" />
                      </children>
                   </StackPane>
                   <HBox>

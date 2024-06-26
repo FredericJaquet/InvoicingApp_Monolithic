@@ -64,7 +64,7 @@ public class CustomProv extends Company{
         
         super.addToDB();
         
-        queryInsert="INSERT INTO CustomProv (defaultVAT, defaultWithholding, enabled, europe, idCompany) values("+defaultVAT+","+defaultWithholding+","+europe+","+enabled+","+getIdCompany()+")";
+        queryInsert="INSERT INTO CustomProv (defaultVAT, defaultWithholding, europe, enabled, idCompany) values("+defaultVAT+","+defaultWithholding+","+europe+","+enabled+","+getIdCompany()+")";
         
         con.openConnection();
         con.noReturnQuery(queryInsert);

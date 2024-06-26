@@ -11,14 +11,20 @@ import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -33,6 +39,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -41,8 +48,6 @@ public class ViewCreateCustomerController implements Initializable {
 
     private String introCompany="Datos de la Empresa";
     private String introAddress="Dirección";
-    private String introContact="Persona de contacto";
-    private String introPhone="Teléfono de contacto";
     private String introFiscalData="Datos fiscales";
     private String introScheme="Esquema de facturación";
     private Customer customer=new Customer();
@@ -50,27 +55,21 @@ public class ViewCreateCustomerController implements Initializable {
     private ObservableList<SchemeLine> schemeLines=FXCollections.observableArrayList();
     private Scheme scheme=new Scheme();
     private SchemeLine line=new SchemeLine();
+    private Stage stage;
     
     @FXML private Label labelIntro, labelError;
     @FXML private TextField fieldVAT,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
     @FXML private TextField fieldStreet,fieldStNumber,fieldApt,fieldCP,fieldCity,fieldState,fieldCountry;
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,fieldDuedate;
-    @FXML private TextField fieldPhoneNumber,fieldPhoneKind;
-    @FXML private TextField fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail;
-    @FXML private TextField fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,fieldPrice,fieldFieldName,fieldDescription, fieldDiscount,fieldUnits;
     @FXML private CheckBox cbEurope,cbEnabled;
     @FXML private ComboBox cbCompany;
-    @FXML private GridPane paneCompany, paneAddress,paneFiscalData,panePhone,paneContact,paneScheme;
-    @FXML private HBox paneFootCompany,paneFootAddress,paneFootFiscalData,paneFootPhone,paneFootContact,paneFootScheme,boxLines;
-    @FXML TableView<SchemeLine> tableSchemeLine;
-    @FXML TableColumn<SchemeLine,String>columnDescription;
-    @FXML TableColumn<SchemeLine,Double>columnDiscount;
+    @FXML private GridPane paneCompany, paneAddress,paneFiscalData;
+    @FXML private HBox paneFootCompany,paneFootAddress,paneFootFiscalData;
+    @FXML private VBox paneCreateCustomer;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        companies=CustomProv.getAllCustomProvFromDB();
-        createTableSchemeLines();
-        
+        companies=CustomProv.getAllCustomProvFromDB();        
         labelIntro.setText(introCompany);
     }
     
@@ -78,49 +77,6 @@ public class ViewCreateCustomerController implements Initializable {
         Button source=(Button)e.getSource();
         Stage stage=(Stage)source.getScene().getWindow();
         stage.close();
-    }
-    
-    @FXML protected void onClicCancelFromPhone(){
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        panePhone.setVisible(false);
-        paneFootPhone.setVisible(false);
-        
-        fieldPhoneNumber.clear();
-        fieldPhoneKind.clear();
-    }
-    
-    @FXML protected void onClicCancelFromContact(){
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        paneContact.setVisible(false);
-        paneFootContact.setVisible(false);
-        
-        fieldFirstname.clear();
-        fieldMiddlename.clear();
-        fieldLastname.clear();
-        fieldRole.clear();
-        fieldContactEmail.clear();
-    }
-    
-    @FXML protected void onClicCancelFromScheme(){
-        labelIntro.setText(introFiscalData);
-        
-        paneFiscalData.setVisible(true);
-        paneFootFiscalData.setVisible(true);
-        paneScheme.setVisible(false);
-        boxLines.setVisible(false);
-        paneFootScheme.setVisible(false);
-        
-        fieldSchemeName.clear();
-        fieldSourceLanguage.clear();
-        fieldTargetLanguage.clear();
-        fieldPrice.clear();
-        fieldFieldName.clear();
     }
     
     @FXML protected void onClicNextFromCompany(){
@@ -153,9 +109,8 @@ public class ViewCreateCustomerController implements Initializable {
         paneFootFiscalData.setVisible(true);
     }
     
-    @FXML protected void onClicSaveFromFiscalData(ActionEvent e){
-        Button source=(Button)e.getSource();
-        Stage stage=(Stage)source.getScene().getWindow();
+    @FXML protected void onClicSaveFromFiscalData(){
+        stage=(Stage)paneCreateCustomer.getScene().getWindow();
         double defaultVAT=0,defaultWithholding=0;
         int duedate=0;
         boolean control=true;
@@ -196,106 +151,96 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicAddContact(){
-        labelIntro.setText(introContact);
-        paneCompany.setVisible(false);
-        paneFootCompany.setVisible(false);
+        ContactPerson contact=new ContactPerson();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        ViewNewContactController controller=null;
         
-        paneContact.setVisible(true);
-        paneFootContact.setVisible(true);
+        loader.setLocation(getClass().getResource("viewNewContact.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(contact);
+        customer.addContactPerson(contact);
+        
+        scene=new Scene(root);
+        Stage viewNewContact=new Stage();
+        viewNewContact.setScene(scene);
+        viewNewContact.show();
+        
+        stage=(Stage)paneCreateCustomer.getScene().getWindow();
+        viewNewContact.setOnHiding(event -> {
+                stage.show();
+            });
+        
+        stage.close();
     }
     
     @FXML protected void onClicAddPhone(){
-        labelIntro.setText(introPhone);
-        paneCompany.setVisible(false);
-        paneFootCompany.setVisible(false);
+        Phone phone=new Phone();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        ViewNewPhoneController controller=null;
         
-        panePhone.setVisible(true);
-        paneFootPhone.setVisible(true);
+        loader.setLocation(getClass().getResource("viewNewPhone.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(phone);
+        customer.addPhone(phone);
+        
+        scene=new Scene(root);
+        Stage viewNewPhone=new Stage();
+        viewNewPhone.setScene(scene);
+        viewNewPhone.show();
+        
+        stage=(Stage)paneCreateCustomer.getScene().getWindow();
+        viewNewPhone.setOnHiding(event -> {
+                stage.show();
+            });
+        
+        stage.close();
     }
     
     @FXML protected void onClicAddScheme(){
-        labelIntro.setText(introScheme);
-        paneFiscalData.setVisible(false);
-        paneFootFiscalData.setVisible(false);
+        Scheme scheme=new Scheme();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        ViewNewSchemeController controller=null;
         
-        paneScheme.setVisible(true);
-        boxLines.setVisible(true);
-        paneFootScheme.setVisible(true);
+        loader.setLocation(getClass().getResource("viewNewScheme.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-    }
-    
-    @FXML protected void onClicSaveFromPhone(){
-        Phone phone=new Phone();
-        
-        phone.setPhoneNumber(fieldPhoneNumber.getText());
-        phone.setKind(fieldPhoneKind.getText());
-        
-        customer.addPhone(phone);
-        
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        panePhone.setVisible(false);
-        paneFootPhone.setVisible(false);
-        fieldPhoneNumber.clear();
-        fieldPhoneKind.clear();
-    }
-    
-    @FXML protected void onClicSaveFromContact(){
-        ContactPerson contact=new ContactPerson();
-        
-        contact.setFirstname(fieldFirstname.getText());
-        contact.setMiddlename(fieldMiddlename.getText());
-        contact.setLastname(fieldLastname.getText());
-        contact.setRole(fieldRole.getText());
-        contact.setEmail(fieldContactEmail.getText());
-        
-        customer.addContactPerson(contact);
-        
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        paneContact.setVisible(false);
-        paneFootContact.setVisible(false);
-        fieldFirstname.clear();
-        fieldMiddlename.clear();
-        fieldLastname.clear();
-        fieldRole.clear();
-        fieldContactEmail.clear();
-    }
-    
-    @FXML protected void onClicSaveFromScheme(){
+        controller=loader.getController();
+        controller.initData(scheme);
         customer.addScheme(scheme);
-        double price=0;
-        boolean control=true;
         
-        scheme.setName(fieldSchemeName.getText());
-        try{
-                price=Double.parseDouble(fieldDiscount.getText());
-                scheme.setPrice(price);
-            }catch(NumberFormatException ex){
-                fieldDiscount.getStyleClass().add("error");
-                control=false;
-            }
-        scheme.setUnits(fieldUnits.getText());
-        scheme.setField(fieldFieldName.getText());
-        scheme.setSourceLanguage(fieldSourceLanguage.getText());
-        scheme.setTargetLanguage(fieldTargetLanguage.getText());
+        scene=new Scene(root);
+        Stage viewNewScheme=new Stage();
+        viewNewScheme.setScene(scene);
+        viewNewScheme.show();
         
-        fieldDescription.clear();
-        fieldDiscount.clear();
-        scheme=new Scheme();
-        line=new SchemeLine();
+        stage=(Stage)paneCreateCustomer.getScene().getWindow();
+        viewNewScheme.setOnHiding(event -> {
+                stage.show();
+            });
         
-        paneScheme.setVisible(false);
-        boxLines.setVisible(false);
-        paneFootScheme.setVisible(false);
-        
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
+        stage.close();
     }
     
     @FXML protected void onClicBackFromAddress(){
@@ -367,36 +312,7 @@ public class ViewCreateCustomerController implements Initializable {
         customer.setIdCompany(customProv.getIdCompany());
         customer.getAddress().setIdAddress(customProv.getAddress().getIdAddress());   
     }
-
-    private void createTableSchemeLines(){
-        
-        columnDescription.setCellValueFactory(new PropertyValueFactory<SchemeLine, String>("description"));
-        columnDiscount.setCellValueFactory(new PropertyValueFactory<SchemeLine,Double>("discount"));
-        
-        tableSchemeLine.setItems(schemeLines);
-    }
     
-    @FXML private void commitLine(KeyEvent event) {
-        double discount=0;
-        boolean control=true;
-        if (event.getCode() == KeyCode.ENTER) {
-            try{
-                discount=Double.parseDouble(fieldDiscount.getText());
-            }catch(NumberFormatException ex){
-                fieldDiscount.getStyleClass().add("error");
-                control=false;
-            }
-            if(control){
-                line=new SchemeLine(fieldDescription.getText(),discount);
-                schemeLines.add(line);
-                scheme.addLine(line);
-                
-                fieldDescription.clear();
-                fieldDiscount.clear();
-                fieldDescription.requestFocus();
-            }
-            
-        }
-    }
 }
+
     

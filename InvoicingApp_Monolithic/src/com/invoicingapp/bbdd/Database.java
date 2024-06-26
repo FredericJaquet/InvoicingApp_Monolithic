@@ -25,7 +25,6 @@ public class Database {
     protected static final String DB_PASSWORD="Frederic";
     
     public static final String CREATETABLEFILEPATH="ScriptCreateTables.sql";
-    public static final String CREATEFUNCTIONFILEPATH="ScriptFunctions.sql";
     
     public static void createUser(){
 
@@ -104,52 +103,5 @@ public class Database {
         }
         con.closeConnection();
     }
- 
-    /*public static void createFunctions(){
-        ConnectionDB con=new ConnectionDB();
-        ArrayList<String> blocks = new ArrayList<>();
-        BufferedReader reader=null;
-        StringBuilder sql=null;
-        String line=null;
-        int index;
-        
-        con.openConnection();
-        try{ 
-            reader=new BufferedReader(new FileReader(CREATEFUNCTIONFILEPATH));
-            sql=new StringBuilder();
-            
-            while ((line = reader.readLine()) != null) {
-                if (line.trim().isEmpty() || line.trim().startsWith("--") || line.trim().startsWith("#")) {
-                    continue; // Ignora líneas vacías y comentarios
-                }
-
-                sql.append(line).append("\n");
-
-                if (line.trim().endsWith("$")) {
-                    // Eliminar el delimitador y ejecutar el bloque
-                    String query = sql.toString().replace("$", "");
-                    con.getResultSet(query);
-                    System.out.println("Executed: " + query);
-                    
-                    sql.setLength(0); // Limpia el StringBuilder para la próxima instrucción
-                }
-            }
-
-            System.out.println("Script executed successfully.");
-
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
- 
-        con.closeConnection();
-    }*/
-    
-    /*public static void runScript(String scriptPath){
-        ConnectionDB con=new ConnectionDB();
-        
-        con.openConnection();
-        con.runScript(scriptPath);
-        con.closeConnection();
-    }*/
     
 }

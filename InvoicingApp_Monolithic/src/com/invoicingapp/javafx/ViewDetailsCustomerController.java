@@ -9,16 +9,23 @@ import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +33,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 
 public class ViewDetailsCustomerController implements Initializable {
@@ -52,6 +60,7 @@ public class ViewDetailsCustomerController implements Initializable {
     @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
             btnSchemeLeft,btnSchemeRight, btnNewScheme;
     @FXML GridPane gridContacts,gridPhones,gridScheme;
+    @FXML ScrollPane paneDetailsCustomer;
     @FXML TableView<SchemeLine> tableSchemeLines;
     @FXML TableColumn<SchemeLine,String> columnDescription;
     @FXML TableColumn<SchemeLine,Double> columnDiscount;
@@ -130,14 +139,20 @@ public class ViewDetailsCustomerController implements Initializable {
         makeLabelEditable(lbContactEmail, fieldContactEmail);
         makeLabelEditable(lbPhoneNumber, fieldPhoneNumber);
         makeLabelEditable(lbKind, fieldKind);
+        makeLabelEditable(lbSchemeName, fieldSchemeName);
+        makeLabelEditable(lbSourceLanguage, fieldSourceLanguage);
+        makeLabelEditable(lbTargetLanguage, fieldTargetLanguage);
+        makeLabelEditable(lbPrice, fieldPrice);
+        makeLabelEditable(lbUnits, fieldUnits);
+        makeLabelEditable(lbFieldName, fieldFieldName);
     }
     
-    @FXML private void onNextScheme(){
+    @FXML protected void onNextScheme(){
         iSchemes++;
         showSchemes();
     }
     
-    @FXML private void onPrevScheme(){
+    @FXML protected void onPrevScheme(){
         iSchemes--;
         showSchemes();
     }
@@ -160,6 +175,100 @@ public class ViewDetailsCustomerController implements Initializable {
     @FXML protected void onPrevPhone(){
         iPhones--;
         showPhones();
+    }
+    
+    @FXML protected void onClicAddContact(){
+        ContactPerson contact=new ContactPerson();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        ViewNewContactController controller=null;
+        
+        loader.setLocation(getClass().getResource("viewNewContact.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(contact);
+        customer.addContactPerson(contact);
+        
+        scene=new Scene(root);
+        Stage viewNewContact=new Stage();
+        viewNewContact.setScene(scene);
+        viewNewContact.show();
+        
+        viewNewContact.setOnHiding(event -> {
+                paneDetailsCustomer.getParent().setDisable(false);
+                showContacts();
+            });
+        
+        paneDetailsCustomer.getParent().setDisable(true);
+    }
+    
+    @FXML protected void onClicAddPhone(){
+        Phone phone=new Phone();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        Stage stage;
+        ViewNewPhoneController controller=null;
+        
+        loader.setLocation(getClass().getResource("viewNewPhone.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(phone);
+        customer.addPhone(phone);
+        
+        scene=new Scene(root);
+        Stage viewNewPhone=new Stage();
+        viewNewPhone.setScene(scene);
+        viewNewPhone.show();
+        
+        viewNewPhone.setOnHiding(event -> {
+                paneDetailsCustomer.getParent().setDisable(false);
+                showPhones();
+            });
+        
+        paneDetailsCustomer.getParent().setDisable(true);
+    }
+    
+    @FXML protected void onClicAddScheme(){
+        Scheme scheme=new Scheme();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        ViewNewSchemeController controller=null;
+        
+        loader.setLocation(getClass().getResource("viewNewScheme.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(scheme);
+        customer.addScheme(scheme);
+        
+        scene=new Scene(root);
+        Stage viewNewScheme=new Stage();
+        viewNewScheme.setScene(scene);
+        viewNewScheme.show();
+        
+        viewNewScheme.setOnHiding(event -> {
+                paneDetailsCustomer.getParent().setDisable(false);
+                showSchemes();
+            });
+        
+        paneDetailsCustomer.getParent().setDisable(true);
     }
     
     private void showContacts(){
@@ -297,6 +406,8 @@ public class ViewDetailsCustomerController implements Initializable {
         label.setText(textField.getText());
         label.setVisible(true);
         textField.setVisible(false);
+        
+        
     }
     
     private void switchToLabel(Label label, CheckBox checkBox) {

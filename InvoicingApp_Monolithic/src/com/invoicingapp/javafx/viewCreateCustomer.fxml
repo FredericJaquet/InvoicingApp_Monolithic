@@ -5,8 +5,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -37,7 +35,7 @@
       </Label>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <GridPane fx:id="paneCompany" vgap="25.0" visible="false">
+            <GridPane fx:id="paneCompany" vgap="25.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -185,86 +183,6 @@
                   <TextField fx:id="fieldCountry" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                </children>
             </GridPane>
-            <GridPane fx:id="paneContact" visible="false">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label text="Nombre" />
-                  <TextField fx:id="fieldFirstname" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Primer Apellido" GridPane.rowIndex="2" />
-                  <TextField fx:id="fieldMiddlename" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Segundo Apellido" GridPane.rowIndex="4" />
-                  <TextField fx:id="fieldLastname" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Función" GridPane.columnIndex="1" />
-                  <TextField fx:id="fieldRole" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="fieldContactEmail" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-               </children>
-            </GridPane>
-            <GridPane fx:id="panePhone" layoutX="10.0" layoutY="10.0" visible="false">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label text="Teléfono" />
-                  <TextField fx:id="fieldPhoneNumber" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Descripción" GridPane.columnIndex="1" />
-                  <TextField fx:id="fieldPhoneKind" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </TextField>
-               </children>
-            </GridPane>
             <GridPane fx:id="paneFiscalData" layoutX="10.0" layoutY="10.0" vgap="25.0" visible="false">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -339,110 +257,11 @@
                   </FlowPane>
                </children>
             </GridPane>
-            <GridPane fx:id="paneScheme" layoutX="10.0" layoutY="10.0" vgap="25.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label text="Nombre de Esquema">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldSchemeName" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Precio Base" GridPane.columnIndex="1">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldPrice" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Idioma Origen" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldSourceLanguage" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Idioma Destino" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldTargetLanguage" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Sector" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldFieldName" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin></TextField>
-                  <Label text="Unidades" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <FlowPane fx:id="PaneTableScheme" alignment="CENTER" columnHalignment="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="3">
-                     <children>
-                        <TableView fx:id="tableSchemeLine" editable="true" prefHeight="100.0" prefWidth="350.0">
-                          <columns>
-                            <TableColumn fx:id="columnDescription" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="275.0" text="Descripción" />
-                            <TableColumn fx:id="columnDiscount" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" text="Descuento" />
-                          </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                           <padding>
-                              <Insets bottom="5.0" />
-                           </padding>
-                        </TableView>
-                     </children>
-                  </FlowPane>
-                  <TextField fx:id="fieldUnits" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-               </children>
-            </GridPane>
          </children>
          <VBox.margin>
             <Insets right="25.0" top="25.0" />
          </VBox.margin>
       </StackPane>
-      <HBox fx:id="boxLines" prefHeight="100.0" prefWidth="200.0" visible="false">
-         <children>
-            <TextField fx:id="fieldDescription" prefWidth="270.0" promptText="Description">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </TextField>
-            <TextField fx:id="fieldDiscount" onKeyPressed="#commitLine" prefWidth="75.0" promptText="Descuento">
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-         <VBox.margin>
-            <Insets top="15.0" />
-         </VBox.margin>
-      </HBox>
       <StackPane>
          <children>
             <HBox fx:id="paneFootCompany" alignment="BOTTOM_RIGHT" prefHeight="250.0">
@@ -483,36 +302,6 @@
                      </HBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#onClicSaveFromFiscalData" text="Guardar" />
-               </children>
-            </HBox>
-            <HBox fx:id="paneFootContact" alignment="BOTTOM_RIGHT" prefHeight="250.0" visible="false">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#onClicCancelFromContact" text="Cancelar">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onClicSaveFromContact" text="Guardar" />
-               </children>
-            </HBox>
-            <HBox fx:id="paneFootPhone" alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="250.0" visible="false">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#onClicCancelFromPhone" text="Cancelar">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onClicSaveFromPhone" text="Guardar" />
-               </children>
-            </HBox>
-            <HBox fx:id="paneFootScheme" alignment="BOTTOM_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="250.0" visible="false">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#onClicCancelFromScheme" text="Cancelar">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onClicSaveFromScheme" text="Guardar" />
                </children>
             </HBox>
          </children>

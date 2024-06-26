@@ -34,7 +34,6 @@ public class ViewCustomersController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         createTableCustomers();
         tableCustomers.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -42,8 +41,6 @@ public class ViewCustomersController implements Initializable {
             }
         });
     }
-    
-    //Para cambiar a vista de detalles del Cliente ver (https://www.youtube.com/watch?v=Wc1a2KshJ4w&list=PLoodc-fmtJNYbs-gYCdd5MYS4CKVbGHv2&index=11)
     
     @FXML protected void onCreateCustomer(){
             Parent root=null;
