@@ -18,13 +18,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -62,7 +60,7 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicCancel(){
-        Stage stage=(Stage)paneCreateCustomer.getScene().getWindow();
+        stage=(Stage)paneCreateCustomer.getScene().getWindow();
         stage.close();
     }
     
@@ -78,44 +76,6 @@ public class ViewCreateCustomerController implements Initializable {
         paneFootCompany.setVisible(false);
         paneFiscalData.setVisible(true);
         paneFootFiscalData.setVisible(true);
-    }
-    
-    @FXML protected void onClicAddAddress(){
-        ViewNewAddressController controller=null;
-        FXMLLoader loader=switchWindow("viewNewAddress.fxml");
-        
-        controller=loader.getController();
-        controller.initData(customer.getAddress());
-    }
-    
-    @FXML protected void onClicAddContact(){
-        ViewNewContactController controller=null;
-        FXMLLoader loader=switchWindow("viewNewContact.fxml");
-        ContactPerson contact=new ContactPerson();
-        
-        controller=loader.getController();
-        controller.initData(contact);
-        customer.addContactPerson(contact);
-    }
-    
-    @FXML protected void onClicAddPhone(){
-        ViewNewPhoneController controller=null;
-        FXMLLoader loader=switchWindow("viewNewPhone.fxml");
-        Phone phone=new Phone();
-        
-        controller=loader.getController();
-        controller.initData(phone);
-        customer.addPhone(phone);
-    }
-    
-    @FXML protected void onClicAddScheme(){
-        ViewNewSchemeController controller=null;
-        FXMLLoader loader=switchWindow("viewNewScheme.fxml");
-        Scheme scheme=new Scheme();
-        
-        controller=loader.getController();
-        controller.initData(scheme);
-        customer.addScheme(scheme);
     }
     
     @FXML protected void onClicBack(){
@@ -174,6 +134,44 @@ public class ViewCreateCustomerController implements Initializable {
         }
     }
     
+    @FXML protected void onClicAddAddress(){
+        ViewNewAddressController controller=null;
+        FXMLLoader loader=switchWindow("viewNewAddress.fxml");
+        
+        controller=loader.getController();
+        controller.initData(customer.getAddress());
+    }
+    
+    @FXML protected void onClicAddContact(){
+        ViewNewContactController controller=null;
+        FXMLLoader loader=switchWindow("viewNewContact.fxml");
+        ContactPerson contact=new ContactPerson();
+        
+        controller=loader.getController();
+        controller.initData(contact);
+        customer.addContactPerson(contact);
+    }
+    
+    @FXML protected void onClicAddPhone(){
+        ViewNewPhoneController controller=null;
+        FXMLLoader loader=switchWindow("viewNewPhone.fxml");
+        Phone phone=new Phone();
+        
+        controller=loader.getController();
+        controller.initData(phone);
+        customer.addPhone(phone);
+    }
+    
+    @FXML protected void onClicAddScheme(){
+        ViewNewSchemeController controller=null;
+        FXMLLoader loader=switchWindow("viewNewScheme.fxml");
+        Scheme scheme=new Scheme();
+        
+        controller=loader.getController();
+        controller.initData(scheme);
+        customer.addScheme(scheme);
+    }
+    
     @FXML protected void populateComboBox(){
         ObservableList<CustomProv> companyObs =FXCollections.observableArrayList(companies);
         cbCompany.setItems(companyObs);
@@ -218,7 +216,7 @@ public class ViewCreateCustomerController implements Initializable {
         fieldWeb.setText(customProv.getWeb());
         
         customer.setIdCompany(customProv.getIdCompany());
-        customer.getAddress().getFromDB(customProv.getAddress().getIdAddress());   
+        customer.setAddress(customProv.getAddress());
     }
     
     private FXMLLoader switchWindow(String path){

@@ -407,6 +407,10 @@ public class Company {
     public void setAddress(){
         this.address=new Address();
     }
+    
+    public void setAddress(Address address){
+        this.address=address;
+    }
 
     /**
      * @return the id

@@ -9,14 +9,21 @@ import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Provider;
+import invoicingapp_monolithic.Scheme;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -26,6 +33,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -37,66 +45,33 @@ import javafx.util.Callback;
 public class ViewCreateProviderController implements Initializable {
 
     private String introCompany="Datos de la Empresa";
-    private String introAddress="Dirección";
-    private String introContact="Persona de contacto";
-    private String introPhone="Teléfono de contacto";
     private String introFiscalData="Datos fiscales";
     private Provider provider=new Provider();
     private ArrayList<CustomProv> companies=new ArrayList();
+    private Stage stage;
     
     @FXML private Label labelIntro, labelError;
     @FXML private TextField fieldVAT,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
-    @FXML private TextField fieldStreet,fieldStNumber,fieldApt,fieldCP,fieldCity,fieldState,fieldCountry;
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding;
-    @FXML private TextField fieldPhoneNumber,fieldPhoneKind;
-    @FXML private TextField fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail;
     @FXML private CheckBox cbEurope,cbEnabled;
     @FXML ComboBox cbCompany;
-    @FXML private GridPane paneCompany, paneAddress,paneFiscalData,panePhone,paneContact;
-    @FXML HBox paneFootCompany,paneFootAddress,paneFootFiscalData,paneFootPhone,paneFootContact;
+    @FXML private GridPane paneCompany,paneFiscalData;
+    @FXML HBox paneFootCompany,paneFootFiscalData;
+    @FXML VBox paneCreateProvider;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         companies=CustomProv.getAllCustomProvFromDB();
-        
         labelIntro.setText(introCompany);
     }    
     
-    @FXML protected void onClicCancel(ActionEvent e){
-        Button source=(Button)e.getSource();
-        Stage stage=(Stage)source.getScene().getWindow();
+    @FXML protected void onClicCancel(){
+        stage=(Stage)paneCreateProvider.getScene().getWindow();
         stage.close();
     }
     
-    @FXML protected void onClicCancelFromPhone(){
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        panePhone.setVisible(false);
-        paneFootPhone.setVisible(false);
-        
-        fieldPhoneNumber.clear();
-        fieldPhoneKind.clear();
-    }
-    
-    @FXML protected void onClicCancelFromContact(){
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        paneContact.setVisible(false);
-        paneFootContact.setVisible(false);
-        
-        fieldFirstname.clear();
-        fieldMiddlename.clear();
-        fieldLastname.clear();
-        fieldRole.clear();
-        fieldContactEmail.clear();
-    }
-    
-    @FXML protected void onClicNextFromCompany(){
-        labelIntro.setText(introAddress);
+    @FXML protected void onClicNext(){
+        labelIntro.setText(introFiscalData);
         provider.setVatNumber(fieldVAT.getText());
         provider.setComName(fieldComName.getText());
         provider.setLegalName(fieldLegalName.getText());
@@ -105,132 +80,91 @@ public class ViewCreateProviderController implements Initializable {
         
         paneCompany.setVisible(false);
         paneFootCompany.setVisible(false);
-        paneAddress.setVisible(true);
-        paneFootAddress.setVisible(true);
-    }
-    
-    @FXML protected void onClicNextFromAddress(){
-        labelIntro.setText(introFiscalData);
-        provider.getAddress().setStreet(fieldStreet.getText());
-        provider.getAddress().setStNumber(fieldStNumber.getText());
-        provider.getAddress().setApt(fieldApt.getText());
-        provider.getAddress().setCp(fieldCP.getText());
-        provider.getAddress().setCity(fieldCity.getText());
-        provider.getAddress().setState(fieldState.getText());
-        provider.getAddress().setCountry(fieldCountry.getText());
-        
-        paneAddress.setVisible(false);
-        paneFootAddress.setVisible(false);
         paneFiscalData.setVisible(true);
         paneFootFiscalData.setVisible(true);
     }
     
-    @FXML protected void onClicSaveFromFiscalData(ActionEvent e){
-        Button source=(Button)e.getSource();
-        Stage stage=(Stage)source.getScene().getWindow();
-        double defaultVAT=0,defaultWithholding=0;
-        boolean control=true;
-        
-        try{
-            defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
-        }catch(NumberFormatException ex){
-            fieldDefaultVAT.getStyleClass().add("error");
-            control=false;
-        }
-        try{
-            defaultWithholding=Double.parseDouble(fieldDefaultWithholding.getText());
-        }catch(NumberFormatException ex){
-            fieldDefaultWithholding.getStyleClass().add("error");
-            control=false;
-        }
-        
-        if(!control){
+    @FXML protected void onClicBack(){
+        labelIntro.setText(introCompany);
+        paneCompany.setVisible(true);
+        paneFiscalData.setVisible(false);
+        paneFootCompany.setVisible(true);
+        paneFootFiscalData.setVisible(false);
+    }
+    
+    @FXML protected void onClicSave(){
+        if(provider.getAddress().getStreet()==null){
+            labelError.setText("Es obligatorio añadir una dirección.");
             labelError.setVisible(true);
         }else{
-            provider.setDefaultVAT(defaultVAT);
-            provider.setDefaultWithholding(defaultWithholding);
-            provider.setEurope(cbEurope.isSelected());
-            provider.setEnabled(cbEnabled.isSelected());
-            provider.addToDB();
+            stage=(Stage)paneCreateProvider.getScene().getWindow();
+            double defaultVAT=0,defaultWithholding=0;
+            boolean control=true;
         
-            stage.close();
+            try{
+                defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
+            }catch(NumberFormatException ex){
+                fieldDefaultVAT.getStyleClass().add("error");
+                control=false;
+            }
+            try{
+                defaultWithholding=Double.parseDouble(fieldDefaultWithholding.getText());
+            }catch(NumberFormatException ex){
+                fieldDefaultWithholding.getStyleClass().add("error");
+                control=false;
+            }
+        
+            if(!control){
+                labelError.setText("Un dato introducido no es correcto");
+                labelError.setVisible(true);
+            }else{
+                provider.setDefaultVAT(defaultVAT);
+                provider.setDefaultWithholding(defaultWithholding);
+                provider.setEurope(cbEurope.isSelected());
+                provider.setEnabled(cbEnabled.isSelected());
+                provider.addToDB();
+        
+                stage.close();
+            }
         }
     }
         
-    @FXML protected void onClicAddContact(){
-        labelIntro.setText(introContact);
-        paneCompany.setVisible(false);
-        paneFootCompany.setVisible(false);
+    @FXML protected void onClicAddAddress(){
+        ViewNewAddressController controller=null;
+        FXMLLoader loader=switchWindow("viewNewAddress.fxml");
         
-        paneContact.setVisible(true);
-        paneFootContact.setVisible(true);
+        controller=loader.getController();
+        controller.initData(provider.getAddress());
+    }
+    
+    @FXML protected void onClicAddContact(){
+        ViewNewContactController controller=null;
+        FXMLLoader loader=switchWindow("viewNewContact.fxml");
+        ContactPerson contact=new ContactPerson();
+        
+        controller=loader.getController();
+        controller.initData(contact);
+        provider.addContactPerson(contact);
     }
     
     @FXML protected void onClicAddPhone(){
-        labelIntro.setText(introPhone);
-        paneCompany.setVisible(false);
-        paneFootCompany.setVisible(false);
-        
-        panePhone.setVisible(true);
-        paneFootPhone.setVisible(true);
-    }
-    
-    @FXML protected void onClicSaveFromPhone(){
+        ViewNewPhoneController controller=null;
+        FXMLLoader loader=switchWindow("viewNewPhone.fxml");
         Phone phone=new Phone();
         
-        phone.setPhoneNumber(fieldPhoneNumber.getText());
-        phone.setKind(fieldPhoneKind.getText());
-        
+        controller=loader.getController();
+        controller.initData(phone);
         provider.addPhone(phone);
-        
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        panePhone.setVisible(false);
-        paneFootPhone.setVisible(false);
-        fieldPhoneNumber.clear();
-        fieldPhoneKind.clear();
     }
     
-    @FXML protected void onClicSaveFromContact(){
-        ContactPerson contact=new ContactPerson();
+    @FXML protected void onClicAddScheme(){
+        ViewNewSchemeController controller=null;
+        FXMLLoader loader=switchWindow("viewNewScheme.fxml");
+        Scheme scheme=new Scheme();
         
-        contact.setFirstname(fieldFirstname.getText());
-        contact.setMiddlename(fieldMiddlename.getText());
-        contact.setLastname(fieldLastname.getText());
-        contact.setRole(fieldRole.getText());
-        contact.setEmail(fieldContactEmail.getText());
-        
-        provider.addContactPerson(contact);
-        
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        paneContact.setVisible(false);
-        paneFootContact.setVisible(false);
-        fieldFirstname.clear();
-        fieldMiddlename.clear();
-        fieldLastname.clear();
-        fieldRole.clear();
-        fieldContactEmail.clear();
-    }
-    
-    @FXML protected void onClicBackFromAddress(){
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneAddress.setVisible(false);
-        paneFootCompany.setVisible(true);
-        paneFootAddress.setVisible(false);
-    }
-    
-    @FXML protected void onClicBackFromFiscalData(){
-        labelIntro.setText(introAddress);
-        paneAddress.setVisible(true);
-        paneFiscalData.setVisible(false);
-        paneFootAddress.setVisible(true);
-        paneFootFiscalData.setVisible(false);
+        controller=loader.getController();
+        controller.initData(scheme);
+        provider.addScheme(scheme);
     }
     
     @FXML protected void populateComboBox(){
@@ -275,15 +209,34 @@ public class ViewCreateProviderController implements Initializable {
         fieldLegalName.setText(customProv.getLegalName());
         fieldEmailCompany.setText(customProv.getEmail());
         fieldWeb.setText(customProv.getWeb());
-        fieldStreet.setText(customProv.getAddress().getStreet());
-        fieldStNumber.setText(customProv.getAddress().getStNumber());
-        fieldApt.setText(customProv.getAddress().getApt());
-        fieldCP.setText(customProv.getAddress().getCp());
-        fieldCity.setText(customProv.getAddress().getCity());
-        fieldState.setText(customProv.getAddress().getState());
-        fieldCountry.setText(customProv.getAddress().getCountry());
         
         provider.setIdCompany(customProv.getIdCompany());
-        provider.getAddress().setIdAddress(customProv.getAddress().getIdAddress());   
+        provider.setAddress(customProv.getAddress());
+    }
+    
+    private FXMLLoader switchWindow(String path){
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        loader.setLocation(getClass().getResource(path));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        scene=new Scene(root);
+        Stage newStage=new Stage();
+        newStage.setScene(scene);
+        newStage.show();
+        
+        stage=(Stage)paneCreateProvider.getScene().getWindow();
+        newStage.setOnHiding(event -> {
+                stage.show();
+            });
+        
+        stage.close();
+        
+        return loader;
     }
 }
