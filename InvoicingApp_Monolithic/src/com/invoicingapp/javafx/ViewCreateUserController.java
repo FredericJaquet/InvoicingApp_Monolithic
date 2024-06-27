@@ -8,14 +8,20 @@ import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Users;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -25,6 +31,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -35,25 +42,20 @@ import javafx.util.Callback;
  */
 public class ViewCreateUserController implements Initializable {
 
-    Users user=new Users();
-    String introUser="Aquí, puedes crear un nombre de usuario y su contraseña";
-    String introCompany="Aquí, puedes crear una Empresa nueva o seleccionar una existente";
-    String introAddress="Aquí, puedes crear una dirección para la Empresa nueva";
-    String introContact="Aquí, puedes añadir una persona de contacto";
-    String introPhone="Aquí, puedes añadir un número de teléfono";
-    ArrayList<Company> companies=new ArrayList();
+    private Users user=new Users();
+    private String introUser="Datos del usuario";
+    private String introCompany="Datos de la Empresa";
+    private ArrayList<Company> companies=new ArrayList();
+    private Stage stage;
     
     @FXML private PasswordField fieldPasswd1,fieldPasswd2 ;
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
-            fieldVAT,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb,
-            fieldStreet,fieldStNumber,fieldApt,fieldCP,fieldCity,
-            fieldState,fieldCountry,
-            fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
-            fieldPhoneNumber, fieldPhoneKind;
-    @FXML ComboBox cbCompany;
-    @FXML private Label labelIntro, labelPassword;
-    @FXML private GridPane paneUser,paneCompany,paneAddress,paneContact,panePhone;
-    @FXML private HBox paneFootUser,paneFootCompany,paneFootAddress,paneFootContact,paneFootPhone;
+            fieldVAT,fieldComName,fieldLegalName,fieldEmail,fieldWeb;
+    @FXML private ComboBox cbCompany;
+    @FXML private Label labelIntro, labelPassword,labelError;
+    @FXML private GridPane paneUser,paneCompany;
+    @FXML private HBox paneFootUser,paneFootCompany;
+    @FXML private VBox paneCreateUser;
     
     /**
      * Initializes the controller class.
@@ -83,9 +85,8 @@ public class ViewCreateUserController implements Initializable {
         fieldPasswd2.setVisible(true);
     }
     
-    @FXML protected void onClicCancel(ActionEvent e){
-        Button source=(Button)e.getSource();
-        Stage stage=(Stage)source.getScene().getWindow();
+    @FXML protected void onClicCancel(){
+        Stage stage=(Stage)paneCreateUser.getScene().getWindow();
         stage.close();
     }
     
@@ -106,18 +107,21 @@ public class ViewCreateUserController implements Initializable {
         }
     }
     
-    @FXML protected void onClicNextFromCompany(){
-        labelIntro.setText(introAddress);
-        user.setVatNumber(fieldVAT.getText());
-        user.setComName(fieldComName.getText());
-        user.setLegalName(fieldLegalName.getText());
-        user.setEmail(fieldEmailCompany.getText());
-        user.setWeb(fieldWeb.getText());
+    @FXML protected void onClicSave(){
+        Stage stage=(Stage)paneCreateUser.getScene().getWindow();
         
-        paneCompany.setVisible(false);
-        paneFootCompany.setVisible(false);
-        paneAddress.setVisible(true);
-        paneFootAddress.setVisible(true);
+        if(user.getAddress().getStreet()==null){
+            labelError.setText("Es obligatorio añadir una dirección.");
+            labelError.setVisible(true);
+        }else{
+            user.setVatNumber(fieldVAT.getText());
+            user.setComName(fieldComName.getText());
+            user.setLegalName(fieldLegalName.getText());
+            user.setEmail(fieldEmail.getText());
+            user.setWeb(fieldWeb.getText());
+            user.addToDB();
+            stage.close();
+        }
     }
     
     @FXML protected void onClicBackFromCompany(){
@@ -128,115 +132,32 @@ public class ViewCreateUserController implements Initializable {
         paneFootCompany.setVisible(false);
     }
     
-    @FXML protected void onClicBackFromAddress(){
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneAddress.setVisible(false);
-        paneFootCompany.setVisible(true);
-        paneFootAddress.setVisible(false);
+    @FXML protected void onClicAddAddress(){
+        ViewNewAddressController controller=null;
+        FXMLLoader loader=switchWindow("viewNewAddress.fxml");
+        
+        controller=loader.getController();
+        controller.initData(user.getAddress());
     }
     
     @FXML protected void onClicAddContact(){
-        labelIntro.setText(introContact);
-        paneCompany.setVisible(false);
-        paneFootCompany.setVisible(false);
+        ViewNewContactController controller=null;
+        FXMLLoader loader=switchWindow("viewNewContact.fxml");
+        ContactPerson contact=new ContactPerson();
         
-        paneContact.setVisible(true);
-        paneFootContact.setVisible(true);
+        controller=loader.getController();
+        controller.initData(contact);
+        user.addContactPerson(contact);
     }
     
     @FXML protected void onClicAddPhone(){
-        labelIntro.setText(introPhone);
-        paneCompany.setVisible(false);
-        paneFootCompany.setVisible(false);
-        
-        panePhone.setVisible(true);
-        paneFootPhone.setVisible(true);
-    }
-    
-    @FXML protected void onClicCancelFromContact(){
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        paneContact.setVisible(false);
-        paneFootContact.setVisible(false);
-        
-        fieldFirstname.clear();
-        fieldMiddlename.clear();
-        fieldLastname.clear();
-        fieldRole.clear();
-        fieldContactEmail.clear();
-    }
-    
-    @FXML protected void onClicCancelFromPhone(){
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        panePhone.setVisible(false);
-        paneFootPhone.setVisible(false);
-        
-        fieldPhoneNumber.clear();
-        fieldPhoneKind.clear();
-    }
-    
-    @FXML protected void onClicSaveFromContact(){
-        ContactPerson contact=new ContactPerson();
-        
-        contact.setFirstname(fieldFirstname.getText());
-        contact.setMiddlename(fieldMiddlename.getText());
-        contact.setLastname(fieldLastname.getText());
-        contact.setRole(fieldRole.getText());
-        contact.setEmail(fieldContactEmail.getText());
-        
-        user.addContactPerson(contact);
-        
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        paneContact.setVisible(false);
-        paneFootContact.setVisible(false);
-        fieldFirstname.clear();
-        fieldMiddlename.clear();
-        fieldLastname.clear();
-        fieldRole.clear();
-        fieldContactEmail.clear();
-    }
-    
-    @FXML protected void onClicSaveFromPhone(){
+        ViewNewPhoneController controller=null;
+        FXMLLoader loader=switchWindow("viewNewPhone.fxml");
         Phone phone=new Phone();
         
-        phone.setPhoneNumber(fieldPhoneNumber.getText());
-        phone.setKind(fieldPhoneKind.getText());
-        
+        controller=loader.getController();
+        controller.initData(phone);
         user.addPhone(phone);
-        
-        labelIntro.setText(introCompany);
-        paneCompany.setVisible(true);
-        paneFootCompany.setVisible(true);
-        
-        panePhone.setVisible(false);
-        paneFootPhone.setVisible(false);
-        fieldPhoneNumber.clear();
-        fieldPhoneKind.clear();
-    }
-    
-    @FXML protected void onClicSaveFromAddress(ActionEvent e){
-        Button source=(Button)e.getSource();
-        Stage stage=(Stage)source.getScene().getWindow();
-        
-        user.getAddress().setStreet(fieldStreet.getText());
-        user.getAddress().setStNumber(fieldStNumber.getText());
-        user.getAddress().setApt(fieldApt.getText());
-        user.getAddress().setCp(fieldCP.getText());
-        user.getAddress().setCity(fieldCity.getText());
-        user.getAddress().setState(fieldState.getText());
-        user.getAddress().setCountry(fieldCountry.getText());
-        user.addToDB();
-        
-        stage.close();
     }
     
     @FXML protected void populateComboBox(){
@@ -279,18 +200,37 @@ public class ViewCreateUserController implements Initializable {
         fieldVAT.setText(company.getVatNumber());
         fieldComName.setText(company.getComName());
         fieldLegalName.setText(company.getLegalName());
-        fieldEmailCompany.setText(company.getEmail());
+        fieldEmail.setText(company.getEmail());
         fieldWeb.setText(company.getWeb());
-        fieldStreet.setText(company.getAddress().getStreet());
-        fieldStNumber.setText(company.getAddress().getStNumber());
-        fieldApt.setText(company.getAddress().getApt());
-        fieldCP.setText(company.getAddress().getCp());
-        fieldCity.setText(company.getAddress().getCity());
-        fieldState.setText(company.getAddress().getState());
-        fieldCountry.setText(company.getAddress().getCountry());
         
         user.setIdCompany(company.getIdCompany());
-        user.getAddress().setIdAddress(company.getAddress().getIdAddress());
+        user.getAddress().getFromDB(company.getAddress().getIdAddress());
         
+    }
+    
+    private FXMLLoader switchWindow(String path){
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        loader.setLocation(getClass().getResource(path));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        scene=new Scene(root);
+        Stage newStage=new Stage();
+        newStage.setScene(scene);
+        newStage.show();
+        
+        stage=(Stage)paneCreateUser.getScene().getWindow();
+        newStage.setOnHiding(event -> {
+                stage.show();
+            });
+        
+        stage.close();
+        
+        return loader;
     }
 }

@@ -74,7 +74,7 @@ public class Address {
     * Gets the address from the Database and create an instance of that address.
     * @param id The idAddress of the address to get from DB
     */
-    protected void getFromDB (int id){
+    public void getFromDB (int id){
         ConnectionDB con=new ConnectionDB();
         String query="SELECT * FROM Address WHERE idAddress="+id;
         ResultSet result=null;
