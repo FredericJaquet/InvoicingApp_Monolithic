@@ -21,6 +21,9 @@ import java.util.logging.Logger;
  */
 public class Customer extends CustomProv {
     
+    public static int ENABLED=1;
+    public static int DISABLED=2;
+    public static int ALL=3;
     private String invoicingMethod, payMethod;
     private int duedate;
     private int idCustomer;
@@ -97,6 +100,34 @@ public class Customer extends CustomProv {
         ConnectionDB con=new ConnectionDB();
         ResultSet result=null;
         Customer customer=new Customer();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                customer=new Customer();
+                customer.getFromDB(result.getInt(1));
+                list.add(customer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public static ArrayList<Customer> getAllCustomersFromDB(int enabled){
+        ArrayList<Customer> list=new ArrayList();
+        String query="SELECT idCustomer FROM Customer";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Customer customer=new Customer();
+        
+        switch(enabled){
+            case(1):query=query.concat(" JOIN CustomProv ON (Customer.idCustomProv=CustomProv.idCustomProv) WHERE enabled=true;");break;
+            case(2):query=query.concat(" JOIN CustomProv ON (Customer.idCustomProv=CustomProv.idCustomProv) WHERE enabled=false;");break;
+            case(3):query=query.concat(";");
+        }
         
         con.openConnection();
         result=con.getResultSet(query);

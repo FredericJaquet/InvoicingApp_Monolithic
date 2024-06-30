@@ -9,6 +9,24 @@
 
 <VBox fx:id="paneCustomers" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewCustomersController">
    <children>
+      <HBox alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onClicEnabled" text="Habilitados">
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onClicDisabled" text="No Habilitados">
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onClicAll" text="Todos" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="15.0" top="15.0" />
+         </VBox.margin>
+      </HBox>
       <TableView fx:id="tableCustomers" prefHeight="300.0" prefWidth="600.0">
          <columns>
             <TableColumn fx:id="columnComName" prefWidth="75.0" text="Nombre Comercial" />

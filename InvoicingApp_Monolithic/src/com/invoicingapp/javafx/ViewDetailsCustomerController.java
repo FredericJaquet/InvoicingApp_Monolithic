@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.bbdd.ConnectionDB;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Phone;
@@ -40,16 +41,20 @@ public class ViewDetailsCustomerController implements Initializable {
 
     private Customer customer=new Customer();
     private ArrayList<Phone> phones=new ArrayList();
+    private ArrayList<Phone> newPhones=new ArrayList();
     private ArrayList<ContactPerson> contacts=new ArrayList();
+    private ArrayList<ContactPerson> newContacts=new ArrayList();
     private ArrayList<Scheme> schemes=new ArrayList();
+    private ArrayList<Scheme> newSchemes=new ArrayList();
     private int iContacts=0,iPhones=0,iSchemes=0;
+    private String query="";
     
-    @FXML Label lbComName,lbLegalName,lbWeb,lbCompEmail,lbVATNumber,lbDefaultVAT,
-            lbDuedate,lbDefaultWithholding,lbInvoicingMethod,lbPayMethod,lbEurope,
-            lbEnabled,lbStreet,lbStNumber,lbCity,lbState,lbApt,lbCP,lbCountry,
-            lbFirstname,lbMiddlename,lbLastname,lbRole,lbContactEmail,
-            lbPhoneNumber,lbKind,lbSchemeName,lbSourceLanguage,lbTargetLanguage,
-            lbPrice,lbUnits,lbFieldName;
+    @FXML Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_CustomProv_DefaultVAT,
+            lb_Customer_Duedate,lb_CustomProv_DefaultWithholding,lb_Customer_InvoicingMethod,lb_Customer_PayMethod,lb_CustomProv_Europe,
+            lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country,
+            lb_ContactPerson_Firstname,lb_ContactPerson_Middlename,lb_ContactPerson_Lastname,lb_ContactPerson_Role,lb_ContactPerson_Email,
+            lb_Phone_PhoneNumber,lb_Phone_Kind,lb_Scheme_SchemeName,lb_Scheme_SourceLanguage,lb_Scheme_TargetLanguage,
+            lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName;
     @FXML TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
             fieldDuedate,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,
             fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
@@ -72,33 +77,33 @@ public class ViewDetailsCustomerController implements Initializable {
         schemes=customer.getSchemes();
         
         //Company data
-        lbComName.setText(customer.getComName());
-        lbLegalName.setText(customer.getLegalName());
-        lbWeb.setText(customer.getWeb());
-        lbCompEmail.setText(customer.getEmail());
-        lbVATNumber.setText(customer.getVatNumber());
-        lbDefaultVAT.setText(String.valueOf(customer.getDefaultVAT())+"%");
-        lbDuedate.setText(String.valueOf(customer.getDuedate()));
-        lbDefaultWithholding.setText(String.valueOf(customer.getDefaultWithholding())+"%");
-        lbInvoicingMethod.setText(customer.getInvoicingMethod());
-        lbPayMethod.setText(customer.getPayMethod());
-        lbStreet.setText(customer.getAddress().getStreet());
-        lbStNumber.setText(customer.getAddress().getStNumber());
-        lbCity.setText(customer.getAddress().getCity());
-        lbState.setText(customer.getAddress().getState());
-        lbApt.setText(customer.getAddress().getApt());
-        lbCP.setText(customer.getAddress().getCp());
-        lbCountry.setText(customer.getAddress().getCountry());
+        lb_Company_ComName.setText(customer.getComName());
+        lb_Company_LegalName.setText(customer.getLegalName());
+        lb_Company_Web.setText(customer.getWeb());
+        lb_Company_Email.setText(customer.getEmail());
+        lb_Company_VATNumber.setText(customer.getVatNumber());
+        lb_CustomProv_DefaultVAT.setText(String.valueOf(customer.getDefaultVAT())+"%");
+        lb_Customer_Duedate.setText(String.valueOf(customer.getDuedate()));
+        lb_CustomProv_DefaultWithholding.setText(String.valueOf(customer.getDefaultWithholding())+"%");
+        lb_Customer_InvoicingMethod.setText(customer.getInvoicingMethod());
+        lb_Customer_PayMethod.setText(customer.getPayMethod());
+        lb_Address_Street.setText(customer.getAddress().getStreet());
+        lb_Address_StNumber.setText(customer.getAddress().getStNumber());
+        lb_Address_City.setText(customer.getAddress().getCity());
+        lb_Address_State.setText(customer.getAddress().getState());
+        lb_Address_Apt.setText(customer.getAddress().getApt());
+        lb_Address_CP.setText(customer.getAddress().getCp());
+        lb_Address_Country.setText(customer.getAddress().getCountry());
         
         if(customer.isEurope()){
-            lbEurope.setText("Sí");
+            lb_CustomProv_Europe.setText("Sí");
         }else{
-            lbEurope.setText("No");
+            lb_CustomProv_Europe.setText("No");
         }
         if(customer.isEnabled()){
-            lbEnabled.setText("Sí");
+            lb_CustomProv_Enabled.setText("Sí");
         }else{
-            lbEnabled.setText("No");
+            lb_CustomProv_Enabled.setText("No");
         }
         
         //Contact Person data
@@ -113,38 +118,38 @@ public class ViewDetailsCustomerController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        makeLabelEditable(lbComName, fieldComName);
-        makeLabelEditable(lbLegalName, fieldLegalName);
-        makeLabelEditable(lbWeb, fieldWeb);
-        makeLabelEditable(lbCompEmail, fieldCompEmail);
-        makeLabelEditable(lbVATNumber, fieldVATNumber);
-        makeLabelEditable(lbDefaultVAT, fieldDefaultVAT);
-        makeLabelEditable(lbDuedate, fieldDuedate);
-        makeLabelEditable(lbDefaultWithholding, fieldDefaultWithholding);
-        makeLabelEditable(lbInvoicingMethod, fieldInvoicingMethod);
-        makeLabelEditable(lbPayMethod, fieldPayMethod);
-        makeLabelEditable(lbEurope, cbEurope);
-        makeLabelEditable(lbEnabled, cbEnabled);
-        makeLabelEditable(lbStreet, fieldStreet);
-        makeLabelEditable(lbStNumber, fieldStNumber);
-        makeLabelEditable(lbCity, fieldCity);
-        makeLabelEditable(lbState, fieldState);
-        makeLabelEditable(lbApt, fieldApt);
-        makeLabelEditable(lbCP, fieldCP);
-        makeLabelEditable(lbCountry, fieldCountry);
-        makeLabelEditable(lbFirstname, fieldFirstname);
-        makeLabelEditable(lbMiddlename, fieldMiddlename);
-        makeLabelEditable(lbLastname, fieldLastname);
-        makeLabelEditable(lbRole, fieldRole);
-        makeLabelEditable(lbContactEmail, fieldContactEmail);
-        makeLabelEditable(lbPhoneNumber, fieldPhoneNumber);
-        makeLabelEditable(lbKind, fieldKind);
-        makeLabelEditable(lbSchemeName, fieldSchemeName);
-        makeLabelEditable(lbSourceLanguage, fieldSourceLanguage);
-        makeLabelEditable(lbTargetLanguage, fieldTargetLanguage);
-        makeLabelEditable(lbPrice, fieldPrice);
-        makeLabelEditable(lbUnits, fieldUnits);
-        makeLabelEditable(lbFieldName, fieldFieldName);
+        makeLabelEditable(lb_Company_ComName, fieldComName);
+        makeLabelEditable(lb_Company_LegalName, fieldLegalName);
+        makeLabelEditable(lb_Company_Web, fieldWeb);
+        makeLabelEditable(lb_Company_Email, fieldCompEmail);
+        makeLabelEditable(lb_Company_VATNumber, fieldVATNumber);
+        makeLabelEditable(lb_CustomProv_DefaultVAT, fieldDefaultVAT);
+        makeLabelEditable(lb_Customer_Duedate, fieldDuedate);
+        makeLabelEditable(lb_CustomProv_DefaultWithholding, fieldDefaultWithholding);
+        makeLabelEditable(lb_Customer_InvoicingMethod, fieldInvoicingMethod);
+        makeLabelEditable(lb_Customer_PayMethod, fieldPayMethod);
+        makeLabelEditable(lb_CustomProv_Europe, cbEurope);
+        makeLabelEditable(lb_CustomProv_Enabled, cbEnabled);
+        makeLabelEditable(lb_Address_Street, fieldStreet);
+        makeLabelEditable(lb_Address_StNumber, fieldStNumber);
+        makeLabelEditable(lb_Address_City, fieldCity);
+        makeLabelEditable(lb_Address_State, fieldState);
+        makeLabelEditable(lb_Address_Apt, fieldApt);
+        makeLabelEditable(lb_Address_CP, fieldCP);
+        makeLabelEditable(lb_Address_Country, fieldCountry);
+        makeLabelEditable(lb_ContactPerson_Firstname, fieldFirstname);
+        makeLabelEditable(lb_ContactPerson_Middlename, fieldMiddlename);
+        makeLabelEditable(lb_ContactPerson_Lastname, fieldLastname);
+        makeLabelEditable(lb_ContactPerson_Role, fieldRole);
+        makeLabelEditable(lb_ContactPerson_Email, fieldContactEmail);
+        makeLabelEditable(lb_Phone_PhoneNumber, fieldPhoneNumber);
+        makeLabelEditable(lb_Phone_Kind, fieldKind);
+        makeLabelEditable(lb_Scheme_SchemeName, fieldSchemeName);
+        makeLabelEditable(lb_Scheme_SourceLanguage, fieldSourceLanguage);
+        makeLabelEditable(lb_Scheme_TargetLanguage, fieldTargetLanguage);
+        makeLabelEditable(lb_Scheme_Price, fieldPrice);
+        makeLabelEditable(lb_Scheme_Units, fieldUnits);
+        makeLabelEditable(lb_Scheme_FieldName, fieldFieldName);
     }
     
     @FXML protected void onNextScheme(){
@@ -194,6 +199,7 @@ public class ViewDetailsCustomerController implements Initializable {
         controller=loader.getController();
         controller.initData(contact);
         customer.addContactPerson(contact);
+        newContacts.add(contact);
         
         scene=new Scene(root);
         Stage viewNewContact=new Stage();
@@ -226,6 +232,7 @@ public class ViewDetailsCustomerController implements Initializable {
         controller=loader.getController();
         controller.initData(phone);
         customer.addPhone(phone);
+        newPhones.add(phone);
         
         scene=new Scene(root);
         Stage viewNewPhone=new Stage();
@@ -257,6 +264,7 @@ public class ViewDetailsCustomerController implements Initializable {
         controller=loader.getController();
         controller.initData(scheme);
         customer.addScheme(scheme);
+        newSchemes.add(scheme);
         
         scene=new Scene(root);
         Stage viewNewScheme=new Stage();
@@ -271,6 +279,27 @@ public class ViewDetailsCustomerController implements Initializable {
         paneDetailsCustomer.getParent().setDisable(true);
     }
     
+    @FXML protected void onClicSave(){
+        ConnectionDB con=new ConnectionDB();
+        
+        con.openConnection();
+        con.noReturnQuery(query);
+        con.closeConnection();
+        
+        for(int i=0;i<newContacts.size();i++){
+            newContacts.get(i).addToDB();
+        }
+        
+        for(int j=0;j<newPhones.size();j++){
+            newPhones.get(j).addToDB();
+        }
+        
+        for(int k=0;k<schemes.size();k++){
+            newSchemes.get(k).addToDB();
+        }
+        
+    }
+    
     private void showContacts(){
         btnContactLeft.setVisible(true);
         btnContactRight.setVisible(true);
@@ -282,11 +311,11 @@ public class ViewDetailsCustomerController implements Initializable {
         if(iContacts<contacts.size()){
             gridContacts.setDisable(false);
             btnNewContact.setVisible(false);
-            lbFirstname.setText(contacts.get(iContacts).getFirstname());
-            lbMiddlename.setText(contacts.get(iContacts).getMiddlename());
-            lbLastname.setText(contacts.get(iContacts).getLastname());
-            lbRole.setText(contacts.get(iContacts).getRole());
-            lbContactEmail.setText(contacts.get(iContacts).getEmail());
+            lb_ContactPerson_Firstname.setText(contacts.get(iContacts).getFirstname());
+            lb_ContactPerson_Middlename.setText(contacts.get(iContacts).getMiddlename());
+            lb_ContactPerson_Lastname.setText(contacts.get(iContacts).getLastname());
+            lb_ContactPerson_Role.setText(contacts.get(iContacts).getRole());
+            lb_ContactPerson_Email.setText(contacts.get(iContacts).getEmail());
         }
         else{
             gridContacts.setDisable(true);
@@ -307,8 +336,8 @@ public class ViewDetailsCustomerController implements Initializable {
         if(iPhones<phones.size()){
             gridPhones.setDisable(false);
             btnNewPhone.setVisible(false);
-            lbKind.setText(phones.get(iPhones).getPhoneNumber());
-            lbPhoneNumber.setText(phones.get(iPhones).getKind());
+            lb_Phone_Kind.setText(phones.get(iPhones).getPhoneNumber());
+            lb_Phone_PhoneNumber.setText(phones.get(iPhones).getKind());
         }
         else{
             gridPhones.setDisable(true);
@@ -328,12 +357,12 @@ public class ViewDetailsCustomerController implements Initializable {
         if(iSchemes<schemes.size()){
             gridScheme.setDisable(false);
             btnNewScheme.setVisible(false);
-            lbSchemeName.setText(schemes.get(iSchemes).getName());
-            lbSourceLanguage.setText(schemes.get(iSchemes).getSourceLanguage());
-            lbTargetLanguage.setText(schemes.get(iSchemes).getTargetLanguage());
-            lbPrice.setText(String.valueOf(schemes.get(iSchemes).getPrice()));
-            lbUnits.setText(schemes.get(iSchemes).getUnits());
-            lbFieldName.setText(schemes.get(iSchemes).getField());
+            lb_Scheme_SchemeName.setText(schemes.get(iSchemes).getName());
+            lb_Scheme_SourceLanguage.setText(schemes.get(iSchemes).getSourceLanguage());
+            lb_Scheme_TargetLanguage.setText(schemes.get(iSchemes).getTargetLanguage());
+            lb_Scheme_Price.setText(String.valueOf(schemes.get(iSchemes).getPrice()));
+            lb_Scheme_Units.setText(schemes.get(iSchemes).getUnits());
+            lb_Scheme_FieldName.setText(schemes.get(iSchemes).getField());
             createTableSchemeLines(schemes.get(iSchemes));
         }else{
             gridScheme.setDisable(true);
@@ -407,6 +436,7 @@ public class ViewDetailsCustomerController implements Initializable {
         label.setVisible(true);
         textField.setVisible(false);
         
+        getQuery(label);
         
     }
     
@@ -419,6 +449,42 @@ public class ViewDetailsCustomerController implements Initializable {
         
         label.setVisible(true);
         checkBox.setVisible(false);
+        
+        getQuery(label);
+    }
+    
+    private void getQuery(Label label){
+        String fixId=label.getId();
+        String table=fixId.substring(fixId.indexOf("_",0)+1,fixId.indexOf("_",3));
+        String field=fixId.substring(fixId.indexOf("_",3)+1);
+        String newValue=label.getText();
+        if(table.equals("Phone")){
+            query=query.concat("UPDATE Phone SET"+field+"="+newValue+" WHERE PhoneNumber="+customer.getPhones().get(iPhones).getPhoneNumber()+";");
+        }else{
+            if(field.equals("Europe")||field.equals("Enabled")){
+                if(newValue.equals("Sí")){
+                    newValue="1";
+                }else if(newValue.equals("No")){
+                    newValue="0";
+                }
+            }
+            query=query.concat("UPDATE "+table+" SET "+field+"='"+newValue+"' WHERE id"+table+"="+getID(table)+";");
+        }
+    }
+    
+    private int getID(String table){
+        int id=0;
+        
+        switch(table){
+            case("Address"):id=customer.getAddress().getIdAddress();break;
+            case("Company"):id=customer.getIdCompany();break;
+            case("CustomProv"):id=customer.getIdCustomProv();break;
+            case("Customer"):id=customer.getIdCustomer();break;
+            case("ContactPerson"):id=customer.getContacts().get(iContacts).getIdContactPerson();break;
+            case("Scheme"):id=customer.getSchemes().get(iSchemes).getIdScheme();break;
+        }
+        
+        return id;
     }
 
 }

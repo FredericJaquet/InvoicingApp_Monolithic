@@ -28,13 +28,15 @@ import javafx.stage.Stage;
 
 public class ViewCustomersController implements Initializable {
     
+    private ObservableList<Customer> customers;
+    
     @FXML private TableView<Customer> tableCustomers;
     @FXML private TableColumn<Customer, String> columnComName, columnVATNbr, columnEmail, ColumnWeb;
     @FXML private VBox paneCustomers;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        createTableCustomers();
+        onClicEnabled();
         tableCustomers.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 onSeeDetails();
@@ -82,9 +84,22 @@ public class ViewCustomersController implements Initializable {
         home.setCenter(detailsCustomerView);
     }
     
+    @FXML protected void onClicEnabled(){
+        customers=FXCollections.observableArrayList(Customer.getAllCustomersFromDB(Customer.ENABLED));
+        createTableCustomers();
+    }
+    
+    @FXML protected void onClicDisabled(){
+        customers=FXCollections.observableArrayList(Customer.getAllCustomersFromDB(Customer.DISABLED));
+        createTableCustomers();
+    }
+    
+    @FXML protected void onClicAll(){
+        customers=FXCollections.observableArrayList(Customer.getAllCustomersFromDB());
+        createTableCustomers();
+    }
+    
     private void createTableCustomers(){
-        ObservableList<Customer> customers=FXCollections.observableArrayList(Customer.getAllCustomersFromDB());
-        
         columnComName.setCellValueFactory(new PropertyValueFactory<Customer, String>("comName"));
         columnVATNbr.setCellValueFactory(new PropertyValueFactory<Customer, String>("vatNumber"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<Customer, String>("email"));

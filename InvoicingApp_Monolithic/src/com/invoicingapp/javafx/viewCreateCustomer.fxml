@@ -178,7 +178,6 @@
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="fieldDuedate" stylesheets="@viewcreatecustomer.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6" />
                   <CheckBox fx:id="cbEurope" mnemonicParsing="false" selected="true" text="Es Europeo" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets top="15.0" />
