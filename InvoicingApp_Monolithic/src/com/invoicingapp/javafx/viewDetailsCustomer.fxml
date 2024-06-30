@@ -716,7 +716,7 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" minHeight="-Infinity" minWidth="-Infinity">
                      <children>
-                        <Button mnemonicParsing="false" text="Eliminar">
+                        <Button mnemonicParsing="false" onAction="#onClicDelete" text="Eliminar">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>

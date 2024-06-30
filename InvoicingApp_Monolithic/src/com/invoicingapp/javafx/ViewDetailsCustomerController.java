@@ -186,6 +186,7 @@ public class ViewDetailsCustomerController implements Initializable {
         ContactPerson contact=new ContactPerson();
         FXMLLoader loader=new FXMLLoader();
         Parent root=null;
+        Stage viewNewContact=new Stage();
         Scene scene;
         ViewNewContactController controller=null;
         
@@ -202,7 +203,6 @@ public class ViewDetailsCustomerController implements Initializable {
         newContacts.add(contact);
         
         scene=new Scene(root);
-        Stage viewNewContact=new Stage();
         viewNewContact.setScene(scene);
         viewNewContact.show();
         
@@ -219,7 +219,7 @@ public class ViewDetailsCustomerController implements Initializable {
         FXMLLoader loader=new FXMLLoader();
         Parent root=null;
         Scene scene;
-        Stage stage;
+        Stage viewNewPhone=new Stage();
         ViewNewPhoneController controller=null;
         
         loader.setLocation(getClass().getResource("viewNewPhone.fxml"));
@@ -235,7 +235,6 @@ public class ViewDetailsCustomerController implements Initializable {
         newPhones.add(phone);
         
         scene=new Scene(root);
-        Stage viewNewPhone=new Stage();
         viewNewPhone.setScene(scene);
         viewNewPhone.show();
         
@@ -252,6 +251,7 @@ public class ViewDetailsCustomerController implements Initializable {
         FXMLLoader loader=new FXMLLoader();
         Parent root=null;
         Scene scene;
+        Stage viewNewScheme=new Stage();
         ViewNewSchemeController controller=null;
         
         loader.setLocation(getClass().getResource("viewNewScheme.fxml"));
@@ -267,7 +267,6 @@ public class ViewDetailsCustomerController implements Initializable {
         newSchemes.add(scheme);
         
         scene=new Scene(root);
-        Stage viewNewScheme=new Stage();
         viewNewScheme.setScene(scene);
         viewNewScheme.show();
         
@@ -298,6 +297,10 @@ public class ViewDetailsCustomerController implements Initializable {
             newSchemes.get(k).addToDB();
         }
         
+    }
+    
+    @FXML protected void onClicDelete(){
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este cliente?", this::deleteCustomer, () -> {});
     }
     
     private void showContacts(){
@@ -378,7 +381,6 @@ public class ViewDetailsCustomerController implements Initializable {
         columnDiscount.setCellValueFactory(new PropertyValueFactory<SchemeLine,Double>("discount"));
         
         tableSchemeLines.setItems(lines);
-        
     }
 
     private void makeLabelEditable(Label label, TextField textField) {
@@ -437,7 +439,6 @@ public class ViewDetailsCustomerController implements Initializable {
         textField.setVisible(false);
         
         getQuery(label);
-        
     }
     
     private void switchToLabel(Label label, CheckBox checkBox) {
@@ -483,8 +484,11 @@ public class ViewDetailsCustomerController implements Initializable {
             case("ContactPerson"):id=customer.getContacts().get(iContacts).getIdContactPerson();break;
             case("Scheme"):id=customer.getSchemes().get(iSchemes).getIdScheme();break;
         }
-        
         return id;
+    }
+    
+    private void deleteCustomer(){
+        customer.deleteFromDB();
     }
 
 }
