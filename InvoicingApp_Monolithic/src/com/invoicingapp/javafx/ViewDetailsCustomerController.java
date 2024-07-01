@@ -314,6 +314,39 @@ public class ViewDetailsCustomerController implements Initializable {
         }
     }
     
+    @FXML protected void onClicNewOrder(){
+        BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
+        Parent customersView;
+        try {
+            customersView=FXMLLoader.load(getClass().getResource("viewNewOrder.fxml"));
+            home.setCenter(customersView);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML protected void onClicNewInvoice(){
+        BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
+        Parent customersView;
+        try {
+            customersView=FXMLLoader.load(getClass().getResource("viewNewInvoiceCustomer.fxml"));
+            home.setCenter(customersView);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @FXML protected void onClicNewQuote(){
+        BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
+        Parent customersView;
+        try {
+            customersView=FXMLLoader.load(getClass().getResource("viewNewQuote.fxml"));
+            home.setCenter(customersView);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void showContacts(){
         btnContactLeft.setVisible(true);
         btnContactRight.setVisible(true);

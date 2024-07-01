@@ -702,17 +702,17 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="250.0" prefWidth="200.0">
                      <children>
-                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Pedido">
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onClicNewOrder" prefHeight="25.0" prefWidth="59.0" text="Pedido">
                            <HBox.margin>
                               <Insets bottom="25.0" right="15.0" />
                            </HBox.margin>
                         </Button>
-                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Ppto">
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onClicNewQuote" prefHeight="25.0" prefWidth="59.0" text="Ppto">
                            <HBox.margin>
                               <Insets bottom="25.0" right="15.0" />
                            </HBox.margin>
                         </Button>
-                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Factura">
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onClicNewInvoice" prefHeight="25.0" prefWidth="59.0" text="Factura">
                            <HBox.margin>
                               <Insets bottom="25.0" />
                            </HBox.margin>
