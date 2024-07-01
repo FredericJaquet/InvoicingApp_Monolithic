@@ -292,6 +292,7 @@ public class Company {
     * @param contact 
     */
     public void addContactPerson(ContactPerson contact){
+        contact.setIdCompany(idCompany);
         contacts.add(contact);
     }
     
@@ -304,6 +305,7 @@ public class Company {
     * @param phone 
     */
     public void addPhone(Phone phone){
+        phone.setIdCompany(idCompany);
         phones.add(phone);
     }
     

@@ -325,6 +325,7 @@ public class CustomProv extends Company{
     * @param scheme 
     */
     public void addScheme(Scheme scheme){
+        scheme.setIdCustomProv(idCustomProv);
         schemes.add(scheme);
     }
     

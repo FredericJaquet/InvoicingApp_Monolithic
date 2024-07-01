@@ -79,10 +79,10 @@ public class ViewHomeController implements Initializable {
         Button button=(Button) e.getSource();
         String idBtn=button.getId().substring(3);
         String window="view"+idBtn+".fxml";
-        Parent customersView;
+        Parent view;
         try {
-            customersView=FXMLLoader.load(getClass().getResource(window));
-            mainPane.setCenter(customersView);
+            view=FXMLLoader.load(getClass().getResource(window));
+            mainPane.setCenter(view);
         } catch (IOException ex) {
             Logger.getLogger(ViewHomeController.class.getName()).log(Level.SEVERE, null, ex);
         } 

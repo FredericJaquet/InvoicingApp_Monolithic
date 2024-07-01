@@ -33,6 +33,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -48,6 +49,7 @@ public class ViewDetailsCustomerController implements Initializable {
     private ArrayList<Scheme> newSchemes=new ArrayList();
     private int iContacts=0,iPhones=0,iSchemes=0;
     private String query="";
+    private boolean changes=false;
     
     @FXML Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_CustomProv_DefaultVAT,
             lb_Customer_Duedate,lb_CustomProv_DefaultWithholding,lb_Customer_InvoicingMethod,lb_Customer_PayMethod,lb_CustomProv_Europe,
@@ -297,10 +299,19 @@ public class ViewDetailsCustomerController implements Initializable {
             newSchemes.get(k).addToDB();
         }
         
+        changes=false;
     }
     
     @FXML protected void onClicDelete(){
         ConfirmationDialog.show("¿Está seguro de querer eliminar este cliente?", this::deleteCustomer, () -> {});
+    }
+    
+    @FXML protected void onClicback(){
+        if(changes){
+            ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::backToViewCustomers, () -> {});
+        }else{
+            backToViewCustomers();
+        }
     }
     
     private void showContacts(){
@@ -471,6 +482,7 @@ public class ViewDetailsCustomerController implements Initializable {
             }
             query=query.concat("UPDATE "+table+" SET "+field+"='"+newValue+"' WHERE id"+table+"="+getID(table)+";");
         }
+        changes=true;
     }
     
     private int getID(String table){
@@ -489,6 +501,18 @@ public class ViewDetailsCustomerController implements Initializable {
     
     private void deleteCustomer(){
         customer.deleteFromDB();
+        backToViewCustomers();
+    }
+    
+    private void backToViewCustomers(){
+        BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
+        Parent customersView;
+        try {
+            customersView=FXMLLoader.load(getClass().getResource("viewCustomers.fxml"));
+            home.setCenter(customersView);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

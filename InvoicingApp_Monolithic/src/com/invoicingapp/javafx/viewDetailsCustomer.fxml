@@ -702,12 +702,17 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="250.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Factura">
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Pedido">
                            <HBox.margin>
                               <Insets bottom="25.0" right="15.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Pedido">
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Ppto">
+                           <HBox.margin>
+                              <Insets bottom="25.0" right="15.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Factura">
                            <HBox.margin>
                               <Insets bottom="25.0" />
                            </HBox.margin>
@@ -716,17 +721,17 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" minHeight="-Infinity" minWidth="-Infinity">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#onClicDelete" text="Eliminar">
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onClicDelete" prefHeight="25.0" prefWidth="59.0" text="Eliminar">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" text="Volver">
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onClicback" prefHeight="25.0" prefWidth="59.0" text="Volver">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#onClicSave" text="Guardar" />
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onClicSave" prefHeight="25.0" prefWidth="59.0" text="Guardar" />
                      </children>
                   </HBox>
                </children>

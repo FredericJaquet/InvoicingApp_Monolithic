@@ -45,14 +45,17 @@ public class ViewCustomersController implements Initializable {
     }
     
     @FXML protected void onCreateCustomer(){
-            Parent root=null;
+        Parent root=null;
+        Scene scene=null;
+        Stage stage=new Stage();
+        
         try {
             root = FXMLLoader.load(getClass().getResource("viewCreateCustomer.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(ViewCustomersController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Scene scene=new Scene(root);
-        Stage stage=new Stage();
+        
+        scene=new Scene(root);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
         stage.setScene(scene);
         
