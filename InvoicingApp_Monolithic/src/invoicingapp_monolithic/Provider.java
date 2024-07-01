@@ -103,6 +103,34 @@ public class Provider extends CustomProv{
         return list;
     }
     
+    public static ArrayList<Provider> getAllProvidersFromDB(int enabled){
+        ArrayList<Provider> list=new ArrayList();
+        String query="SELECT idProvider FROM Provider";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Provider provider=new Provider();
+        
+        switch(enabled){
+            case(1):query=query.concat(" JOIN CustomProv ON (Provider.idCustomProv=CustomProv.idCustomProv) WHERE enabled=true;");break;
+            case(2):query=query.concat(" JOIN CustomProv ON (Provider.idCustomProv=CustomProv.idCustomProv) WHERE enabled=false;");break;
+            case(3):query=query.concat(";");
+        }
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                provider=new Provider();
+                provider.getFromDB(result.getInt(1));
+                list.add(provider);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Provider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     /**
     * Cleans the table Provider in the DB.
     */

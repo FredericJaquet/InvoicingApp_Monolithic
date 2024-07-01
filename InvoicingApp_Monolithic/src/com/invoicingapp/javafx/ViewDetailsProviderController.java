@@ -6,8 +6,8 @@ package com.invoicingapp.javafx;
 
 import com.invoicingapp.bbdd.ConnectionDB;
 import invoicingapp_monolithic.ContactPerson;
-import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Phone;
+import invoicingapp_monolithic.Provider;
 import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
 import java.io.IOException;
@@ -38,9 +38,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
-public class ViewDetailsCustomerController implements Initializable {
+public class ViewDetailsProviderController implements Initializable {
 
-    private Customer customer=new Customer();
+    private Provider provider=new Provider();
     private ArrayList<Phone> phones=new ArrayList();
     private ArrayList<Phone> newPhones=new ArrayList();
     private ArrayList<ContactPerson> contacts=new ArrayList();
@@ -51,15 +51,14 @@ public class ViewDetailsCustomerController implements Initializable {
     private String query="";
     private boolean changes=false;
     
-    @FXML Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_CustomProv_DefaultVAT,
-            lb_Customer_Duedate,lb_CustomProv_DefaultWithholding,lb_Customer_InvoicingMethod,lb_Customer_PayMethod,lb_CustomProv_Europe,
+    @FXML Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,
+            lb_CustomProv_DefaultVAT,lb_CustomProv_DefaultWithholding,lb_CustomProv_Europe,
             lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country,
             lb_ContactPerson_Firstname,lb_ContactPerson_Middlename,lb_ContactPerson_Lastname,lb_ContactPerson_Role,lb_ContactPerson_Email,
             lb_Phone_PhoneNumber,lb_Phone_Kind,lb_Scheme_SchemeName,lb_Scheme_SourceLanguage,lb_Scheme_TargetLanguage,
             lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName;
     @FXML TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
-            fieldDuedate,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,
-            fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
+            fieldDefaultWithholding,fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
             fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
             fieldPhoneNumber,fieldKind,fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,
             fieldPrice,fieldUnits,fieldFieldName;
@@ -67,42 +66,39 @@ public class ViewDetailsCustomerController implements Initializable {
     @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
             btnSchemeLeft,btnSchemeRight, btnNewScheme;
     @FXML GridPane gridContacts,gridPhones,gridScheme;
-    @FXML ScrollPane paneDetailsCustomer;
+    @FXML ScrollPane paneDetailsProvider;
     @FXML TableView<SchemeLine> tableSchemeLines;
     @FXML TableColumn<SchemeLine,String> columnDescription;
     @FXML TableColumn<SchemeLine,Double> columnDiscount;
     
-    public void initData(Customer customer){
-        this.customer=customer;
-        contacts=customer.getContacts();
-        phones=customer.getPhones();
-        schemes=customer.getSchemes();
+    public void initData(Provider provider){
+        this.provider=provider;
+        contacts=provider.getContacts();
+        phones=provider.getPhones();
+        schemes=provider.getSchemes();
         
         //Company data
-        lb_Company_ComName.setText(customer.getComName());
-        lb_Company_LegalName.setText(customer.getLegalName());
-        lb_Company_Web.setText(customer.getWeb());
-        lb_Company_Email.setText(customer.getEmail());
-        lb_Company_VATNumber.setText(customer.getVatNumber());
-        lb_CustomProv_DefaultVAT.setText(String.valueOf(customer.getDefaultVAT())+"%");
-        lb_Customer_Duedate.setText(String.valueOf(customer.getDuedate()));
-        lb_CustomProv_DefaultWithholding.setText(String.valueOf(customer.getDefaultWithholding())+"%");
-        lb_Customer_InvoicingMethod.setText(customer.getInvoicingMethod());
-        lb_Customer_PayMethod.setText(customer.getPayMethod());
-        lb_Address_Street.setText(customer.getAddress().getStreet());
-        lb_Address_StNumber.setText(customer.getAddress().getStNumber());
-        lb_Address_City.setText(customer.getAddress().getCity());
-        lb_Address_State.setText(customer.getAddress().getState());
-        lb_Address_Apt.setText(customer.getAddress().getApt());
-        lb_Address_CP.setText(customer.getAddress().getCp());
-        lb_Address_Country.setText(customer.getAddress().getCountry());
+        lb_Company_ComName.setText(provider.getComName());
+        lb_Company_LegalName.setText(provider.getLegalName());
+        lb_Company_Web.setText(provider.getWeb());
+        lb_Company_Email.setText(provider.getEmail());
+        lb_Company_VATNumber.setText(provider.getVatNumber());
+        lb_CustomProv_DefaultVAT.setText(String.valueOf(provider.getDefaultVAT())+"%");
+        lb_CustomProv_DefaultWithholding.setText(String.valueOf(provider.getDefaultWithholding())+"%");
+        lb_Address_Street.setText(provider.getAddress().getStreet());
+        lb_Address_StNumber.setText(provider.getAddress().getStNumber());
+        lb_Address_City.setText(provider.getAddress().getCity());
+        lb_Address_State.setText(provider.getAddress().getState());
+        lb_Address_Apt.setText(provider.getAddress().getApt());
+        lb_Address_CP.setText(provider.getAddress().getCp());
+        lb_Address_Country.setText(provider.getAddress().getCountry());
         
-        if(customer.isEurope()){
+        if(provider.isEurope()){
             lb_CustomProv_Europe.setText("Sí");
         }else{
             lb_CustomProv_Europe.setText("No");
         }
-        if(customer.isEnabled()){
+        if(provider.isEnabled()){
             lb_CustomProv_Enabled.setText("Sí");
         }else{
             lb_CustomProv_Enabled.setText("No");
@@ -118,6 +114,9 @@ public class ViewDetailsCustomerController implements Initializable {
         showSchemes();
     }
     
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         makeLabelEditable(lb_Company_ComName, fieldComName);
@@ -126,10 +125,7 @@ public class ViewDetailsCustomerController implements Initializable {
         makeLabelEditable(lb_Company_Email, fieldCompEmail);
         makeLabelEditable(lb_Company_VATNumber, fieldVATNumber);
         makeLabelEditable(lb_CustomProv_DefaultVAT, fieldDefaultVAT);
-        makeLabelEditable(lb_Customer_Duedate, fieldDuedate);
         makeLabelEditable(lb_CustomProv_DefaultWithholding, fieldDefaultWithholding);
-        makeLabelEditable(lb_Customer_InvoicingMethod, fieldInvoicingMethod);
-        makeLabelEditable(lb_Customer_PayMethod, fieldPayMethod);
         makeLabelEditable(lb_CustomProv_Europe, cbEurope);
         makeLabelEditable(lb_CustomProv_Enabled, cbEnabled);
         makeLabelEditable(lb_Address_Street, fieldStreet);
@@ -196,12 +192,12 @@ public class ViewDetailsCustomerController implements Initializable {
         try {
             root=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
         controller.initData(contact);
-        customer.addContactPerson(contact);
+        provider.addContactPerson(contact);
         newContacts.add(contact);
         
         scene=new Scene(root);
@@ -209,11 +205,11 @@ public class ViewDetailsCustomerController implements Initializable {
         viewNewContact.show();
         
         viewNewContact.setOnHiding(event -> {
-                paneDetailsCustomer.getParent().setDisable(false);
+                paneDetailsProvider.getParent().setDisable(false);
                 showContacts();
             });
         
-        paneDetailsCustomer.getParent().setDisable(true);
+        paneDetailsProvider.getParent().setDisable(true);
     }
     
     @FXML protected void onClicAddPhone(){
@@ -228,12 +224,12 @@ public class ViewDetailsCustomerController implements Initializable {
         try {
             root=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
         controller.initData(phone);
-        customer.addPhone(phone);
+        provider.addPhone(phone);
         newPhones.add(phone);
         
         scene=new Scene(root);
@@ -241,11 +237,11 @@ public class ViewDetailsCustomerController implements Initializable {
         viewNewPhone.show();
         
         viewNewPhone.setOnHiding(event -> {
-                paneDetailsCustomer.getParent().setDisable(false);
+                paneDetailsProvider.getParent().setDisable(false);
                 showPhones();
             });
         
-        paneDetailsCustomer.getParent().setDisable(true);
+        paneDetailsProvider.getParent().setDisable(true);
     }
     
     @FXML protected void onClicAddScheme(){
@@ -260,12 +256,12 @@ public class ViewDetailsCustomerController implements Initializable {
         try {
             root=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
         controller.initData(scheme);
-        customer.addScheme(scheme);
+        provider.addScheme(scheme);
         newSchemes.add(scheme);
         
         scene=new Scene(root);
@@ -273,11 +269,11 @@ public class ViewDetailsCustomerController implements Initializable {
         viewNewScheme.show();
         
         viewNewScheme.setOnHiding(event -> {
-                paneDetailsCustomer.getParent().setDisable(false);
+                paneDetailsProvider.getParent().setDisable(false);
                 showSchemes();
             });
         
-        paneDetailsCustomer.getParent().setDisable(true);
+        paneDetailsProvider.getParent().setDisable(true);
     }
     
     @FXML protected void onClicSave(){
@@ -303,47 +299,47 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicDelete(){
-        ConfirmationDialog.show("¿Está seguro de querer eliminar este cliente?", this::deleteCustomer, () -> {});
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este cliente?", this::deleteProvider, () -> {});
     }
     
     @FXML protected void onClicback(){
         if(changes){
-            ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::backToViewCustomers, () -> {});
+            ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::backToViewProviders, () -> {});
         }else{
-            backToViewCustomers();
+            backToViewProviders();
         }
     }
     
     @FXML protected void onClicNewOrder(){
-        BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
+        BorderPane home=(BorderPane)paneDetailsProvider.getParent();
         Parent customersView;
         try {
             customersView=FXMLLoader.load(getClass().getResource("viewNewOrder.fxml"));
             home.setCenter(customersView);
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCreateProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     @FXML protected void onClicNewInvoice(){
-        BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
+        BorderPane home=(BorderPane)paneDetailsProvider.getParent();
         Parent customersView;
         try {
             customersView=FXMLLoader.load(getClass().getResource("viewNewInvoiceCustomer.fxml"));
             home.setCenter(customersView);
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCreateProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    @FXML protected void onClicNewQuote(){
-        BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
+    @FXML protected void onClicNewPO(){
+        BorderPane home=(BorderPane)paneDetailsProvider.getParent();
         Parent customersView;
         try {
-            customersView=FXMLLoader.load(getClass().getResource("viewNewQuote.fxml"));
+            customersView=FXMLLoader.load(getClass().getResource("viewNewPo.fxml"));
             home.setCenter(customersView);
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewCreateProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -426,7 +422,7 @@ public class ViewDetailsCustomerController implements Initializable {
         
         tableSchemeLines.setItems(lines);
     }
-
+    
     private void makeLabelEditable(Label label, TextField textField) {
         textField.setVisible(false);
 
@@ -504,7 +500,7 @@ public class ViewDetailsCustomerController implements Initializable {
         String field=fixId.substring(fixId.indexOf("_",3)+1);
         String newValue=label.getText();
         if(table.equals("Phone")){
-            query=query.concat("UPDATE Phone SET"+field+"="+newValue+" WHERE PhoneNumber="+customer.getPhones().get(iPhones).getPhoneNumber()+";");
+            query=query.concat("UPDATE Phone SET"+field+"="+newValue+" WHERE PhoneNumber="+provider.getPhones().get(iPhones).getPhoneNumber()+";");
         }else{
             if(field.equals("Europe")||field.equals("Enabled")){
                 if(newValue.equals("Sí")){
@@ -522,30 +518,32 @@ public class ViewDetailsCustomerController implements Initializable {
         int id=0;
         
         switch(table){
-            case("Address"):id=customer.getAddress().getIdAddress();break;
-            case("Company"):id=customer.getIdCompany();break;
-            case("CustomProv"):id=customer.getIdCustomProv();break;
-            case("Customer"):id=customer.getIdCustomer();break;
-            case("ContactPerson"):id=customer.getContacts().get(iContacts).getIdContactPerson();break;
-            case("Scheme"):id=customer.getSchemes().get(iSchemes).getIdScheme();break;
+            case("Address"):id=provider.getAddress().getIdAddress();break;
+            case("Company"):id=provider.getIdCompany();break;
+            case("CustomProv"):id=provider.getIdCustomProv();break;
+            case("ContactPerson"):id=provider.getContacts().get(iContacts).getIdContactPerson();break;
+            case("Scheme"):id=provider.getSchemes().get(iSchemes).getIdScheme();break;
         }
         return id;
     }
     
-    private void deleteCustomer(){
-        customer.deleteFromDB();
-        backToViewCustomers();
+    private void deleteProvider(){
+        provider.deleteFromDB();
+        backToViewProviders();
     }
     
-    private void backToViewCustomers(){
-        BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
+    private void backToViewProviders(){
+        BorderPane home=(BorderPane)paneDetailsProvider.getParent();
         Parent customersView;
         try {
-            customersView=FXMLLoader.load(getClass().getResource("viewCustomers.fxml"));
+            customersView=FXMLLoader.load(getClass().getResource("viewProviders.fxml"));
             home.setCenter(customersView);
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    
+    
+    
 }

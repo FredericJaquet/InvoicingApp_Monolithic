@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Provider;
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -31,24 +33,33 @@ import javafx.stage.Stage;
  */
 public class ViewProvidersController implements Initializable {
 
+    private ObservableList<Provider> providers;
+    
     @FXML private TableView<Provider> tableProviders;
     @FXML private TableColumn<Provider, String> columnComName, columnVATNbr, columnEmail, ColumnWeb;
     @FXML private VBox paneProviders;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        createTableProviders();
+        onClicEnabled();
+        tableProviders.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                onSeeDetails();
+            }
+        });
     }
     
     @FXML protected void onCreateProvider(){
             Parent root=null;
+            Scene scene=null;
+            Stage stage=new Stage();
+            
         try {
             root = FXMLLoader.load(getClass().getResource("viewCreateProvider.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(ViewProvidersController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Scene scene=new Scene(root);
-        Stage stage=new Stage();
+        scene=new Scene(root);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
         stage.setScene(scene);
         
@@ -61,9 +72,41 @@ public class ViewProvidersController implements Initializable {
         paneProviders.getParent().setDisable(true);
     }
     
-    private void createTableProviders(){
-        ObservableList<Provider> providers=FXCollections.observableArrayList(Provider.getAllProvidersFromDB());
+    @FXML protected void onSeeDetails(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent detailsProviderView=null;
+        ViewDetailsProviderController controller=null;
+        BorderPane home=null;
         
+        loader.setLocation(getClass().getResource("viewDetailsProvider.fxml"));
+        try {
+            detailsProviderView=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewProvidersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(tableProviders.getSelectionModel().getSelectedItem());
+        home=(BorderPane)paneProviders.getParent();
+        home.setCenter(detailsProviderView);
+    }
+    
+    @FXML protected void onClicEnabled(){
+        providers=FXCollections.observableArrayList(Provider.getAllProvidersFromDB(Provider.ENABLED));
+        createTableProviders();
+    }
+    
+    @FXML protected void onClicDisabled(){
+        providers=FXCollections.observableArrayList(Provider.getAllProvidersFromDB(Provider.DISABLED));
+        createTableProviders();
+    }
+    
+    @FXML protected void onClicAll(){
+        providers=FXCollections.observableArrayList(Provider.getAllProvidersFromDB());
+        createTableProviders();
+    }
+    
+    private void createTableProviders(){        
         columnComName.setCellValueFactory(new PropertyValueFactory<Provider, String>("comName"));
         columnVATNbr.setCellValueFactory(new PropertyValueFactory<Provider, String>("vatNumber"));;
         columnEmail.setCellValueFactory(new PropertyValueFactory<Provider, String>("email"));;

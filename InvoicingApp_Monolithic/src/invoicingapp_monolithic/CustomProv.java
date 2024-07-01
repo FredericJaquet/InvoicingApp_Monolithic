@@ -18,7 +18,9 @@ import java.util.logging.Logger;
  * @author frede
  */
 public class CustomProv extends Company{
-    
+    public static int ENABLED=1;
+    public static int DISABLED=2;
+    public static int ALL=3;
     private double defaultVAT, defaultWithholding;
     private boolean enabled, europe;
     private int idCustomProv;

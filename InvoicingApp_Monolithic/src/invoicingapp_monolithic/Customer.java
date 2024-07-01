@@ -21,9 +21,6 @@ import java.util.logging.Logger;
  */
 public class Customer extends CustomProv {
     
-    public static int ENABLED=1;
-    public static int DISABLED=2;
-    public static int ALL=3;
     private String invoicingMethod, payMethod;
     private int duedate;
     private int idCustomer;
