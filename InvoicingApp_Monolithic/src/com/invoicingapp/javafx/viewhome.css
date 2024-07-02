@@ -45,6 +45,9 @@
 .centralMenu{
     -fx-pref-width: 130px;
     -fx-pref-height: 130px;
+    -fx-text-align: center;
+    -fx-font-color: red;
+    -fx-font-weight: bold;
 }
 
 .verticalBorder{

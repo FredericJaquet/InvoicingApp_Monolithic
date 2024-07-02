@@ -29,3 +29,4 @@ replay_pid*
 /build/
 /InvoicingApp_Monolithic/nbproject/private/
 /InvoicingApp_Monolithic/build/
+/InvoicingApp_Monolithic/dist/
