@@ -25,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -36,7 +37,7 @@ public class ViewHomeController implements Initializable {
 
     private int imgSize=100;
     
-    @FXML private VBox PaneCenterHome;
+    @FXML private GridPane paneCentral;
     @FXML private BorderPane mainPane;
     @FXML private Button btnCustomers,btnProviders,btnNewOrder,
             btnNewInvoiceCustomer,btnNewInvoiceProvider,btnNewQuote, 
@@ -92,7 +93,7 @@ public class ViewHomeController implements Initializable {
     }
     
     @FXML protected void onHome(){
-        mainPane.setCenter(PaneCenterHome);
+        mainPane.setCenter(paneCentral);
     }
     
     @FXML protected void onItemCentralMenu(ActionEvent e){

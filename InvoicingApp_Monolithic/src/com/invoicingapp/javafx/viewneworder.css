@@ -5,3 +5,7 @@
 .mainFxmlClass {
 
 }
+
+.labels{
+    -fx-font-weight:bold;
+}

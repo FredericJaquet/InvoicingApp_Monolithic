@@ -31,7 +31,6 @@
     -fx-background-position: center;
     -fx-background-size: 50px 50px;
     -fx-padding: 5;
-    
 }
 
 .borders{
@@ -39,7 +38,7 @@
 }
 
 .labelMenu{
-    -fx-font-weight: bold;
+    -fx-font-weight: bolder;
 }
 
 .centralMenu{

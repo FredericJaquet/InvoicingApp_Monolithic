@@ -40,7 +40,7 @@ import javafx.stage.Stage;
 
 public class ViewDetailsCustomerController implements Initializable {
 
-    private Customer customer=new Customer();
+    private Customer customer;
     private ArrayList<Phone> phones=new ArrayList();
     private ArrayList<Phone> newPhones=new ArrayList();
     private ArrayList<ContactPerson> contacts=new ArrayList();
@@ -211,6 +211,7 @@ public class ViewDetailsCustomerController implements Initializable {
         viewNewContact.setOnHiding(event -> {
                 paneDetailsCustomer.getParent().setDisable(false);
                 showContacts();
+                changes=true;
             });
         
         paneDetailsCustomer.getParent().setDisable(true);
@@ -243,6 +244,7 @@ public class ViewDetailsCustomerController implements Initializable {
         viewNewPhone.setOnHiding(event -> {
                 paneDetailsCustomer.getParent().setDisable(false);
                 showPhones();
+                changes=true;
             });
         
         paneDetailsCustomer.getParent().setDisable(true);
@@ -275,6 +277,7 @@ public class ViewDetailsCustomerController implements Initializable {
         viewNewScheme.setOnHiding(event -> {
                 paneDetailsCustomer.getParent().setDisable(false);
                 showSchemes();
+                changes=true;
             });
         
         paneDetailsCustomer.getParent().setDisable(true);
@@ -315,14 +318,21 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicNewOrder(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent newOrderView=null;
+        ViewNewOrderController controller=null;
         BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
-        Parent customersView;
+        
+        loader.setLocation(getClass().getResource("viewNewOrder.fxml"));
         try {
-            customersView=FXMLLoader.load(getClass().getResource("viewNewOrder.fxml"));
-            home.setCenter(customersView);
+            newOrderView=loader.load();
         } catch (IOException ex) {
             Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        controller=loader.getController();
+        controller.initData(customer);
+        home.setCenter(newOrderView);
     }
     
     @FXML protected void onClicNewInvoice(){
