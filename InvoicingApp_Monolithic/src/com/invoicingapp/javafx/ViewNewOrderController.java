@@ -7,6 +7,7 @@ package com.invoicingapp.javafx;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Scheme;
+import invoicingapp_monolithic.SchemeLine;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,10 +31,12 @@ import javafx.util.Callback;
 public class ViewNewOrderController implements Initializable {
 
     private CustomProv company;
+    private Scheme scheme;
+    private ArrayList<SchemeLine> lines=new ArrayList();
     private ArrayList<CustomProv> companies=new ArrayList();
     
     @FXML ComboBox cbCustomProvs, cbSchemes;
-    @FXML TextField tfDescription,tfPrice,tfUnits,tfFieldName,tfSourceLanguage,tfTargetlanguage;
+    @FXML TextField tfDescription,tfPrice,tfUnits,tfFieldName,tfSourceLanguage,tfTargetLanguage;
     @FXML Label lbLegalName,lbVATNumber,lbUpdatedTotal;
     @FXML DatePicker dpDateOrder;
     
@@ -55,6 +58,11 @@ public class ViewNewOrderController implements Initializable {
     @FXML protected void getSelectionCBCustomProvs(){
         company=(CustomProv) cbCustomProvs.getSelectionModel().getSelectedItem();
         popuplateCbSchemes();
+        updateData();
+    }
+    
+    @FXML protected void getSelectionCBSchemes(){//Cuando cambiamos de Cliente en el CBCUstomProvs, salta un error, porque este metodo viene OnAction.
+        scheme=(Scheme) cbSchemes.getSelectionModel().getSelectedItem();
         updateData();
     }
     
@@ -113,8 +121,6 @@ public class ViewNewOrderController implements Initializable {
             }
         });
         
-        //setViewCBCustomProvs();
-        
         cbCustomProvs.setButtonCell(new ListCell<CustomProv>() {
             @Override
             protected void updateItem(CustomProv item, boolean empty) {
@@ -126,28 +132,20 @@ public class ViewNewOrderController implements Initializable {
                 }
             }
         });
-    }
-    
-    private void setViewCBCustomProvs(){
-        cbCustomProvs.setButtonCell(new ListCell<CustomProv>() {
-            @Override
-            protected void updateItem(CustomProv item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item != null) {
-                    setText(item.getComName());
-                } else {
-                    setText(null);
-                }
-            }
-        });
-    }
+    }    
     
     private void updateData(){
         if(company!=null){
-            //cbCustomProvs.getSelectionModel().select(company.getComName());
-            setViewCBCustomProvs();
             lbLegalName.setText(company.getLegalName());
             lbVATNumber.setText(company.getVatNumber());
+        }
+        if(scheme!=null){
+            lines=scheme.getLines();
+            tfPrice.setText(String.valueOf(scheme.getPrice()));
+            tfUnits.setText(scheme.getUnits());
+            tfFieldName.setText(scheme.getField());
+            tfSourceLanguage.setText(scheme.getSourceLanguage());
+            tfTargetLanguage.setText(scheme.getTargetLanguage());
         }
     }
 }

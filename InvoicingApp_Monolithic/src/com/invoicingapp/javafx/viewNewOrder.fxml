@@ -46,7 +46,7 @@
    </padding>
    <children>
       <ComboBox fx:id="cbCustomProvs" onAction="#getSelectionCBCustomProvs" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-      <ComboBox fx:id="cbSchemes" prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" />
+      <ComboBox fx:id="cbSchemes" onAction="#getSelectionCBSchemes" prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" />
       <TextField fx:id="tfDescription" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
       <DatePicker fx:id="dpDateOrder" GridPane.columnIndex="5" GridPane.rowIndex="3" />
       <TextField fx:id="tfPrice" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
