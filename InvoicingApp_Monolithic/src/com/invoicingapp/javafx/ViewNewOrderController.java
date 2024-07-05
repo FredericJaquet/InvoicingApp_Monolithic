@@ -53,7 +53,6 @@ public class ViewNewOrderController implements Initializable {
     @FXML TableColumn<Item,String> columnDescription;
     @FXML TableColumn<Item,Double> columnDiscount,columnQuantity;
     
-    
     public void initData(CustomProv company){
         this.company=company;
         updateData();
@@ -78,8 +77,10 @@ public class ViewNewOrderController implements Initializable {
     
     @FXML protected void getSelectionCBCustomProvs(){
         company=(CustomProv) cbCustomProvs.getSelectionModel().getSelectedItem();
-        popuplateCbSchemes();
-        updateData();
+        if(company!=null){
+            popuplateCbSchemes();
+            updateData();
+        }
     }
     
     @FXML protected void getSelectionCBSchemes(){
@@ -136,7 +137,10 @@ public class ViewNewOrderController implements Initializable {
         order.setDateOrder(dpDateOrder.getValue());
         if(!tfDescription.getText().equals("")){
             order.setDescription(tfDescription.getText());
-        }else{control=false;}
+        }else{
+            control=false;
+            tfDescription.getStyleClass().add("error");
+        }
         order.setFieldName(tfFieldName.getText());
         order.setIdCustomProv(company.getIdCustomProv());
         try{
@@ -149,8 +153,10 @@ public class ViewNewOrderController implements Initializable {
         order.setTargetLanguage(tfTargetLanguage.getText());
         order.setUnits(tfUnits.getText());
         
-        order.addToDB();
-        
+        if(control){
+            order.addToDB();
+            clearAll();
+        }
     }
     
     private void popuplateCbSchemes(){
@@ -270,5 +276,32 @@ public class ViewNewOrderController implements Initializable {
         columnQuantity.setCellValueFactory(new PropertyValueFactory<Item,Double>("quantity"));
                 
         tvItems.setItems(items);
+    }
+
+    private void clearAll(){
+        order=new Orders();
+        company=new CustomProv();
+        scheme=new Scheme();
+        iLine=0;
+        updatedTotal=0;
+        tfDescription.clear();
+        tfLineDescription.clear();
+        tfDiscount.clear();
+        tfQuantity.clear();
+        tfPrice.clear();
+        tfUnits.clear();
+        tfFieldName.clear();
+        tfSourceLanguage.clear();
+        tfTargetLanguage.clear();
+        lbLegalName.setText("");
+        lbVATNumber.setText("");
+        lbUpdatedTotal.setText(",00€");
+        dpDateOrder.setValue(LocalDate.now());
+        cbCustomProvs.setValue(null);
+        cbSchemes.setValue(null);
+        createTableSchemeLines();
+        
+        tfDescription.getStyleClass().remove("error");
+        tfPrice.getStyleClass().remove("error");
     }
 }
