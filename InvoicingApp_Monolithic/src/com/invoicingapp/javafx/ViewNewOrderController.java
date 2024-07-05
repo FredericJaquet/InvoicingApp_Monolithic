@@ -10,6 +10,7 @@ import invoicingapp_monolithic.SchemeLine;
 import invoicingapp_monolithic.Item;
 import invoicingapp_monolithic.Orders;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -72,6 +73,7 @@ public class ViewNewOrderController implements Initializable {
         companies=CustomProv.getAllCustomProvFromDB(CustomProv.ENABLED);
         populateCbCustomProvs();
         lbUpdatedTotal.setText(String.valueOf(0)+"€");
+        dpDateOrder.setValue(LocalDate.now());
     }
     
     @FXML protected void getSelectionCBCustomProvs(){
