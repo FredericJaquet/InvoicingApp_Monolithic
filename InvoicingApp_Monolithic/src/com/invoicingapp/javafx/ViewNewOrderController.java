@@ -4,10 +4,11 @@
  */
 package com.invoicingapp.javafx;
 
-import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
+import invoicingapp_monolithic.Item;
+import invoicingapp_monolithic.Orders;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -20,7 +21,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
 /**
@@ -30,19 +36,31 @@ import javafx.util.Callback;
  */
 public class ViewNewOrderController implements Initializable {
 
+    private Orders order=new Orders();
     private CustomProv company;
     private Scheme scheme;
     private ArrayList<SchemeLine> lines=new ArrayList();
     private ArrayList<CustomProv> companies=new ArrayList();
+    private int iLine=0;
+    private double updatedTotal=0;
     
     @FXML ComboBox cbCustomProvs, cbSchemes;
-    @FXML TextField tfDescription,tfPrice,tfUnits,tfFieldName,tfSourceLanguage,tfTargetLanguage;
+    @FXML TextField tfDescription,tfLineDescription, tfDiscount,tfQuantity,tfPrice,tfUnits,tfFieldName,tfSourceLanguage,tfTargetLanguage;
     @FXML Label lbLegalName,lbVATNumber,lbUpdatedTotal;
     @FXML DatePicker dpDateOrder;
+    @FXML TableView<Item> tvItems;
+    @FXML TableColumn<Item,String> columnDescription;
+    @FXML TableColumn<Item,Double> columnDiscount,columnQuantity;
+    
     
     public void initData(CustomProv company){
         this.company=company;
         updateData();
+        for(int i=0;i<companies.size();i++){
+            if(companies.get(i).getIdCustomProv()==company.getIdCustomProv()){
+                cbCustomProvs.getSelectionModel().select(i);
+            }
+        }
         popuplateCbSchemes();
     }
     
@@ -53,6 +71,7 @@ public class ViewNewOrderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         companies=CustomProv.getAllCustomProvFromDB(CustomProv.ENABLED);
         populateCbCustomProvs();
+        lbUpdatedTotal.setText(String.valueOf(0)+"€");
     }
     
     @FXML protected void getSelectionCBCustomProvs(){
@@ -61,9 +80,75 @@ public class ViewNewOrderController implements Initializable {
         updateData();
     }
     
-    @FXML protected void getSelectionCBSchemes(){//Cuando cambiamos de Cliente en el CBCUstomProvs, salta un error, porque este metodo viene OnAction.
+    @FXML protected void getSelectionCBSchemes(){
         scheme=(Scheme) cbSchemes.getSelectionModel().getSelectedItem();
         updateData();
+        iLine=0;
+        updateSchemeLine();
+    }
+    
+    @FXML protected void onCommitLine(KeyEvent event){
+        Item newLine=new Item();
+        boolean control=true;
+        
+        if (event.getCode()==KeyCode.ENTER) {
+            newLine.setDescription(tfLineDescription.getText());
+            if(tfLineDescription.getText().equals("")){
+                tfLineDescription.getStyleClass().add("error");
+                control=false;
+            }
+            try{
+                newLine.setDiscount(Double.parseDouble(tfDiscount.getText()));
+            }catch(NumberFormatException ex){
+                tfDiscount.getStyleClass().add("error");
+                control=false;
+            }
+            try{
+                newLine.setQuantity(Double.parseDouble(tfQuantity.getText()));
+            }catch(NumberFormatException ex){
+                tfQuantity.getStyleClass().add("error");
+                control=false;
+            }
+            if(control){
+                if(newLine.getQuantity()>0){
+                    order.addItem(newLine);
+                }
+                createTableSchemeLines();
+                control=true;
+                tfLineDescription.getStyleClass().remove("error");
+                tfQuantity.getStyleClass().remove("error");
+                tfDiscount.getStyleClass().remove("error");
+                tfLineDescription.clear();
+                tfDiscount.clear();
+                tfQuantity.clear();
+                updateSchemeLine();
+                updateTotalOrder(newLine);
+            }
+        }
+    }
+    
+    @FXML protected void onClicSave(){
+        boolean control=true;
+        
+        order.setBilled(false);
+        order.setDateOrder(dpDateOrder.getValue());
+        if(!tfDescription.getText().equals("")){
+            order.setDescription(tfDescription.getText());
+        }else{control=false;}
+        order.setFieldName(tfFieldName.getText());
+        order.setIdCustomProv(company.getIdCustomProv());
+        try{
+            order.setPricePerUnit(Double.parseDouble(tfPrice.getText()));
+        }catch(NumberFormatException ex){
+            tfPrice.getStyleClass().add("error");
+            control=false;
+        }
+        order.setSourceLanguage(tfSourceLanguage.getText());
+        order.setTargetLanguage(tfTargetLanguage.getText());
+        order.setUnits(tfUnits.getText());
+        
+        order.addToDB();
+        
     }
     
     private void popuplateCbSchemes(){
@@ -147,5 +232,41 @@ public class ViewNewOrderController implements Initializable {
             tfSourceLanguage.setText(scheme.getSourceLanguage());
             tfTargetLanguage.setText(scheme.getTargetLanguage());
         }
+    }
+
+    private void updateSchemeLine(){
+        if(iLine<lines.size()){
+            tfLineDescription.setText(lines.get(iLine).getDescription());
+            tfDiscount.setText(String.valueOf(lines.get(iLine).getDiscount()));
+            iLine++;
+        }
+    }
+    
+    private void updateTotalOrder(Item item){
+        double price=0;
+        boolean control=true;
+        
+        try{
+            price=Double.parseDouble(tfPrice.getText());
+        }catch(NumberFormatException ex){
+            tfPrice.getStyleClass().add("error");
+            control=false;
+        }
+        
+        if(control){
+            updatedTotal=updatedTotal+price*item.getQuantity()*(100-item.getDiscount())/100;
+            lbUpdatedTotal.setText(String.format("%.2f€", updatedTotal));
+            tfPrice.getStyleClass().remove("error");
+        }
+    }
+
+    private void createTableSchemeLines(){
+        ObservableList<Item> items=FXCollections.observableArrayList(order.getItems());
+        
+        columnDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
+        columnDiscount.setCellValueFactory(new PropertyValueFactory<Item,Double>("discount"));
+        columnQuantity.setCellValueFactory(new PropertyValueFactory<Item,Double>("quantity"));
+                
+        tvItems.setItems(items);
     }
 }

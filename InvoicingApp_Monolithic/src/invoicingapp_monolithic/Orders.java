@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author frede
  */
-class Orders {
+public class Orders {
     private String description, units, fieldName, sourceLanguage, targetLanguage;
     private double pricePerUnit;
     private boolean billed;
@@ -419,8 +419,8 @@ class Orders {
     /**
      * @param dateOrder the dateOrder to set
      */
-    public void setDateOrder(String dateOrder) {
-        this.dateOrder = LocalDate.parse(dateOrder);
+    public void setDateOrder(LocalDate dateOrder) {
+        this.dateOrder = dateOrder;
     }
 
     /**

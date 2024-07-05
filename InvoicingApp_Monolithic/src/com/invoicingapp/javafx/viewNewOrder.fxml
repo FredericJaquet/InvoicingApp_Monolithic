@@ -47,9 +47,9 @@
    <children>
       <ComboBox fx:id="cbCustomProvs" onAction="#getSelectionCBCustomProvs" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
       <ComboBox fx:id="cbSchemes" onAction="#getSelectionCBSchemes" prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" />
-      <TextField fx:id="tfDescription" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+      <TextField fx:id="tfDescription" promptText="Obligatorio" stylesheets="@viewneworder.css" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
       <DatePicker fx:id="dpDateOrder" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-      <TextField fx:id="tfPrice" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextField fx:id="tfPrice" promptText="Obligatorio" stylesheets="@viewneworder.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <TextField fx:id="tfUnits" GridPane.columnIndex="3" GridPane.rowIndex="4" />
       <TextField fx:id="tfFieldName" GridPane.columnIndex="5" GridPane.rowIndex="4" />
       <TextField fx:id="tfSourceLanguage" GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -70,19 +70,19 @@
       <Label styleClass="labels" stylesheets="@viewneworder.css" text="Sector" GridPane.columnIndex="4" GridPane.rowIndex="4" />
       <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6" />
       <Label styleClass="labels" stylesheets="@viewneworder.css" text="Artículos" GridPane.rowIndex="7" />
-      <TableView GridPane.columnSpan="6" GridPane.rowIndex="9" GridPane.rowSpan="6">
+      <TableView fx:id="tvItems" GridPane.columnSpan="6" GridPane.rowIndex="9" GridPane.rowSpan="6">
         <columns>
-            <TableColumn prefWidth="417.9999803304672" text="Descripción" />
-          <TableColumn prefWidth="105.3333740234375" text="Descuento" />
-          <TableColumn prefWidth="101.3333740234375" text="Cantidad" />
+            <TableColumn fx:id="columnDescription" prefWidth="417.9999803304672" text="Descripción" />
+          <TableColumn fx:id="columnDiscount" prefWidth="105.3333740234375" text="Descuento" />
+          <TableColumn fx:id="columnQuantity" prefWidth="101.3333740234375" text="Cantidad" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextField promptText="Descripción" GridPane.columnSpan="4" GridPane.rowIndex="8" />
-      <TextField promptText="Descuento" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-      <TextField promptText="Cantidad" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+      <TextField fx:id="tfLineDescription" promptText="Descripción" stylesheets="@viewneworder.css" GridPane.columnSpan="4" GridPane.rowIndex="8" />
+      <TextField fx:id="tfDiscount" promptText="Descuento" stylesheets="@viewneworder.css" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+      <TextField fx:id="tfQuantity" onKeyPressed="#onCommitLine" promptText="Cantidad" stylesheets="@viewneworder.css" GridPane.columnIndex="5" GridPane.rowIndex="8" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="15">
          <children>
             <Button layoutX="19.0" layoutY="3.0" mnemonicParsing="false" text="Cancelar" />
@@ -90,7 +90,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="15">
          <children>
-            <Button layoutX="21.0" layoutY="3.0" mnemonicParsing="false" text="Guardar" />
+            <Button layoutX="21.0" layoutY="3.0" mnemonicParsing="false" onAction="#onClicSave" text="Guardar" />
          </children>
       </AnchorPane>
       <Label styleClass="labels" stylesheets="@viewneworder.css" text="Total" GridPane.columnIndex="4" GridPane.rowIndex="7" />

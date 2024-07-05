@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author frede
  */
-class Item {
+public class Item {
     
     private String description;
     private double discount, quantity;

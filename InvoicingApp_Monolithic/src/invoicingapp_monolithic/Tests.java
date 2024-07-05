@@ -437,7 +437,7 @@ public class Tests {
         System.out.println("Descripción:");
         order.setDescription(scan.nextLine());
         System.out.println("Fecha:");
-        order.setDateOrder(scan.nextLine());
+        //order.setDateOrder(scan.nextLine());
         
         if(idScheme!=0){
             scheme.getFromDB(idScheme);
@@ -534,7 +534,7 @@ public class Tests {
         System.out.println("Descripción:");
         order.setDescription(scan.nextLine());
         System.out.println("Fecha:");
-        order.setDateOrder(scan.nextLine());
+        //order.setDateOrder(scan.nextLine());
         
         if(idScheme!=0){
             scheme.getFromDB(idScheme);
