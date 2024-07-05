@@ -71,7 +71,7 @@ public class ViewNewOrderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         companies=CustomProv.getAllCustomProvFromDB(CustomProv.ENABLED);
         populateCbCustomProvs();
-        lbUpdatedTotal.setText(String.valueOf(0)+"€");
+        lbUpdatedTotal.setText(String.valueOf(0.00)+"€");
         dpDateOrder.setValue(LocalDate.now());
     }
     
@@ -225,7 +225,7 @@ public class ViewNewOrderController implements Initializable {
                 }
             }
         });
-    }    
+    }
     
     private void updateData(){
         if(company!=null){

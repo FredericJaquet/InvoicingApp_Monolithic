@@ -22,6 +22,7 @@ public class Orders {
     private String description, units, fieldName, sourceLanguage, targetLanguage;
     private double pricePerUnit;
     private boolean billed;
+    private boolean selected=false;
     private int idOrders, idCustomProv;
     private LocalDate dateOrder;
     private ArrayList<Item> items=new ArrayList();
@@ -217,6 +218,7 @@ public class Orders {
         
         try{
             while(result.next()){
+                item=new Item();
                 idItem=result.getInt(1);
                 item.getFromDB(idItem);
                 items.add(item);
@@ -262,7 +264,7 @@ public class Orders {
         double totalOrder=0;
                  
         for(int i=0;i<items.size();i++){
-            totalOrder=totalOrder+(items.get(i).getQuantity()*(1-items.get(i).getDiscount()/100)*pricePerUnit);
+            totalOrder=totalOrder+(items.get(i).getQuantity()*(1-(items.get(i).getDiscount()/100))*pricePerUnit);
         }
         
         return totalOrder;
@@ -428,6 +430,20 @@ public class Orders {
      */
     public void setItems(ArrayList<Item> items) {
         this.items = items;
+    }
+
+    /**
+     * @return the selected
+     */
+    public boolean isSelected() {
+        return selected;
+    }
+
+    /**
+     * @param selected the selected to set
+     */
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
     
 }

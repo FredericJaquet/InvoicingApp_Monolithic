@@ -336,14 +336,21 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicNewInvoice(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent invoiceCustomerView=null;
+        ViewNewInvoiceCustomerController controller=null;
         BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
-        Parent customersView;
+        
+        loader.setLocation(getClass().getResource("viewNewInvoiceCustomer.fxml"));
         try {
-            customersView=FXMLLoader.load(getClass().getResource("viewNewInvoiceCustomer.fxml"));
-            home.setCenter(customersView);
+            invoiceCustomerView=loader.load();
         } catch (IOException ex) {
             Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        controller=loader.getController();
+        controller.initData(customer);
+        home.setCenter(invoiceCustomerView);
     }
     
     @FXML protected void onClicNewQuote(){

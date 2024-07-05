@@ -20,11 +20,14 @@ import java.util.logging.Logger;
 public class CustomProv extends Company{
     public static int ENABLED=1;
     public static int DISABLED=2;
+    public static int BILLED=1;
+    public static int NOTBILLED=2;
     public static int ALL=3;
     private double defaultVAT, defaultWithholding;
     private boolean enabled, europe;
     private int idCustomProv;
     private ArrayList<Scheme> schemes=new ArrayList();
+    private ArrayList<Orders> orders=new ArrayList();
     
     public CustomProv(){}
     
@@ -166,6 +169,54 @@ public class CustomProv extends Company{
         }
         
         return list;
+    }
+    
+    public ArrayList<Orders> getOrdersFromDB(){
+        String query="SELECT idOrders FROM Orders WHERE idCustomProv="+idCustomProv;
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Orders order=new Orders();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                order=new Orders();
+                order.getFromDB(result.getInt(1));
+                orders.add(order);
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return orders;
+    }
+    
+    public ArrayList<Orders> getOrdersFromDB(int billed){
+        String query="SELECT idOrders FROM Orders WHERE idCustomProv="+idCustomProv;
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Orders order=new Orders();
+        
+        switch(billed){
+            case(1):query=query.concat(" AND billed=true;");break;
+            case(2):query=query.concat(" AND billed=false;");break;
+            case(3):query=query.concat(";");
+        }
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                order=new Orders();
+                order.getFromDB(result.getInt(1));
+                orders.add(order);
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return orders;
     }
     
     /**

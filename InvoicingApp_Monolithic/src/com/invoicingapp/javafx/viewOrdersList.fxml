@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+
+<HBox minHeight="-Infinity" minWidth="-Infinity" prefWidth="700.0" spacing="10.0" stylesheets="@vieworderslist.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewOrdersListController">
+   <children>
+      <Label fx:id="lbDescription" prefWidth="500.0" text="Label" />
+      <Label fx:id="lbDate" minHeight="-Infinity" minWidth="-Infinity" prefWidth="100.0" text="Label" />
+      <Label fx:id="lbTotal" text="Label" />
+      <CheckBox fx:id="cbSelected" mnemonicParsing="false" onAction="#getSelection" />
+   </children>
+</HBox>

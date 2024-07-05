@@ -1,14 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.invoicingapp.javafx.ViewNewInvoiceCustomerController">
-    <stylesheets>
-        <URL value="@viewnewinvoicecustomer.css" />
-    </stylesheets>
-   <children>
-      <Label layoutX="262.0" layoutY="191.0" text="Nueva Factura" />
-   </children>
-</AnchorPane>
+<ScrollPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewInvoiceCustomerController">
+   <content>
+      <VBox fx:id="VBoxNewInvoice" spacing="15.0">
+         <children>
+            <HBox>
+               <children>
+                  <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Empresa">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="cbCustomProvs" minWidth="-Infinity" onAction="#getSelectionCBCustomProvs" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets right="25.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Label text="Fecha">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <DatePicker>
+                     <HBox.margin>
+                        <Insets right="25.0" />
+                     </HBox.margin>
+                  </DatePicker>
+                  <Label styleClass="data" stylesheets="@viewnewinvoicecustomer.css" text="Número">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField minWidth="-Infinity" />
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+         </children>
+      </VBox>
+   </content>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</ScrollPane>
