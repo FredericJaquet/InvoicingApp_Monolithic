@@ -47,6 +47,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Nombre de Usuario" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER">
@@ -84,6 +85,7 @@
                      </GridPane.margin>
                   </Button>
                   <Label fx:id="labelPassword" textFill="RED" GridPane.rowIndex="6" />
+                  <Button fx:id="btnImportLogo" mnemonicParsing="false" onAction="#handleImportLogo" text="Importar Logo" GridPane.rowIndex="7" />
                </children>
             </GridPane>
             <GridPane fx:id="paneCompany" vgap="25.0" visible="false">

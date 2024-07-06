@@ -25,6 +25,7 @@ public class Configuration {
     private static String path="config.txt";
     @Expose private boolean reminder=false;
     @Expose private int idUser=0;
+    @Expose private String logoPath;
     
     public static Configuration getConfiguration(){
         String json="";
@@ -32,8 +33,6 @@ public class Configuration {
         Configuration config=new Configuration();
         
         File configFile=new File(path);
-        
-        
         
         json=Configuration.readFile(configFile);
         configList = new Gson().fromJson(json, new TypeToken<ArrayList<Configuration>>() {}.getType());
@@ -146,7 +145,12 @@ public class Configuration {
         this.idUser = idUser;
     }
     
+    public void setLogoPath(String logoPath){
+        this.logoPath=logoPath;
+    }
     
-    
+    public String getLogoPath(){
+        return logoPath;
+    }
     
 }

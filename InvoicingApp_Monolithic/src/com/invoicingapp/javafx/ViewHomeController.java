@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.Configuration;
 import invoicingapp_monolithic.Customer;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +27,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class

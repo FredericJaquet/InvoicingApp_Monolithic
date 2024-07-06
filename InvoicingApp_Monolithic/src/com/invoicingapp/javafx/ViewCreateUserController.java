@@ -8,8 +8,12 @@ import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Users;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -30,6 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -45,6 +51,7 @@ public class ViewCreateUserController implements Initializable {
     private String introCompany="Datos de la Empresa";
     private ArrayList<Company> companies=new ArrayList();
     private Stage stage;
+    private String logoPath;
     
     @FXML private PasswordField fieldPasswd1,fieldPasswd2 ;
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
@@ -54,6 +61,7 @@ public class ViewCreateUserController implements Initializable {
     @FXML private GridPane paneUser,paneCompany;
     @FXML private HBox paneFootUser,paneFootCompany;
     @FXML private VBox paneCreateUser;
+    @FXML Button btnImportLogo;
     
     /**
      * Initializes the controller class.
@@ -85,6 +93,11 @@ public class ViewCreateUserController implements Initializable {
     
     @FXML protected void onClicCancel(){
         Stage stage=(Stage)paneCreateUser.getScene().getWindow();
+        try {
+            Files.deleteIfExists(Paths.get(logoPath));
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCreateUserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         stage.close();
     }
     
@@ -120,6 +133,9 @@ public class ViewCreateUserController implements Initializable {
             user.addToDB();
             stage.close();
         }
+        
+        
+        System.out.println(logoPath);
     }
     
     @FXML protected void onClicBackFromCompany(){
@@ -203,6 +219,35 @@ public class ViewCreateUserController implements Initializable {
         
         user.setIdCompany(company.getIdCompany());
         user.setAddress(company.getAddress());
+    }
+    
+    @FXML private void handleImportLogo() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar Logo");
+        fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        Stage stage = (Stage) btnImportLogo.getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedFile != null) {
+            try {
+                File destDir = new File("src/com/invoicingapp/img/");
+                if (!destDir.exists()) {
+                    destDir.mkdirs(); 
+                }
+
+                File destFile = new File(destDir, selectedFile.getName());
+                Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                logoPath = destFile.getAbsolutePath();
+                
+                labelError.setText("Logo importado: " + logoPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
     private FXMLLoader switchWindow(String path){

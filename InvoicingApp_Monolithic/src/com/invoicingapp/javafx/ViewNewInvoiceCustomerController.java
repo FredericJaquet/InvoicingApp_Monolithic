@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.Configuration;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Orders;
 import java.io.IOException;
@@ -19,13 +20,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
@@ -39,6 +36,8 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private ArrayList<Orders> pendingOrders;
     private ArrayList<CustomProv> companies=new ArrayList();
     private CustomProv company;
+    private Configuration config=Configuration.getConfiguration();
+    private String logoPath=config.getLogoPath();
     private int node=1;
     
     @FXML private VBox VBoxNewInvoice;
