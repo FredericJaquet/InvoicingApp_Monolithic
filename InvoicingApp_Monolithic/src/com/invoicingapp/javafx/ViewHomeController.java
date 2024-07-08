@@ -4,7 +4,6 @@
  */
 package com.invoicingapp.javafx;
 
-import com.invoicingapp.config.Configuration;
 import invoicingapp_monolithic.Customer;
 import java.io.IOException;
 import java.io.InputStream;

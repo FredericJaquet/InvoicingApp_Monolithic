@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.Configuration;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Phone;
@@ -46,6 +47,7 @@ import javafx.util.Callback;
  */
 public class ViewCreateUserController implements Initializable {
 
+    private Configuration config=Configuration.getConfiguration();
     private Users user=new Users();
     private String introUser="Datos del usuario";
     private String introCompany="Datos de la Empresa";
@@ -113,6 +115,7 @@ public class ViewCreateUserController implements Initializable {
             paneFootUser.setVisible(false);
             paneFootCompany.setVisible(true);
             labelPassword.setText("");
+            labelError.setText("");
         }else{
             labelPassword.setText("Las contraseñas no coinciden");
         }
@@ -133,9 +136,8 @@ public class ViewCreateUserController implements Initializable {
             user.addToDB();
             stage.close();
         }
-        
-        
-        System.out.println(logoPath);
+        config.setLogoPath(logoPath);
+        config.save();
     }
     
     @FXML protected void onClicBackFromCompany(){
@@ -221,7 +223,7 @@ public class ViewCreateUserController implements Initializable {
         user.setAddress(company.getAddress());
     }
     
-    @FXML private void handleImportLogo() {
+    @FXML protected void handleImportLogo() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar Logo");
         fileChooser.getExtensionFilters().addAll(
@@ -243,7 +245,7 @@ public class ViewCreateUserController implements Initializable {
 
                 logoPath = destFile.getAbsolutePath();
                 
-                labelError.setText("Logo importado: " + logoPath);
+                labelError.setText("Logo importado correctamente");
             } catch (IOException e) {
                 e.printStackTrace();
             }

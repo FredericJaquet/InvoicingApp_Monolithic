@@ -177,6 +177,8 @@ public class CustomProv extends Company{
         ResultSet result=null;
         Orders order=new Orders();
         
+        orders.clear();
+        
         con.openConnection();
         result=con.getResultSet(query);
         
@@ -197,6 +199,8 @@ public class CustomProv extends Company{
         ConnectionDB con=new ConnectionDB();
         ResultSet result=null;
         Orders order=new Orders();
+        
+        orders.clear();
         
         switch(billed){
             case(1):query=query.concat(" AND billed=true;");break;

@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class Configuration {
     
-    private static String path="config.txt";
+    private static String path="src/com/invoicingapp/config/config.txt";
     @Expose private boolean reminder=false;
     @Expose private int idUser=0;
     @Expose private String logoPath;
@@ -48,7 +48,9 @@ public class Configuration {
         File configFile=new File(path);
         String json=gson.toJson(this);
         
-        Configuration.writeFiles(configFile, json);
+        System.out.println(json);
+        
+        Configuration.writeFile(configFile, json);
     }
     
     private static String readFile(File file){
@@ -60,7 +62,7 @@ public class Configuration {
 	if(!file.exists()) {
             try {
                 file.createNewFile();
-                writeFiles(file,"");			
+                writeFile(file,"");			
                 } catch (IOException e1) {
                     e1.printStackTrace();
             }
@@ -88,7 +90,7 @@ public class Configuration {
 	return data;
     }
 
-    private static void writeFiles(File file, String data){
+    private static void writeFile(File file, String data){
         FileWriter fw=null;
 	PrintWriter pw=null;
 		

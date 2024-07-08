@@ -139,6 +139,4 @@ public class ViewLoginController implements Initializable {
         fieldPasswd.setVisible(true);
     }
     
-    
-    
 }
