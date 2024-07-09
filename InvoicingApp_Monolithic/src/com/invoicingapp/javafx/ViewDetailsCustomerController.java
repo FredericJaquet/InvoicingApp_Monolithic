@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.bbdd.ConnectionDB;
+import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Phone;
@@ -47,7 +48,9 @@ public class ViewDetailsCustomerController implements Initializable {
     private ArrayList<ContactPerson> newContacts=new ArrayList();
     private ArrayList<Scheme> schemes=new ArrayList();
     private ArrayList<Scheme> newSchemes=new ArrayList();
-    private int iContacts=0,iPhones=0,iSchemes=0;
+    private ArrayList<BankAccount> accounts=new ArrayList();
+    private ArrayList<BankAccount> newAccounts=new ArrayList();
+    private int iContacts=0,iPhones=0,iSchemes=0,iAccounts=0;
     private String query="";
     private boolean changes=false;
     
@@ -56,7 +59,8 @@ public class ViewDetailsCustomerController implements Initializable {
             lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country,
             lb_ContactPerson_Firstname,lb_ContactPerson_Middlename,lb_ContactPerson_Lastname,lb_ContactPerson_Role,lb_ContactPerson_Email,
             lb_Phone_PhoneNumber,lb_Phone_Kind,lb_Scheme_SchemeName,lb_Scheme_SourceLanguage,lb_Scheme_TargetLanguage,
-            lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName;
+            lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName,
+            lb_BankAccount_Iban,lb_BankAccount_Swift,lb_BankAccount_Holder,lb_BankAccount_branch;
     @FXML TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
             fieldDuedate,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,
             fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
@@ -65,8 +69,8 @@ public class ViewDetailsCustomerController implements Initializable {
             fieldPrice,fieldUnits,fieldFieldName;
     @FXML CheckBox cbEurope,cbEnabled;
     @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
-            btnSchemeLeft,btnSchemeRight, btnNewScheme;
-    @FXML GridPane gridContacts,gridPhones,gridScheme;
+            btnSchemeLeft,btnSchemeRight, btnNewScheme,btnNewBankAccount,btnAccountLeft,btnAccountRight;
+    @FXML GridPane gridContacts,gridPhones,gridScheme,gridAccounts;
     @FXML ScrollPane paneDetailsCustomer;
     @FXML TableView<SchemeLine> tableSchemeLines;
     @FXML TableColumn<SchemeLine,String> columnDescription;
@@ -77,6 +81,7 @@ public class ViewDetailsCustomerController implements Initializable {
         contacts=customer.getContacts();
         phones=customer.getPhones();
         schemes=customer.getSchemes();
+        accounts=customer.getBankAccounts();
         
         //Company data
         lb_Company_ComName.setText(customer.getComName());
@@ -116,6 +121,8 @@ public class ViewDetailsCustomerController implements Initializable {
         
         //Scheme
         showSchemes();
+        
+        //Bank Accounts;
     }
     
     @Override
@@ -182,6 +189,16 @@ public class ViewDetailsCustomerController implements Initializable {
     @FXML protected void onPrevPhone(){
         iPhones--;
         showPhones();
+    }
+    
+    @FXML protected void onPrevAccount(){
+        iAccounts--;
+        showAccounts();
+    }
+    
+    @FXML protected void onNextAccount(){
+        iAccounts++;
+        showAccounts();
     }
     
     @FXML protected void onClicAddContact(){
@@ -283,6 +300,39 @@ public class ViewDetailsCustomerController implements Initializable {
         paneDetailsCustomer.getParent().setDisable(true);
     }
     
+    @FXML protected void onClicAddBankAccount(){
+        BankAccount account=new BankAccount();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        Stage viewNewBankAccount=new Stage();
+        ViewNewBankAccountController controller=null;
+        
+        loader.setLocation(getClass().getResource("viewNewBankAccount.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(account);
+        customer.addBankAccount(account);
+        newAccounts.add(account);
+        
+        scene=new Scene(root);
+        viewNewBankAccount.setScene(scene);
+        viewNewBankAccount.show();
+        
+        viewNewBankAccount.setOnHiding(event -> {
+                paneDetailsCustomer.getParent().setDisable(false);
+                showAccounts();
+                changes=true;
+            });
+        
+        paneDetailsCustomer.getParent().setDisable(true);
+    }
+    
     @FXML protected void onClicSave(){
         ConnectionDB con=new ConnectionDB();
         
@@ -298,8 +348,12 @@ public class ViewDetailsCustomerController implements Initializable {
             newPhones.get(j).addToDB();
         }
         
-        for(int k=0;k<schemes.size();k++){
+        for(int k=0;k<newSchemes.size();k++){
             newSchemes.get(k).addToDB();
+        }
+        
+        for(int l=0;l<newAccounts.size();l++){
+            newAccounts.get(l).addToDB();
         }
         
         changes=false;
@@ -338,10 +392,10 @@ public class ViewDetailsCustomerController implements Initializable {
     @FXML protected void onClicNewInvoice(){
         FXMLLoader loader=new FXMLLoader();
         Parent invoiceCustomerView=null;
-        ViewNewInvoiceCustomerController controller=null;
+        ViewNewInvoiceController controller=null;
         BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
         
-        loader.setLocation(getClass().getResource("viewNewInvoiceCustomer.fxml"));
+        loader.setLocation(getClass().getResource("viewNewInvoice.fxml"));
         try {
             invoiceCustomerView=loader.load();
         } catch (IOException ex) {
@@ -432,6 +486,29 @@ public class ViewDetailsCustomerController implements Initializable {
             gridScheme.setDisable(true);
             btnNewScheme.setVisible(true);
             btnSchemeRight.setVisible(false);
+        }
+    }
+    
+    private void showAccounts(){
+        btnAccountLeft.setVisible(true);
+        btnAccountRight.setVisible(true);
+        
+        if(iAccounts==0){
+            btnAccountLeft.setVisible(false);
+            
+            if(iAccounts<accounts.size()){
+                gridAccounts.setDisable(false);
+                btnNewBankAccount.setVisible(false);
+                lb_BankAccount_Iban.setText(accounts.get(iAccounts).getIban());
+                lb_BankAccount_Swift.setText(accounts.get(iAccounts).getSwift());
+                lb_BankAccount_Holder.setText(accounts.get(iAccounts).getHolder());
+                lb_BankAccount_branch.setText(accounts.get(iAccounts).getBranch());
+            }
+            else{
+                gridAccounts.setDisable(true);
+                btnNewBankAccount.setVisible(true);
+                btnAccountRight.setVisible(false);
+            }
         }
     }
     

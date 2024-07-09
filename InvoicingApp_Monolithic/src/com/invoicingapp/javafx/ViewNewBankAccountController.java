@@ -4,7 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
-import invoicingapp_monolithic.ContactPerson;
+import invoicingapp_monolithic.BankAccount;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -18,17 +18,16 @@ import javafx.stage.Stage;
  *
  * @author frede
  */
-public class ViewNewContactController implements Initializable {
+public class ViewNewBankAccountController implements Initializable {
 
-    private ContactPerson contact;
+    private BankAccount account;
     
-    @FXML private TextField fieldFirstname,fieldMiddlename, fieldLastname, fieldRole,fieldEmail;
-    @FXML private VBox paneNewContact;
+    @FXML VBox paneNewBankAccount;
+    @FXML TextField tfIban,tfSwift,tfHolder,tfBranch;
     
-    protected void initData(ContactPerson contact){
-        this.contact=contact;
+    public void initData(BankAccount account){
+        this.account=account;
     }
-    
     /**
      * Initializes the controller class.
      */
@@ -37,18 +36,17 @@ public class ViewNewContactController implements Initializable {
     }
     
     @FXML protected void onClicCancel(){
-        Stage stage = (Stage) paneNewContact.getScene().getWindow();
+        Stage stage = (Stage) paneNewBankAccount.getScene().getWindow();
         stage.close();
     }
     
     @FXML protected void onClicSave(){
-        contact.setFirstname(fieldFirstname.getText());
-        contact.setMiddlename(fieldMiddlename.getText());
-        contact.setLastname(fieldLastname.getText());
-        contact.setRole(fieldRole.getText());
-        contact.setEmail(fieldEmail.getText());
+        account.setIban(tfIban.getText());
+        account.setSwift(tfSwift.getText());
+        account.setHolder(tfHolder.getText());
+        account.setBranch(tfBranch.getText());
         
-        Stage stage = (Stage) paneNewContact.getScene().getWindow();
+        Stage stage = (Stage) paneNewBankAccount.getScene().getWindow();
         stage.close();
     }
 }

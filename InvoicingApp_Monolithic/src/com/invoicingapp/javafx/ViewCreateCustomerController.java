@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.CustomProv;
@@ -24,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -49,6 +51,7 @@ public class ViewCreateCustomerController implements Initializable {
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,fieldDuedate;
     @FXML private CheckBox cbEurope,cbEnabled;
     @FXML private ComboBox cbCompany;
+    @FXML private ChoiceBox<String> cbLanguage;
     @FXML private GridPane paneCompany, paneFiscalData;
     @FXML private HBox paneFootCompany,paneFootFiscalData;
     @FXML private VBox paneCreateCustomer;
@@ -57,6 +60,8 @@ public class ViewCreateCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         companies=CustomProv.getAllCustomProvFromDB();        
         labelIntro.setText(introCompany);
+        cbLanguage.getItems().addAll("Español", "English", "Français");
+        
     }
     
     @FXML protected void onClicCancel(){
@@ -96,6 +101,7 @@ public class ViewCreateCustomerController implements Initializable {
             double defaultVAT=0,defaultWithholding=0;
             int duedate=0;
             boolean control=true;
+            String language="";
         
             try{
                 defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
@@ -127,6 +133,7 @@ public class ViewCreateCustomerController implements Initializable {
                 customer.setInvoicingMethod(fieldInvoicingMethod.getText());
                 customer.setPayMethod(fieldPayMethod.getText());
                 customer.setDuedate(duedate);
+                customer.setDefaultLanguage(cbLanguage.getValue());
                 customer.addToDB();
                 
                 stage.close();
@@ -170,6 +177,16 @@ public class ViewCreateCustomerController implements Initializable {
         controller=loader.getController();
         controller.initData(scheme);
         customer.addScheme(scheme);
+    }
+    
+    @FXML protected void onClicAddBankAccount(){
+        ViewNewBankAccountController controller=null;
+        FXMLLoader loader=switchWindow("viewNewBankAccoutnt.fxml");
+        BankAccount bankAccount=new BankAccount();
+        
+        controller=loader.getController();
+        controller.initData(bankAccount);
+        customer.addBankAccount(bankAccount);
     }
     
     @FXML protected void populateComboBox(){

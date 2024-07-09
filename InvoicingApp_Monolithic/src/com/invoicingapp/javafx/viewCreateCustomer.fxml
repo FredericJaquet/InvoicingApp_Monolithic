@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -35,94 +36,6 @@
       </Label>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <GridPane fx:id="paneCompany" vgap="25.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Label text="CIF">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldVAT" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" text="Nombre Comercial" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldComName" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Nombre Fiscal" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldLegalName" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Label text="Email" GridPane.columnIndex="1">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldEmailCompany" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Web" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets top="15.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <TextField fx:id="fieldWeb" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Seleccionar una Empresa" GridPane.rowIndex="6">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </Label>
-                  <ComboBox fx:id="cbCompany" onAction="#getSelectionComboBox" onShowing="#populateComboBox" prefWidth="375.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="8">
-                     <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClicAddContact" text="Añadir Contacto">
-                           <HBox.margin>
-                              <Insets right="21.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#onClicAddPhone" text="Añadir Teléfono">
-                           <HBox.margin>
-                              <Insets right="21.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#onClicAddAddress" text="Añadir Dirección" />
-                     </children>
-                  </HBox>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
-            </GridPane>
             <GridPane fx:id="paneFiscalData" layoutX="10.0" layoutY="10.0" vgap="25.0" visible="false">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -195,6 +108,111 @@
                      </children>
                   </FlowPane>
                </children>
+            </GridPane>
+            <GridPane fx:id="paneCompany" vgap="25.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="CIF" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldVAT" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" text="Nombre Comercial" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldComName" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Nombre Fiscal" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldLegalName" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="Email" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldEmailCompany" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Web" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="fieldWeb" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="Seleccionar una Empresa">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <ComboBox fx:id="cbCompany" onAction="#getSelectionComboBox" onShowing="#populateComboBox" prefWidth="375.0" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin></ComboBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                     <children>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClicAddContact" text="Añadir Contacto">
+                           <HBox.margin>
+                              <Insets right="21.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onClicAddPhone" text="Añadir Teléfono">
+                           <HBox.margin>
+                              <Insets right="21.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#onClicAddAddress" text="Añadir Dirección" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </HBox>
+                  <Label text="Idioma" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" text="Añadir Cuenta Bancaria" GridPane.rowIndex="8">
+                     <GridPane.margin>
+                        <Insets top="15.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <ChoiceBox fx:id="cbDefaultLanguage" prefWidth="375.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
             </GridPane>
          </children>
          <VBox.margin>

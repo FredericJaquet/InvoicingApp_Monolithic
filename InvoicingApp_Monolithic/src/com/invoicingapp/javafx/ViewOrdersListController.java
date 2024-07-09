@@ -26,13 +26,13 @@ import javafx.scene.layout.HBox;
 public class ViewOrdersListController implements Initializable {
 
     private Orders order;
-    private ViewNewInvoiceCustomerController mainController;
+    private ViewNewInvoiceController mainController;
     
     @FXML Label lbDescription,lbDate,lbTotal;
     @FXML CheckBox cbSelected;
     @FXML HBox hbOrders;
     
-    public void initData(Orders order,ViewNewInvoiceCustomerController mainController){
+    public void initData(Orders order,ViewNewInvoiceController mainController){
         this.order=order;
         lbDescription.setText(order.getDescription());
         lbDate.setText(order.getDateOrder().toString());

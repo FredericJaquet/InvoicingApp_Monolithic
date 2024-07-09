@@ -6,6 +6,7 @@ package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
 import invoicingapp_monolithic.CustomProv;
+import invoicingapp_monolithic.InvoiceCustomer;
 import invoicingapp_monolithic.Orders;
 import invoicingapp_monolithic.Users;
 import java.io.File;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +27,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -40,12 +42,13 @@ import javafx.util.Callback;
  *
  * @author frede
  */
-public class ViewNewInvoiceCustomerController implements Initializable {
+public class ViewNewInvoiceController implements Initializable {
 
     private ArrayList<Orders> pendingOrders;
     private ArrayList<CustomProv> companies=new ArrayList();
     private CustomProv company;
     private Users user=new Users();
+    private InvoiceCustomer invoice=new InvoiceCustomer();
     private Configuration config;
     private String logoPath;
     private int imgSize=150;
@@ -57,6 +60,8 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             lbTotalNet,lbVAT,lbTotalVAT,lbWithholding,lbTotalWithholding,lbTotalInvoice,lbTotalToPay;
     @FXML ImageView ivLogo;
     @FXML CheckBox cbSelectAll;
+    @FXML DatePicker dpDocDate;
+    @FXML TextField tfDocNumber;
     
     public void initData(CustomProv customProv){
         this.company=customProv;
@@ -95,12 +100,12 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             isImage = (InputStream) new FileInputStream(img);
             ivLogo.setImage(new Image(isImage));
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewNewInvoiceController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 isImage.close();
             } catch (IOException ex) {
-                Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ViewNewInvoiceController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -116,6 +121,26 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             pendingOrders.get(i).setSelected(cbSelectAll.isSelected());
         }
         getOrders();
+    }
+    
+    @FXML protected void save(){
+        invoice.setChangeRate(changeRate);
+        invoice.setCustomer(company);
+        invoice.setDocDate(dpDocDate.getValue());
+        invoice.setDocNumber(tfDocNumber.getText());
+        invoice.setDuedate(dpDocDate.getValue().plusDays(company.getduedate()));
+        invoice.setOrders(orders);
+        invoice.setPaid(false);
+        invoice.setTitle("FACTURA");
+        invoice.setUser(user);
+        invoice.setVat(company.getDefaultVAT());
+        invoice.setWithholding(company.getDefaultWithholding());
+        
+        
+    }
+    
+    @FXML protected void cancel(){
+        
     }
     
     private void populateCbCustomProvs(){
@@ -164,7 +189,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             try {
                 ordersListView=loader.load();
             } catch (IOException ex) {
-                Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ViewNewInvoiceController.class.getName()).log(Level.SEVERE, null, ex);
             }
             controller=loader.getController();
             controller.initData(pendingOrders.get(j),this);

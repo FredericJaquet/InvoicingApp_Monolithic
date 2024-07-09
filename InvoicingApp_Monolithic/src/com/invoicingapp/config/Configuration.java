@@ -48,8 +48,6 @@ public class Configuration {
         File configFile=new File(path);
         String json=gson.toJson(this);
         
-        System.out.println(json);
-        
         Configuration.writeFile(configFile, json);
     }
     

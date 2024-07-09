@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -17,11 +18,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewInvoiceCustomerController">
+<ScrollPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewInvoiceController">
    <content>
       <VBox fx:id="VBoxNewInvoice" spacing="15.0">
          <children>
-            <VBox fx:id="vbHeader" spacing="15.0" stylesheets="@viewnewinvoicecustomer.css">
+            <VBox fx:id="vbHeader" spacing="15.0" stylesheets="@viewnewinvoice.css">
                <children>
                   <GridPane>
                     <columnConstraints>
@@ -48,12 +49,12 @@
                               <RowConstraints vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Nombre" GridPane.columnIndex="1" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Cif" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="CP / Población" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Web" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Nombre" GridPane.columnIndex="1" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Cif" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="CP / Población" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Web" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <ImageView fx:id="ivLogo" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.rowSpan="6" />
                               <Label fx:id="lbLegalName" text="Label" GridPane.columnIndex="2" />
                               <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -63,7 +64,7 @@
                               <Label fx:id="lbWeb" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                            </children>
                         </GridPane>
-                        <AnchorPane styleClass="withBorder" stylesheets="@viewnewinvoicecustomer.css" GridPane.rowIndex="1">
+                        <AnchorPane styleClass="withBorder" stylesheets="@viewnewinvoice.css" GridPane.rowIndex="1">
                            <children>
                               <Label layoutX="166.0" layoutY="10.0" text="FACTURA">
                                  <font>
@@ -75,7 +76,7 @@
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                            </GridPane.margin>
                         </AnchorPane>
-                        <VBox spacing="5.0" styleClass="withBorder" stylesheets="@viewnewinvoicecustomer.css" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                        <VBox spacing="5.0" styleClass="withBorder" stylesheets="@viewnewinvoice.css" GridPane.columnIndex="1" GridPane.rowSpan="2">
                            <padding>
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                            </padding>
@@ -97,13 +98,13 @@
                   </GridPane>
                   <AnchorPane>
                      <children>
-                        <Label layoutY="6.0" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Número">
+                        <Label layoutY="6.0" styleClass="title" stylesheets="@viewnewinvoice.css" text="Número">
                            <padding>
                               <Insets right="5.0" />
                            </padding>
                         </Label>
-                        <TextField layoutX="49.0" layoutY="2.0" minWidth="-Infinity" />
-                        <Label layoutX="304.0" layoutY="6.0" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Fecha">
+                        <TextField fx:id="tfDocNumber" layoutX="49.0" layoutY="2.0" minWidth="-Infinity" />
+                        <Label layoutX="304.0" layoutY="6.0" styleClass="title" stylesheets="@viewnewinvoice.css" text="Fecha">
                            <padding>
                               <Insets right="5.0" />
                            </padding>
@@ -114,7 +115,7 @@
                   <HBox alignment="CENTER_RIGHT" spacing="10.0">
                      <children>
                         <Label text="Seleccionar todo" />
-                        <CheckBox fx:id="cbSelectAll" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#selectAllOrders" stylesheets="@viewnewinvoicecustomer.css" />
+                        <CheckBox fx:id="cbSelectAll" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#selectAllOrders" stylesheets="@viewnewinvoice.css" />
                      </children>
                   </HBox>
                   <Separator prefWidth="200.0">
@@ -128,21 +129,21 @@
             <VBox fx:id="vbFooter" spacing="15.0">
                <children>
                   <Separator />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                  <AnchorPane>
                      <children>
                         <VBox spacing="5.0">
                            <children>
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Pago por transferencia bancaria a la cuenta número:" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Pago por transferencia bancaria a la cuenta número:" />
                               <Label fx:id="lbIBAN" text="Label" />
                               <HBox spacing="5.0">
                                  <children>
-                                    <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Titular:" />
+                                    <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Titular:" />
                                     <Label fx:id="lbHolder" text="Label" />
                                  </children>
                               </HBox>
                               <HBox spacing="5.0">
                                  <children>
-                                    <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Forma de Pago:" />
+                                    <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Forma de Pago:" />
                                     <Label fx:id="lbPaymentMe" text="Label" />
                                  </children>
                               </HBox>
@@ -163,25 +164,30 @@
                               <RowConstraints vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Base Imponible" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="IVA" GridPane.columnIndex="1" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Importe IVA" GridPane.columnIndex="2" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Base Imponible" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="IVA" GridPane.columnIndex="1" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Importe IVA" GridPane.columnIndex="2" />
                               <Label fx:id="lbTotalNet" text="Label" GridPane.rowIndex="1" />
                               <Label fx:id="lbVAT" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label fx:id="lbTotalVAT" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Retención" GridPane.rowIndex="2" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Retención" GridPane.rowIndex="2" />
                               <Label fx:id="lbWithholding" text="Label" GridPane.rowIndex="3" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Total Retención" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Total Retención" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                               <Label fx:id="lbTotalWithholding" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Total Factura" GridPane.rowIndex="4" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Total Factura" GridPane.rowIndex="4" />
                               <Label fx:id="lbTotalInvoice" text="Label" GridPane.rowIndex="5" />
-                              <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Total a Pagar" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <Label styleClass="title" stylesheets="@viewnewinvoice.css" text="Total a Pagar" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
                               <Label fx:id="lbTotalToPay" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                         </GridPane>
+                        <HBox layoutX="442.0" layoutY="142.0" spacing="15.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="Cancelar" />
+                              <Button mnemonicParsing="false" text="Guadar" />
+                           </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
-                  <HBox spacing="100.0" />
                </children>
             </VBox>
          </children>

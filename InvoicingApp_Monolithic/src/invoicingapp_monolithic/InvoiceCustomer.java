@@ -50,7 +50,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         
         super.addToDB();
         
-        queryInsert="INSERT INTO InvoiceCustomer (withholding, paid, idDocument) values("+withholding+","+paid+","+getIdDocument()+")";
+        queryInsert="INSERT INTO InvoiceCustomer (withholding, paid, idDocument) VALUES ("+withholding+","+paid+","+getIdDocument()+")";
         con.openConnection();
         con.noReturnQuery(queryInsert);
         result=con.getResultSet(queryGetId);

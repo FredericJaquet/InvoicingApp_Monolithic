@@ -61,7 +61,6 @@ public class Document {
             QueryDocumentOrders="INSERT INTO DocumentOrders(idDocument, idOrders) VALUES("+idDocument+","+orders.get(i).getIdOrders()+");";
             con.noReturnQuery(QueryDocumentOrders);
         }
-        
         con.closeConnection();
     }
     
@@ -90,13 +89,12 @@ public class Document {
                 user.getFromDB(user.getIdUsers());
                 changeRate.setIdChangeRate(result.getInt(7));
                 changeRate.getFromDB(changeRate.getIdChangeRate());
-                getOrdersFromDB();
             }
         } catch (SQLException ex) {
             Logger.getLogger(Document.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         con.closeConnection();
+        getOrdersFromDB();
     }
     
     /**
@@ -375,6 +373,13 @@ public class Document {
      */
     public void setDocDate(String date) {
         this.docDate = LocalDate.parse(date);
+    }
+    
+    /**
+     * @param date the docDate to set
+     */
+    public void setDocDate(LocalDate date) {
+        this.docDate = date;
     }
 
     /**

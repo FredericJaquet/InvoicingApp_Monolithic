@@ -224,7 +224,7 @@ public class Customer extends CustomProv {
     */
     public static Map<Integer,Customer> getMap(){
         ConnectionDB con=new ConnectionDB();
-        String query="SELECT Customer.idCustomer FROM Customer;";
+        String query="SELECT idCustomer FROM Customer;";
         ResultSet result=null;
         Map<Integer, Customer> mapCustomers=new HashMap();
         Customer customer=new Customer();

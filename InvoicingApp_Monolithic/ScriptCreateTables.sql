@@ -1,5 +1,3 @@
-
-
 CREATE TABLE IF NOT EXISTS Address(
 idAddress	INT(10) AUTO_INCREMENT,
 street		VARCHAR(100),
@@ -19,9 +17,21 @@ comName		VARCHAR(100),
 legalName	VARCHAR(100) 	UNIQUE,
 email		VARCHAR(100),
 web		VARCHAR(100),
+defaultLanguage	VARCHAR(10),
 idAddress	INT(10) 	UNIQUE,
 PRIMARY KEY 	(idCompany),
 FOREIGN KEY 	(idAddress) 	REFERENCES address(idAddress) ON UPDATE CASCADE
+);
+
+CREATE IF NOT EXISTS BankAccount(
+idBankAccount	INT(10) AUTO_INCREMENT,
+iban		VARCHAR(40),
+swift		VARCHAR(15),
+holder		VARCHAR(40),
+branch		VARCHAR(40)
+idCompany	INT(10),
+PRIMARY KEY	(idBankAccount),
+FOREIGN KEY	(idCompany)	REFERENCES Company (idCompany) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Phone(

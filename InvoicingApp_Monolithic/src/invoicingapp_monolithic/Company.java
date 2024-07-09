@@ -14,11 +14,12 @@ import java.util.logging.Logger;
 
 public class Company {
     
-    private String vatNumber, comName, legalName, email, web;
+    private String vatNumber, comName, legalName, email, web, defaultLanguage;
     private Address address=new Address();
     private int idCompany;
     private ArrayList<Phone> phones=new ArrayList();
     private ArrayList<ContactPerson> contacts=new ArrayList();
+    private ArrayList<BankAccount> bankAccounts=new ArrayList();
     
     public Company(){}
     
@@ -45,7 +46,7 @@ public class Company {
         
         address.addToDB();
         
-        queryInsert="INSERT INTO Company (vatNumber, comName, legalName, email, web, idAddress) VALUES('"+vatNumber+"','"+comName+"','"+legalName+"','"+email+"','"+web+"',"+address.getIdAddress()+")";
+        queryInsert="INSERT INTO Company (vatNumber, comName, legalName, email, web, defaultLanguage, idAddress) VALUES('"+vatNumber+"','"+comName+"','"+legalName+"','"+email+"','"+web+"','"+defaultLanguage+"',"+address.getIdAddress()+")";
         
         con.openConnection();
         
@@ -74,13 +75,18 @@ public class Company {
         }
         
         for(int i=0;i<phones.size();i++){
-                phones.get(i).setIdCompany(idCompany);
-                phones.get(i).addToDB();
+            phones.get(i).setIdCompany(idCompany);
+            phones.get(i).addToDB();
         }
             
-        for(int i=0;i<contacts.size();i++){
-            contacts.get(i).setIdCompany(idCompany);
-            contacts.get(i).addToDB();
+        for(int j=0;j<contacts.size();j++){
+            contacts.get(j).setIdCompany(idCompany);
+            contacts.get(j).addToDB();
+        }
+        
+        for(int k=0;k<bankAccounts.size();k++){
+            bankAccounts.get(k).setIdCompany(idCompany);
+            bankAccounts.get(k).addToDB();
         }
         con.closeConnection();
     }
@@ -108,14 +114,17 @@ public class Company {
                 legalName=result.getString(4);
                 email=result.getString(5);
                 web=result.getString(6);
-                address.getFromDB(result.getInt(7));
-                getPhonesFromDB();
-                getContactPersonFromDB();
+                defaultLanguage=result.getString(7);
+                address.getFromDB(result.getInt(8));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Company.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+        
+        getPhonesFromDB();
+        getContactPersonFromDB();
+        getBankAccountsFromDB();
     }
     
     public static ArrayList<Company> getAllFromDB(){
@@ -287,7 +296,29 @@ public class Company {
         con.closeConnection();
     }
     
-        /**
+    public void getBankAccountsFromDB(){
+        ConnectionDB con=new ConnectionDB();
+        String query="SELECT idBankAccount FROM BankAccount WHERE idCompany="+idCompany;
+        int idBankAccount;
+        BankAccount bankAccount =new BankAccount();
+        ResultSet result=null;
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        try{
+            while(result.next()){
+                bankAccount=new BankAccount();
+                idBankAccount=result.getInt(1);
+                bankAccount.getFromDB(idBankAccount);
+                bankAccounts.add(bankAccount);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Company.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        con.closeConnection();
+    }
+    
+    /**
     * add the contactPerson to the list contacts
     * @param contact 
     */
@@ -318,6 +349,10 @@ public class Company {
      */
     public ArrayList<Phone> getPhones(){
         return phones;
+    }
+    
+    public void addBankAccount(BankAccount account){
+        bankAccounts.add(account);
     }
 
     /**
@@ -440,6 +475,34 @@ public class Company {
      */
     public void setContacts(ArrayList<ContactPerson> contacts) {
         this.contacts = contacts;
+    }
+
+    /**
+     * @return the bankAccounts
+     */
+    public ArrayList<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    /**
+     * @param bankAccounts the bankAccounts to set
+     */
+    public void setBankAccounts(ArrayList<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
+    }
+
+    /**
+     * @return the defaultLanguage
+     */
+    public String getDefaultLanguage() {
+        return defaultLanguage;
+    }
+
+    /**
+     * @param defaultLanguage the defaultLanguage to set
+     */
+    public void setDefaultLanguage(String defaultLanguage) {
+        this.defaultLanguage = defaultLanguage;
     }
     
 }
