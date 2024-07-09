@@ -60,7 +60,7 @@ public class ViewDetailsCustomerController implements Initializable {
             lb_ContactPerson_Firstname,lb_ContactPerson_Middlename,lb_ContactPerson_Lastname,lb_ContactPerson_Role,lb_ContactPerson_Email,
             lb_Phone_PhoneNumber,lb_Phone_Kind,lb_Scheme_SchemeName,lb_Scheme_SourceLanguage,lb_Scheme_TargetLanguage,
             lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName,
-            lb_BankAccount_Iban,lb_BankAccount_Swift,lb_BankAccount_Holder,lb_BankAccount_branch;
+            lb_BankAccount_Iban,lb_BankAccount_Swift,lb_BankAccount_Holder,lb_BankAccount_Branch;
     @FXML TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
             fieldDuedate,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,
             fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
@@ -123,6 +123,7 @@ public class ViewDetailsCustomerController implements Initializable {
         showSchemes();
         
         //Bank Accounts;
+        showAccounts();
     }
     
     @Override
@@ -317,8 +318,6 @@ public class ViewDetailsCustomerController implements Initializable {
         
         controller=loader.getController();
         controller.initData(account);
-        customer.addBankAccount(account);
-        newAccounts.add(account);
         
         scene=new Scene(root);
         viewNewBankAccount.setScene(scene);
@@ -326,8 +325,12 @@ public class ViewDetailsCustomerController implements Initializable {
         
         viewNewBankAccount.setOnHiding(event -> {
                 paneDetailsCustomer.getParent().setDisable(false);
+                if(account.getIban()!=null){
+                    changes=true;
+                    customer.addBankAccount(account);
+                    newAccounts.add(account);
+                }
                 showAccounts();
-                changes=true;
             });
         
         paneDetailsCustomer.getParent().setDisable(true);
@@ -495,20 +498,19 @@ public class ViewDetailsCustomerController implements Initializable {
         
         if(iAccounts==0){
             btnAccountLeft.setVisible(false);
+        }
             
-            if(iAccounts<accounts.size()){
-                gridAccounts.setDisable(false);
-                btnNewBankAccount.setVisible(false);
-                lb_BankAccount_Iban.setText(accounts.get(iAccounts).getIban());
-                lb_BankAccount_Swift.setText(accounts.get(iAccounts).getSwift());
-                lb_BankAccount_Holder.setText(accounts.get(iAccounts).getHolder());
-                lb_BankAccount_branch.setText(accounts.get(iAccounts).getBranch());
-            }
-            else{
-                gridAccounts.setDisable(true);
-                btnNewBankAccount.setVisible(true);
-                btnAccountRight.setVisible(false);
-            }
+        if(iAccounts<accounts.size()){
+            gridAccounts.setDisable(false);
+            btnNewBankAccount.setVisible(false);
+            lb_BankAccount_Iban.setText(accounts.get(iAccounts).getIban());
+            lb_BankAccount_Swift.setText(accounts.get(iAccounts).getSwift());
+            lb_BankAccount_Holder.setText(accounts.get(iAccounts).getHolder());
+            lb_BankAccount_Branch.setText(accounts.get(iAccounts).getBranch());
+        }else{
+            gridAccounts.setDisable(true);
+            btnNewBankAccount.setVisible(true);
+            btnAccountRight.setVisible(false);
         }
     }
     

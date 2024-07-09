@@ -115,4 +115,22 @@ public class ConnectionDB {
     public void setConnection(Connection con) {
         this.con = con;
     }
+    
+    public void executeUpdate(String sql) {
+        Statement statement = null;
+        try {
+            statement = con.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

@@ -35,7 +35,7 @@
       </Label>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
-            <GridPane fx:id="paneUser" visible="false">
+            <GridPane fx:id="paneUser">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="315.0" prefWidth="315.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -89,7 +89,7 @@
                   <Button fx:id="btnImportLogo" mnemonicParsing="false" onAction="#handleImportLogo" text="Importar Logo" GridPane.rowIndex="7" />
                </children>
             </GridPane>
-            <GridPane fx:id="paneCompany" vgap="25.0">
+            <GridPane fx:id="paneCompany" vgap="25.0" visible="false">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="25.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -173,7 +173,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </HBox>
-                  <Button mnemonicParsing="false" text="Añadir Cuenta Bancaria" GridPane.rowIndex="8">
+                  <Button mnemonicParsing="false" onAction="#onClicAddBankAccount" text="Añadir Cuenta Bancaria" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin>

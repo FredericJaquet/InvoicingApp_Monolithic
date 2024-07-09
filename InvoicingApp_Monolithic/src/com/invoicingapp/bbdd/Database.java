@@ -69,39 +69,46 @@ public class Database {
         }
     }
     
-    public static void createTables(){
-        ConnectionDB con=new ConnectionDB();
+    public static void createTables() {
+        ConnectionDB con = new ConnectionDB();
         ArrayList<String> blocks = new ArrayList<>();
-        BufferedReader br=null;
-        StringBuilder content=null;
-        String line=null;
-        int index;
+        BufferedReader br = null;
+        StringBuilder content = new StringBuilder();
+        String line;
+
+        try {
+            br = new BufferedReader(new FileReader(CREATETABLEFILEPATH));
         
-        try{ 
-            br=new BufferedReader(new FileReader(CREATETABLEFILEPATH));
-            content=new StringBuilder();
-            
-            while ((line=br.readLine())!=null) {
-                while ((index=line.indexOf(';'))!=-1) {
-                    content.append(line, 0, index + 1);
-                    blocks.add(content.toString());
-                    content.setLength(0);
-                    line=line.substring(index + 1);
-                }
+            while ((line = br.readLine()) != null) {
                 content.append(line).append("\n");
             }
-            if (content.length() > 0) {
-                blocks.add(content.toString());
+        
+            // Split the SQL script by semicolons
+            String[] sqlStatements = content.toString().split(";");
+            for (String statement : sqlStatements) {
+                // Trim and add to blocks if it's not empty
+                if (!statement.trim().isEmpty()) {
+                    blocks.add(statement.trim() + ";");
+                }
             }
+        
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         con.openConnection();
         for (String block : blocks) {
-            con.getResultSet(block);
+            con.executeUpdate(block);
         }
         con.closeConnection();
-    }
+}
     
 }

@@ -23,12 +23,12 @@ PRIMARY KEY 	(idCompany),
 FOREIGN KEY 	(idAddress) 	REFERENCES address(idAddress) ON UPDATE CASCADE
 );
 
-CREATE IF NOT EXISTS BankAccount(
+CREATE TABLE IF NOT EXISTS BankAccount(
 idBankAccount	INT(10) AUTO_INCREMENT,
 iban		VARCHAR(40),
 swift		VARCHAR(15),
 holder		VARCHAR(40),
-branch		VARCHAR(40)
+branch		VARCHAR(40),
 idCompany	INT(10),
 PRIMARY KEY	(idBankAccount),
 FOREIGN KEY	(idCompany)	REFERENCES Company (idCompany) ON UPDATE CASCADE

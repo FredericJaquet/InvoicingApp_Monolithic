@@ -51,7 +51,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldIban" promptText="Obligatorio" GridPane.rowIndex="1">
+            <TextField fx:id="tfIban" promptText="Obligatorio" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -61,7 +61,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldHolder" promptText="Obligatorio" GridPane.rowIndex="3">
+            <TextField fx:id="tfHolder" promptText="Obligatorio" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -71,7 +71,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldSwift" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="tfSwift" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -81,7 +81,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldBranch" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="tfBranch" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>

@@ -780,7 +780,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </GridPane>
-                        <Button fx:id="btnNewBankAccount" mnemonicParsing="false" onAction="#onClicAddPhone" text="Crear Cuenta bancaria" visible="false" />
+                        <Button fx:id="btnNewBankAccount" mnemonicParsing="false" onAction="#onClicAddBankAccount" text="Crear Cuenta bancaria" visible="false" />
                      </children>
                   </StackPane>
                   <HBox>

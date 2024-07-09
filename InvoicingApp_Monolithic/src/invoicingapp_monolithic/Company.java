@@ -146,7 +146,8 @@ public class Company {
                 company.setLegalName(result.getString(4));
                 company.setEmail(result.getString(5));
                 company.setWeb(result.getString(6));
-                company.setAddress(result.getInt(7));
+                company.setDefaultLanguage(result.getString(7));
+                company.setAddress(result.getInt(8));
                 list.add(company);
             }
         }catch (SQLException ex) {

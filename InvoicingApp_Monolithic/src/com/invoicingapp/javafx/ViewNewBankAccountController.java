@@ -36,6 +36,7 @@ public class ViewNewBankAccountController implements Initializable {
     }
     
     @FXML protected void onClicCancel(){
+        account=null;
         Stage stage = (Stage) paneNewBankAccount.getScene().getWindow();
         stage.close();
     }

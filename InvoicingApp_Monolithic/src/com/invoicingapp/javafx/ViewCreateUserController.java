@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
+import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Phone;
@@ -27,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -59,6 +61,7 @@ public class ViewCreateUserController implements Initializable {
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
             fieldVAT,fieldComName,fieldLegalName,fieldEmail,fieldWeb;
     @FXML private ComboBox cbCompany;
+    @FXML ChoiceBox<String> cbDefaultLanguage;
     @FXML private Label labelIntro, labelPassword,labelError;
     @FXML private GridPane paneUser,paneCompany;
     @FXML private HBox paneFootUser,paneFootCompany;
@@ -75,6 +78,7 @@ public class ViewCreateUserController implements Initializable {
         textFieldPW1.setVisible(false);
         textFieldPW2.setVisible(false);
         labelIntro.setText(introUser);
+        cbDefaultLanguage.getItems().addAll("Español", "English", "Français");
     }
     
     @FXML protected void onPressedSeePW(){
@@ -95,10 +99,13 @@ public class ViewCreateUserController implements Initializable {
     
     @FXML protected void onClicCancel(){
         Stage stage=(Stage)paneCreateUser.getScene().getWindow();
-        try {
-            Files.deleteIfExists(Paths.get(logoPath));
-        } catch (IOException ex) {
-            Logger.getLogger(ViewCreateUserController.class.getName()).log(Level.SEVERE, null, ex);
+        if(logoPath!=null){
+            try {
+                System.out.println(logoPath);
+                Files.deleteIfExists(Paths.get(logoPath));
+            } catch (IOException ex) {
+                Logger.getLogger(ViewCreateUserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         stage.close();
     }
@@ -133,6 +140,7 @@ public class ViewCreateUserController implements Initializable {
             user.setLegalName(fieldLegalName.getText());
             user.setEmail(fieldEmail.getText());
             user.setWeb(fieldWeb.getText());
+            user.setDefaultLanguage(cbDefaultLanguage.getValue());
             user.addToDB();
             stage.close();
         }
@@ -164,6 +172,16 @@ public class ViewCreateUserController implements Initializable {
         controller=loader.getController();
         controller.initData(contact);
         user.addContactPerson(contact);
+    }
+    
+    @FXML protected void onClicAddBankAccount(){
+        ViewNewBankAccountController controller=null;
+        FXMLLoader loader=switchWindow("viewNewBankAccount.fxml");
+        BankAccount bankAccount=new BankAccount();
+        
+        controller=loader.getController();
+        controller.initData(bankAccount);
+        user.addBankAccount(bankAccount);   
     }
     
     @FXML protected void onClicAddPhone(){

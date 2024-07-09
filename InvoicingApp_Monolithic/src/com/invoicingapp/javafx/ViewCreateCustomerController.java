@@ -51,7 +51,7 @@ public class ViewCreateCustomerController implements Initializable {
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,fieldDuedate;
     @FXML private CheckBox cbEurope,cbEnabled;
     @FXML private ComboBox cbCompany;
-    @FXML private ChoiceBox<String> cbLanguage;
+    @FXML private ChoiceBox<String> cbDefaultLanguage;
     @FXML private GridPane paneCompany, paneFiscalData;
     @FXML private HBox paneFootCompany,paneFootFiscalData;
     @FXML private VBox paneCreateCustomer;
@@ -60,8 +60,7 @@ public class ViewCreateCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         companies=CustomProv.getAllCustomProvFromDB();        
         labelIntro.setText(introCompany);
-        cbLanguage.getItems().addAll("Español", "English", "Français");
-        
+        cbDefaultLanguage.getItems().addAll("Español", "English", "Français");
     }
     
     @FXML protected void onClicCancel(){
@@ -101,7 +100,6 @@ public class ViewCreateCustomerController implements Initializable {
             double defaultVAT=0,defaultWithholding=0;
             int duedate=0;
             boolean control=true;
-            String language="";
         
             try{
                 defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
@@ -133,7 +131,7 @@ public class ViewCreateCustomerController implements Initializable {
                 customer.setInvoicingMethod(fieldInvoicingMethod.getText());
                 customer.setPayMethod(fieldPayMethod.getText());
                 customer.setDuedate(duedate);
-                customer.setDefaultLanguage(cbLanguage.getValue());
+                customer.setDefaultLanguage(cbDefaultLanguage.getValue());
                 customer.addToDB();
                 
                 stage.close();
@@ -181,7 +179,7 @@ public class ViewCreateCustomerController implements Initializable {
     
     @FXML protected void onClicAddBankAccount(){
         ViewNewBankAccountController controller=null;
-        FXMLLoader loader=switchWindow("viewNewBankAccoutnt.fxml");
+        FXMLLoader loader=switchWindow("viewNewBankAccount.fxml");
         BankAccount bankAccount=new BankAccount();
         
         controller=loader.getController();
