@@ -262,5 +262,3 @@ public class ViewCreateCustomerController implements Initializable {
     }
 
 }
-
-    

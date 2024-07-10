@@ -5,3 +5,13 @@
 .mainFxmlClass {
 
 }
+
+.binButton{
+    -fx-background-image: url(../img/logo_bin.png);
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 20px 20px;
+    -fx-padding: 5;
+    -fx-pref-width: 25px;
+    -fx-pref-height: 25px;
+}

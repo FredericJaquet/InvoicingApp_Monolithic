@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.bbdd.ConnectionDB;
+import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Provider;
@@ -25,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
@@ -47,25 +49,31 @@ public class ViewDetailsProviderController implements Initializable {
     private ArrayList<ContactPerson> newContacts=new ArrayList();
     private ArrayList<Scheme> schemes=new ArrayList();
     private ArrayList<Scheme> newSchemes=new ArrayList();
-    private int iContacts=0,iPhones=0,iSchemes=0;
+    private ArrayList<BankAccount> accounts=new ArrayList();
+    private ArrayList<BankAccount> newAccounts=new ArrayList();
+    private int iContacts=0,iPhones=0,iSchemes=0,iAccounts=0;;
     private String query="";
     private boolean changes=false;
     
-    @FXML Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,
+    @FXML Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_Company_DefaultLanguage,
             lb_CustomProv_DefaultVAT,lb_CustomProv_DefaultWithholding,lb_CustomProv_Europe,
             lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country,
             lb_ContactPerson_Firstname,lb_ContactPerson_Middlename,lb_ContactPerson_Lastname,lb_ContactPerson_Role,lb_ContactPerson_Email,
             lb_Phone_PhoneNumber,lb_Phone_Kind,lb_Scheme_SchemeName,lb_Scheme_SourceLanguage,lb_Scheme_TargetLanguage,
-            lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName;
+            lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName,
+            lb_BankAccount_Iban,lb_BankAccount_Swift,lb_BankAccount_Holder,lb_BankAccount_Branch;
     @FXML TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
             fieldDefaultWithholding,fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
             fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
             fieldPhoneNumber,fieldKind,fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,
-            fieldPrice,fieldUnits,fieldFieldName;
+            fieldPrice,fieldUnits,fieldFieldName,
+            fieldIban,fieldSwift,fieldHolder,fieldBranch;
     @FXML CheckBox cbEurope,cbEnabled;
+    @FXML ChoiceBox cbLanguage;
     @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
-            btnSchemeLeft,btnSchemeRight, btnNewScheme;
-    @FXML GridPane gridContacts,gridPhones,gridScheme;
+            btnSchemeLeft,btnSchemeRight, btnNewScheme,btnNewBankAccount,btnAccountLeft,btnAccountRight,
+            btnDeleteScheme,btnDeletePhone,btnDeleteContact,btnDeleteBankAccount;
+    @FXML GridPane gridContacts,gridPhones,gridScheme,gridAccounts;
     @FXML ScrollPane paneDetailsProvider;
     @FXML TableView<SchemeLine> tableSchemeLines;
     @FXML TableColumn<SchemeLine,String> columnDescription;
@@ -76,6 +84,7 @@ public class ViewDetailsProviderController implements Initializable {
         contacts=provider.getContacts();
         phones=provider.getPhones();
         schemes=provider.getSchemes();
+        accounts=provider.getBankAccounts();
         
         //Company data
         lb_Company_ComName.setText(provider.getComName());
@@ -83,6 +92,7 @@ public class ViewDetailsProviderController implements Initializable {
         lb_Company_Web.setText(provider.getWeb());
         lb_Company_Email.setText(provider.getEmail());
         lb_Company_VATNumber.setText(provider.getVatNumber());
+        lb_Company_DefaultLanguage.setText(provider.getDefaultLanguage());
         lb_CustomProv_DefaultVAT.setText(String.valueOf(provider.getDefaultVAT())+"%");
         lb_CustomProv_DefaultWithholding.setText(String.valueOf(provider.getDefaultWithholding())+"%");
         lb_Address_Street.setText(provider.getAddress().getStreet());
@@ -92,7 +102,6 @@ public class ViewDetailsProviderController implements Initializable {
         lb_Address_Apt.setText(provider.getAddress().getApt());
         lb_Address_CP.setText(provider.getAddress().getCp());
         lb_Address_Country.setText(provider.getAddress().getCountry());
-        
         if(provider.isEurope()){
             lb_CustomProv_Europe.setText("Sí");
         }else{
@@ -112,6 +121,9 @@ public class ViewDetailsProviderController implements Initializable {
         
         //Scheme
         showSchemes();
+        
+        //Bank Accounts data
+        showAccounts();
     }
     
     /**
@@ -119,11 +131,14 @@ public class ViewDetailsProviderController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        cbLanguage.getItems().addAll("Español", "English", "Français");
+        
         makeLabelEditable(lb_Company_ComName, fieldComName);
         makeLabelEditable(lb_Company_LegalName, fieldLegalName);
         makeLabelEditable(lb_Company_Web, fieldWeb);
         makeLabelEditable(lb_Company_Email, fieldCompEmail);
         makeLabelEditable(lb_Company_VATNumber, fieldVATNumber);
+        makeLabelEditable(lb_Company_DefaultLanguage,cbLanguage);
         makeLabelEditable(lb_CustomProv_DefaultVAT, fieldDefaultVAT);
         makeLabelEditable(lb_CustomProv_DefaultWithholding, fieldDefaultWithholding);
         makeLabelEditable(lb_CustomProv_Europe, cbEurope);
@@ -148,6 +163,10 @@ public class ViewDetailsProviderController implements Initializable {
         makeLabelEditable(lb_Scheme_Price, fieldPrice);
         makeLabelEditable(lb_Scheme_Units, fieldUnits);
         makeLabelEditable(lb_Scheme_FieldName, fieldFieldName);
+        makeLabelEditable(lb_BankAccount_Iban,fieldIban);
+        makeLabelEditable(lb_BankAccount_Swift,fieldSwift);
+        makeLabelEditable(lb_BankAccount_Holder,fieldHolder);
+        makeLabelEditable(lb_BankAccount_Branch,fieldBranch);
     }
     
     @FXML protected void onNextScheme(){
@@ -180,6 +199,16 @@ public class ViewDetailsProviderController implements Initializable {
         showPhones();
     }
     
+    @FXML protected void onPrevAccount(){
+        iAccounts--;
+        showAccounts();
+    }
+    
+    @FXML protected void onNextAccount(){
+        iAccounts++;
+        showAccounts();
+    }
+    
     @FXML protected void onClicAddContact(){
         ContactPerson contact=new ContactPerson();
         FXMLLoader loader=new FXMLLoader();
@@ -197,19 +226,25 @@ public class ViewDetailsProviderController implements Initializable {
         
         controller=loader.getController();
         controller.initData(contact);
-        provider.addContactPerson(contact);
-        newContacts.add(contact);
-        
         scene=new Scene(root);
         viewNewContact.setScene(scene);
         viewNewContact.show();
         
         viewNewContact.setOnHiding(event -> {
                 paneDetailsProvider.getParent().setDisable(false);
+                if(contact.getFirstname()!=null){
+                    provider.addContactPerson(contact);
+                    newContacts.add(contact);
+                    changes=true;
+                }
                 showContacts();
             });
         
         paneDetailsProvider.getParent().setDisable(true);
+    }
+    
+    @FXML protected void onClicDeteleContact(){
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este contacto?", this::deleteContact, () -> {});
     }
     
     @FXML protected void onClicAddPhone(){
@@ -229,19 +264,25 @@ public class ViewDetailsProviderController implements Initializable {
         
         controller=loader.getController();
         controller.initData(phone);
-        provider.addPhone(phone);
-        newPhones.add(phone);
-        
         scene=new Scene(root);
         viewNewPhone.setScene(scene);
         viewNewPhone.show();
         
         viewNewPhone.setOnHiding(event -> {
                 paneDetailsProvider.getParent().setDisable(false);
+                if(phone.getPhoneNumber()!=null){
+                    provider.addPhone(phone);
+                    newPhones.add(phone);
+                    changes=true;
+                }
                 showPhones();
             });
         
         paneDetailsProvider.getParent().setDisable(true);
+    }
+    
+    @FXML protected void onClicDeletePhone(){
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este teléfono?", this::deletePhone, () -> {});
     }
     
     @FXML protected void onClicAddScheme(){
@@ -261,27 +302,73 @@ public class ViewDetailsProviderController implements Initializable {
         
         controller=loader.getController();
         controller.initData(scheme);
-        provider.addScheme(scheme);
-        newSchemes.add(scheme);
-        
         scene=new Scene(root);
         viewNewScheme.setScene(scene);
         viewNewScheme.show();
         
         viewNewScheme.setOnHiding(event -> {
                 paneDetailsProvider.getParent().setDisable(false);
+                if(scheme.getName()!=null){
+                    changes=true;
+                    provider.addScheme(scheme);
+                    newSchemes.add(scheme);
+                } 
                 showSchemes();
             });
         
         paneDetailsProvider.getParent().setDisable(true);
     }
     
+    @FXML protected void onClicDeleteScheme(){
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este esquema?", this::delecteScheme, () -> {});
+    }
+    
+    @FXML protected void onClicAddBankAccount(){
+        BankAccount account=new BankAccount();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Scene scene;
+        Stage viewNewBankAccount=new Stage();
+        ViewNewBankAccountController controller=null;
+        
+        loader.setLocation(getClass().getResource("viewNewBankAccount.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(account);
+        scene=new Scene(root);
+        viewNewBankAccount.setScene(scene);
+        viewNewBankAccount.show();
+        
+        viewNewBankAccount.setOnHiding(event -> {
+                paneDetailsProvider.getParent().setDisable(false);
+                if(account.getIban()!=null){
+                    changes=true;
+                    provider.addBankAccount(account);
+                    newAccounts.add(account);
+                }
+                showAccounts();
+            });
+        
+        paneDetailsProvider.getParent().setDisable(true);
+    }
+    
+    @FXML protected void onClicDeleteBankAccount(){
+        ConfirmationDialog.show("¿Está seguro de querer eliminar esta cuenta bancaria?", this::deleteBankAccount, () -> {});
+    }
+    
     @FXML protected void onClicSave(){
         ConnectionDB con=new ConnectionDB();
         
-        con.openConnection();
-        con.noReturnQuery(query);
-        con.closeConnection();
+        if(!query.equals("")){
+            con.openConnection();
+            con.noReturnQuery(query);
+            con.closeConnection();
+        }
         
         for(int i=0;i<newContacts.size();i++){
             newContacts.get(i).addToDB();
@@ -295,6 +382,11 @@ public class ViewDetailsProviderController implements Initializable {
             newSchemes.get(k).addToDB();
         }
         
+        for(int l=0;l<newAccounts.size();l++){
+            newAccounts.get(l).addToDB();
+        }
+        
+        query="";
         changes=false;
     }
     
@@ -329,14 +421,21 @@ public class ViewDetailsProviderController implements Initializable {
     }
     
     @FXML protected void onClicNewInvoice(){
+        /*FXMLLoader loader=new FXMLLoader();
+        Parent invoiceProviderView=null;
+        ViewNewInvoiceProviderController controller=null;
         BorderPane home=(BorderPane)paneDetailsProvider.getParent();
-        Parent customersView;
+        
+        loader.setLocation(getClass().getResource("viewNewInvoiceProvider.fxml"));
         try {
-            customersView=FXMLLoader.load(getClass().getResource("viewNewInvoiceCustomer.fxml"));
-            home.setCenter(customersView);
+            invoiceProviderView=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewCreateProviderController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        controller=loader.getController();
+        controller.initData(provider);
+        home.setCenter(invoiceProviderView);*/
     }
     
     @FXML protected void onClicNewPO(){
@@ -353,6 +452,7 @@ public class ViewDetailsProviderController implements Initializable {
     private void showContacts(){
         btnContactLeft.setVisible(true);
         btnContactRight.setVisible(true);
+        btnDeleteContact.setVisible(true);
         
         if(iContacts==0){
             btnContactLeft.setVisible(false);
@@ -371,6 +471,7 @@ public class ViewDetailsProviderController implements Initializable {
             gridContacts.setDisable(true);
             btnNewContact.setVisible(true);
             btnContactRight.setVisible(false);
+            btnDeleteContact.setVisible(false);
         }
     }
     
@@ -378,6 +479,7 @@ public class ViewDetailsProviderController implements Initializable {
         
         btnPhoneLeft.setVisible(true);
         btnPhoneRight.setVisible(true);
+        btnDeletePhone.setVisible(true);
         
         if(iPhones==0){
             btnPhoneLeft.setVisible(false);
@@ -393,12 +495,14 @@ public class ViewDetailsProviderController implements Initializable {
             gridPhones.setDisable(true);
             btnNewPhone.setVisible(true);
             btnPhoneRight.setVisible(false);
+            btnDeletePhone.setVisible(false);
         }
     }
     
     private void showSchemes(){
         btnSchemeLeft.setVisible(true);
         btnSchemeRight.setVisible(true);
+        btnDeleteScheme.setVisible(true);
         
         if(iSchemes==0){
             btnSchemeLeft.setVisible(false);
@@ -418,6 +522,31 @@ public class ViewDetailsProviderController implements Initializable {
             gridScheme.setDisable(true);
             btnNewScheme.setVisible(true);
             btnSchemeRight.setVisible(false);
+            btnDeleteScheme.setVisible(false);
+        }
+    }
+    
+    private void showAccounts(){
+        btnAccountLeft.setVisible(true);
+        btnAccountRight.setVisible(true);
+        btnDeleteBankAccount.setVisible(true);
+        
+        if(iAccounts==0){
+            btnAccountLeft.setVisible(false);
+        }
+            
+        if(iAccounts<accounts.size()){
+            gridAccounts.setDisable(false);
+            btnNewBankAccount.setVisible(false);
+            lb_BankAccount_Iban.setText(accounts.get(iAccounts).getIban());
+            lb_BankAccount_Swift.setText(accounts.get(iAccounts).getSwift());
+            lb_BankAccount_Holder.setText(accounts.get(iAccounts).getHolder());
+            lb_BankAccount_Branch.setText(accounts.get(iAccounts).getBranch());
+        }else{
+            gridAccounts.setDisable(true);
+            btnNewBankAccount.setVisible(true);
+            btnAccountRight.setVisible(false);
+            btnDeleteBankAccount.setVisible(false);
         }
     }
     
@@ -462,6 +591,21 @@ public class ViewDetailsProviderController implements Initializable {
         });
     }
     
+    private void makeLabelEditable(Label label,ChoiceBox choiceBox){
+        choiceBox.setVisible(false);
+        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                switchToChoiceBox(label, choiceBox);
+            }
+        });
+        
+        choiceBox.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                switchToLabel(label, choiceBox);
+            }
+        });
+    }
+    
     private void switchToTextField(Label label, TextField textField) {
         textField.setText(label.getText());
         textField.setVisible(true);
@@ -477,6 +621,12 @@ public class ViewDetailsProviderController implements Initializable {
         }
         checkBox.requestFocus();
         checkBox.setVisible(true);
+        label.setVisible(false);
+    }
+    
+    private void switchToChoiceBox(Label label, ChoiceBox choiceBox){
+        choiceBox.getSelectionModel().select(label.getText());
+        choiceBox.setVisible(true);
         label.setVisible(false);
     }
     
@@ -497,6 +647,14 @@ public class ViewDetailsProviderController implements Initializable {
         
         label.setVisible(true);
         checkBox.setVisible(false);
+        
+        getQuery(label);
+    }
+    
+    private void switchToLabel(Label label, ChoiceBox choiceBox){
+        label.setText(choiceBox.getValue().toString());
+        label.setVisible(true);
+        choiceBox.setVisible(false);
         
         getQuery(label);
     }
@@ -530,6 +688,7 @@ public class ViewDetailsProviderController implements Initializable {
             case("CustomProv"):id=provider.getIdCustomProv();break;
             case("ContactPerson"):id=provider.getContacts().get(iContacts).getIdContactPerson();break;
             case("Scheme"):id=provider.getSchemes().get(iSchemes).getIdScheme();break;
+            case("BankAccount"):id=provider.getBankAccounts().get(iAccounts).getIdBankAccount();break;
         }
         return id;
     }
@@ -537,6 +696,42 @@ public class ViewDetailsProviderController implements Initializable {
     private void deleteProvider(){
         provider.deleteFromDB();
         backToViewProviders();
+    }
+    
+    private void deleteContact(){
+        contacts.get(iContacts).deleteFromDB();
+        contacts.remove(iContacts);
+        if(iContacts>0){
+            iContacts--;
+        }
+        showContacts();
+    }
+    
+    private void deletePhone(){
+        phones.get(iPhones).deleteFromDB();
+        phones.remove(iPhones);
+        if(iPhones>0){
+            iPhones--;
+        }
+        showPhones();
+    }
+    
+    private void delecteScheme(){
+        schemes.get(iSchemes).deleteFromDB();
+        schemes.remove(iSchemes);
+        if(iSchemes>0){
+            iSchemes--;
+        }
+        showSchemes();
+    }
+    
+    private void deleteBankAccount(){
+        accounts.get(iAccounts).deleteFromDB();
+        accounts.remove(iAccounts);
+        if(iAccounts>0){
+            iAccounts--;
+        }
+        showAccounts();
     }
     
     private void backToViewProviders(){
@@ -549,8 +744,5 @@ public class ViewDetailsProviderController implements Initializable {
             Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    
     
 }

@@ -306,7 +306,6 @@ public class ViewDetailsCustomerController implements Initializable {
         
         controller=loader.getController();
         controller.initData(scheme);
-        
         scene=new Scene(root);
         viewNewScheme.setScene(scene);
         viewNewScheme.show();
