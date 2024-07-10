@@ -187,7 +187,7 @@
                      </GridPane.margin>
                   </Label>
                   <ChoiceBox fx:id="cbDefaultLanguage" prefWidth="375.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Button mnemonicParsing="false" text="Añadir Cuenta Bancaria" GridPane.rowIndex="8">
+                  <Button mnemonicParsing="false" onAction="#onClicAddBankAccount" text="Añadir Cuenta Bancaria" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin>

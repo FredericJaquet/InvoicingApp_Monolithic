@@ -265,6 +265,7 @@ public class Company {
         result=con.getResultSet(query);
         try{
             while(result.next()){
+                phone=new Phone();
                 phoneNumber=result.getString(1);
                 phone.getFromDB(phoneNumber);
                 phones.add(phone);

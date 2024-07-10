@@ -248,10 +248,7 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicDeteleContact(){
-        contacts.get(iContacts).deleteFromDB();
-        contacts.remove(iContacts);
-        iContacts--;
-        showContacts();
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este contacto?", this::deleteContact, () -> {});
     }
     
     @FXML protected void onClicAddPhone(){
@@ -289,10 +286,7 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicDeletePhone(){
-        phones.get(iPhones).deleteFromDB();
-        phones.remove(iPhones);
-        iPhones--;
-        showPhones();
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este teléfono?", this::deletePhone, () -> {});
     }
     
     @FXML protected void onClicAddScheme(){
@@ -331,10 +325,7 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicDeleteScheme(){
-        schemes.get(iSchemes).deleteFromDB();
-        schemes.remove(iSchemes);
-        iSchemes--;
-        showSchemes();
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este esquema?", this::delecteScheme, () -> {});
     }
     
     @FXML protected void onClicAddBankAccount(){
@@ -372,10 +363,7 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicDeleteBankAccount(){
-        accounts.get(iAccounts).deleteFromDB();
-        accounts.remove(iAccounts);
-        iAccounts--;
-        showAccounts();
+        ConfirmationDialog.show("¿Está seguro de querer eliminar esta cuenta bancaria?", this::deleteBankAccount, () -> {});
     }
     
     @FXML protected void onClicSave(){
@@ -493,7 +481,6 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     private void showPhones(){
-        
         btnPhoneLeft.setVisible(true);
         btnPhoneRight.setVisible(true);
         btnDeletePhone.setVisible(true);
@@ -714,6 +701,42 @@ public class ViewDetailsCustomerController implements Initializable {
     private void deleteCustomer(){
         customer.deleteFromDB();
         backToViewCustomers();
+    }
+    
+    private void deleteContact(){
+        contacts.get(iContacts).deleteFromDB();
+        contacts.remove(iContacts);
+        if(iContacts>0){
+            iContacts--;
+        }
+        showContacts();
+    }
+    
+    private void deletePhone(){
+        phones.get(iPhones).deleteFromDB();
+        phones.remove(iPhones);
+        if(iPhones>0){
+            iPhones--;
+        }
+        showPhones();
+    }
+    
+    private void delecteScheme(){
+        schemes.get(iSchemes).deleteFromDB();
+        schemes.remove(iSchemes);
+        if(iSchemes>0){
+            iSchemes--;
+        }
+        showSchemes();
+    }
+    
+    private void deleteBankAccount(){
+        accounts.get(iAccounts).deleteFromDB();
+        accounts.remove(iAccounts);
+        if(iAccounts>0){
+            iAccounts--;
+        }
+        showAccounts();
     }
     
     private void backToViewCustomers(){

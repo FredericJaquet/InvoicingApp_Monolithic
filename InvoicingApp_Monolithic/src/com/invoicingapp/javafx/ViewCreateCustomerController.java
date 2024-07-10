@@ -69,6 +69,7 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicNext(){
+        labelError.setVisible(false);
         labelIntro.setText(introFiscalData);
         customer.setVatNumber(fieldVAT.getText());
         customer.setComName(fieldComName.getText());

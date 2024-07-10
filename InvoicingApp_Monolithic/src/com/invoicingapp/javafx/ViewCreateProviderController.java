@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.CustomProv;
@@ -18,14 +19,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -55,6 +55,7 @@ public class ViewCreateProviderController implements Initializable {
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding;
     @FXML private CheckBox cbEurope,cbEnabled;
     @FXML ComboBox cbCompany;
+    @FXML ChoiceBox<String> cbDefaultLanguage;
     @FXML private GridPane paneCompany,paneFiscalData;
     @FXML HBox paneFootCompany,paneFootFiscalData;
     @FXML VBox paneCreateProvider;
@@ -63,6 +64,7 @@ public class ViewCreateProviderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         companies=CustomProv.getAllCustomProvFromDB();
         labelIntro.setText(introCompany);
+        cbDefaultLanguage.getItems().addAll("English","Español","Français");
     }    
     
     @FXML protected void onClicCancel(){
@@ -71,6 +73,7 @@ public class ViewCreateProviderController implements Initializable {
     }
     
     @FXML protected void onClicNext(){
+        labelError.setVisible(false);
         labelIntro.setText(introFiscalData);
         provider.setVatNumber(fieldVAT.getText());
         provider.setComName(fieldComName.getText());
@@ -85,6 +88,7 @@ public class ViewCreateProviderController implements Initializable {
     }
     
     @FXML protected void onClicBack(){
+        labelError.setVisible(false);
         labelIntro.setText(introCompany);
         paneCompany.setVisible(true);
         paneFiscalData.setVisible(false);
@@ -122,6 +126,7 @@ public class ViewCreateProviderController implements Initializable {
                 provider.setDefaultWithholding(defaultWithholding);
                 provider.setEurope(cbEurope.isSelected());
                 provider.setEnabled(cbEnabled.isSelected());
+                provider.setDefaultLanguage(cbDefaultLanguage.getValue());
                 provider.addToDB();
         
                 stage.close();
@@ -165,6 +170,16 @@ public class ViewCreateProviderController implements Initializable {
         controller=loader.getController();
         controller.initData(scheme);
         provider.addScheme(scheme);
+    }
+    
+    @FXML protected void onClicAddBankAccount(){
+        ViewNewBankAccountController controller=null;
+        FXMLLoader loader=switchWindow("viewNewBankAccount.fxml");
+        BankAccount bankAccount=new BankAccount();
+        
+        controller=loader.getController();
+        controller.initData(bankAccount);
+        provider.addBankAccount(bankAccount);
     }
     
     @FXML protected void populateComboBox(){
