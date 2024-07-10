@@ -132,7 +132,8 @@ public class Scheme {
     */
     public void deleteFromDB(){
         ConnectionDB con=new ConnectionDB();
-        String query="DELETE FROM SchemeCustomProv WHERE idScheme="+idScheme+";"+"DELETE FROM Scheme where idScheme="+idScheme+";";
+        String queryScheme="DELETE FROM Scheme WHERE idScheme="+idScheme+";";
+        String queryCustomProv="DELETE FROM SchemeCustomProv WHERE idScheme="+idScheme+";";
         String queryGetIdLine="SELECT idSchemeLine FROM SchemeLine WHERE idScheme="+idScheme+";";
         int idLine;
         SchemeLine line=new SchemeLine();
@@ -151,7 +152,8 @@ public class Scheme {
             Logger.getLogger(Scheme.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        con.noReturnQuery(query);
+        con.noReturnQuery(queryCustomProv);
+        con.noReturnQuery(queryScheme);
         con.closeConnection();
     }
     

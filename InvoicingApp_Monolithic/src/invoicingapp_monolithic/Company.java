@@ -353,6 +353,7 @@ public class Company {
     }
     
     public void addBankAccount(BankAccount account){
+        account.setIdCompany(idCompany);
         bankAccounts.add(account);
     }
 
