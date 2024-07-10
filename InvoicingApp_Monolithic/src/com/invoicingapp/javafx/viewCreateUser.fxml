@@ -55,7 +55,7 @@
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin></Label>
-                  <TextField fx:id="fieldUsername" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
+                  <TextField fx:id="fieldUsername" promptText="Obligatorio" stylesheets="@viewcreateuser.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -70,13 +70,13 @@
                      </GridPane.margin></Label>
                   <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
-                        <PasswordField fx:id="fieldPasswd1" />
+                        <PasswordField fx:id="fieldPasswd1" promptText="Obligatorio" stylesheets="@viewcreateuser.css" />
                         <TextField fx:id="textFieldPW1" />
                      </children>
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="5">
                      <children>
-                        <PasswordField fx:id="fieldPasswd2" />
+                        <PasswordField fx:id="fieldPasswd2" promptText="Obligatorio" stylesheets="@viewcreateuser.css" />
                         <TextField fx:id="textFieldPW2" />
                      </children>
                   </StackPane>
@@ -112,7 +112,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldVAT" GridPane.rowIndex="2">
+                  <TextField fx:id="fieldVATNumber" promptText="Obligatorio" stylesheets="@viewcreateuser.css" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -132,7 +132,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldLegalName" GridPane.rowIndex="6">
+                  <TextField fx:id="fieldLegalName" promptText="Obligatorio" stylesheets="@viewcreateuser.css" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>

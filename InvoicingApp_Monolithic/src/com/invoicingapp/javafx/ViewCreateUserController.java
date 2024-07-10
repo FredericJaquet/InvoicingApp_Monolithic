@@ -59,7 +59,7 @@ public class ViewCreateUserController implements Initializable {
     
     @FXML private PasswordField fieldPasswd1,fieldPasswd2 ;
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
-            fieldVAT,fieldComName,fieldLegalName,fieldEmail,fieldWeb;
+            fieldVATNumber,fieldComName,fieldLegalName,fieldEmail,fieldWeb;
     @FXML private ComboBox cbCompany;
     @FXML ChoiceBox<String> cbDefaultLanguage;
     @FXML private Label labelIntro, labelPassword,labelError;
@@ -111,41 +111,86 @@ public class ViewCreateUserController implements Initializable {
     }
     
     @FXML protected void onClicNextFromUser(){
+        boolean control=true;
         labelIntro.setText(introCompany);
+        labelError.setVisible(false);
+        fieldUsername.getStyleClass().remove("error");
+        fieldPasswd1.getStyleClass().remove("error");
         
-        if(fieldPasswd1.getText().equals(fieldPasswd2.getText())){
-            user.setUserName(fieldUsername.getText());
-            user.setPasswd(fieldPasswd1.getText());
+        if(fieldUsername.getText().isEmpty()){
+            labelError.setText("Falta un dato obligatorio.");
+            labelError.setVisible(true);
+            fieldUsername.getStyleClass().add("error");
+            control=false;
+        }
+        if(fieldPasswd1.getText().isEmpty()){
+            labelError.setText("Falta un dato obligatorio.");
+            labelError.setVisible(true);
+            fieldPasswd1.getStyleClass().add("error");
+            control=false;
+        }
+        if(fieldPasswd2.getText().isEmpty()){
+            labelError.setText("Falta un dato obligatorio.");
+            labelError.setVisible(true);
+            fieldPasswd2.getStyleClass().add("error");
+            control=false;
+        }
         
-            paneUser.setVisible(false);
-            paneCompany.setVisible(true);
-            paneFootUser.setVisible(false);
-            paneFootCompany.setVisible(true);
-            labelPassword.setText("");
-            labelError.setText("");
-        }else{
-            labelPassword.setText("Las contraseñas no coinciden");
+        if(control){
+            if(fieldPasswd1.getText().equals(fieldPasswd2.getText())){
+                user.setUserName(fieldUsername.getText());
+                user.setPasswd(fieldPasswd1.getText());
+        
+                paneUser.setVisible(false);
+                paneCompany.setVisible(true);
+                paneFootUser.setVisible(false);
+                paneFootCompany.setVisible(true);
+                
+                labelPassword.setVisible(false);
+                labelError.setVisible(false);
+            }else{
+                labelPassword.setText("Las contraseñas no coinciden.");
+            }
         }
     }
     
     @FXML protected void onClicSave(){
         Stage stage=(Stage)paneCreateUser.getScene().getWindow();
+        boolean control=true;
+        
+        fieldVATNumber.getStyleClass().remove("error");
+        fieldLegalName.getStyleClass().remove("error");
         
         if(user.getAddress().getStreet()==null){
             labelError.setText("Es obligatorio añadir una dirección.");
             labelError.setVisible(true);
-        }else{
-            user.setVatNumber(fieldVAT.getText());
+            control=false;
+        }
+        if(fieldVATNumber.getText().isEmpty()){
+            labelError.setText("Falta un dato obligatorio.");
+            labelError.setVisible(true);
+            fieldVATNumber.getStyleClass().add("error");
+            control=false;
+        }
+        if(fieldLegalName.getText().isEmpty()){
+            labelError.setText("Falta un dato obligatorio.");
+            labelError.setVisible(true);
+            fieldLegalName.getStyleClass().add("error");
+            control=false;
+        }
+        
+        if(control){
+            user.setVatNumber(fieldVATNumber.getText());
             user.setComName(fieldComName.getText());
             user.setLegalName(fieldLegalName.getText());
             user.setEmail(fieldEmail.getText());
             user.setWeb(fieldWeb.getText());
             user.setDefaultLanguage(cbDefaultLanguage.getValue());
             user.addToDB();
+            config.setLogoPath(logoPath);
+            config.save();
             stage.close();
         }
-        config.setLogoPath(logoPath);
-        config.save();
     }
     
     @FXML protected void onClicBackFromCompany(){
@@ -154,6 +199,7 @@ public class ViewCreateUserController implements Initializable {
         paneCompany.setVisible(false);
         paneFootUser.setVisible(true);
         paneFootCompany.setVisible(false);
+        
     }
     
     @FXML protected void onClicAddAddress(){
@@ -231,7 +277,7 @@ public class ViewCreateUserController implements Initializable {
     @FXML protected void getSelectionComboBox(){
         Company company=(Company) cbCompany.getSelectionModel().getSelectedItem();
         
-        fieldVAT.setText(company.getVatNumber());
+        fieldVATNumber.setText(company.getVatNumber());
         fieldComName.setText(company.getComName());
         fieldLegalName.setText(company.getLegalName());
         fieldEmail.setText(company.getEmail());

@@ -47,7 +47,7 @@ public class ViewCreateCustomerController implements Initializable {
     private Stage stage;
     
     @FXML private Label labelIntro, labelError;
-    @FXML private TextField fieldVAT,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
+    @FXML private TextField fieldVATNumber,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,fieldDuedate;
     @FXML private CheckBox cbEurope,cbEnabled;
     @FXML private ComboBox cbCompany;
@@ -69,18 +69,37 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicNext(){
-        labelError.setVisible(false);
-        labelIntro.setText(introFiscalData);
-        customer.setVatNumber(fieldVAT.getText());
-        customer.setComName(fieldComName.getText());
-        customer.setLegalName(fieldLegalName.getText());
-        customer.setEmail(fieldEmailCompany.getText());
-        customer.setWeb(fieldWeb.getText());
+        boolean control=true;
         
-        paneCompany.setVisible(false);
-        paneFootCompany.setVisible(false);
-        paneFiscalData.setVisible(true);
-        paneFootFiscalData.setVisible(true);
+        labelIntro.setText(introFiscalData);
+        labelError.setVisible(false);
+        fieldVATNumber.getStyleClass().remove("error");
+        fieldLegalName.getStyleClass().remove("error");
+        
+        if(fieldVATNumber.getText().isEmpty()){
+            labelError.setText("Falta un dato obligatorio.");
+            labelError.setVisible(true);
+            fieldVATNumber.getStyleClass().add("error");
+            control=false;
+        }
+        if(fieldLegalName.getText().isEmpty()){
+            labelError.setText("Falta un dato obligatorio.");
+            labelError.setVisible(true);
+            fieldLegalName.getStyleClass().add("error");
+            control=false;
+        }
+        if(control){
+            customer.setVatNumber(fieldVATNumber.getText());
+            customer.setComName(fieldComName.getText());
+            customer.setLegalName(fieldLegalName.getText());
+            customer.setEmail(fieldEmailCompany.getText());
+            customer.setWeb(fieldWeb.getText());
+        
+            paneCompany.setVisible(false);
+            paneFootCompany.setVisible(false);
+            paneFiscalData.setVisible(true);
+            paneFootFiscalData.setVisible(true);
+        }
     }
     
     @FXML protected void onClicBack(){
@@ -93,50 +112,52 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
+        boolean control=true;
+        
         if(customer.getAddress().getStreet()==null){
             labelError.setText("Es obligatorio añadir una dirección.");
             labelError.setVisible(true);
+            control=false;
+        }
+        
+        stage=(Stage)paneCreateCustomer.getScene().getWindow();
+        double defaultVAT=0,defaultWithholding=0;
+        int duedate=0;
+        
+        try{
+        defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
+        }catch(NumberFormatException ex){
+            fieldDefaultVAT.getStyleClass().add("error");
+            control=false;
+        }
+        try{
+            defaultWithholding=Double.parseDouble(fieldDefaultWithholding.getText());
+        }catch(NumberFormatException ex){
+            fieldDefaultWithholding.getStyleClass().add("error");
+            control=false;
+        }
+        try{
+            duedate=Integer.parseInt(fieldDuedate.getText());
+        }catch(NumberFormatException ex){
+            fieldDuedate.getStyleClass().add("error");
+            control=false;
+        }
+        
+        if(!control){
+            labelError.setText("Uno de los datos introducidos no es correcto.");
+            labelError.setVisible(true);
         }else{
-            stage=(Stage)paneCreateCustomer.getScene().getWindow();
-            double defaultVAT=0,defaultWithholding=0;
-            int duedate=0;
-            boolean control=true;
-        
-            try{
-                defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
-            }catch(NumberFormatException ex){
-                fieldDefaultVAT.getStyleClass().add("error");
-                control=false;
-            }
-            try{
-                defaultWithholding=Double.parseDouble(fieldDefaultWithholding.getText());
-            }catch(NumberFormatException ex){
-                fieldDefaultWithholding.getStyleClass().add("error");
-                control=false;
-            }
-            try{
-                duedate=Integer.parseInt(fieldDuedate.getText());
-            }catch(NumberFormatException ex){
-                fieldDuedate.getStyleClass().add("error");
-                control=false;
-            }
-        
-            if(!control){
-                labelError.setText("Uno de los datos introducidos no es correcto.");
-                labelError.setVisible(true);
-            }else{
-                customer.setDefaultVAT(defaultVAT);
-                customer.setDefaultWithholding(defaultWithholding);
-                customer.setEurope(cbEurope.isSelected());
-                customer.setEnabled(cbEnabled.isSelected());
-                customer.setInvoicingMethod(fieldInvoicingMethod.getText());
-                customer.setPayMethod(fieldPayMethod.getText());
-                customer.setDuedate(duedate);
-                customer.setDefaultLanguage(cbDefaultLanguage.getValue());
-                customer.addToDB();
-                
-                stage.close();
-            }
+            customer.setDefaultVAT(defaultVAT);
+            customer.setDefaultWithholding(defaultWithholding);
+            customer.setEurope(cbEurope.isSelected());
+            customer.setEnabled(cbEnabled.isSelected());
+            customer.setInvoicingMethod(fieldInvoicingMethod.getText());
+            customer.setPayMethod(fieldPayMethod.getText());
+            customer.setDuedate(duedate);
+            customer.setDefaultLanguage(cbDefaultLanguage.getValue());
+            customer.addToDB();
+               
+            stage.close();
         }
     }
     
@@ -225,7 +246,7 @@ public class ViewCreateCustomerController implements Initializable {
     @FXML protected void getSelectionComboBox(){
         CustomProv customProv=(CustomProv) cbCompany.getSelectionModel().getSelectedItem();
         
-        fieldVAT.setText(customProv.getVatNumber());
+        fieldVATNumber.setText(customProv.getVatNumber());
         fieldComName.setText(customProv.getComName());
         fieldLegalName.setText(customProv.getLegalName());
         fieldEmailCompany.setText(customProv.getEmail());

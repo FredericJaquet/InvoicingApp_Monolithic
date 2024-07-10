@@ -6,6 +6,12 @@
 
 }
 
+.error{
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-text-fill: red
+}
+
 .btnSeePD{
     -fx-background-image: url(../img/seePW.png);
     -fx-background-repeat: no-repeat;
