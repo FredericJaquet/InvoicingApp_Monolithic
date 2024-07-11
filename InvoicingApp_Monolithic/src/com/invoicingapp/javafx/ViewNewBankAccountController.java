@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,32 +22,66 @@ import javafx.stage.Stage;
 public class ViewNewBankAccountController implements Initializable {
 
     private BankAccount account;
+    private boolean control=true;
+    private final String errorEmpty="Falta un dato obligatorio.";
     
-    @FXML VBox paneNewBankAccount;
-    @FXML TextField tfIban,tfSwift,tfHolder,tfBranch;
+    @FXML private Label labelError;
+    @FXML private VBox paneNewBankAccount;
+    @FXML private TextField tfIban,tfSwift,tfHolder,tfBranch;
     
     public void initData(BankAccount account){
         this.account=account;
+        if(account.getIban()!=null){
+            tfIban.setText(account.getIban());
+            tfSwift.setText(account.getSwift());
+            tfHolder.setText(account.getHolder());
+            tfBranch.setText(account.getBranch());
+        }
     }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        labelError.setText(errorEmpty);
     }
     
     @FXML protected void onClicCancel(){
-        account=null;
-        Stage stage = (Stage) paneNewBankAccount.getScene().getWindow();
-        stage.close();
+        closeWindow();
     }
     
     @FXML protected void onClicSave(){
-        account.setIban(tfIban.getText());
-        account.setSwift(tfSwift.getText());
-        account.setHolder(tfHolder.getText());
-        account.setBranch(tfBranch.getText());
+        saveData();
+        if(control){
+            closeWindow();
+        }
+    }
+    
+    private void saveData(){
+        control=true;
+        labelError.setVisible(false);
+        tfIban.getStyleClass().remove("error");
+        tfHolder.getStyleClass().remove("error");
         
+        if(tfIban.getText().isEmpty()){
+            labelError.setVisible(true);
+            tfIban.getStyleClass().add("error");
+            control=false;
+        }
+        if(tfHolder.getText().isEmpty()){
+            labelError.setVisible(true);
+            tfHolder.getStyleClass().add("error");
+            control=false;
+        }
+        if(control){
+            account.setIban(tfIban.getText());
+            account.setSwift(tfSwift.getText());
+            account.setHolder(tfHolder.getText());
+            account.setBranch(tfBranch.getText());
+        }
+    }
+    
+    private void closeWindow(){
         Stage stage = (Stage) paneNewBankAccount.getScene().getWindow();
         stage.close();
     }

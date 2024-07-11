@@ -135,6 +135,11 @@
             <Insets top="15.0" />
          </VBox.margin>
       </HBox>
+      <Label text="Falta un dato obligatorio." textFill="RED" visible="false">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Label>
       <HBox fx:id="paneFootScheme" alignment="BOTTOM_RIGHT" prefHeight="250.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">

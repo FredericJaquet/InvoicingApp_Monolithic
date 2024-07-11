@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -21,12 +22,22 @@ import javafx.stage.Stage;
 public class ViewNewContactController implements Initializable {
 
     private ContactPerson contact;
+    private boolean control=true;
+    private final String errorEmpty="Falta un dato obligatorio.";
     
+    @FXML private Label labelError;
     @FXML private TextField fieldFirstname,fieldMiddlename, fieldLastname, fieldRole,fieldEmail;
     @FXML private VBox paneNewContact;
     
     protected void initData(ContactPerson contact){
         this.contact=contact;
+        if(contact.getFirstname()!=null){
+            fieldFirstname.setText(contact.getFirstname());
+            fieldMiddlename.setText(contact.getMiddlename());
+            fieldLastname.setText(contact.getLastname());
+            fieldRole.setText(contact.getRole());
+            fieldEmail.setText(contact.getEmail());
+        }
     }
     
     /**
@@ -34,21 +45,47 @@ public class ViewNewContactController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        labelError.setText(errorEmpty);
     }
     
     @FXML protected void onClicCancel(){
-        Stage stage = (Stage) paneNewContact.getScene().getWindow();
-        stage.close();
+        closeWindow();
     }
     
     @FXML protected void onClicSave(){
-        contact.setFirstname(fieldFirstname.getText());
-        contact.setMiddlename(fieldMiddlename.getText());
-        contact.setLastname(fieldLastname.getText());
-        contact.setRole(fieldRole.getText());
-        contact.setEmail(fieldEmail.getText());
+        saveData();
+        if(control){
+            closeWindow();
+        }
+    }
+    
+    private void saveData(){
+        control=true;
+        labelError.setVisible(false);
+        fieldFirstname.getStyleClass().remove("error");
+        fieldMiddlename.getStyleClass().remove("error");
         
-        Stage stage = (Stage) paneNewContact.getScene().getWindow();
+        if(fieldFirstname.getText().isEmpty()){
+            labelError.setVisible(true);
+            fieldFirstname.getStyleClass().add("error");
+            control=false;
+        }
+        if(fieldMiddlename.getText().isEmpty()){
+            labelError.setVisible(true);
+            fieldMiddlename.getStyleClass().add("error");
+            control=false;
+        }
+        if(control){
+            contact.setFirstname(fieldFirstname.getText());
+            contact.setMiddlename(fieldMiddlename.getText());
+            contact.setLastname(fieldLastname.getText());
+            contact.setRole(fieldRole.getText());
+            contact.setEmail(fieldEmail.getText());
+        }
+    }
+    
+    private void closeWindow(){
+        Stage stage = (Stage)paneNewContact.getScene().getWindow();
         stage.close();
     }
 }

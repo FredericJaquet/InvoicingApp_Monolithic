@@ -51,18 +51,22 @@ public class ViewCreateUserController implements Initializable {
 
     private Configuration config=Configuration.getConfiguration();
     private Users user=new Users();
-    private String introUser="Datos del usuario";
-    private String introCompany="Datos de la Empresa";
     private ArrayList<Company> companies=new ArrayList();
     private Stage stage;
     private String logoPath;
+    private final String introUser="Datos del usuario";
+    private final String introCompany="Datos de la Empresa";
+    private final String errorEmpty="Falta un dato obligatorio.";
+    private final String errorAddress="Es obligatorio añadir una dirección.";
+    private final String errorPassword="Las contraseñas no coinciden.";
+    private boolean control=true;
     
+    @FXML private Label labelIntro, labelPassword,labelError;
     @FXML private PasswordField fieldPasswd1,fieldPasswd2 ;
     @FXML private TextField textFieldPW1,textFieldPW2,fieldUsername, 
             fieldVATNumber,fieldComName,fieldLegalName,fieldEmail,fieldWeb;
     @FXML private ComboBox cbCompany;
     @FXML ChoiceBox<String> cbDefaultLanguage;
-    @FXML private Label labelIntro, labelPassword,labelError;
     @FXML private GridPane paneUser,paneCompany;
     @FXML private HBox paneFootUser,paneFootCompany;
     @FXML private VBox paneCreateUser;
@@ -98,7 +102,7 @@ public class ViewCreateUserController implements Initializable {
     }
     
     @FXML protected void onClicCancel(){
-        Stage stage=(Stage)paneCreateUser.getScene().getWindow();
+        
         if(logoPath!=null){
             try {
                 System.out.println(logoPath);
@@ -107,7 +111,7 @@ public class ViewCreateUserController implements Initializable {
                 Logger.getLogger(ViewCreateUserController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        stage.close();
+        closeWindow();
     }
     
     @FXML protected void onClicNextFromUser(){
@@ -149,31 +153,30 @@ public class ViewCreateUserController implements Initializable {
                 labelPassword.setVisible(false);
                 labelError.setVisible(false);
             }else{
-                labelPassword.setText("Las contraseñas no coinciden.");
+                labelPassword.setText(errorPassword);
             }
         }
     }
     
     @FXML protected void onClicSave(){
-        Stage stage=(Stage)paneCreateUser.getScene().getWindow();
-        boolean control=true;
-        
+        control=true;
+        labelError.setVisible(false);
         fieldVATNumber.getStyleClass().remove("error");
         fieldLegalName.getStyleClass().remove("error");
         
         if(user.getAddress().getStreet()==null){
-            labelError.setText("Es obligatorio añadir una dirección.");
+            labelError.setText(errorAddress);
             labelError.setVisible(true);
             control=false;
         }
         if(fieldVATNumber.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
+            labelError.setText(errorEmpty);
             labelError.setVisible(true);
             fieldVATNumber.getStyleClass().add("error");
             control=false;
         }
         if(fieldLegalName.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
+            labelError.setText(errorEmpty);
             labelError.setVisible(true);
             fieldLegalName.getStyleClass().add("error");
             control=false;
@@ -187,19 +190,21 @@ public class ViewCreateUserController implements Initializable {
             user.setWeb(fieldWeb.getText());
             user.setDefaultLanguage(cbDefaultLanguage.getValue());
             user.addToDB();
+            
             config.setLogoPath(logoPath);
             config.save();
-            stage.close();
+            
+            closeWindow();
         }
     }
     
     @FXML protected void onClicBackFromCompany(){
         labelIntro.setText(introUser);
+        labelError.setVisible(false);
         paneUser.setVisible(true);
         paneCompany.setVisible(false);
         paneFootUser.setVisible(true);
-        paneFootCompany.setVisible(false);
-        
+        paneFootCompany.setVisible(false); 
     }
     
     @FXML protected void onClicAddAddress(){
@@ -320,6 +325,8 @@ public class ViewCreateUserController implements Initializable {
         FXMLLoader loader=new FXMLLoader();
         Parent root=null;
         Scene scene;
+        Stage newStage=new Stage();
+        
         loader.setLocation(getClass().getResource(path));
         try {
             root=loader.load();
@@ -328,18 +335,20 @@ public class ViewCreateUserController implements Initializable {
         }
         
         scene=new Scene(root);
-        Stage newStage=new Stage();
         newStage.setScene(scene);
         newStage.show();
         
-        stage=(Stage)paneCreateUser.getScene().getWindow();
         newStage.setOnHiding(event -> {
                 stage.show();
             });
-        
-        stage.close();
+        closeWindow();
         
         return loader;
+    }
+    
+    private void closeWindow(){
+        Stage stage=(Stage)paneCreateUser.getScene().getWindow();
+        stage.close();
     }
     
 }

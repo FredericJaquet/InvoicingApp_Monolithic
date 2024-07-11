@@ -44,6 +44,8 @@ public class ViewNewOrderController implements Initializable {
     private ArrayList<CustomProv> companies=new ArrayList();
     private int iLine=0;
     private double updatedTotal=0;
+    private final String errorFormat="Uno de los datos introducidos no es correcto.";
+    private final String errorEmpty="Falta un dato obligatorio.";
     
     @FXML ComboBox cbCustomProvs, cbSchemes;
     @FXML TextField tfDescription,tfLineDescription, tfDiscount,tfQuantity,tfPrice,tfUnits,tfFieldName,tfSourceLanguage,tfTargetLanguage;
@@ -135,7 +137,7 @@ public class ViewNewOrderController implements Initializable {
         
         order.setBilled(false);
         order.setDateOrder(dpDateOrder.getValue());
-        if(!tfDescription.getText().equals("")){
+        if(!tfDescription.getText().isEmpty()){
             order.setDescription(tfDescription.getText());
         }else{
             control=false;

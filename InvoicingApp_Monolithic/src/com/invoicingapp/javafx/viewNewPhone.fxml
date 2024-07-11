@@ -47,7 +47,7 @@
          </rowConstraints>
          <children>
             <Label text="Teléfono" />
-            <TextField fx:id="fieldPhoneNumber" promptText="Obligatorio" GridPane.rowIndex="1">
+            <TextField fx:id="fieldPhoneNumber" promptText="Obligatorio" stylesheets="@viewnewphone.css" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -63,6 +63,7 @@
             <Insets top="25.0" />
          </padding>
       </GridPane>
+      <Label fx:id="labelError" text="Falta un dato obligatorio." textFill="RED" visible="false" />
       <HBox fx:id="paneFootCompany" alignment="BOTTOM_RIGHT" prefHeight="250.0">
          <children>
             <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">

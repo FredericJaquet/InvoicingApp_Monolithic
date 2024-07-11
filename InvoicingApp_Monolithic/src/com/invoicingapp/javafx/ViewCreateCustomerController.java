@@ -45,6 +45,10 @@ public class ViewCreateCustomerController implements Initializable {
     private Customer customer=new Customer();
     private ArrayList<CustomProv> companies=new ArrayList();
     private Stage stage;
+    private final String errorFormat="Uno de los datos introducidos no es correcto.";
+    private final String errorEmpty="Falta un dato obligatorio.";
+    private final String errorAddress="Es obligatorio añadir una dirección.";
+    private boolean control=true;
     
     @FXML private Label labelIntro, labelError;
     @FXML private TextField fieldVATNumber,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
@@ -64,12 +68,11 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicCancel(){
-        stage=(Stage)paneCreateCustomer.getScene().getWindow();
-        stage.close();
+        closeWindow();
     }
     
     @FXML protected void onClicNext(){
-        boolean control=true;
+        control=true;
         
         labelIntro.setText(introFiscalData);
         labelError.setVisible(false);
@@ -77,13 +80,13 @@ public class ViewCreateCustomerController implements Initializable {
         fieldLegalName.getStyleClass().remove("error");
         
         if(fieldVATNumber.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
+            labelError.setText(errorEmpty);
             labelError.setVisible(true);
             fieldVATNumber.getStyleClass().add("error");
             control=false;
         }
         if(fieldLegalName.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
+            labelError.setText(errorEmpty);
             labelError.setVisible(true);
             fieldLegalName.getStyleClass().add("error");
             control=false;
@@ -112,41 +115,46 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        boolean control=true;
-        
-        if(customer.getAddress().getStreet()==null){
-            labelError.setText("Es obligatorio añadir una dirección.");
-            labelError.setVisible(true);
-            control=false;
-        }
-        
-        stage=(Stage)paneCreateCustomer.getScene().getWindow();
         double defaultVAT=0,defaultWithholding=0;
         int duedate=0;
         
+        control=true;
+        labelError.setVisible(false);
+        fieldDefaultVAT.getStyleClass().remove("error");
+        fieldDefaultWithholding.getStyleClass().remove("error");
+        fieldDuedate.getStyleClass().remove("error");
+        
+        if(customer.getAddress().getStreet()==null){
+            labelError.setText(errorAddress);
+            labelError.setVisible(true);
+            control=false;
+        }
         try{
-        defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
+            defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
         }catch(NumberFormatException ex){
             fieldDefaultVAT.getStyleClass().add("error");
+            labelError.setText(errorFormat);
+            labelError.setVisible(true);
             control=false;
         }
         try{
             defaultWithholding=Double.parseDouble(fieldDefaultWithholding.getText());
         }catch(NumberFormatException ex){
             fieldDefaultWithholding.getStyleClass().add("error");
+            labelError.setText(errorFormat);
+            labelError.setVisible(true);
             control=false;
         }
         try{
             duedate=Integer.parseInt(fieldDuedate.getText());
         }catch(NumberFormatException ex){
             fieldDuedate.getStyleClass().add("error");
+            labelError.setText(errorFormat);
+            labelError.setVisible(true);
             control=false;
         }
         
-        if(!control){
-            labelError.setText("Uno de los datos introducidos no es correcto.");
-            labelError.setVisible(true);
-        }else{
+        if(control){
             customer.setDefaultVAT(defaultVAT);
             customer.setDefaultWithholding(defaultWithholding);
             customer.setEurope(cbEurope.isSelected());
@@ -156,8 +164,8 @@ public class ViewCreateCustomerController implements Initializable {
             customer.setDuedate(duedate);
             customer.setDefaultLanguage(cbDefaultLanguage.getValue());
             customer.addToDB();
-               
-            stage.close();
+            
+            closeWindow();
         }
     }
     
@@ -260,6 +268,8 @@ public class ViewCreateCustomerController implements Initializable {
         FXMLLoader loader=new FXMLLoader();
         Parent root=null;
         Scene scene;
+        Stage newStage=new Stage();
+        
         loader.setLocation(getClass().getResource(path));
         try {
             root=loader.load();
@@ -268,18 +278,21 @@ public class ViewCreateCustomerController implements Initializable {
         }
         
         scene=new Scene(root);
-        Stage newStage=new Stage();
+        
         newStage.setScene(scene);
         newStage.show();
         
-        stage=(Stage)paneCreateCustomer.getScene().getWindow();
         newStage.setOnHiding(event -> {
                 stage.show();
             });
-        
-        stage.close();
+        closeWindow();
         
         return loader;
+    }
+    
+    private void closeWindow(){
+        stage=(Stage)paneCreateCustomer.getScene().getWindow();
+        stage.close();
     }
 
 }

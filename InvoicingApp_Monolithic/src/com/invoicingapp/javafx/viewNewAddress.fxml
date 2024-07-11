@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneNewAddress" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewAddressController">
+<VBox fx:id="paneNewAddress" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewAddressController">
    <children>
       <Label fx:id="labelTitle" text="Nueva Dirección">
          <font>
@@ -51,7 +51,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldStreet" GridPane.rowIndex="1">
+            <TextField fx:id="fieldStreet" promptText="Obligatorio" stylesheets="@viewnewaddress.css" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -61,7 +61,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldStNumber" GridPane.rowIndex="3">
+            <TextField fx:id="fieldStNumber" promptText="Obligatorio" stylesheets="@viewnewaddress.css" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -81,13 +81,13 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldCP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="fieldCP" promptText="Obligatorio" stylesheets="@viewnewaddress.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Ciudad" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldCity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="fieldCity" promptText="Obligatorio" stylesheets="@viewnewaddress.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Provincia" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets top="15.0" />
@@ -99,14 +99,15 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldCountry" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="fieldCountry" promptText="Obligatorio" stylesheets="@viewnewaddress.css" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
-      <HBox fx:id="paneFootAddress" alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0">
+      <Label fx:id="labelError" text="Falta un dato obligatorio." textFill="RED" visible="false" />
+      <HBox fx:id="paneFootAddress" alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets />
                </HBox.margin>
             </Button>
             <Button mnemonicParsing="false" onAction="#onClicSave" text="Guardar" />
@@ -114,6 +115,6 @@
       </HBox>
    </children>
    <padding>
-      <Insets bottom="50.0" left="25.0" right="25.0" top="50.0" />
+      <Insets bottom="25.0" left="25.0" right="25.0" top="50.0" />
    </padding>
 </VBox>

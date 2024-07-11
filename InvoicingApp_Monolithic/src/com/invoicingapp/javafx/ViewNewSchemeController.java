@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -30,8 +31,13 @@ public class ViewNewSchemeController implements Initializable {
     private Scheme scheme;
     private ObservableList<SchemeLine> schemeLines=FXCollections.observableArrayList();
     private SchemeLine line=new SchemeLine();
-    
-    @FXML private TextField fieldSchemeName, fieldPrice,fieldSourceLanguage,fieldTargetLanguage,fieldFieldName, fieldUnits,fieldDescription,fieldDiscount;
+    private boolean control=true;
+    private boolean controlLines=true;
+    private final String errorFormat="Uno de los datos introducidos no es correcto.";
+    private final String errorEmpty="Falta un dato obligatorio.";
+   
+    @FXML private Label labelError;    
+    @FXML private TextField fieldSchemeName, fieldPrice,fieldSourceLanguage,fieldTargetLanguage,fieldFieldName,fieldUnits,fieldDescription,fieldDiscount;
     @FXML private TableView<SchemeLine> tableSchemeLine;
     @FXML private TableColumn<SchemeLine,String>columnDescription;
     @FXML private TableColumn<SchemeLine,Double>columnDiscount;
@@ -47,52 +53,39 @@ public class ViewNewSchemeController implements Initializable {
     }    
     
     @FXML protected void onClicCancel(){
-        Stage stage = (Stage) paneNewScheme.getScene().getWindow();
-        stage.close();
+        closeWindow();
     }
     
     @FXML protected void onClicSave(){
-        double price=0;
-        boolean control=true;
-        
-        scheme.setName(fieldSchemeName.getText());
-        try{
-                price=Double.parseDouble(fieldPrice.getText());
-                scheme.setPrice(price);
-            }catch(NumberFormatException ex){
-                fieldPrice.getStyleClass().add("error");
-                control=false;
-            }
-        scheme.setUnits(fieldUnits.getText());
-        scheme.setField(fieldFieldName.getText());
-        scheme.setSourceLanguage(fieldSourceLanguage.getText());
-        scheme.setTargetLanguage(fieldTargetLanguage.getText());
-        
+        saveData();
         if(control){
-            Stage stage = (Stage) paneNewScheme.getScene().getWindow();
-            stage.close();
+            closeWindow();
         }
     }
     
     @FXML protected void commitLine(KeyEvent event) {
         double discount=0;
-        boolean control=true;
+        
+        controlLines=true;
+        labelError.setVisible(false);
+        fieldDiscount.getStyleClass().remove("error");
         
         if (event.getCode() == KeyCode.ENTER) {
             try{
                 discount=Double.parseDouble(fieldDiscount.getText());
             }catch(NumberFormatException ex){
                 fieldDiscount.getStyleClass().add("error");
-                control=false;
+                labelError.setText(errorFormat);
+                labelError.setVisible(true);
+                controlLines=false;
             }
-            if(control){
+            if(controlLines){
                 line=new SchemeLine(fieldDescription.getText(),discount);
                 schemeLines.add(line);
                 scheme.addLine(line);
                 
                 fieldDescription.clear();
                 fieldDiscount.clear();
-                fieldDiscount.getStyleClass().remove("error");
                 fieldDescription.requestFocus();
             } 
         }
@@ -102,6 +95,58 @@ public class ViewNewSchemeController implements Initializable {
         columnDescription.setCellValueFactory(new PropertyValueFactory<SchemeLine, String>("description"));
         columnDiscount.setCellValueFactory(new PropertyValueFactory<SchemeLine,Double>("discount"));
         tableSchemeLine.setItems(schemeLines);
+    }
+    
+    private void saveData(){
+        double price=0;
+        
+        control=true;
+        labelError.setVisible(false);
+        fieldSchemeName.getStyleClass().remove("error");
+        fieldPrice.getStyleClass().remove("error");
+        fieldDescription.getStyleClass().remove("error");
+        fieldDiscount.getStyleClass().remove("error");
+            
+        if(fieldSchemeName.getText().isEmpty()){
+            labelError.setText(errorEmpty);
+            labelError.setVisible(true);
+            fieldSchemeName.getStyleClass().add("error");
+            control=false;
+        }
+        if(fieldPrice.getText().isEmpty()){
+            labelError.setText(errorEmpty);
+            labelError.setVisible(true);
+            fieldPrice.getStyleClass().add("error");
+            control=false;
+        }
+        if(schemeLines.isEmpty()){
+            labelError.setText(errorEmpty);
+            labelError.setVisible(true);
+            fieldDescription.getStyleClass().add("error");
+            fieldDiscount.getStyleClass().add("error");
+            control=false;
+        }
+        try{
+            price=Double.parseDouble(fieldPrice.getText());
+        }catch(NumberFormatException ex){
+            labelError.setText(errorFormat);
+            labelError.setVisible(true);
+            fieldPrice.getStyleClass().add("error");
+            control=false;
+        }
+        if(control&&controlLines){
+            scheme.setName(fieldSchemeName.getText());
+            scheme.setPrice(price);
+            scheme.setUnits(fieldUnits.getText());
+            scheme.setField(fieldFieldName.getText());
+            scheme.setSourceLanguage(fieldSourceLanguage.getText());
+            scheme.setTargetLanguage(fieldTargetLanguage.getText());
+        }
+    }
+    
+    private void closeWindow(){
+        Stage stage = (Stage) paneNewScheme.getScene().getWindow();
+        stage.close();
     }
     
 }

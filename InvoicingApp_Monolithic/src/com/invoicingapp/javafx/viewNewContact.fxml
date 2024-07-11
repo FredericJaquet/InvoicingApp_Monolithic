@@ -51,7 +51,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldFirstname" promptText="Obligatorio" GridPane.rowIndex="1">
+            <TextField fx:id="fieldFirstname" promptText="Obligatorio" stylesheets="@viewnewcontact.css" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -61,7 +61,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldMiddlename" promptText="Obligatorio" GridPane.rowIndex="3">
+            <TextField fx:id="fieldMiddlename" promptText="Obligatorio" stylesheets="@viewnewcontact.css" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -101,6 +101,7 @@
             <Insets top="25.0" />
          </padding>
       </GridPane>
+      <Label fx:id="labelError" text="Falta un dato obligatorio." textFill="RED" visible="false" />
       <HBox fx:id="paneFootContact" alignment="BOTTOM_RIGHT" prefHeight="250.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar">

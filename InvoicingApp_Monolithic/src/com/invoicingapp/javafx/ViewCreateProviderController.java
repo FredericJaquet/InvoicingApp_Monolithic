@@ -49,6 +49,10 @@ public class ViewCreateProviderController implements Initializable {
     private Provider provider=new Provider();
     private ArrayList<CustomProv> companies=new ArrayList();
     private Stage stage;
+    private final String errorFormat="Uno de los datos introducidos no es correcto.";
+    private final String errorEmpty="Falta un dato obligatorio.";
+    private final String errorAddress="Es obligatorio añadir una dirección.";
+    private boolean control=true;
     
     @FXML private Label labelIntro, labelError;
     @FXML private TextField fieldVATNumber,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
@@ -68,12 +72,11 @@ public class ViewCreateProviderController implements Initializable {
     }    
     
     @FXML protected void onClicCancel(){
-        stage=(Stage)paneCreateProvider.getScene().getWindow();
-        stage.close();
+        closeWindow();
     }
     
     @FXML protected void onClicNext(){
-        boolean control=true;
+        control=true;
         
         labelIntro.setText(introFiscalData);
         labelError.setVisible(false);
@@ -81,13 +84,13 @@ public class ViewCreateProviderController implements Initializable {
         fieldLegalName.getStyleClass().remove("error");
         
         if(fieldVATNumber.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
+            labelError.setText(errorEmpty);
             labelError.setVisible(true);
             fieldVATNumber.getStyleClass().add("error");
             control=false;
         }
         if(fieldLegalName.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
+            labelError.setText(errorEmpty);
             labelError.setVisible(true);
             fieldLegalName.getStyleClass().add("error");
             control=false;
@@ -116,33 +119,36 @@ public class ViewCreateProviderController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        boolean control=true;
+        double defaultVAT=0,defaultWithholding=0;
+        
+        control=true;
+        labelError.setVisible(false);
+        fieldDefaultVAT.getStyleClass().remove("error");
+        fieldDefaultWithholding.getStyleClass().remove("error");
         
         if(provider.getAddress().getStreet()==null){
-            labelError.setText("Es obligatorio añadir una dirección.");
+            labelError.setText(errorAddress);
             labelError.setVisible(true);
             control=false;
         }
-        stage=(Stage)paneCreateProvider.getScene().getWindow();
-        double defaultVAT=0,defaultWithholding=0;
-        
         try{
             defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
         }catch(NumberFormatException ex){
             fieldDefaultVAT.getStyleClass().add("error");
+            labelError.setText(errorFormat);
+            labelError.setVisible(true);
             control=false;
         }
         try{
             defaultWithholding=Double.parseDouble(fieldDefaultWithholding.getText());
         }catch(NumberFormatException ex){
             fieldDefaultWithholding.getStyleClass().add("error");
+            labelError.setText(errorFormat);
+            labelError.setVisible(true);
             control=false;
         }
         
-        if(!control){
-            labelError.setText("Un dato introducido no es correcto.");
-            labelError.setVisible(true);
-        }else{
+        if(control){
             provider.setDefaultVAT(defaultVAT);
             provider.setDefaultWithholding(defaultWithholding);
             provider.setEurope(cbEurope.isSelected());
@@ -150,7 +156,7 @@ public class ViewCreateProviderController implements Initializable {
             provider.setDefaultLanguage(cbDefaultLanguage.getValue());
             provider.addToDB();
         
-            stage.close();
+            closeWindow();
         }
     }
         
@@ -253,6 +259,8 @@ public class ViewCreateProviderController implements Initializable {
         FXMLLoader loader=new FXMLLoader();
         Parent root=null;
         Scene scene;
+        Stage newStage=new Stage();
+        
         loader.setLocation(getClass().getResource(path));
         try {
             root=loader.load();
@@ -261,18 +269,20 @@ public class ViewCreateProviderController implements Initializable {
         }
         
         scene=new Scene(root);
-        Stage newStage=new Stage();
         newStage.setScene(scene);
         newStage.show();
         
-        stage=(Stage)paneCreateProvider.getScene().getWindow();
         newStage.setOnHiding(event -> {
                 stage.show();
             });
-        
-        stage.close();
+        closeWindow();
         
         return loader;
+    }
+    
+    private void closeWindow(){
+        stage=(Stage)paneCreateProvider.getScene().getWindow();
+        stage.close();
     }
 
 }
