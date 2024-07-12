@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="CENTER" hgap="5.0" maxWidth="600.0" vgap="5.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewOrderController">
+<GridPane fx:id="paneNewOrder" alignment="CENTER" hgap="5.0" maxWidth="600.0" vgap="5.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewOrderController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -27,6 +27,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -83,14 +84,14 @@
       <TextField fx:id="tfLineDescription" promptText="Descripción" stylesheets="@viewneworder.css" GridPane.columnSpan="4" GridPane.rowIndex="8" />
       <TextField fx:id="tfDiscount" promptText="Descuento" stylesheets="@viewneworder.css" GridPane.columnIndex="4" GridPane.rowIndex="8" />
       <TextField fx:id="tfQuantity" onKeyPressed="#onCommitLine" promptText="Cantidad" stylesheets="@viewneworder.css" GridPane.columnIndex="5" GridPane.rowIndex="8" />
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="15">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="16">
          <children>
-            <Button layoutX="19.0" layoutY="3.0" mnemonicParsing="false" text="Cancelar" />
+            <Button layoutX="15.0" layoutY="3.0" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="15">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="16">
          <children>
-            <Button layoutX="21.0" layoutY="3.0" mnemonicParsing="false" onAction="#onClicSave" text="Guardar" />
+            <Button layoutX="16.0" layoutY="3.0" mnemonicParsing="false" onAction="#onClicSave" text="Guardar" />
          </children>
       </AnchorPane>
       <Label styleClass="labels" stylesheets="@viewneworder.css" text="Total" GridPane.columnIndex="4" GridPane.rowIndex="7" />
@@ -99,5 +100,6 @@
             <Label fx:id="lbUpdatedTotal" layoutX="36.0" layoutY="5.0" text="Label" />
          </children>
       </AnchorPane>
+      <Label fx:id="labelError" text="Label" textFill="RED" visible="false" GridPane.columnSpan="6" GridPane.rowIndex="15" />
    </children>
 </GridPane>

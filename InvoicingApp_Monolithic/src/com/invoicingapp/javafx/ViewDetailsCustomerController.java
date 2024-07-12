@@ -324,7 +324,7 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicDeleteScheme(){
-        ConfirmationDialog.show("¿Está seguro de querer eliminar este esquema?", this::delecteScheme, () -> {});
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este esquema?", this::deleteScheme, () -> {});
     }
     
     @FXML protected void onClicAddBankAccount(){
@@ -720,7 +720,7 @@ public class ViewDetailsCustomerController implements Initializable {
         showPhones();
     }
     
-    private void delecteScheme(){
+    private void deleteScheme(){
         schemes.get(iSchemes).deleteFromDB();
         schemes.remove(iSchemes);
         if(iSchemes>0){

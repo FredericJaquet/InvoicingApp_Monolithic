@@ -69,8 +69,14 @@ public class ViewNewSchemeController implements Initializable {
         controlLines=true;
         labelError.setVisible(false);
         fieldDiscount.getStyleClass().remove("error");
-        
+        fieldDescription.getStyleClass().remove("error");
         if (event.getCode() == KeyCode.ENTER) {
+            if(fieldDescription.getText().isEmpty()){
+                fieldDescription.getStyleClass().add("error");
+                labelError.setText(errorEmpty);
+                labelError.setVisible(true);
+                controlLines=false;
+            }
             try{
                 discount=Double.parseDouble(fieldDiscount.getText());
             }catch(NumberFormatException ex){

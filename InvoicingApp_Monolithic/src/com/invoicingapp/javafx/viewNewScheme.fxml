@@ -120,7 +120,7 @@
       </GridPane>
       <HBox fx:id="boxLines" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="fieldDescription" prefWidth="270.0" promptText="Nueva línea">
+            <TextField fx:id="fieldDescription" prefWidth="270.0" promptText="Nueva línea" stylesheets="@viewnewscheme.css">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -135,7 +135,7 @@
             <Insets top="15.0" />
          </VBox.margin>
       </HBox>
-      <Label text="Falta un dato obligatorio." textFill="RED" visible="false">
+      <Label fx:id="labelError" text="Falta un dato obligatorio." textFill="RED" visible="false">
          <VBox.margin>
             <Insets top="10.0" />
          </VBox.margin>

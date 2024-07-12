@@ -9,14 +9,19 @@ import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
 import invoicingapp_monolithic.Item;
 import invoicingapp_monolithic.Orders;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -28,6 +33,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
 /**
@@ -38,22 +45,28 @@ import javafx.util.Callback;
 public class ViewNewOrderController implements Initializable {
 
     private Orders order=new Orders();
+    private Item newLine=new Item();
     private CustomProv company;
     private Scheme scheme;
     private ArrayList<SchemeLine> lines=new ArrayList();
     private ArrayList<CustomProv> companies=new ArrayList();
     private int iLine=0;
     private double updatedTotal=0;
+    private boolean control=true;
+    private boolean controlLines=true;
+    private boolean changes=false;
     private final String errorFormat="Uno de los datos introducidos no es correcto.";
     private final String errorEmpty="Falta un dato obligatorio.";
-    
+    private final String errorDateOrder="Falta la Fecha.";
+    private final String errorNoLines="El pedido no tiene artículos.";
     @FXML ComboBox cbCustomProvs, cbSchemes;
     @FXML TextField tfDescription,tfLineDescription, tfDiscount,tfQuantity,tfPrice,tfUnits,tfFieldName,tfSourceLanguage,tfTargetLanguage;
-    @FXML Label lbLegalName,lbVATNumber,lbUpdatedTotal;
+    @FXML Label lbLegalName,lbVATNumber,lbUpdatedTotal,labelError;
     @FXML DatePicker dpDateOrder;
     @FXML TableView<Item> tvItems;
     @FXML TableColumn<Item,String> columnDescription;
     @FXML TableColumn<Item,Double> columnDiscount,columnQuantity;
+    @FXML private GridPane paneNewOrder;
     
     public void initData(CustomProv company){
         this.company=company;
@@ -93,72 +106,78 @@ public class ViewNewOrderController implements Initializable {
     }
     
     @FXML protected void onCommitLine(KeyEvent event){
-        Item newLine=new Item();
-        boolean control=true;
+        double discount=0;
+        double quantity=0;
+        newLine=new Item();
         
+        controlLines=true;
+        labelError.setVisible(false);
+        tfLineDescription.getStyleClass().remove("error");
+        tfQuantity.getStyleClass().remove("error");
+        tfDiscount.getStyleClass().remove("error");
         if (event.getCode()==KeyCode.ENTER) {
-            newLine.setDescription(tfLineDescription.getText());
-            if(tfLineDescription.getText().equals("")){
+            if(tfLineDescription.getText().isEmpty()){
                 tfLineDescription.getStyleClass().add("error");
-                control=false;
+                labelError.setText(errorEmpty);
+                labelError.setVisible(true);
+                controlLines=false;
+            }
+            if(tfQuantity.getText().isEmpty()){
+                tfQuantity.getStyleClass().add("error");
+                labelError.setText(errorEmpty);
+                labelError.setVisible(true);
+                controlLines=false;
+            }
+            if(tfDiscount.getText().isEmpty()){
+                tfDiscount.getStyleClass().add("error");
+                labelError.setText(errorEmpty);
+                labelError.setVisible(true);
+                controlLines=false;
             }
             try{
-                newLine.setDiscount(Double.parseDouble(tfDiscount.getText()));
+                discount=Double.parseDouble(tfDiscount.getText());
             }catch(NumberFormatException ex){
                 tfDiscount.getStyleClass().add("error");
-                control=false;
+                labelError.setText(errorFormat);
+                labelError.setVisible(true);
+                controlLines=false;
             }
             try{
-                newLine.setQuantity(Double.parseDouble(tfQuantity.getText()));
+                quantity=Double.parseDouble(tfQuantity.getText());
             }catch(NumberFormatException ex){
                 tfQuantity.getStyleClass().add("error");
-                control=false;
+                labelError.setText(errorFormat);
+                labelError.setVisible(true);
+                controlLines=false;
             }
-            if(control){
+            if(controlLines){
+                newLine=new Item(tfLineDescription.getText(),Double.parseDouble(tfQuantity.getText()),Double.parseDouble(tfDiscount.getText()));
                 if(newLine.getQuantity()>0){
                     order.addItem(newLine);
+                    changes=true;
                 }
                 createTableSchemeLines();
-                control=true;
-                tfLineDescription.getStyleClass().remove("error");
-                tfQuantity.getStyleClass().remove("error");
-                tfDiscount.getStyleClass().remove("error");
+                
                 tfLineDescription.clear();
                 tfDiscount.clear();
                 tfQuantity.clear();
+                tfLineDescription.requestFocus();
                 updateSchemeLine();
                 updateTotalOrder(newLine);
             }
         }
     }
     
-    @FXML protected void onClicSave(){
-        boolean control=true;
-        
-        order.setBilled(false);
-        order.setDateOrder(dpDateOrder.getValue());
-        if(!tfDescription.getText().isEmpty()){
-            order.setDescription(tfDescription.getText());
+    @FXML protected void onClicCancel(){
+        if(changes){
+            ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::closeWindow, () -> {});
         }else{
-            control=false;
-            tfDescription.getStyleClass().add("error");
+            closeWindow();
         }
-        order.setFieldName(tfFieldName.getText());
-        order.setIdCustomProv(company.getIdCustomProv());
-        try{
-            order.setPricePerUnit(Double.parseDouble(tfPrice.getText()));
-        }catch(NumberFormatException ex){
-            tfPrice.getStyleClass().add("error");
-            control=false;
-        }
-        order.setSourceLanguage(tfSourceLanguage.getText());
-        order.setTargetLanguage(tfTargetLanguage.getText());
-        order.setUnits(tfUnits.getText());
-        
-        if(control){
-            order.addToDB();
-            clearAll();
-        }
+    }
+    
+    @FXML protected void onClicSave(){
+        saveData();
     }
     
     private void popuplateCbSchemes(){
@@ -297,7 +316,7 @@ public class ViewNewOrderController implements Initializable {
         tfTargetLanguage.clear();
         lbLegalName.setText("");
         lbVATNumber.setText("");
-        lbUpdatedTotal.setText(",00€");
+        lbUpdatedTotal.setText("0,00€");
         dpDateOrder.setValue(LocalDate.now());
         cbCustomProvs.setValue(null);
         cbSchemes.setValue(null);
@@ -305,5 +324,74 @@ public class ViewNewOrderController implements Initializable {
         
         tfDescription.getStyleClass().remove("error");
         tfPrice.getStyleClass().remove("error");
+    }
+    
+    private void saveData(){
+        double price=0;
+        
+        control=true;
+        labelError.setVisible(false);
+        tfDescription.getStyleClass().remove("error");
+        tfPrice.getStyleClass().remove("error");
+        dpDateOrder.getStyleClass().remove("error");
+        
+        if(tfDescription.getText().isEmpty()){
+            labelError.setText(errorEmpty);
+            labelError.setVisible(true);
+            tfDescription.getStyleClass().add("error");
+            control=false;
+        }
+        if(tfPrice.getText().isEmpty()){
+            labelError.setText(errorEmpty);
+            labelError.setVisible(true);
+            tfPrice.getStyleClass().add("error");
+            control=false;
+        }
+        try{
+            price=Double.parseDouble(tfPrice.getText());
+        }catch(NumberFormatException ex){
+            labelError.setText(errorFormat);
+            labelError.setVisible(true);
+            tfPrice.getStyleClass().add("error");
+            control=false;
+        }
+        if(dpDateOrder.getValue()==null){
+            labelError.setText(errorDateOrder);
+            labelError.setVisible(true);
+            dpDateOrder.getStyleClass().add("error");
+            control=false;
+        }
+        
+        if(order.getItems().isEmpty()){
+            control=false;
+            labelError.setText(errorNoLines);
+            labelError.setVisible(true);
+        }
+        if(control&&controlLines){
+            order.setBilled(false);
+            order.setDateOrder(dpDateOrder.getValue());
+            order.setDescription(tfDescription.getText());
+            order.setFieldName(tfFieldName.getText());
+            order.setIdCustomProv(company.getIdCustomProv());
+            order.setPricePerUnit(Double.parseDouble(tfPrice.getText()));
+            order.setSourceLanguage(tfSourceLanguage.getText());
+            order.setTargetLanguage(tfTargetLanguage.getText());
+            order.setUnits(tfUnits.getText());
+            order.addToDB();
+            clearAll();
+            changes=false;
+        }
+    }
+    
+    private void closeWindow(){
+        BorderPane home=(BorderPane)paneNewOrder.getParent();
+        Parent DetailsCustomerView;
+        
+        try {
+            DetailsCustomerView=FXMLLoader.load(getClass().getResource("viewDetailsCustomer.fxml"));
+            home.setCenter(DetailsCustomerView);
+        } catch (IOException ex) {
+            Logger.getLogger(ViewNewOrderController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
