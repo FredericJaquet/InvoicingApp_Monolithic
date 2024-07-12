@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.Translations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
@@ -68,7 +69,7 @@ public class ViewCreateProviderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         companies=CustomProv.getAllCustomProvFromDB();
         labelIntro.setText(introCompany);
-        cbDefaultLanguage.getItems().addAll("English","Español","Français");
+        cbDefaultLanguage.getItems().addAll(Translations.languages);
     }    
     
     @FXML protected void onClicCancel(){
@@ -260,6 +261,8 @@ public class ViewCreateProviderController implements Initializable {
         Parent root=null;
         Scene scene;
         Stage newStage=new Stage();
+        
+        stage=(Stage)paneCreateProvider.getScene().getWindow();
         
         loader.setLocation(getClass().getResource(path));
         try {

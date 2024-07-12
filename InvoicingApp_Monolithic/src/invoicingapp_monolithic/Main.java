@@ -27,6 +27,7 @@ public class Main extends Application{
         Database.createUser();
         Database.createDataBase();
         Database.createTables();
+        ChangeRate.setDefaultChangeRate();
     }
     
     @Override

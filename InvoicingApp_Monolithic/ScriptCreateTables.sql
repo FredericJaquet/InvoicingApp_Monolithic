@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS Document(
 idDocument	INT(10) AUTO_INCREMENT, 
 docNumber	VARCHAR(25),
 docDate		DATE,
-title		VARCHAR(25),
+language	VARCHAR(25),
 vat		DOUBLE,
 idUsers		INT(10),
 idChangeRate	INT(10)		DEFAULT 1,
@@ -145,7 +145,9 @@ idInvoiceCustomer	INT(10) AUTO_INCREMENT,
 withholding		double,
 paid			boolean DEFAULT 0,
 idDocument		INT(10) UNIQUE,
+idBankAccount		INT(10),
 PRIMARY KEY		(idInvoiceCustomer),
+FOREIGN KEY		(idBankAccount)	REFERENCES BankAccount(idBankAccount)	ON UPDATE CASCADE,
 FOREIGN KEY		(idDocument)	REFERENCES Document(idDocument) ON UPDATE CASCADE
 );
 
@@ -153,7 +155,9 @@ CREATE TABLE IF NOT EXISTS InvoiceProvider(
 idInvoiceProvider	INT(10) AUTO_INCREMENT, 
 withholding		double,
 idDocument		INT(10) UNIQUE,
+idBankAccount		INT(10),
 PRIMARY KEY		(idInvoiceProvider),
+FOREIGN KEY		(idBankAccount)	REFERENCES BankAccount(idBankAccount)	ON UPDATE CASCADE,
 FOREIGN KEY		(idDocument)	REFERENCES Document(idDocument) ON UPDATE CASCADE
 );
 

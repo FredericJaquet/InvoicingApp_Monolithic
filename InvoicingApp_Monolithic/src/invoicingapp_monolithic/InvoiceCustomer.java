@@ -21,6 +21,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
     private int idInvoiceCustomer;
     private Customer customer=new Customer();
     private LocalDate duedate;
+    private BankAccount bankAccount=new BankAccount();
     private int comparableValue;
     
     public InvoiceCustomer(){}
@@ -50,7 +51,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         
         super.addToDB();
         
-        queryInsert="INSERT INTO InvoiceCustomer (withholding, paid, idDocument) VALUES ("+withholding+","+paid+","+getIdDocument()+")";
+        queryInsert="INSERT INTO InvoiceCustomer (withholding, paid, idDocument,idBankAccount) VALUES ("+withholding+","+paid+","+getIdDocument()+","+bankAccount.getIdBankAccount()+")";
         con.openConnection();
         con.noReturnQuery(queryInsert);
         result=con.getResultSet(queryGetId);
@@ -77,7 +78,6 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         
         String queryGetIdCustomer;
         ResultSet result=null;
-        Orders order=new Orders();
         
         con.openConnection();
         result=con.getResultSet(query);
@@ -88,6 +88,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
                 withholding=result.getDouble(2);
                 paid=result.getBoolean(3);
                 super.getFromDB(result.getInt(4));
+                bankAccount.getFromDB(result.getInt(5));
             }
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
@@ -290,5 +291,19 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
     @Override
     public int compareTo(InvoiceCustomer o) {
         return this.comparableValue-o.getComparableValue();
+    }
+
+    /**
+     * @return the bankAccount
+     */
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    /**
+     * @param bankAccount the bankAccount to set
+     */
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 }

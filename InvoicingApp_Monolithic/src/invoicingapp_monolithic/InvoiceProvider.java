@@ -20,6 +20,7 @@ public class InvoiceProvider extends Document{
     private double withholding;
     private int idInvoiceProvider;
     private Provider provider=new Provider();
+    private BankAccount bankAccount=new BankAccount();
     
     public InvoiceProvider(){}
     
@@ -41,7 +42,7 @@ public class InvoiceProvider extends Document{
         
         super.addToDB();
         
-        queryInsert="INSERT INTO InvoiceProvider (withholding, idDocument) values("+withholding+","+getIdDocument()+")";
+        queryInsert="INSERT INTO InvoiceProvider (withholding, idDocument,idBankAccount) values("+withholding+","+getIdDocument()+","+bankAccount.getIdBankAccount()+")";
         con.openConnection();
         con.noReturnQuery(queryInsert);
         result=con.getResultSet(queryGetId);
@@ -76,6 +77,7 @@ public class InvoiceProvider extends Document{
                 idInvoiceProvider=result.getInt(1);
                 withholding=result.getDouble(2);
                 super.getFromDB(result.getInt(3));
+                bankAccount.getFromDB(result.getInt(4));
             }
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceProvider.class.getName()).log(Level.SEVERE, null, ex);
@@ -202,6 +204,20 @@ public class InvoiceProvider extends Document{
      */
     public void setProvider(Provider provider) {
         this.provider=provider;
+    }
+
+    /**
+     * @return the bankAccount
+     */
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    /**
+     * @param bankAccount the bankAccount to set
+     */
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
      
 }

@@ -662,7 +662,7 @@ public class Tests {
         invoiceCustomer.setDocNumber(scan.nextLine());
         System.out.println("Fecha:");
         invoiceCustomer.setDocDate(scan.nextLine());
-        invoiceCustomer.setTitle("FACTURA");
+        //invoiceCustomer.setTitle("FACTURA");
         if(customer.getDefaultVAT()==0){
             System.out.println("IVA:");
             invoiceCustomer.setVat(scan.nextDouble());
@@ -736,7 +736,7 @@ public class Tests {
         invoiceProvider.setDocNumber(scan.nextLine());
         System.out.println("Fecha:");
         invoiceProvider.setDocDate(scan.nextLine());
-        invoiceProvider.setTitle("FACTURA");
+        //invoiceProvider.setTitle("FACTURA");
         if(provider.getDefaultVAT()==0){
             System.out.println("IVA:");
             invoiceProvider.setVat(scan.nextDouble());
@@ -809,7 +809,7 @@ public class Tests {
         quote.setDocNumber(scan.nextLine());
         System.out.println("Fecha:");
         quote.setDocDate(scan.nextLine());
-        quote.setTitle("PRESUPUESTO");
+        //quote.setTitle("PRESUPUESTO");
         if(customer.getDefaultVAT()==0){
             System.out.println("IVA:");
             quote.setVat(scan.nextDouble());
@@ -878,7 +878,7 @@ public class Tests {
         po.setDocNumber(scan.nextLine());
         System.out.println("Fecha:");
         po.setDocDate(scan.nextLine());
-        po.setTitle("Orden de Pedido");
+        //po.setTitle("Orden de Pedido");
         if(provider.getDefaultVAT()==0){
             System.out.println("IVA:");
             po.setVat(scan.nextDouble());

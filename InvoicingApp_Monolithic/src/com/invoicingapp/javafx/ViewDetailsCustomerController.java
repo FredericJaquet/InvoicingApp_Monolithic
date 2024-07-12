@@ -55,30 +55,30 @@ public class ViewDetailsCustomerController implements Initializable {
     private String query="";
     private boolean changes=false;
     
-    @FXML Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_CustomProv_DefaultVAT,lb_Company_DefaultLanguage,
+    @FXML private Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_CustomProv_DefaultVAT,lb_Company_DefaultLanguage,
             lb_Customer_Duedate,lb_CustomProv_DefaultWithholding,lb_Customer_InvoicingMethod,lb_Customer_PayMethod,lb_CustomProv_Europe,
             lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country,
             lb_ContactPerson_Firstname,lb_ContactPerson_Middlename,lb_ContactPerson_Lastname,lb_ContactPerson_Role,lb_ContactPerson_Email,
             lb_Phone_PhoneNumber,lb_Phone_Kind,lb_Scheme_SchemeName,lb_Scheme_SourceLanguage,lb_Scheme_TargetLanguage,
             lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName,
             lb_BankAccount_Iban,lb_BankAccount_Swift,lb_BankAccount_Holder,lb_BankAccount_Branch;
-    @FXML TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
+    @FXML private TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
             fieldDuedate,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,
             fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
             fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
             fieldPhoneNumber,fieldKind,fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,
             fieldPrice,fieldUnits,fieldFieldName,
             fieldIban,fieldSwift,fieldHolder,fieldBranch;
-    @FXML CheckBox cbEurope,cbEnabled;
-    @FXML ChoiceBox cbLanguage;
-    @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
+    @FXML private CheckBox cbEurope,cbEnabled;
+    @FXML private ChoiceBox cbLanguage;
+    @FXML private Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
             btnSchemeLeft,btnSchemeRight, btnNewScheme,btnNewBankAccount,btnAccountLeft,btnAccountRight,
             btnDeleteScheme,btnDeletePhone,btnDeleteContact,btnDeleteBankAccount;
-    @FXML GridPane gridContacts,gridPhones,gridScheme,gridAccounts;
-    @FXML ScrollPane paneDetailsCustomer;
-    @FXML TableView<SchemeLine> tableSchemeLines;
-    @FXML TableColumn<SchemeLine,String> columnDescription;
-    @FXML TableColumn<SchemeLine,Double> columnDiscount;
+    @FXML private GridPane gridContacts,gridPhones,gridScheme,gridAccounts;
+    @FXML private ScrollPane paneDetailsCustomer;
+    @FXML private TableView<SchemeLine> tableSchemeLines;
+    @FXML private TableColumn<SchemeLine,String> columnDescription;
+    @FXML private TableColumn<SchemeLine,Double> columnDiscount;
     
     public void initData(Customer customer){
         this.customer=customer;
@@ -420,17 +420,17 @@ public class ViewDetailsCustomerController implements Initializable {
         }
         
         controller=loader.getController();
-        controller.initData(customer);
+        controller.initData(customer,0);
         home.setCenter(newOrderView);
     }
     
     @FXML protected void onClicNewInvoice(){
         FXMLLoader loader=new FXMLLoader();
         Parent invoiceCustomerView=null;
-        ViewNewInvoiceController controller=null;
+        ViewNewInvoiceCustomerController controller=null;
         BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
         
-        loader.setLocation(getClass().getResource("viewNewInvoice.fxml"));
+        loader.setLocation(getClass().getResource("viewNewInvoiceCustomer.fxml"));
         try {
             invoiceCustomerView=loader.load();
         } catch (IOException ex) {

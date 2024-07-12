@@ -416,7 +416,7 @@ public class ViewDetailsProviderController implements Initializable {
         }
         
         controller=loader.getController();
-        controller.initData(provider);
+        controller.initData(provider,1);
         home.setCenter(newOrderView);
     }
     

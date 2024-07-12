@@ -44,6 +44,9 @@ import javafx.util.Callback;
  */
 public class ViewNewOrderController implements Initializable {
 
+    private String[] views={"viewCustomers.fxml","viewProviders.fxml"};
+    private String prevView;
+    private int lastView;
     private Orders order=new Orders();
     private Item newLine=new Item();
     private CustomProv company;
@@ -68,7 +71,7 @@ public class ViewNewOrderController implements Initializable {
     @FXML TableColumn<Item,Double> columnDiscount,columnQuantity;
     @FXML private GridPane paneNewOrder;
     
-    public void initData(CustomProv company){
+    public void initData(CustomProv company, int lastView){
         this.company=company;
         updateData();
         for(int i=0;i<companies.size();i++){
@@ -77,6 +80,7 @@ public class ViewNewOrderController implements Initializable {
             }
         }
         popuplateCbSchemes();
+        prevView=views[lastView];
     }
     
     /**
@@ -388,7 +392,7 @@ public class ViewNewOrderController implements Initializable {
         Parent DetailsCustomerView;
         
         try {
-            DetailsCustomerView=FXMLLoader.load(getClass().getResource("viewDetailsCustomer.fxml"));
+            DetailsCustomerView=FXMLLoader.load(getClass().getResource(prevView));
             home.setCenter(DetailsCustomerView);
         } catch (IOException ex) {
             Logger.getLogger(ViewNewOrderController.class.getName()).log(Level.SEVERE, null, ex);

@@ -18,20 +18,20 @@ import java.util.logging.Logger;
  */
 public class Document {
     
-    private String docNumber, title;
+    private String docNumber, language;
     private double vat;
     private LocalDate docDate;
     private Users user=new Users();
     private ChangeRate changeRate=new ChangeRate();
-    private  int idDocument;
+    private int idDocument;
     private ArrayList<Orders> orders=new ArrayList();
     
     public Document(){}
     
-    public Document(String docNumber, String title, double vat, LocalDate docDate){
+    public Document(String docNumber, String language, double vat, LocalDate docDate){
         this.docDate=docDate;
         this.docNumber=docNumber;
-        this.title=title;
+        this.language=language;
         this.vat=vat;
     }
     
@@ -43,7 +43,7 @@ public class Document {
     */
     protected void addToDB(){
         ConnectionDB con=new ConnectionDB();
-        String queryInsert="INSERT INTO Document (docNumber, docDate, title, vat, idUsers, idChangeRate) values('"+docNumber+"','"+docDate.toString()+"','"+title+"',"+vat+","+user.getIdUsers()+","+changeRate.getIdChangeRate()+")";
+        String queryInsert="INSERT INTO Document (docNumber, docDate, language, vat, idUsers, idChangeRate) values('"+docNumber+"','"+docDate.toString()+"','"+language+"',"+vat+","+user.getIdUsers()+","+changeRate.getIdChangeRate()+")";
         String queryGetId="SELECT MAX(idDocument) FROM Document";
         String QueryDocumentOrders;
         ResultSet result=null;
@@ -83,7 +83,7 @@ public class Document {
                 idDocument=result.getInt(1);
                 docNumber=result.getString(2);
                 docDate=LocalDate.parse(result.getString(3));
-                title=result.getString(4);
+                language=result.getString(4);
                 vat=result.getDouble(5);
                 user.setIdUsers(result.getInt(6));
                 user.getFromDB(user.getIdUsers());
@@ -334,17 +334,17 @@ public class Document {
     }
 
     /**
-     * @return the title
+     * @return the language
      */
-    public String getTitle() {
-        return title;
+    public String getLanguage() {
+        return language;
     }
 
     /**
-     * @param title the title to set
+     * @param language the language to set
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     /**

@@ -62,8 +62,6 @@ public class Orders {
         String queryGetId="SELECT MAX(idOrders) FROM Orders";
         ResultSet result=null;
         
-        System.out.println(queryInsert);
-        
         con.openConnection();
         con.noReturnQuery(queryInsert);
         result=con.getResultSet(queryGetId);

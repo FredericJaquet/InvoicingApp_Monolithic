@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
+import com.invoicingapp.config.Translations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
@@ -82,7 +83,7 @@ public class ViewCreateUserController implements Initializable {
         textFieldPW1.setVisible(false);
         textFieldPW2.setVisible(false);
         labelIntro.setText(introUser);
-        cbDefaultLanguage.getItems().addAll("Español", "English", "Français");
+        cbDefaultLanguage.getItems().addAll( Translations.languages);
     }
     
     @FXML protected void onPressedSeePW(){
@@ -102,7 +103,6 @@ public class ViewCreateUserController implements Initializable {
     }
     
     @FXML protected void onClicCancel(){
-        
         if(logoPath!=null){
             try {
                 System.out.println(logoPath);
@@ -326,6 +326,7 @@ public class ViewCreateUserController implements Initializable {
         Parent root=null;
         Scene scene;
         Stage newStage=new Stage();
+        stage=(Stage)paneCreateUser.getScene().getWindow();
         
         loader.setLocation(getClass().getResource(path));
         try {
@@ -347,7 +348,7 @@ public class ViewCreateUserController implements Initializable {
     }
     
     private void closeWindow(){
-        Stage stage=(Stage)paneCreateUser.getScene().getWindow();
+        stage=(Stage)paneCreateUser.getScene().getWindow();
         stage.close();
     }
     

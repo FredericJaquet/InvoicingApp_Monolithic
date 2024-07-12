@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.Translations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
@@ -54,7 +55,7 @@ public class ViewCreateCustomerController implements Initializable {
     @FXML private TextField fieldVATNumber,fieldComName,fieldLegalName,fieldEmailCompany,fieldWeb;
     @FXML private TextField fieldDefaultVAT,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,fieldDuedate;
     @FXML private CheckBox cbEurope,cbEnabled;
-    @FXML private ComboBox cbCompany;
+    @FXML private ComboBox<CustomProv> cbCompany;
     @FXML private ChoiceBox<String> cbDefaultLanguage;
     @FXML private GridPane paneCompany, paneFiscalData;
     @FXML private HBox paneFootCompany,paneFootFiscalData;
@@ -64,7 +65,7 @@ public class ViewCreateCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         companies=CustomProv.getAllCustomProvFromDB();        
         labelIntro.setText(introCompany);
-        cbDefaultLanguage.getItems().addAll("Español", "English", "Français");
+        cbDefaultLanguage.getItems().addAll(Translations.languages);
     }
     
     @FXML protected void onClicCancel(){
@@ -221,12 +222,12 @@ public class ViewCreateCustomerController implements Initializable {
         ObservableList<CustomProv> companyObs =FXCollections.observableArrayList(companies);
         cbCompany.setItems(companyObs);
         
-        cbCompany.setCellFactory(new Callback<ListView<Company>, ListCell<Company>>() {
+        cbCompany.setCellFactory(new Callback<ListView<CustomProv>, ListCell<CustomProv>>() {
             @Override
-            public ListCell<Company> call(ListView<Company> p) {
-                return new ListCell<Company>() {
+            public ListCell<CustomProv> call(ListView<CustomProv> p) {
+                return new ListCell<CustomProv>() {
                     @Override
-                    protected void updateItem(Company item, boolean empty) {
+                    protected void updateItem(CustomProv item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item.getComName());
@@ -238,9 +239,9 @@ public class ViewCreateCustomerController implements Initializable {
             }
         });
         
-        cbCompany.setButtonCell(new ListCell<Company>() {
+        cbCompany.setButtonCell(new ListCell<CustomProv>() {
             @Override
-            protected void updateItem(Company item, boolean empty) {
+            protected void updateItem(CustomProv item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
                     setText(item.getComName());
@@ -252,16 +253,16 @@ public class ViewCreateCustomerController implements Initializable {
     }
 
     @FXML protected void getSelectionComboBox(){
-        CustomProv customProv=(CustomProv) cbCompany.getSelectionModel().getSelectedItem();
+        CustomProv cust= cbCompany.getSelectionModel().getSelectedItem();
         
-        fieldVATNumber.setText(customProv.getVatNumber());
-        fieldComName.setText(customProv.getComName());
-        fieldLegalName.setText(customProv.getLegalName());
-        fieldEmailCompany.setText(customProv.getEmail());
-        fieldWeb.setText(customProv.getWeb());
+        fieldVATNumber.setText(cust.getVatNumber());
+        fieldComName.setText(cust.getComName());
+        fieldLegalName.setText(cust.getLegalName());
+        fieldEmailCompany.setText(cust.getEmail());
+        fieldWeb.setText(cust.getWeb());
         
-        customer.setIdCompany(customProv.getIdCompany());
-        customer.setAddress(customProv.getAddress());
+        customer.setIdCompany(cust.getIdCompany());
+        customer.setAddress(cust.getAddress());
     }
     
     private FXMLLoader switchWindow(String path){
@@ -269,6 +270,7 @@ public class ViewCreateCustomerController implements Initializable {
         Parent root=null;
         Scene scene;
         Stage newStage=new Stage();
+        stage=(Stage)paneCreateCustomer.getScene().getWindow();
         
         loader.setLocation(getClass().getResource(path));
         try {

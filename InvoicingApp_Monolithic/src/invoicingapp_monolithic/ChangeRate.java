@@ -7,6 +7,7 @@ package invoicingapp_monolithic;
 import com.invoicingapp.bbdd.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,6 +75,28 @@ public class ChangeRate {
             Logger.getLogger(ChangeRate.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+    }
+    
+    public static ArrayList<ChangeRate> getAllChangeRatesFromDB(){
+        ArrayList<ChangeRate> list=new ArrayList();
+        String query="SELECT idChangeRate FROM ChangeRate;";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        ChangeRate rate=new ChangeRate();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try{
+            while(result.next()){
+                rate=new ChangeRate();
+                rate.getFromDB(result.getInt(1));
+                list.add(rate);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ChangeRate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;        
     }
     
     /**
@@ -199,6 +222,25 @@ public class ChangeRate {
      */
     public void setIdChangeRate(int id) {
         this.idChangeRate = id;
+    }
+    
+    @Override
+    public String toString(){
+        return currency1+" -> "+currency2+": "+String.format("%.4f",rate);
+    }
+    
+    public static void setDefaultChangeRate(){
+        ChangeRate changeRate=new ChangeRate();
+        ConnectionDB con=new ConnectionDB();
+        String queryInsert="INSERT INTO ChangeRate(currency1, currency2, rate) VALUES('€','€', 1);";
+        
+        changeRate.getFromDB(1);
+        
+        if(changeRate.getIdChangeRate()==0){
+            con.openConnection();
+            con.noReturnQuery(queryInsert);
+            con.closeConnection();
+        }
     }
     
 }
