@@ -208,7 +208,7 @@
                   <Separator prefWidth="200.0" />
                   <HBox alignment="CENTER_RIGHT" spacing="15.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Ver" />
+                        <Button mnemonicParsing="false" onAction="#onClicSee" text="Ver" />
                         <Button mnemonicParsing="false" onAction="#cancel" text="Volver" />
                         <Button mnemonicParsing="false" onAction="#save" text="Guardar" />
                      </children>

@@ -29,6 +29,7 @@ public class Translations {
     public static String[] titleHolder={"Holder","Titular","Titulaire"};
     public static String[] titleBranch={"Branch","Sucursal","Banque"};
     public static String[] titlePayMethod={"Payment method","Método de pago","Méthode de payement"};
+    public static String[] titleDuedate={"Duedate","Plazo de pago","Délai de payement"};
     public static String[] titleTotalNet={"Total Net","Total Neto","Total Net"};
     public static String[] titleVAT={"VAT","IVA","TVA"};
     public static String[] titleTotalVAT={"Total VAT","Total IVA","Total TVA"};

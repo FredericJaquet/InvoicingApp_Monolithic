@@ -208,6 +208,24 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         paneNewInvoice.getParent().setDisable(true);
     }
     
+    @FXML protected void onClicSee(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent invoiceCustomerView=null;
+        ViewInvoiceCustomerController controller=null;
+        BorderPane home=(BorderPane)paneNewInvoice.getParent();
+        
+        loader.setLocation(getClass().getResource("viewInvoiceCustomer.fxml"));
+        try {
+            invoiceCustomerView=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(invoice);
+        home.setCenter(invoiceCustomerView);
+    }
+    
     @FXML protected void save(){
         invoice.setChangeRate(changeRate);
         invoice.setCustomer(customer);
@@ -222,15 +240,14 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         invoice.setBankAccount(bankAccount);
         invoice.setChangeRate(changeRate);
         
-        
         for(int i=0;i<pendingOrders.size();i++){
             if(pendingOrders.get(i).isSelected()){
                 invoice.addOrder(pendingOrders.get(i));
             }
         }
-        
+        getSelectionCBBankAccounts();
         invoice.addToDB();
-        backToViewDetailsCustomer();
+        //backToViewDetailsCustomer();
     }
     
     @FXML protected void cancel(){
@@ -308,7 +325,6 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private void populateCbBankAccounts(){
         ObservableList<BankAccount> list=FXCollections.observableArrayList(accounts);
         cbBankAccounts.setItems(list);
-        
         cbBankAccounts.setCellFactory(new Callback<ListView<BankAccount>, ListCell<BankAccount>>() {
             @Override
             public ListCell<BankAccount> call(ListView<BankAccount> p) {
