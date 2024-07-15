@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.tools.DoubleStringConverter;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
@@ -31,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -46,7 +48,6 @@ public class ViewNewOrderController implements Initializable {
 
     private String[] views={"viewCustomers.fxml","viewProviders.fxml"};
     private String prevView;
-    private int lastView;
     private Orders order=new Orders();
     private Item newLine=new Item();
     private CustomProv company;
@@ -92,6 +93,7 @@ public class ViewNewOrderController implements Initializable {
         populateCbCustomProvs();
         lbUpdatedTotal.setText(String.valueOf(0.00)+"€");
         dpDateOrder.setValue(LocalDate.now());
+        makeTableViewEditable();
     }
     
     @FXML protected void getSelectionCBCustomProvs(){
@@ -167,7 +169,7 @@ public class ViewNewOrderController implements Initializable {
                 tfQuantity.clear();
                 tfLineDescription.requestFocus();
                 updateSchemeLine();
-                updateTotalOrder(newLine);
+                updateTotalOrder();
             }
         }
     }
@@ -275,9 +277,11 @@ public class ViewNewOrderController implements Initializable {
         }
     }
     
-    private void updateTotalOrder(Item item){
+    private void updateTotalOrder(){
         double price=0;
         boolean control=true;
+        updatedTotal=0;
+        tfPrice.getStyleClass().remove("error");
         
         try{
             price=Double.parseDouble(tfPrice.getText());
@@ -285,14 +289,50 @@ public class ViewNewOrderController implements Initializable {
             tfPrice.getStyleClass().add("error");
             control=false;
         }
-        
         if(control){
-            updatedTotal=updatedTotal+price*item.getQuantity()*(100-item.getDiscount())/100;
-            lbUpdatedTotal.setText(String.format("%.2f€", updatedTotal));
-            tfPrice.getStyleClass().remove("error");
+            for(int i=0;i<order.getItems().size();i++){
+                updatedTotal=updatedTotal+price*order.getItems().get(i).getQuantity()*(100-order.getItems().get(i).getDiscount())/100;
+                lbUpdatedTotal.setText(String.format("%.2f€", updatedTotal));
+            }
         }
     }
+    
+    private void makeTableViewEditable(){
+        labelError.setVisible(false);
+        labelError.setText(errorFormat);
+        
+        tvItems.setEditable(true);
+        columnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnDiscount.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        columnQuantity.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 
+        columnDescription.setOnEditCommit(event -> {
+            Item item = event.getRowValue();
+            item.setDescription(event.getNewValue());
+        });
+
+        columnDiscount.setOnEditCommit(event -> {
+            Item item = event.getRowValue();
+            try {
+                double discount = event.getNewValue();
+                item.setDiscount(discount);
+            } catch (NumberFormatException ex) {
+                labelError.setVisible(true);
+            }
+        });
+
+        columnQuantity.setOnEditCommit(event -> {
+            Item item = event.getRowValue();
+            try {
+                double quantity = event.getNewValue();
+                item.setQuantity(quantity);
+                updateTotalOrder();
+            } catch (NumberFormatException ex) {
+                labelError.setVisible(true);
+            }
+        });
+    }
+    
     private void createTableSchemeLines(){
         ObservableList<Item> items=FXCollections.observableArrayList(order.getItems());
         
