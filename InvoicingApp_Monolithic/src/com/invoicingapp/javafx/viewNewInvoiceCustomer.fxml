@@ -26,8 +26,8 @@
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
                   <ChoiceBox fx:id="cbLanguages" />
-                  <ComboBox fx:id="cbChangeRates" onAction="#getSelectioncbChangeRates" />
-                  <Button mnemonicParsing="false" text="Nuevo Cambio" />
+                  <ComboBox fx:id="cbChangeRates" onAction="#getSelectionCBChangeRates" />
+                  <Button mnemonicParsing="false" onAction="#onClicAddChangeRate" text="Nuevo Cambio" />
                </children>
             </HBox>
             <VBox fx:id="vbHeader" spacing="15.0" stylesheets="@viewnewinvoicecustomer.css">
@@ -42,7 +42,7 @@
                       <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <GridPane hgap="10.0">
+                        <GridPane hgap="10.0" stylesheets="@viewnewinvoicecustomer.css">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" />
                             <ColumnConstraints hgrow="SOMETIMES" />
@@ -64,7 +64,7 @@
                               <Label fx:id="lbTitleCPCity" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="CP / Población" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label fx:id="lbTitleEmail" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <Label fx:id="lbTitleWeb" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Web" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <ImageView fx:id="ivLogo" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.rowSpan="6" />
+                              <ImageView fx:id="ivLogo" pickOnBounds="true" preserveRatio="true" styleClass="logo" GridPane.rowSpan="6" />
                               <Label fx:id="lbLegalName" text="Label" GridPane.columnIndex="2" />
                               <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Label fx:id="lbStreet" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -145,7 +145,7 @@
                         <VBox spacing="5.0">
                            <children>
                               <Label fx:id="lbTitleBankDetails" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Pago por transferencia bancaria a la cuenta número:" />
-                              <ComboBox fx:id="cbBankAccounts" />
+                              <ComboBox fx:id="cbBankAccounts" onAction="#getSelectionCBBankAccounts" />
                               <HBox spacing="5.0">
                                  <children>
                                     <Label fx:id="lbTitleHolder" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Titular:" />
@@ -166,7 +166,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <GridPane hgap="5.0" layoutX="330.0" vgap="5.0">
+                        <GridPane hgap="10.0" layoutX="330.0" vgap="5.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" />
                               <ColumnConstraints hgrow="SOMETIMES" />
@@ -176,6 +176,8 @@
                             <RowConstraints vgrow="SOMETIMES" />
                             <RowConstraints vgrow="SOMETIMES" />
                             <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
@@ -194,7 +196,11 @@
                               <Label fx:id="lbTitleTotalInvoice" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Total Factura" GridPane.rowIndex="4" />
                               <Label fx:id="lbTotalInvoice" text="Label" GridPane.rowIndex="5" />
                               <Label fx:id="lbTitleTotalToPay" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Total a Pagar" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                              <Label fx:id="lbTotalToPay" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label fx:id="lbTotalToPay" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                              <Label fx:id="lbTitleTotalInvoice2" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Total Factura" GridPane.rowIndex="6" />
+                              <Label fx:id="lbTitleTotalToPay2" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Total a Pagar" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                              <Label fx:id="lbTotalInvoice2" text="Label" GridPane.rowIndex="7" />
+                              <Label fx:id="lbTotalToPay2" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                            </children>
                         </GridPane>
                      </children>

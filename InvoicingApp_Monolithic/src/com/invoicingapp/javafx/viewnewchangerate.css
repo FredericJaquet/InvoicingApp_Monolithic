@@ -1,0 +1,13 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+
+.error{
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-text-fill: red
+}

@@ -6,7 +6,6 @@ package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Translations;
 import invoicingapp_monolithic.BankAccount;
-import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Customer;

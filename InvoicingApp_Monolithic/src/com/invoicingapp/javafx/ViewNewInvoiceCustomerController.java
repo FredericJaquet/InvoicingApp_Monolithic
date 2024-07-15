@@ -29,6 +29,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -42,6 +43,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -62,7 +64,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private InvoiceCustomer invoice=new InvoiceCustomer();
     private Configuration config;
     private String logoPath;
-    private int imgSize=150;
+    private int imgSize=175;
     private int language=1;
     
     @FXML private ScrollPane paneNewInvoice;
@@ -74,10 +76,10 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     @FXML private Label lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
             lbCustLegalName,lbCustVATNumber,lbCustStreet,lbCustCPCity,lbCustStateCountry,lbCustEmail,lbCustWeb,
             lbHolder,lbBranch,lbPayMethod,
-            lbTotalNet,lbVAT,lbTotalVAT,lbWithholding,lbTotalWithholding,lbTotalInvoice,lbTotalToPay,lbTitleSelectAll,
+            lbTotalNet,lbVAT,lbTotalVAT,lbWithholding,lbTotalWithholding,lbTotalInvoice,lbTotalToPay,lbTitleSelectAll,lbTotalInvoice2,lbTotalToPay2,
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
             lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,
-            lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay;
+            lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2;
     @FXML private ImageView ivLogo;
     @FXML private CheckBox cbSelectAll;
     @FXML private DatePicker dpDocDate;
@@ -133,6 +135,10 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             img=new File(logoPath);
             isImage = (InputStream) new FileInputStream(img);
             ivLogo.setImage(new Image(isImage));
+            ivLogo.setFitWidth(imgSize);
+            ivLogo.setFitHeight(imgSize);
+            ivLogo.setPreserveRatio(true);
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -148,14 +154,20 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         customer=cbCustomers.getSelectionModel().getSelectedItem();
         updateData();
         getOrders();
+        invoice.setCustomer(customer);
     }
     
     @FXML protected void getSelectionCBBankAccounts(){
+        bankAccount=cbBankAccounts.getSelectionModel().getSelectedItem();
         updateBankData();
+        invoice.setBankAccount(bankAccount);
     }
     
     @FXML protected void getSelectionCBChangeRates(){
         changeRate=cbChangeRates.getSelectionModel().getSelectedItem();
+        updateTotals();
+        setTitles();
+        invoice.setChangeRate(changeRate);
     }
     
     @FXML protected void selectAllOrders(){
@@ -163,6 +175,37 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             pendingOrders.get(i).setSelected(cbSelectAll.isSelected());
         }
         getOrders();
+    }
+    
+    @FXML protected void onClicAddChangeRate(){
+        ChangeRate changeRate=new ChangeRate();
+        FXMLLoader loader=new FXMLLoader();
+        Parent root=null;
+        Stage viewNewChangeRate=new Stage();
+        Scene scene;
+        ViewNewChangeRateController controller=null;
+        
+        loader.setLocation(getClass().getResource("viewNewChangeRate.fxml"));
+        try {
+            root=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        controller=loader.getController();
+        controller.initData(changeRate);
+        scene=new Scene(root);
+        viewNewChangeRate.setScene(scene);
+        viewNewChangeRate.show();
+        
+        viewNewChangeRate.setOnHiding(event -> {
+                paneNewInvoice.getParent().setDisable(false);
+                this.changeRate=changeRate;
+                changeRates.add(changeRate);
+                populateCbChangeRates();
+                cbChangeRates.getSelectionModel().selectLast();
+                updateTotals();
+            });
+        paneNewInvoice.getParent().setDisable(true);
     }
     
     @FXML protected void save(){
@@ -299,16 +342,17 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         updateBankData();
     }
     
-    private void getSelectionCBLanguages(String newValue){
-        language=getLanguage(newValue);
-        setTitles();
-    }
-    
     private void populateCbLanguages(){
         cbLanguages.getItems().addAll( Translations.languages);
         cbLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             getSelectionCBLanguages(newValue);
         });
+    }
+    
+    private void getSelectionCBLanguages(String newValue){
+        language=getLanguage(newValue);
+        setTitles();
+        invoice.setLanguage(newValue);
     }
     
     private void getOrders(){
@@ -351,6 +395,9 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         double totalInvoice=0;
         double totalToPay=0;
         
+        lbTotalInvoice2.setVisible(false);
+        lbTotalToPay2.setVisible(false);
+        
         for(int i=0;i<pendingOrders.size();i++){
             if(pendingOrders.get(i).isSelected()){
                 totalNet=totalNet+pendingOrders.get(i).getTotalOrder();
@@ -360,17 +407,22 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             totalInvoice=totalNet+totalVAT;
             totalToPay=totalNet+totalVAT-totalWithholding;
         }
-        lbTotalNet.setText(String.format("%.2f€",totalNet));
+        lbTotalNet.setText(String.format("%.2f"+changeRate.getCurrency1(),totalNet));
         lbVAT.setText(String.format("%.2f%%",customer.getDefaultVAT()));
-        lbTotalVAT.setText(String.format("%.2f€",totalVAT));
+        lbTotalVAT.setText(String.format("%.2f"+changeRate.getCurrency1(),totalVAT));
         lbWithholding.setText(String.format("%.2f%%",customer.getDefaultWithholding()));
-        lbTotalWithholding.setText(String.format("%.2f€",totalWithholding));
-        lbTotalInvoice.setText(String.format("%.2f€",totalInvoice));
-        lbTotalToPay.setText(String.format("%.2f€",totalToPay));    
+        lbTotalWithholding.setText(String.format("%.2f"+changeRate.getCurrency1(),totalWithholding));
+        lbTotalInvoice.setText(String.format("%.2f"+changeRate.getCurrency1(),totalInvoice));
+        lbTotalToPay.setText(String.format("%.2f"+changeRate.getCurrency1(),totalToPay));
+        if(changeRate.getIdChangeRate()!=1){
+            lbTotalInvoice2.setVisible(true);
+            lbTotalToPay2.setVisible(true);
+            lbTotalInvoice2.setText(String.format("%.2f"+changeRate.getCurrency2(),totalInvoice*changeRate.getRate()));
+            lbTotalToPay2.setText(String.format("%.2f"+changeRate.getCurrency2(),totalToPay*changeRate.getRate()));
+        }
    }
     
     protected void updateBankData(){
-        bankAccount=cbBankAccounts.getSelectionModel().getSelectedItem();
         lbHolder.setText(bankAccount.getHolder());
         lbBranch.setText(bankAccount.getBranch());
     }
@@ -394,6 +446,9 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     }
     
     private void setTitles(){
+        lbTitleTotalInvoice2.setVisible(false);
+        lbTitleTotalToPay2.setVisible(false);
+        
         lbTitleName.setText(Translations.titleName[language]);
         lbTitleVATNumber.setText(Translations.titleVATNumber[language]);
         lbTitleAddress.setText(Translations.titleAddress[language]);
@@ -416,6 +471,12 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         lbTitleTotalWithholding.setText(Translations.titleTotalWithholding[language]);
         lbTitleTotalInvoice.setText(Translations.titleTotalInvoice[language]);
         lbTitleTotalToPay.setText(Translations.titleTotalToPay[language]);
+        if(changeRate.getIdChangeRate()!=1){
+            lbTitleTotalInvoice2.setVisible(true);
+            lbTitleTotalToPay2.setVisible(true);
+            lbTitleTotalInvoice2.setText(Translations.titleTotalInvoice[language]);
+            lbTitleTotalToPay2.setText(Translations.titleTotalToPay[language]);
+        }
     }
     
     private void backToViewDetailsCustomer(){
@@ -436,4 +497,6 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         home=(BorderPane)paneNewInvoice.getParent();
         home.setCenter(detailsCustomerView);
     }
+
+    
 }

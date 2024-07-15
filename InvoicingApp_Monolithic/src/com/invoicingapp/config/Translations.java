@@ -4,6 +4,8 @@
  */
 package com.invoicingapp.config;
 
+import invoicingapp_monolithic.Currency;
+
 /**
  *
  * @author frede
@@ -34,5 +36,36 @@ public class Translations {
     public static String[] titleTotalWithholding={"Total Withholding","Total Retención","Total Rétention"};
     public static String[] titleTotalInvoice={"Total Invoice","Total Factura","Total Facture"};
     public static String[] titleTotalToPay={"Total to Pay","Total a Pagar","Total à payer"};
-    
+    public static Currency[] currencies={ new Currency("€","EUR"),
+                                        new Currency("£","GBP"),
+                                        new Currency("US$","USD"),
+                                        new Currency("¥","JPY"),
+                                        new Currency("CHF","CHF"),
+                                        new Currency("A$","AUD"),
+                                        new Currency("C$","CAD"),
+                                        new Currency("元","CNY"),
+                                        new Currency("HK$","HKD"),
+                                        new Currency("NZ$","NZD"),
+                                        new Currency("kr","SEK"),
+                                        new Currency("₩","KRW"),
+                                        new Currency("S$","SGD"),
+                                        new Currency("kr","NOK"),
+                                        new Currency("$","MXN"),
+                                        new Currency("₹","INR"),
+                                        new Currency("₽","RUB"),
+                                        new Currency("R","ZAR"),
+                                        new Currency("₺","TRY"),
+                                        new Currency("R$","BRL"),
+                                        new Currency("NT$","TWD"),
+                                        new Currency("kr","DKK"),
+                                        new Currency("zł","PLN"),
+                                        new Currency("฿","THB"),
+                                        new Currency("Rp","IDR"),
+                                        new Currency("Ft","HUF"),
+                                        new Currency("Kč","CZK"),
+                                        new Currency("₪","ILS"),
+                                        new Currency("CLP$","CLP"),
+                                        new Currency("₱","PHP"),};
+
 }
+
