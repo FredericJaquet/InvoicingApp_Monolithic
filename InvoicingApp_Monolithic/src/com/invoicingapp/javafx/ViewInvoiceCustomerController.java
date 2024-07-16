@@ -23,11 +23,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -48,14 +49,15 @@ public class ViewInvoiceCustomerController implements Initializable {
     private int language;
     private int pages;
     private int page=1;
-    private int maxLinePerPage=25;
+    private int maxLinesPerPage=25;
     private double totalNet=0;
     private double totalVAT=0;
     private double totalWithholding=0;
     private double totalInvoice=0;
     private double totalToPay=0;
+    private int[] ordersIndex;
     
-    @FXML private VBox paneInvoice, paneOrders,paneMain;
+    @FXML private VBox paneInvoice,vbOrders,paneMain;
     
     @FXML private Label lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
             lbCustComName,lbCustLegalName,lbCustVATNumber,lbCustStreet,lbCustCPCity,lbCustStateCountry,lbCustEmail,lbCustWeb,
@@ -73,10 +75,11 @@ public class ViewInvoiceCustomerController implements Initializable {
         getObjects();
         setLogo();
         setData();
-        setTitles();
         getTotals();
         setTotals();
         pages=setPageNumber();
+        setTitles();
+        setOrders();
     }
     
     @Override
@@ -116,21 +119,39 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbDuedate.setText(invoice.getDuedate().toString());
     }
     
-    protected void getTotals(){
-                
-        lbTotalInvoice2.setVisible(false);
-        lbTotalToPay2.setVisible(false);
+    private void getTotals(){
+        totalNet=invoice.getTotal();
+        totalVAT=invoice.getTotalVAT();
+        totalWithholding=invoice.getTotalWithholding();
+        totalToPay=invoice.getTotalToPay();
+    }
+    
+    private void setOrders(){
         
-        for(int i=0;i<orders.size();i++){
-            totalNet=totalNet+orders.get(i).getTotalOrder();
-            totalVAT=totalVAT+(orders.get(i).getTotalOrder()*(customer.getDefaultVAT()/100));
-            totalWithholding=totalWithholding+(orders.get(i).getTotalOrder()*(customer.getDefaultWithholding()/100));
+        FXMLLoader loader;
+        Parent ordersListView=null;
+        ViewOrdersForDocumentController controller=null;
+        
+        vbOrders.getChildren().clear();
+        for (int i=0;i<orders.size();i++) {
+            loader=new FXMLLoader();
+            loader.setLocation(getClass().getResource("viewOrdersForDocument.fxml"));
+            try {
+                ordersListView=loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            controller=loader.getController();
+            controller.initData(orders.get(i),changeRate);
+            
+            vbOrders.getChildren().add(ordersListView);
         }
-        totalInvoice=totalNet+totalVAT;
-        totalToPay=totalNet+totalVAT-totalWithholding;
     }
     
     private void setTotals(){
+        lbTotalInvoice2.setVisible(false);
+        lbTotalToPay2.setVisible(false);
+        
         lbTotalNet.setText(String.format("%.2f"+changeRate.getCurrency1(),totalNet));
         lbVAT.setText(String.format("%.2f%%",customer.getDefaultVAT()));
         lbTotalVAT.setText(String.format("%.2f"+changeRate.getCurrency1(),totalVAT));
@@ -229,16 +250,35 @@ public class ViewInvoiceCustomerController implements Initializable {
             itemsNum=itemsNum+orders.get(i).getItems().size();
         }
         
-        if((ordersNum+itemsNum)%maxLinePerPage==0){
-            pages=((ordersNum+itemsNum)/maxLinePerPage);
+        if((ordersNum+itemsNum)%maxLinesPerPage==0){
+            pages=((ordersNum+itemsNum)/maxLinesPerPage);
         }else{
-            pages=((ordersNum+itemsNum)/maxLinePerPage)+1;
+            pages=((ordersNum+itemsNum)/maxLinesPerPage)+1;
         }
         
         System.out.println("invoiceCustomer linea 234: "+ordersNum+" pedidos");
         System.out.println("invoiceCustomer linea 234: "+itemsNum+" artículos");
         System.out.println("InvoiceCustomer linea 234: "+pages+" páginas");
         
+        ordersIndex=new int[pages+1];
+        
         return pages;
+    }
+    
+    private void setIndexOrdersPerPages(){
+        int linesNumber=0;
+        int j=1;
+        
+        ordersIndex[0]=0;
+        
+        for(int i=0;i<orders.size();i++){
+            linesNumber=linesNumber+orders.get(i).getItems().size()+1;
+            if(linesNumber>maxLinesPerPage){
+                ordersIndex[j]=i;
+                j++;
+                linesNumber=0;
+            }
+        }
+        ordersIndex[pages]=orders.size();
     }
 }

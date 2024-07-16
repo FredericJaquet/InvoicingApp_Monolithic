@@ -125,7 +125,7 @@ public class Item {
         con.closeConnection();
         getFromDB(idItem); 
     }
-
+    
     /**
      * @return the description
      */

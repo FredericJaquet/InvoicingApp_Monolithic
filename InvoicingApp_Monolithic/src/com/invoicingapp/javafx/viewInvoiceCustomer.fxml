@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneMain" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewInvoiceCustomerController">
+<VBox fx:id="paneMain" maxHeight="1000.0" prefWidth="700.0" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewInvoiceCustomerController">
    <children>
       <HBox alignment="CENTER_RIGHT" spacing="15.0">
          <children>
@@ -25,216 +25,212 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </HBox>
-      <ScrollPane>
+      <ScrollPane maxHeight="900.0">
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
          <content>
-            <VBox fx:id="paneInvoice" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="891.0" prefWidth="630.0" spacing="10.0" styleClass="invoice" stylesheets="@viewinvoicecustomer.css">
+            <VBox fx:id="vbInvoice" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="891.0" prefWidth="630.0" spacing="10.0" styleClass="invoice" stylesheets="@viewinvoicecustomer.css">
                <children>
-                  <VBox fx:id="vbHeader" spacing="10.0" stylesheets="@viewnewinvoicecustomer.css">
+                  <GridPane>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="399.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <GridPane>
+                        <GridPane hgap="10.0" stylesheets="@viewnewinvoicecustomer.css">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="399.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" />
+                              <ColumnConstraints hgrow="SOMETIMES" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label fx:id="lbTitleName" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Nombre" GridPane.columnIndex="1" />
+                              <Label fx:id="lbTitleVATNumber" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Cif" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="lbTitleAddress" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label fx:id="lbTitleCPCity" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="CP / Población" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label fx:id="lbTitleEmail" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label fx:id="lbTitleWeb" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Web" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <ImageView fx:id="ivLogo" pickOnBounds="true" preserveRatio="true" styleClass="logo" GridPane.rowSpan="6" />
+                              <Label fx:id="lbLegalName" text="Label" GridPane.columnIndex="2" />
+                              <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label fx:id="lbStreet" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Label fx:id="lbCityCp" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <Label fx:id="lbEmail" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                              <Label fx:id="lbWeb" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                              <Label fx:id="lbTitleCountry" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Country" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label fx:id="lbCountry" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                           </children>
+                        </GridPane>
+                        <AnchorPane styleClass="withBorder" stylesheets="@viewinvoicecustomer.css" GridPane.rowIndex="1">
+                           <children>
+                              <Label fx:id="lbTitleInvoice" layoutX="166.0" layoutY="4.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="FACTURA">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <GridPane.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </GridPane.margin>
+                        </AnchorPane>
+                        <VBox spacing="5.0" styleClass="withBorder" stylesheets="@viewinvoicecustomer.css" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                           <children>
+                              <Label fx:id="lbCustComName" text="Label" />
+                              <Label fx:id="lbCustLegalName" text="Label" />
+                              <Label fx:id="lbCustVATNumber" text="Label" />
+                              <Label fx:id="lbCustStreet" text="Label" />
+                              <Label fx:id="lbCustCPCity" text="Label" />
+                              <Label fx:id="lbCustStateCountry" text="Label" />
+                              <Label fx:id="lbCustEmail" text="Label" />
+                              <Label fx:id="lbCustWeb" text="Label" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets bottom="15.0" />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </GridPane>
+                  <AnchorPane>
+                     <children>
+                        <Label fx:id="lbTitleNumber" layoutX="7.0" layoutY="6.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Número:">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbInvoiceNumber1" layoutX="62.0" layoutY="6.0" text="2024-1.001" />
+                        <Label fx:id="lbTitleDate" layoutX="264.0" layoutY="6.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Fecha:">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbDate1" layoutX="305.0" layoutY="6.0" text="31/06/2024" />
+                        <Label fx:id="lbTitlePage" layoutX="557.0" layoutY="3.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Pág.">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbPageNumber" layoutX="585.0" layoutY="3.0" text="x">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbTitleOf" layoutX="596.0" layoutY="3.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="de">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lbPageTotal" layoutX="613.0" layoutY="3.0" text="Y">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane />
+                  <Separator prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Separator>
+                  <VBox fx:id="vbOrders" alignment="TOP_CENTER" maxHeight="500.0" prefHeight="500.0" VBox.vgrow="NEVER" />
+                  <Separator />
+                  <AnchorPane>
+                     <children>
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label fx:id="lbTitleBankDetails" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Pago por transferencia bancaria a la cuenta número:" />
+                              <Label fx:id="lbIBAN" text="IBAN" />
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <Label fx:id="lbTitleHolder" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Titular:" />
+                                    <Label fx:id="lbHolder" text="Label" />
+                                 </children>
+                              </HBox>
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <Label fx:id="lbTitleBranch" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Succursal" />
+                                    <Label fx:id="lbBranch" text="Label" />
+                                 </children>
+                              </HBox>
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <Label fx:id="lbTitlePayMethod" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Forma de Pago:" />
+                                    <Label fx:id="lbPayMethod" text="Label" />
+                                 </children>
+                              </HBox>
+                              <HBox spacing="5.0">
+                                 <children>
+                                    <Label fx:id="lbTitleDuedate" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Plazo de pago:" />
+                                    <Label fx:id="lbDuedate" text="Label" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <GridPane hgap="10.0" layoutX="330.0" vgap="5.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" />
+                              <ColumnConstraints hgrow="SOMETIMES" />
                               <ColumnConstraints hgrow="SOMETIMES" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints vgrow="SOMETIMES" />
                               <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <GridPane hgap="10.0" stylesheets="@viewnewinvoicecustomer.css">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" />
-                                    <ColumnConstraints hgrow="SOMETIMES" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="25.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Label fx:id="lbTitleName" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Nombre" GridPane.columnIndex="1" />
-                                    <Label fx:id="lbTitleVATNumber" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Cif" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label fx:id="lbTitleAddress" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="lbTitleCPCity" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="CP / Población" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label fx:id="lbTitleEmail" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <Label fx:id="lbTitleWeb" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Web" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <ImageView fx:id="ivLogo" pickOnBounds="true" preserveRatio="true" styleClass="logo" GridPane.rowSpan="6" />
-                                    <Label fx:id="lbLegalName" text="Label" GridPane.columnIndex="2" />
-                                    <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Label fx:id="lbStreet" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <Label fx:id="lbCityCp" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                    <Label fx:id="lbEmail" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                    <Label fx:id="lbWeb" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                    <Label fx:id="lbTitleCountry" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Country" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label fx:id="lbCountry" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                 </children>
-                              </GridPane>
-                              <AnchorPane styleClass="withBorder" stylesheets="@viewinvoicecustomer.css" GridPane.rowIndex="1">
-                                 <children>
-                                    <Label fx:id="lbTitleInvoice" layoutX="166.0" layoutY="4.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="FACTURA">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                 </GridPane.margin>
-                              </AnchorPane>
-                              <VBox spacing="5.0" styleClass="withBorder" stylesheets="@viewinvoicecustomer.css" GridPane.columnIndex="1" GridPane.rowSpan="2">
-                                 <children>
-                                    <Label fx:id="lbCustComName" text="Label" />
-                                    <Label fx:id="lbCustLegalName" text="Label" />
-                                    <Label fx:id="lbCustVATNumber" text="Label" />
-                                    <Label fx:id="lbCustStreet" text="Label" />
-                                    <Label fx:id="lbCustCPCity" text="Label" />
-                                    <Label fx:id="lbCustStateCountry" text="Label" />
-                                    <Label fx:id="lbCustEmail" text="Label" />
-                                    <Label fx:id="lbCustWeb" text="Label" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets bottom="15.0" />
-                                 </GridPane.margin>
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
-                                 </padding>
-                              </VBox>
+                              <Label fx:id="lbTitleTotalNet" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Base Imponible" />
+                              <Label fx:id="lbTitleVAT" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="IVA" GridPane.columnIndex="1" />
+                              <Label fx:id="lbTitleTotalVAT" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Importe IVA" GridPane.columnIndex="2" />
+                              <Label fx:id="lbTotalNet" text="Label" GridPane.rowIndex="1" />
+                              <Label fx:id="lbVAT" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="lbTotalVAT" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label fx:id="lbTitleWithholding" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Retención" GridPane.rowIndex="2" />
+                              <Label fx:id="lbWithholding" text="Label" GridPane.rowIndex="3" />
+                              <Label fx:id="lbTitleTotalWithholding" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total Retención" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <Label fx:id="lbTotalWithholding" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <Label fx:id="lbTitleTotalInvoice" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total Factura" GridPane.rowIndex="4" />
+                              <Label fx:id="lbTotalInvoice" text="Label" GridPane.rowIndex="5" />
+                              <Label fx:id="lbTitleTotalToPay" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total a Pagar" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <Label fx:id="lbTotalToPay" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                              <Label fx:id="lbTitleTotalInvoice2" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total Factura" GridPane.rowIndex="6" />
+                              <Label fx:id="lbTitleTotalToPay2" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total a Pagar" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                              <Label fx:id="lbTotalInvoice2" text="Label" GridPane.rowIndex="7" />
+                              <Label fx:id="lbTotalToPay2" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                            </children>
                         </GridPane>
-                        <AnchorPane>
-                           <children>
-                              <Label fx:id="lbTitleNumber" layoutX="7.0" layoutY="6.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Número:">
-                                 <padding>
-                                    <Insets right="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="lbInvoiceNumber1" layoutX="62.0" layoutY="6.0" text="2024-1.001" />
-                              <Label fx:id="lbTitleDate" layoutX="264.0" layoutY="6.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Fecha:">
-                                 <padding>
-                                    <Insets right="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="lbDate1" layoutX="305.0" layoutY="6.0" text="31/06/2024" />
-                              <Label fx:id="lbTitlePage" layoutX="557.0" layoutY="3.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Pág.">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lbPageNumber" layoutX="585.0" layoutY="3.0" text="x">
-                                 <padding>
-                                    <Insets left="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="lbTitleOf" layoutX="596.0" layoutY="3.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="de">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets left="5.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="lbPageTotal" layoutX="613.0" layoutY="3.0" text="Y">
-                                 <padding>
-                                    <Insets left="5.0" />
-                                 </padding>
-                              </Label>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane />
-                        <Separator prefWidth="200.0">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Separator>
-                        <VBox fx:id="vbOrders" prefHeight="500.0" />
-                        <Separator />
-                        <AnchorPane>
-                           <children>
-                              <VBox spacing="5.0">
-                                 <children>
-                                    <Label fx:id="lbTitleBankDetails" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Pago por transferencia bancaria a la cuenta número:" />
-                                    <Label fx:id="lbIBAN" text="IBAN" />
-                                    <HBox spacing="5.0">
-                                       <children>
-                                          <Label fx:id="lbTitleHolder" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Titular:" />
-                                          <Label fx:id="lbHolder" text="Label" />
-                                       </children>
-                                    </HBox>
-                                    <HBox spacing="5.0">
-                                       <children>
-                                          <Label fx:id="lbTitleBranch" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Succursal" />
-                                          <Label fx:id="lbBranch" text="Label" />
-                                       </children>
-                                    </HBox>
-                                    <HBox spacing="5.0">
-                                       <children>
-                                          <Label fx:id="lbTitlePayMethod" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Forma de Pago:" />
-                                          <Label fx:id="lbPayMethod" text="Label" />
-                                       </children>
-                                    </HBox>
-                                    <HBox spacing="5.0">
-                                       <children>
-                                          <Label fx:id="lbTitleDuedate" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Plazo de pago:" />
-                                          <Label fx:id="lbDuedate" text="Label" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                              <GridPane hgap="10.0" layoutX="330.0" vgap="5.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" />
-                                    <ColumnConstraints hgrow="SOMETIMES" />
-                                    <ColumnConstraints hgrow="SOMETIMES" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                    <RowConstraints vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Label fx:id="lbTitleTotalNet" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Base Imponible" />
-                                    <Label fx:id="lbTitleVAT" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="IVA" GridPane.columnIndex="1" />
-                                    <Label fx:id="lbTitleTotalVAT" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Importe IVA" GridPane.columnIndex="2" />
-                                    <Label fx:id="lbTotalNet" text="Label" GridPane.rowIndex="1" />
-                                    <Label fx:id="lbVAT" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label fx:id="lbTotalVAT" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Label fx:id="lbTitleWithholding" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Retención" GridPane.rowIndex="2" />
-                                    <Label fx:id="lbWithholding" text="Label" GridPane.rowIndex="3" />
-                                    <Label fx:id="lbTitleTotalWithholding" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total Retención" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                                    <Label fx:id="lbTotalWithholding" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                                    <Label fx:id="lbTitleTotalInvoice" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total Factura" GridPane.rowIndex="4" />
-                                    <Label fx:id="lbTotalInvoice" text="Label" GridPane.rowIndex="5" />
-                                    <Label fx:id="lbTitleTotalToPay" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total a Pagar" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                                    <Label fx:id="lbTotalToPay" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                                    <Label fx:id="lbTitleTotalInvoice2" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total Factura" GridPane.rowIndex="6" />
-                                    <Label fx:id="lbTitleTotalToPay2" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Total a Pagar" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                                    <Label fx:id="lbTotalInvoice2" text="Label" GridPane.rowIndex="7" />
-                                    <Label fx:id="lbTotalToPay2" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
                      </children>
-                     <VBox.margin>
-                        <Insets right="10.0" />
-                     </VBox.margin>
-                  </VBox>
+                  </AnchorPane>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </VBox>
          </content>
-         <padding>
-            <Insets left="15.0" right="15.0" />
-         </padding>
       </ScrollPane>
       <HBox alignment="CENTER_RIGHT" spacing="15.0">
          <children>

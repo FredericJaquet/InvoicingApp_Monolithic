@@ -213,7 +213,7 @@ public class Orders {
         
         con.openConnection();
         result=con.getResultSet(query);
-        
+        items.clear();
         try{
             while(result.next()){
                 item=new Item();
@@ -268,11 +268,20 @@ public class Orders {
         return totalOrder;
     }
     
+    public double getQuantity(){
+        double quantity=0;
+        for(int i=0;i<items.size();i++){
+            quantity=quantity+items.get(i).getQuantity();
+        }
+        return quantity;
+    }
+    
     /**
     * add the item to the items list
     * @param item 
     */
     public void addItem(Item item){
+        System.out.println("Orders linea 285 - He pasado por aqui "+idOrders);
         items.add(item);
     }
 
