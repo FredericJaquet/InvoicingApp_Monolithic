@@ -26,6 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,7 +48,7 @@ public class ViewInvoiceCustomerController implements Initializable {
     private ArrayList<Orders> orders=new ArrayList();
     private int imgSize=175;
     private int language;
-    private int pages;
+    private int pages=1;
     private int page=1;
     private int maxLinesPerPage=25;
     private double totalNet=0;
@@ -66,6 +67,7 @@ public class ViewInvoiceCustomerController implements Initializable {
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
             lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,lbTitleDuedate,
             lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2;
+    @FXML Button btnPrev,btnNext;
     @FXML private ImageView ivLogo;
     
     public void initData(InvoiceCustomer invoice){
@@ -77,13 +79,38 @@ public class ViewInvoiceCustomerController implements Initializable {
         setData();
         getTotals();
         setTotals();
-        pages=setPageNumber();
+        setPageNumber();
         setTitles();
+        setIndexOrdersPerPages();
         setOrders();
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        btnPrev.setVisible(false);
+        btnNext.setVisible(true);
+    }
+    
+    @FXML protected void onClicPrev(){
+        btnPrev.setVisible(true);
+        btnNext.setVisible(true);
+        page--;
+        if(page==1){
+            btnPrev.setVisible(false);
+        }
+        lbPageNumber.setText(String.valueOf(page));
+        setOrders();
+    }
+    
+    @FXML protected void onClicNext(){
+        btnPrev.setVisible(true);
+        btnNext.setVisible(true);
+        page++;
+        if(page==pages){
+            btnNext.setVisible(false);
+        }
+        lbPageNumber.setText(String.valueOf(page));
+        setOrders();
     }
     
     private void getObjects(){
@@ -127,13 +154,12 @@ public class ViewInvoiceCustomerController implements Initializable {
     }
     
     private void setOrders(){
-        
         FXMLLoader loader;
         Parent ordersListView=null;
         ViewOrdersForDocumentController controller=null;
         
         vbOrders.getChildren().clear();
-        for (int i=0;i<orders.size();i++) {
+        for (int i=ordersIndex[page-1];i<ordersIndex[page];i++) {
             loader=new FXMLLoader();
             loader.setLocation(getClass().getResource("viewOrdersForDocument.fxml"));
             try {
@@ -241,28 +267,18 @@ public class ViewInvoiceCustomerController implements Initializable {
         return l;
     }
     
-    private int setPageNumber(){
-        int ordersNum=orders.size();
-        int itemsNum=0;
-        int pages=0;
+    private void setPageNumber(){
+        
+        int linesNumber=0;
         
         for(int i=0;i<orders.size();i++){
-            itemsNum=itemsNum+orders.get(i).getItems().size();
+            linesNumber=linesNumber+orders.get(i).getItems().size()+1;
+            if(linesNumber>maxLinesPerPage){
+                pages++;
+                linesNumber=orders.get(i).getItems().size()+1;
+            }
         }
-        
-        if((ordersNum+itemsNum)%maxLinesPerPage==0){
-            pages=((ordersNum+itemsNum)/maxLinesPerPage);
-        }else{
-            pages=((ordersNum+itemsNum)/maxLinesPerPage)+1;
-        }
-        
-        System.out.println("invoiceCustomer linea 234: "+ordersNum+" pedidos");
-        System.out.println("invoiceCustomer linea 234: "+itemsNum+" artículos");
-        System.out.println("InvoiceCustomer linea 234: "+pages+" páginas");
-        
         ordersIndex=new int[pages+1];
-        
-        return pages;
     }
     
     private void setIndexOrdersPerPages(){
@@ -276,9 +292,10 @@ public class ViewInvoiceCustomerController implements Initializable {
             if(linesNumber>maxLinesPerPage){
                 ordersIndex[j]=i;
                 j++;
-                linesNumber=0;
+                linesNumber=orders.get(i).getItems().size()+1;
             }
         }
         ordersIndex[pages]=orders.size();
     }
+    
 }

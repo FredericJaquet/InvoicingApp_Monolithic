@@ -14,18 +14,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneMain" maxHeight="1000.0" prefWidth="700.0" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewInvoiceCustomerController">
+<VBox fx:id="paneMain" fillWidth="false" maxHeight="1000.0" prefWidth="700.0" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewInvoiceCustomerController">
    <children>
-      <HBox alignment="CENTER_RIGHT" spacing="15.0">
+      <HBox alignment="CENTER_RIGHT" maxWidth="700.0" prefWidth="700.0" spacing="15.0" VBox.vgrow="NEVER">
          <children>
-            <Button fx:id="btnPrev" mnemonicParsing="false" text="&lt;" />
-            <Button fx:id="btnNext" mnemonicParsing="false" text="&gt;" />
+            <Button fx:id="btnPrev" mnemonicParsing="false" onAction="#onClicPrev" text="&lt;" />
+            <Button fx:id="btnNext" mnemonicParsing="false" onAction="#onClicNext" text="&gt;" />
          </children>
          <padding>
             <Insets bottom="10.0" top="10.0" />
          </padding>
       </HBox>
-      <ScrollPane maxHeight="900.0">
+      <ScrollPane maxHeight="900.0" prefWidth="690.0" VBox.vgrow="NEVER">
          <padding>
             <Insets left="15.0" right="15.0" />
          </padding>
@@ -146,7 +146,6 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane />
                   <Separator prefWidth="200.0">
                      <VBox.margin>
                         <Insets />
@@ -232,7 +231,7 @@
             </VBox>
          </content>
       </ScrollPane>
-      <HBox alignment="CENTER_RIGHT" spacing="15.0">
+      <HBox alignment="CENTER_RIGHT" maxWidth="700.0" prefWidth="700.0" spacing="15.0" VBox.vgrow="NEVER">
          <children>
             <Button mnemonicParsing="false" text="Imprimir" />
             <Button mnemonicParsing="false" text="Volver" />
