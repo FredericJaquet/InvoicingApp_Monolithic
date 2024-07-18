@@ -37,6 +37,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
 
@@ -122,7 +123,22 @@ public class ViewInvoiceCustomerController implements Initializable {
     }
     
     @FXML protected void onClicBack(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent detailsCustomerView=null;
+        ViewDetailsCustomerController controller=null;
+        BorderPane home=null;
         
+        loader.setLocation(getClass().getResource("viewDetailsCustomer.fxml"));
+        try {
+            detailsCustomerView=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewCustomersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(customer);
+        home=(BorderPane)paneMain.getParent();
+        home.setCenter(detailsCustomerView);
     }
     
     @FXML protected void print() {

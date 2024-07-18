@@ -424,7 +424,7 @@
       <HBox alignment="CENTER_RIGHT" maxWidth="700.0" prefWidth="504.0" spacing="15.0" VBox.vgrow="NEVER">
          <children>
             <Button mnemonicParsing="false" onAction="#print" text="Imprimir" />
-            <Button mnemonicParsing="false" text="Volver" />
+            <Button mnemonicParsing="false" onAction="#onClicBack" text="Volver" />
          </children>
          <padding>
             <Insets bottom="15.0" />
