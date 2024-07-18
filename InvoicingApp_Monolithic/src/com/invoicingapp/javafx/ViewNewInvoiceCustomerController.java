@@ -64,9 +64,14 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private InvoiceCustomer invoice=new InvoiceCustomer();
     private Configuration config;
     private String logoPath;
+    private String errorDate="Falta la fecha.";
+    private String errorNumber="Falta el numero de factura.";
+    private String errorNoOrders="La factura no tiene pedidos asignados.";
+    private String invoiceSaved="La factura se ha guardado correctamente.";
+    private String invoiceNotSaved="La factura no se ha guardado, es necesario guadar la factura antes de poder verla.";
     private int imgSize=175;
     private int language=1;
-    
+    private boolean saved=false;
     @FXML private ScrollPane paneNewInvoice;
     @FXML private VBox vbItems;
     @FXML private ComboBox<Customer> cbCustomers;
@@ -79,7 +84,8 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             lbTotalNet,lbVAT,lbTotalVAT,lbWithholding,lbTotalWithholding,lbTotalInvoice,lbTotalToPay,lbTitleSelectAll,lbTotalInvoice2,lbTotalToPay2,
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
             lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,
-            lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2;
+            lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2,
+            labelError;
     @FXML private ImageView ivLogo;
     @FXML private CheckBox cbSelectAll;
     @FXML private DatePicker dpDocDate;
@@ -210,29 +216,50 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     }
     
     @FXML protected void onClicSee(){
-        FXMLLoader loader=new FXMLLoader();
-        Parent invoiceCustomerView=null;
-        ViewInvoiceCustomerController controller=null;
-        BorderPane home=(BorderPane)paneNewInvoice.getParent();
+        labelError.setVisible(false);
+        if(saved){
+            FXMLLoader loader=new FXMLLoader();
+            Parent invoiceCustomerView=null;
+            ViewInvoiceCustomerController controller=null;
+            BorderPane home=(BorderPane)paneNewInvoice.getParent();
         
-        loader.setLocation(getClass().getResource("viewInvoiceCustomer.fxml"));
-        try {
-            invoiceCustomerView=loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            loader.setLocation(getClass().getResource("viewInvoiceCustomer.fxml"));
+            try {
+                invoiceCustomerView=loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+            controller=loader.getController();
+            controller.initData(invoice);
+            home.setCenter(invoiceCustomerView);
+        }else{
+            labelError.setText(invoiceNotSaved);
+            labelError.setVisible(true);
         }
-        
-        controller=loader.getController();
-        controller.initData(invoice);
-        home.setCenter(invoiceCustomerView);
     }
     
     @FXML protected void save(){
+        boolean control=true;
+        labelError.setVisible(false);
+        
         invoice.setChangeRate(changeRate);
         invoice.setCustomer(customer);
-        invoice.setDocDate(dpDocDate.getValue());
-        invoice.setDocNumber(tfDocNumber.getText());
-        invoice.setDuedate(dpDocDate.getValue().plusDays(customer.getDuedate()));
+        if(dpDocDate.getValue()!=null){
+            invoice.setDocDate(dpDocDate.getValue());
+            invoice.setDuedate(dpDocDate.getValue().plusDays(customer.getDuedate()));
+        }else{
+            labelError.setText(errorDate);
+            labelError.setVisible(true);
+            control=false;
+        }
+        if(!tfDocNumber.getText().isEmpty()){
+            invoice.setDocNumber(tfDocNumber.getText());
+        }else{
+            labelError.setText(errorNumber);
+            labelError.setVisible(true);
+            control=false;
+        }
         invoice.setPaid(false);
         invoice.setLanguage(Translations.languages[language]);
         invoice.setUser(user);
@@ -240,19 +267,30 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         invoice.setWithholding(customer.getDefaultWithholding());
         invoice.setBankAccount(bankAccount);
         invoice.setChangeRate(changeRate);
-        
         for(int i=0;i<pendingOrders.size();i++){
             if(pendingOrders.get(i).isSelected()){
                 invoice.addOrder(pendingOrders.get(i));
             }
         }
-        getSelectionCBBankAccounts();
-        invoice.addToDB();
-        //backToViewDetailsCustomer();
+        if(invoice.getOrders().size()<1){
+            labelError.setText(errorNoOrders);
+            labelError.setVisible(true);
+            control=false;
+        }
+        if(control){
+            invoice.addToDB();
+            saved=true;
+            labelError.setText(invoiceSaved);
+            labelError.setVisible(true);
+        }
     }
     
     @FXML protected void cancel(){
-        ConfirmationDialog.show("¿Está seguro de querer volver sin guardar?", this::backToViewDetailsCustomer, () -> {});
+        if(!saved){
+            ConfirmationDialog.show("¿Está seguro de querer volver sin guardar?", this::backToViewDetailsCustomer, () -> {});
+        }else{
+            backToViewDetailsCustomer();
+        }
     }
     
     private void populateCbChangeRates(){
@@ -514,6 +552,5 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         home=(BorderPane)paneNewInvoice.getParent();
         home.setCenter(detailsCustomerView);
     }
-
     
 }
