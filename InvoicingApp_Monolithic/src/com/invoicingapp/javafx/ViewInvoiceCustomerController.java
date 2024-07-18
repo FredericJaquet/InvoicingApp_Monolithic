@@ -25,12 +25,20 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.print.PageLayout;
+import javafx.print.PageOrientation;
+import javafx.print.Paper;
+import javafx.print.Printer;
+import javafx.print.Printer.MarginType;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Scale;
 
 /**
  * FXML Controller class
@@ -46,11 +54,11 @@ public class ViewInvoiceCustomerController implements Initializable {
     private Configuration config;
     private ChangeRate changeRate;
     private ArrayList<Orders> orders=new ArrayList();
-    private int imgSize=175;
+    private int imgSize=150;
     private int language;
     private int pages=1;
     private int page=1;
-    private int maxLinesPerPage=25;
+    private int maxLinesPerPage=30;
     private double totalNet=0;
     private double totalVAT=0;
     private double totalWithholding=0;
@@ -113,6 +121,54 @@ public class ViewInvoiceCustomerController implements Initializable {
         setOrders();
     }
     
+    @FXML protected void onClicBack(){
+        
+    }
+    
+    @FXML protected void print() {
+        Printer printer = Printer.getDefaultPrinter();
+        PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
+        PrinterJob job = PrinterJob.createPrinterJob();
+        
+        if (job != null && job.showPrintDialog(paneInvoice.getScene().getWindow())) {
+            boolean success = true;
+
+            for (int i=0;i<pages;i++) {
+                success = success && printNode(paneInvoice, job, pageLayout);
+                if (!success) {
+                    break;
+                }
+                if(page<pages){
+                    onClicNext();
+                }
+            }
+            if (success) {
+                job.endJob();
+            }
+        }
+        page=1;
+        btnPrev.setVisible(false);
+        btnNext.setVisible(true);
+        lbPageNumber.setText(String.valueOf(page));
+        setOrders();
+    }
+    
+    private boolean printNode(Node node, PrinterJob job, PageLayout pageLayout){
+        boolean success;
+        double scaleX = pageLayout.getPrintableWidth() / node.getBoundsInParent().getWidth();
+        double scaleY = pageLayout.getPrintableHeight() / node.getBoundsInParent().getHeight();
+        double scale = Math.min(scaleX, scaleY);
+        
+        node.getTransforms().add(new Scale(scale, scale));
+        success=job.printPage(pageLayout, node);
+           
+        node.getTransforms().clear();
+        node.setTranslateX(0);
+        node.setTranslateY(0);
+        
+        return success;
+    }
+    
     private void getObjects(){
         customer=invoice.getCustomer();
         user=invoice.getUser();
@@ -139,6 +195,7 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbCustStateCountry.setText(customer.getAddress().getState()+" / "+customer.getAddress().getCountry());
         lbCustEmail.setText(customer.getEmail());
         lbCustWeb.setText(customer.getWeb());
+        //Bank Details
         lbPayMethod.setText(customer.getPayMethod());
         lbHolder.setText(bankAccount.getHolder());
         lbBranch.setText(bankAccount.getBranch());
@@ -268,7 +325,6 @@ public class ViewInvoiceCustomerController implements Initializable {
     }
     
     private void setPageNumber(){
-        
         int linesNumber=0;
         
         for(int i=0;i<orders.size();i++){

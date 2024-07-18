@@ -119,6 +119,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         
         populateCbCustomers();
         populateCbBankAccounts();
+        getSelectionCBBankAccounts();
         populateCbLanguages();
         populateCbChangeRates();
         cbChangeRates.getSelectionModel().select(0);
