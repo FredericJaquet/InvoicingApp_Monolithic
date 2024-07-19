@@ -19,12 +19,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="paneNewInvoice" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="paneNewInvoice" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewInvoiceCustomerController">
    <content>
       <VBox fx:id="VBoxNewInvoice" alignment="TOP_CENTER" spacing="15.0">
          <children>
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
+                  <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Última factura:" />
+                  <Label fx:id="lbLastInvoice" text="Label" />
                   <ChoiceBox fx:id="cbLanguages" />
                   <ComboBox fx:id="cbChangeRates" onAction="#getSelectionCBChangeRates" />
                   <Button mnemonicParsing="false" onAction="#onClicAddChangeRate" text="Nuevo Cambio" />
@@ -206,7 +208,7 @@
                      </children>
                   </AnchorPane>
                   <Separator prefWidth="200.0" />
-                  <Label fx:id="labelError" text="Label" textFill="RED" />
+                  <Label fx:id="labelError" text="Label" textFill="RED" visible="false" />
                   <HBox alignment="CENTER_RIGHT" spacing="15.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#onClicSee" text="Ver" />

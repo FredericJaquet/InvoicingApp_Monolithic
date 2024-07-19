@@ -180,6 +180,31 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         getFromDB(idInvoiceCustomer);
     }
     
+    public static String getLastInvoiceNumber(){
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        String lastNumber="";
+        String query="SELECT docNumber "
+                + "FROM document JOIN invoicecustomer "
+                + "ON(document.idDocument=invoicecustomer.idDocument) "
+                + "WHERE docDate=(SELECT docDate FROM document "
+                + "JOIN invoicecustomer ON(document.idDocument=invoicecustomer.idDocument)"
+                + "ORDER BY docDate DESC LIMIT 1);";
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            if(result.next()){
+                lastNumber=result.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return lastNumber;
+    }
+    
     /**
     * Gets the total of Withholding of this invoiceCustomer instance 
     * @return the total of Withholding for this invoiceCustomer instance

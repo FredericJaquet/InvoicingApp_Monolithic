@@ -29,7 +29,6 @@ import javafx.print.PageLayout;
 import javafx.print.PageOrientation;
 import javafx.print.Paper;
 import javafx.print.Printer;
-import javafx.print.Printer.MarginType;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -59,7 +58,7 @@ public class ViewInvoiceCustomerController implements Initializable {
     private int language;
     private int pages=1;
     private int page=1;
-    private int maxLinesPerPage=30;
+    private int maxLinesPerPage=24;
     private double totalNet=0;
     private double totalVAT=0;
     private double totalWithholding=0;

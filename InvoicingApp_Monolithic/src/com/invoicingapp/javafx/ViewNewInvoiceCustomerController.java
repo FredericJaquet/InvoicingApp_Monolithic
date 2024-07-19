@@ -85,7 +85,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
             lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,
             lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2,
-            labelError;
+            labelError,lbLastInvoice;
     @FXML private ImageView ivLogo;
     @FXML private CheckBox cbSelectAll;
     @FXML private DatePicker dpDocDate;
@@ -131,6 +131,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         cbChangeRates.getSelectionModel().select(0);
         changeRate.getFromDB(1);
         
+        lbLastInvoice.setText(InvoiceCustomer.getLastInvoiceNumber());
         lbLegalName.setText(user.getLegalName());
         lbVATNumber.setText(user.getVatNumber());
         lbStreet.setText(user.getAddress().getStreet()+" "+user.getAddress().getStNumber()+" "+user.getAddress().getApt());
