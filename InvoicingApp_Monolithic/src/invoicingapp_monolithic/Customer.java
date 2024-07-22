@@ -298,6 +298,31 @@ public class Customer extends CustomProv {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /**
+    * gets all the invoices of this customer instance for the time frame 
+    * starting on the initialDate and ending on the finalDate.
+    * @param initialDate
+    * @param finalDate 
+    */
+    public void getInvoicesFromDB(){ 
+        ConnectionDB con=new ConnectionDB();
+        String query="SELECT InvoiceCustomer.idInvoiceCustomer FROM InvoiceCustomer JOIN Document ON (Document.idDocument = InvoiceCustomer.idDocument) JOIN DocumentOrders ON (Document.idDocument=DocumentOrders.idDocument) JOIN Orders ON (DocumentOrders.idOrders=Orders.idOrders) WHERE Orders.idCustomProv="+getIdCustomProv()+" GROUP BY idInvoiceCustomer;";
+        InvoiceCustomer invoiceCustomer= new InvoiceCustomer();
+        ResultSet result=null;
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                invoiceCustomer= new InvoiceCustomer();
+                invoiceCustomer.getFromDB(result.getInt(1));
+                invoicesCustomer.add(invoiceCustomer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @return the invoicingMethod
@@ -353,6 +378,10 @@ public class Customer extends CustomProv {
      */
     public void setIdCustomer(int id) {
         this.idCustomer = id;
+    }
+    
+    public ArrayList<InvoiceCustomer> getInvoices(){
+        return invoicesCustomer;
     }
     
 }

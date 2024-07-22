@@ -147,7 +147,7 @@
                      </image>
                   </ImageView>
                   <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Documentos" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Factura cliente" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <Button fx:id="bInvoicesCustomer" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Factura cliente" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <effect>
                         <ColorAdjust />
                      </effect>
@@ -290,7 +290,7 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnNewInvoiceCustomer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnInvoicesCustomer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>

@@ -17,8 +17,10 @@ import java.util.logging.Logger;
  * @author frede
  */
 public class Document {
-    
-    private String docNumber, language;
+    public static int PAID=1;
+    public static int NOTPAID=2;
+    public static int ALL=3;
+    private String docNumber,language,totalString;
     private double vat;
     private LocalDate docDate;
     private Users user=new Users();
@@ -256,6 +258,14 @@ public class Document {
         return totalDocument;
     }
     
+    public void setTotalString(){
+        totalString=String.format("%.2f"+changeRate.getCurrency1(),getTotal());
+    }
+    
+    public String getTotalString(){
+        return totalString;
+    }
+    
     /**
     * Gets the VAT total of this document instance
     * @return the VAT total for this document instance
@@ -274,7 +284,7 @@ public class Document {
      */
     public void getOrdersFromDB(){
         ConnectionDB con=new ConnectionDB();
-        String query="SELECT idOrders FROM Orders WHERE Orders.idDocument="+idDocument;
+        String query="SELECT Orders.idOrders FROM Orders JOIN DocumentOrders ON(Orders.idOrders=DocumentOrders.idOrders) WHERE DocumentOrders.idDocument="+idDocument;
         ResultSet result=null;
         int idOrders;
         Orders order=new Orders();
@@ -284,6 +294,7 @@ public class Document {
         
         try{
             while(result.next()){
+                order=new Orders();
                 idOrders=result.getInt(1);
                 order.getFromDB(idOrders);
                 orders.add(order);

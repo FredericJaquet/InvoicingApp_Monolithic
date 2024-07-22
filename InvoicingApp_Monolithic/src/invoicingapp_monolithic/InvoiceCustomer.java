@@ -7,6 +7,7 @@ import com.invoicingapp.bbdd.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +24,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
     private LocalDate duedate;
     private BankAccount bankAccount=new BankAccount();
     private int comparableValue;
+    private String comName;
     
     public InvoiceCustomer(){}
     
@@ -106,6 +108,55 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         }  
         
         con.closeConnection();
+    }
+    
+    public static ArrayList<InvoiceCustomer> getAllInvoicesFromDB(){
+        ArrayList<InvoiceCustomer> list=new ArrayList();
+        String query="SELECT idInvoiceCustomer FROM InvoiceCustomer;";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        InvoiceCustomer invoice=new InvoiceCustomer();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                invoice=new InvoiceCustomer();
+                invoice.getFromDB(result.getInt(1));
+                list.add(invoice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public static ArrayList<InvoiceCustomer> getAllInvoicesFromDB(int paid){
+        ArrayList<InvoiceCustomer> list=new ArrayList();
+        String query="SELECT idInvoiceCustomer FROM InvoiceCustomer";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        InvoiceCustomer invoice=new InvoiceCustomer();
+        
+        switch(paid){
+            case(1):query=query.concat(" WHERE paid=true;");break;
+            case(2):query=query.concat(" WHERE paid=false;");break;
+            case(3):query=query.concat(";");
+        }
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                invoice=new InvoiceCustomer();
+                invoice.getFromDB(result.getInt(1));
+                list.add(invoice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     
     /**
@@ -312,11 +363,6 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
     public void setComparableValue(int comparableValue) {
         this.comparableValue = comparableValue;
     }
-    
-    @Override
-    public int compareTo(InvoiceCustomer o) {
-        return this.comparableValue-o.getComparableValue();
-    }
 
     /**
      * @return the bankAccount
@@ -330,5 +376,18 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
      */
     public void setBankAccount(BankAccount bankAccount) {
         this.bankAccount = bankAccount;
+    }
+
+    public void setComName(){
+        comName=customer.getComName();
+    }
+     
+    public String getComName(){
+        return comName;
+    }
+    
+    @Override
+    public int compareTo(InvoiceCustomer o) {
+        return this.comparableValue-o.getComparableValue();
     }
 }

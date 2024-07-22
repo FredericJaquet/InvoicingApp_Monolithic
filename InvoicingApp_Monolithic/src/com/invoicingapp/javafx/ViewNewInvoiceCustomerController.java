@@ -53,7 +53,7 @@ import javafx.util.Callback;
  */
 public class ViewNewInvoiceCustomerController implements Initializable {
 
-    private ArrayList<Orders> pendingOrders;
+    private ArrayList<Orders> pendingOrders=new ArrayList();
     private ArrayList<Customer> companies=new ArrayList();
     private ArrayList<ChangeRate> changeRates=new ArrayList();
     private ArrayList<BankAccount> accounts=new ArrayList();
@@ -72,6 +72,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private int imgSize=175;
     private int language=1;
     private boolean saved=false;
+    
     @FXML private ScrollPane paneNewInvoice;
     @FXML private VBox vbItems;
     @FXML private ComboBox<Customer> cbCustomers;
@@ -160,6 +161,9 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     
     @FXML protected void getSelectionCBCustomers(){
         customer=cbCustomers.getSelectionModel().getSelectedItem();
+        language=getLanguage(customer.getDefaultLanguage());
+        cbLanguages.getSelectionModel().select(language);
+        setTitles();
         updateData();
         getOrders();
         invoice.setCustomer(customer);

@@ -39,7 +39,7 @@ public class ViewHomeController implements Initializable {
     @FXML private GridPane paneCentral;
     @FXML private BorderPane mainPane;
     @FXML private Button btnCustomers,btnProviders,btnNewOrder,
-            btnNewInvoiceCustomer,btnNewInvoiceProvider,btnNewQuote, 
+            btnInvoicesCustomer,btnNewInvoiceProvider,btnNewQuote, 
             btnNewPo,btnReportIncomes,btnReportOutcomes,btnHome,
             btnReportPendings,btnGrafIncomes,btnGrafOutcomes;
     @FXML TextField fieldCompany;
@@ -54,7 +54,7 @@ public class ViewHomeController implements Initializable {
         makeButtonFocusable(btnCustomers,"Clientes","../img/Customers.png","../img/Customers_Focused.png");
         makeButtonFocusable(btnProviders,"Proveedores","../img/Providers.png","../img/Providers_Focused.png");
         makeButtonFocusable(btnNewOrder,"Pedidos","../img/NewOrder.png","../img/NewOrder_Focused.png");
-        makeButtonFocusable(btnNewInvoiceCustomer,"Facturas Clientes","../img/NewInvoiceCustomer.png","../img/NewInvoiceCustomer_Focused.png");
+        makeButtonFocusable(btnInvoicesCustomer,"Facturas Clientes","../img/NewInvoiceCustomer.png","../img/NewInvoiceCustomer_Focused.png");
         makeButtonFocusable(btnNewInvoiceProvider,"Facturas Proveedores","../img/NewInvoiceProvider.png","../img/NewInvoiceProvider_Focused.png");
         makeButtonFocusable(btnNewQuote,"Presupuesto","../img/NewQuote.png","../img/NewQuote_Focused.png");
         makeButtonFocusable(btnNewPo,"Orden de Pedido","../img/NewPo.png","../img/NewPo_Focused.png");
