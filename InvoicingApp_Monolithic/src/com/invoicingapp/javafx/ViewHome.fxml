@@ -157,7 +157,7 @@
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Presupuesto" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                  <Button fx:id="b" mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Presupuesto" GridPane.columnIndex="1" GridPane.rowIndex="9">
                      <effect>
                         <ColorAdjust />
                      </effect>

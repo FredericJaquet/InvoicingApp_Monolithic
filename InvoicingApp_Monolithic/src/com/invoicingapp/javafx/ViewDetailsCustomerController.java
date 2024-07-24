@@ -443,14 +443,21 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     @FXML protected void onClicNewQuote(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent newQuoteView=null;
+        ViewNewQuoteController controller=null;
         BorderPane home=(BorderPane)paneDetailsCustomer.getParent();
-        Parent customersView;
+        
+        loader.setLocation(getClass().getResource("viewNewQuote.fxml"));
         try {
-            customersView=FXMLLoader.load(getClass().getResource("viewNewQuote.fxml"));
-            home.setCenter(customersView);
+            newQuoteView=loader.load();
+            home.setCenter(newQuoteView);
         } catch (IOException ex) {
             Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        controller=loader.getController();
+        controller.initData(customer);
+        home.setCenter(newQuoteView);
     }
     
     private void showContacts(){

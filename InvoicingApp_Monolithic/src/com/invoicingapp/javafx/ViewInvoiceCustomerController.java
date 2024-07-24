@@ -33,6 +33,7 @@ import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -67,7 +68,6 @@ public class ViewInvoiceCustomerController implements Initializable {
     private int[] ordersIndex;
     
     @FXML private VBox paneInvoice,vbOrders,paneMain;
-    
     @FXML private Label lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
             lbCustComName,lbCustLegalName,lbCustVATNumber,lbCustStreet,lbCustCPCity,lbCustStateCountry,lbCustEmail,lbCustWeb,
             lbPageNumber,lbPageTotal,lbIBAN,lbHolder,lbBranch,lbPayMethod,lbDuedate,
@@ -76,12 +76,13 @@ public class ViewInvoiceCustomerController implements Initializable {
             lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,lbTitleDuedate,
             lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2;
     @FXML Button btnPrev,btnNext;
+    @FXML CheckBox cbPaid;
     @FXML private ImageView ivLogo;
     
     public void initData(InvoiceCustomer invoice){
         this.invoice=invoice;
         language=getLanguage(invoice.getLanguage());
-        config=Configuration.getConfiguration();
+        
         getObjects();
         setLogo();
         setData();
@@ -97,6 +98,7 @@ public class ViewInvoiceCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         btnPrev.setVisible(false);
         btnNext.setVisible(true);
+        config=Configuration.getConfiguration();
     }
     
     @FXML protected void onClicPrev(){
@@ -166,6 +168,10 @@ public class ViewInvoiceCustomerController implements Initializable {
         btnNext.setVisible(true);
         lbPageNumber.setText(String.valueOf(page));
         setOrders();
+    }
+    
+    @FXML protected void onClicPaid(){
+        invoice.updateDB("paid", cbPaid.isSelected());
     }
     
     private boolean printNode(Node node, PrinterJob job, PageLayout pageLayout){

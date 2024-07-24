@@ -22,6 +22,7 @@ public class Translations {
     public static String[] titleEmail={"Email","Email","Email"};
     public static String[] titleWeb={"Web","Web","Web"};
     public static String[] titleInvoice={"Invoice","Factura","Facture"};
+    public static String[] titleQuote={"Quote","Presupuesto","Devis"};
     public static String[] titleNumber={"Number","Número","Numéro"};
     public static String[] titleDate={"Date","Fecha","Date"};
     public static String[] titleSelectAll={"Select All","Seleccionar todo","Tout sélectionner"};
@@ -29,6 +30,8 @@ public class Translations {
     public static String[] titleHolder={"Holder","Titular","Titulaire"};
     public static String[] titleBranch={"Branch","Sucursal","Banque"};
     public static String[] titlePayMethod={"Payment method","Método de pago","Méthode de payement"};
+    public static String[] titlePayment={"Payment note","Nota de pago","Note de payment"};
+    public static String[] titleDelivery={"Delivery note","Nota de entrega","Note de livraison"};
     public static String[] titleDuedate={"Duedate","Plazo de pago","Délai de payement"};
     public static String[] titleTotalNet={"Total Net","Total Neto","Total Net"};
     public static String[] titleVAT={"VAT","IVA","TVA"};
@@ -36,7 +39,10 @@ public class Translations {
     public static String[] titleWithholding={"Withholding","Retención","Rétention"};
     public static String[] titleTotalWithholding={"Total Withholding","Total Retención","Total Rétention"};
     public static String[] titleTotalInvoice={"Total Invoice","Total Factura","Total Facture"};
+    public static String[] titleTotalQuote={"Total Quote","Total Presupuesto","Total Devis"};
     public static String[] titleTotalToPay={"Total to Pay","Total a Pagar","Total à payer"};
+    public static String[] titleLastInvoice={"Last Invoice","Última Factura","Dernière Facture"};
+    public static String[] titleLastQuote={"Last Quote","Último Presupuesto","Dernier devis"};
     public static Currency[] currencies={ new Currency("€","EUR"),
                                         new Currency("£","GBP"),
                                         new Currency("US$","USD"),

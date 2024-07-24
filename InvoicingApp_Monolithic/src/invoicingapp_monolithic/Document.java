@@ -28,7 +28,9 @@ public class Document {
     private int idDocument;
     private ArrayList<Orders> orders=new ArrayList();
     
-    public Document(){}
+    public Document(){
+        changeRate.getFromDB(1);
+    }
     
     public Document(String docNumber, String language, double vat, LocalDate docDate){
         this.docDate=docDate;

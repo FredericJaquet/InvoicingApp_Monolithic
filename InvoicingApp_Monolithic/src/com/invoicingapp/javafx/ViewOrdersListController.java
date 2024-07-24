@@ -26,7 +26,8 @@ import javafx.scene.layout.HBox;
 public class ViewOrdersListController implements Initializable {
 
     private Orders order;
-    private ViewNewInvoiceCustomerController mainController;
+    private ViewNewInvoiceCustomerController mainInvoiceController;
+    private ViewNewQuoteController mainQuoteController;
     
     @FXML Label lbDescription,lbDate,lbTotal;
     @FXML CheckBox cbSelected;
@@ -37,7 +38,16 @@ public class ViewOrdersListController implements Initializable {
         lbDescription.setText(order.getDescription());
         lbDate.setText(order.getDateOrder().toString());
         lbTotal.setText(String.format("%.2f€",order.getTotalOrder()));
-        this.mainController = mainController;
+        mainInvoiceController = mainController;
+        cbSelected.setSelected(order.isSelected());
+    }
+    
+    public void initData(Orders order,ViewNewQuoteController mainController){
+        this.order=order;
+        lbDescription.setText(order.getDescription());
+        lbDate.setText(order.getDateOrder().toString());
+        lbTotal.setText(String.format("%.2f€",order.getTotalOrder()));
+        mainQuoteController = mainController;
         cbSelected.setSelected(order.isSelected());
     }
     
@@ -51,7 +61,11 @@ public class ViewOrdersListController implements Initializable {
     
     @FXML protected void getSelection(){
         order.setSelected(cbSelected.isSelected());
-        mainController.updateTotals();
+        if(mainInvoiceController!=null){
+            mainInvoiceController.updateTotals();
+        }else if(mainQuoteController!=null){
+            mainQuoteController.updateTotals();
+        }
     }
     
 }

@@ -281,7 +281,6 @@ public class Orders {
     * @param item 
     */
     public void addItem(Item item){
-        System.out.println("Orders linea 285 - He pasado por aqui "+idOrders);
         items.add(item);
     }
 

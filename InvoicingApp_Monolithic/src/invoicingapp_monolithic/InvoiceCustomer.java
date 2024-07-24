@@ -223,7 +223,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
     
     public void updateDB(String field, boolean newValue){
         ConnectionDB con=new ConnectionDB();
-        String query="UDPATE InvoiceCustomer SET "+field+"= "+newValue+" WHERE idInvoiceCustomer="+idInvoiceCustomer;
+        String query="UPDATE InvoiceCustomer SET "+field+"="+newValue+" WHERE idInvoiceCustomer="+idInvoiceCustomer;
         
         con.openConnection();
         con.noReturnQuery(query);
@@ -236,10 +236,10 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         ResultSet result=null;
         String lastNumber="";
         String query="SELECT docNumber "
-                + "FROM document JOIN invoicecustomer "
-                + "ON(document.idDocument=invoicecustomer.idDocument) "
-                + "WHERE docDate=(SELECT docDate FROM document "
-                + "JOIN invoicecustomer ON(document.idDocument=invoicecustomer.idDocument)"
+                + "FROM Document JOIN InvoiceCustomer "
+                + "ON(Document.idDocument=InvoiceCustomer.idDocument) "
+                + "WHERE docDate=(SELECT docDate FROM Document "
+                + "JOIN InvoiceCustomer ON(Document.idDocument=InvoiceCustomer.idDocument)"
                 + "ORDER BY docDate DESC LIMIT 1);";
         
         con.openConnection();

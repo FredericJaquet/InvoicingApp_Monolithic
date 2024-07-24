@@ -8,7 +8,6 @@ import com.invoicingapp.config.Translations;
 import invoicingapp_monolithic.ChangeRate;
 import invoicingapp_monolithic.Currency;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -79,14 +79,14 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     @FXML private ComboBox<ChangeRate> cbChangeRates;
     @FXML private ComboBox<BankAccount> cbBankAccounts;    
     @FXML private ChoiceBox<String> cbLanguages;
-    @FXML private Label lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
+    @FXML private Label lbLastInvoice,lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
             lbCustLegalName,lbCustVATNumber,lbCustStreet,lbCustCPCity,lbCustStateCountry,lbCustEmail,lbCustWeb,
             lbHolder,lbBranch,lbPayMethod,
             lbTotalNet,lbVAT,lbTotalVAT,lbWithholding,lbTotalWithholding,lbTotalInvoice,lbTotalToPay,lbTitleSelectAll,lbTotalInvoice2,lbTotalToPay2,
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
             lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,
             lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2,
-            labelError,lbLastInvoice;
+            labelError,lbTitleLastInvoice;
     @FXML private ImageView ivLogo;
     @FXML private CheckBox cbSelectAll;
     @FXML private DatePicker dpDocDate;
@@ -163,10 +163,12 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         customer=cbCustomers.getSelectionModel().getSelectedItem();
         language=getLanguage(customer.getDefaultLanguage());
         cbLanguages.getSelectionModel().select(language);
+        pendingOrders=customer.getOrdersFromDB(CustomProv.NOTBILLED);
         setTitles();
         updateData();
         getOrders();
         invoice.setCustomer(customer);
+        
     }
     
     @FXML protected void getSelectionCBBankAccounts(){
@@ -232,7 +234,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             try {
                 invoiceCustomerView=loader.load();
             } catch (IOException ex) {
-                Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
             }
         
             controller=loader.getController();
@@ -509,6 +511,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         lbTitleTotalInvoice2.setVisible(false);
         lbTitleTotalToPay2.setVisible(false);
         
+        lbTitleLastInvoice.setText(Translations.titleLastInvoice[language]);
         lbTitleName.setText(Translations.titleName[language]);
         lbTitleVATNumber.setText(Translations.titleVATNumber[language]);
         lbTitleAddress.setText(Translations.titleAddress[language]);

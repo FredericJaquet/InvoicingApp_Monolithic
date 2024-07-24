@@ -25,7 +25,7 @@
          <children>
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Label styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Última factura:" />
+                  <Label fx:id="lbTitleLastInvoice" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Última factura:" />
                   <Label fx:id="lbLastInvoice" text="Label" />
                   <ChoiceBox fx:id="cbLanguages" />
                   <ComboBox fx:id="cbChangeRates" onAction="#getSelectionCBChangeRates" />
@@ -79,7 +79,7 @@
                         </GridPane>
                         <AnchorPane styleClass="withBorder" stylesheets="@viewnewinvoicecustomer.css" GridPane.rowIndex="1">
                            <children>
-                              <Label fx:id="lbTitleInvoice" layoutX="166.0" layoutY="10.0" text="FACTURA">
+                              <Label fx:id="lbTitleInvoice" layoutX="160.0" layoutY="8.0" text="FACTURA">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -156,7 +156,7 @@
                               </HBox>
                               <HBox spacing="5.0">
                                  <children>
-                                    <Label fx:id="lbTitleBranch" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Succursal" />
+                                    <Label fx:id="lbTitleBranch" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Succursal:" />
                                     <Label fx:id="lbBranch" text="Label" />
                                  </children>
                               </HBox>

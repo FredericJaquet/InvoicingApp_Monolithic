@@ -165,6 +165,8 @@ CREATE TABLE IF NOT EXISTS Quotes(
 idQuotes	INT(10) AUTO_INCREMENT, 
 noteDelivery	VARCHAR(100),
 notePayment	VARCHAR(100),
+currency	VARCHAR(10) 	DEFAULT '€',
+accepted	boolean DEFAULT 0,
 idDocument	INT(10) UNIQUE,
 PRIMARY KEY	(idQuotes),
 FOREIGN KEY 	(idDocument)	REFERENCES Document(idDocument) ON UPDATE CASCADE

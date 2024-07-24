@@ -20,6 +20,8 @@ public class Quotes extends Document{
     private String noteDelivery, notePayment;
     private int idQuotes;
     private Customer customer=new Customer();
+    private boolean accepted;
+    private String currency;
     
     public Quotes(){}
     
@@ -42,7 +44,7 @@ public class Quotes extends Document{
         
         super.addToDB();
         
-        queryInsert="INSERT INTO Quotes (noteDelivery, notePayment, idDocument) values('"+noteDelivery+"','"+notePayment+"',"+getIdDocument()+")";
+        queryInsert="INSERT INTO Quotes (noteDelivery, notePayment, currency, accepted, idDocument) values('"+noteDelivery+"','"+notePayment+"','"+currency+"',"+accepted+","+getIdDocument()+")";
         con.openConnection();
         con.noReturnQuery(queryInsert);
         result=con.getResultSet(queryGetId);
@@ -76,7 +78,9 @@ public class Quotes extends Document{
                 idQuotes=result.getInt(1);
                 noteDelivery=result.getString(2);
                 notePayment=result.getString(3);
-                super.getFromDB(result.getInt(4));
+                currency=result.getString(4);
+                accepted=result.getBoolean(5);
+                super.getFromDB(result.getInt(6));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Quotes.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,6 +151,31 @@ public class Quotes extends Document{
         getFromDB(idQuotes);
     }
 
+    public static String getLastQuoteNumber(){
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        String lastNumber="";
+        String query="SELECT docNumber "
+                + "FROM document JOIN Quotes "
+                + "ON(document.idDocument=Quotes.idDocument) "
+                + "WHERE docDate=(SELECT docDate FROM Document "
+                + "JOIN Quotes ON(Document.idDocument=Quotes.idDocument)"
+                + "ORDER BY docDate DESC LIMIT 1);";
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            if(result.next()){
+                lastNumber=result.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return lastNumber;
+    }
+    
     /**
      * @return the noteDelivery
      */
@@ -201,6 +230,34 @@ public class Quotes extends Document{
      */
     public void setCustomer(Customer customer) {
         this.customer= customer;
+    }
+
+    /**
+     * @return the accepted
+     */
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    /**
+     * @param accepted the accepted to set
+     */
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+        return currency;
+    }
+
+    /**
+     * @param currency the currency to set
+     */
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
     
 }
