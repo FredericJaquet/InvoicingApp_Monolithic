@@ -8,6 +8,7 @@ import com.invoicingapp.bbdd.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,11 +18,15 @@ import java.util.logging.Logger;
  */
 public class Quotes extends Document{
     
+    public static final int PENDING=0;
+    public static final int ACCEPTED=1;
+    public static final int REJECTED=2;
     private String noteDelivery, notePayment;
     private int idQuotes;
     private Customer customer=new Customer();
     private boolean accepted;
     private String currency;
+    private String comName;
     
     public Quotes(){}
     
@@ -64,7 +69,6 @@ public class Quotes extends Document{
     */
     @Override
     public void getFromDB (int id){
-        
         ConnectionDB con=new ConnectionDB();
         String query="SELECT * FROM Quotes WHERE idQuotes="+id;
         String queryGetIdCustomer;
@@ -86,7 +90,7 @@ public class Quotes extends Document{
             Logger.getLogger(Quotes.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        queryGetIdCustomer="SELECT Customer.idCustomer FROM Customer JOIN CustomProv ON (CustomProv.idCustomProv=Customer.idCustomProv) WHERE CustomProv.idCustomprov="+getOrders().get(1).getIdCustomProv();
+        queryGetIdCustomer="SELECT Customer.idCustomer FROM Customer JOIN CustomProv ON (CustomProv.idCustomProv=Customer.idCustomProv) WHERE CustomProv.idCustomprov="+getOrders().get(0).getIdCustomProv();
         result=con.getResultSet(queryGetIdCustomer);
         try{
             if(result.next()){
@@ -96,6 +100,50 @@ public class Quotes extends Document{
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }  
         con.closeConnection();
+    }
+    
+    public static ArrayList<Quotes> getAllQuotesFromDB(int accepted){
+        ArrayList<Quotes> list=new ArrayList();
+        String query="SELECT idQuotes FROM Quotes WHERE accepted="+accepted;
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Quotes quote=new Quotes();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                quote=new Quotes();
+                quote.getFromDB(result.getInt(1));
+                list.add(quote);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Quotes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public static ArrayList<Quotes> getAllQuotesFromDB(){
+        ArrayList<Quotes> list=new ArrayList();
+        String query="SELECT idQuotes FROM Quotes";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Quotes quote=new Quotes();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                quote=new Quotes();
+                quote.getFromDB(result.getInt(1));
+                list.add(quote);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Quotes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     
     /**
@@ -258,6 +306,17 @@ public class Quotes extends Document{
      */
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    /**
+     * @return the comName
+     */
+    public String getComName() {
+        return comName;
+    }
+    
+    public void setComName(){
+        comName=customer.getComName();
     }
     
 }

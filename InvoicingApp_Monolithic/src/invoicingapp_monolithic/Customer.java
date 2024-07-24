@@ -25,6 +25,7 @@ public class Customer extends CustomProv {
     private int duedate;
     private int idCustomer;
     private ArrayList<InvoiceCustomer> invoicesCustomer=new ArrayList();
+    private ArrayList<Quotes> quotes=new ArrayList();
     
     public Customer(){}
     
@@ -291,6 +292,7 @@ public class Customer extends CustomProv {
         
         try {
             while(result.next()){
+                invoiceCustomer= new InvoiceCustomer();
                 invoiceCustomer.getFromDB(result.getInt(1));
                 invoicesCustomer.add(invoiceCustomer);
             }
@@ -300,10 +302,7 @@ public class Customer extends CustomProv {
     }
     
     /**
-    * gets all the invoices of this customer instance for the time frame 
-    * starting on the initialDate and ending on the finalDate.
-    * @param initialDate
-    * @param finalDate 
+    * gets all the invoices of this customer
     */
     public void getInvoicesFromDB(){ 
         ConnectionDB con=new ConnectionDB();
@@ -312,12 +311,35 @@ public class Customer extends CustomProv {
         ResultSet result=null;
         con.openConnection();
         result=con.getResultSet(query);
-        
+        invoicesCustomer.clear();
         try {
             while(result.next()){
-                invoiceCustomer= new InvoiceCustomer();
+                invoiceCustomer=new InvoiceCustomer();
                 invoiceCustomer.getFromDB(result.getInt(1));
                 invoicesCustomer.add(invoiceCustomer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+    * gets all the quotes of this customer instance
+    */
+    public void getQuotesFromDB(){ 
+        ConnectionDB con=new ConnectionDB();
+        String query="SELECT Quotes.idQuotes FROM Quotes JOIN Document ON (Document.idDocument = Quotes.idDocument) JOIN DocumentOrders ON (Document.idDocument=DocumentOrders.idDocument) JOIN Orders ON (DocumentOrders.idOrders=Orders.idOrders) WHERE Orders.idCustomProv="+getIdCustomProv()+" GROUP BY idQuotes";
+        Quotes quote= new Quotes();
+        ResultSet result=null;
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        quotes.clear();
+        try {
+            while(result.next()){
+                quote=new Quotes();
+                quote.getFromDB(result.getInt(1));
+                quotes.add(quote);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
@@ -382,6 +404,20 @@ public class Customer extends CustomProv {
     
     public ArrayList<InvoiceCustomer> getInvoices(){
         return invoicesCustomer;
+    }
+
+    /**
+     * @return the quotes
+     */
+    public ArrayList<Quotes> getQuotes() {
+        return quotes;
+    }
+
+    /**
+     * @param quotes the quotes to set
+     */
+    public void setQuotes(ArrayList<Quotes> quotes) {
+        this.quotes = quotes;
     }
     
 }

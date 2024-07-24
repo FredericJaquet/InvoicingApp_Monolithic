@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,8 +49,7 @@ public class ViewInvoicesCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        populateCbCustomers();
-        onClicNotPaid();
+        onClicAll();
         companies=Customer.getAllCustomersFromDB(CustomProv.ENABLED);
         populateCbCustomers();
         tableInvoices.setOnMouseClicked(event -> {
@@ -72,7 +72,6 @@ public class ViewInvoicesCustomerController implements Initializable {
         
         home=(BorderPane)paneInvoicesCustomer.getParent();
         home.setCenter(newInvoiceView);
-        
     }
     
     @FXML protected void onSeeInvoice(){

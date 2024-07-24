@@ -12,7 +12,7 @@
    <children>
       <HBox alignment="CENTER" spacing="25.0">
          <children>
-            <ComboBox fx:id="cbCustomers" onAction="#getSelectionCBCustomers" />
+            <ComboBox fx:id="cbCustomers" onAction="#getSelectionCBCustomers" promptText="Cliente" />
             <Button mnemonicParsing="false" onAction="#onClicPaid" text="Pagadas">
                <HBox.margin>
                   <Insets />
