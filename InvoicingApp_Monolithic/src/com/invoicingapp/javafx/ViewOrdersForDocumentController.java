@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
  */
 public class ViewOrdersForDocumentController implements Initializable {
 
+    private String currency;
     private Orders order;
     private ChangeRate changeRate;
     
@@ -34,6 +35,13 @@ public class ViewOrdersForDocumentController implements Initializable {
     public void initData(Orders order, ChangeRate changeRate){
         this.order=order;
         this.changeRate=changeRate;
+        setData();
+        setItems();
+    }
+    
+    public void initData(Orders order, String currency){
+        this.order=order;
+        this.currency=currency;
         setData();
         setItems();
     }
@@ -69,7 +77,11 @@ public class ViewOrdersForDocumentController implements Initializable {
         lbDescription.setText(order.getDescription());
         lbDate.setText(order.getDateOrder().toString());
         lbQuantity.setText(String.format("%.2f",order.getQuantity()));
-        lbTotal.setText(String.format("%.2f"+changeRate.getCurrency1(),order.getTotalOrder()));
+        if(changeRate!=null){
+            lbTotal.setText(String.format("%.2f"+changeRate.getCurrency1(),order.getTotalOrder()));
+        }else{
+            lbTotal.setText(String.format("%.2f"+currency,order.getTotalOrder()));
+        }
     }
     
     protected int getLinesNumber(){

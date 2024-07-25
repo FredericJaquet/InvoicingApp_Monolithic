@@ -7,11 +7,9 @@ package com.invoicingapp.javafx;
 import com.invoicingapp.bbdd.ConnectionDB;
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
-import invoicingapp_monolithic.BankAccount;
-import invoicingapp_monolithic.ChangeRate;
 import invoicingapp_monolithic.Customer;
-import invoicingapp_monolithic.InvoiceCustomer;
 import invoicingapp_monolithic.Orders;
+import invoicingapp_monolithic.Quotes;
 import invoicingapp_monolithic.Users;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,7 +33,7 @@ import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -47,47 +45,42 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
 
-public class ViewInvoiceCustomerController implements Initializable {
 
-    private InvoiceCustomer invoice;
+public class ViewQuoteController implements Initializable {
+
+    private Quotes quote;
     private Customer customer;
     private Users user;
-    private BankAccount bankAccount;
     private Configuration config;
-    private ChangeRate changeRate;
     private ArrayList<Orders> orders=new ArrayList();
     private boolean changes=false;
     private int language;
     private int pages=1;
     private int page=1;    
     private double totalNet=0;
-    private double totalVAT=0;
-    private double totalWithholding=0;
-    private double totalInvoice=0;
-    private double totalToPay=0;
+    private double totalQuote=0;
     private String query="";
     private int[] ordersIndex;
     private final int maxLinesPerPage=24;
     private final int imgSize=150;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
-    @FXML private VBox paneInvoice,vbOrders,paneMain;
+    @FXML private VBox paneQuote,vbOrders,paneMain;
     @FXML private Label lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
             lbCustComName,lbCustLegalName,lbCustVATNumber,lbCustStreet,lbCustCPCity,lbCustStateCountry,lbCustEmail,lbCustWeb,
-            lbDocDate,lbDocNumber,lbPageNumber,lbPageTotal,lbIBAN,lbHolder,lbBranch,lbPayMethod,lbDuedate,
-            lbTotalNet,lbVAT,lbTotalVAT,lbWithholding,lbTotalWithholding,lbTotalInvoice,lbTotalToPay,lbTotalInvoice2,lbTotalToPay2,
+            lbDocDate,lbDocNumber,lbPageNumber,lbPageTotal,lbPaymentNote,lbDeliveryNote,lbTotalNet,lbVAT,lbTotal,
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
-            lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,lbTitleDuedate,
-            lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2;
+            lbTitleQuote,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,lbTitlePaymentNote,lbTitleDeliveryNote,
+            lbTitleTotalNet,lbTitleVAT,lbTitleTotal;
     @FXML private TextField tfDocNumber;
     @FXML private Button btnPrev,btnNext;
-    @FXML private CheckBox cbPaid;
+    @FXML private ChoiceBox status;
     @FXML private DatePicker dpDocDate;
     @FXML private ImageView ivLogo;
     
-    public void initData(InvoiceCustomer invoice){
-        this.invoice=invoice;
-        language=getLanguage(invoice.getLanguage());
+    public void initData(Quotes quote){
+        this.quote=quote;
+        language=getLanguage(quote.getLanguage());
         
         getObjects();
         setLogo();
@@ -100,6 +93,9 @@ public class ViewInvoiceCustomerController implements Initializable {
         setOrders();
     }
     
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnPrev.setVisible(false);
@@ -156,11 +152,11 @@ public class ViewInvoiceCustomerController implements Initializable {
         PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
         PrinterJob job = PrinterJob.createPrinterJob();
         
-        if (job != null && job.showPrintDialog(paneInvoice.getScene().getWindow())) {
+        if (job != null && job.showPrintDialog(paneQuote.getScene().getWindow())) {
             boolean success = true;
 
             for (int i=0;i<pages;i++) {
-                success = success && printNode(paneInvoice, job, pageLayout);
+                success = success && printNode(paneQuote, job, pageLayout);
                 if (!success) {
                     break;
                 }
@@ -191,8 +187,8 @@ public class ViewInvoiceCustomerController implements Initializable {
         changes=false;
     }
     
-    @FXML protected void onClicPaid(){
-        invoice.updateDB("paid", cbPaid.isSelected());
+    @FXML protected void getSelectionCBStatus(){
+    completar
     }
     
     private boolean printNode(Node node, PrinterJob job, PageLayout pageLayout){
@@ -212,11 +208,9 @@ public class ViewInvoiceCustomerController implements Initializable {
     }
     
     private void getObjects(){
-        customer=invoice.getCustomer();
-        user=invoice.getUser();
-        bankAccount=invoice.getBankAccount();
-        changeRate=invoice.getChangeRate();
-        orders=invoice.getOrders();        
+        customer=quote.getCustomer();
+        user=quote.getUser();
+        orders=quote.getOrders();        
     }
     
     private void setData(){ 
@@ -239,45 +233,26 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbCustStateCountry.setText(customer.getAddress().getState()+" / "+customer.getAddress().getCountry());
         lbCustEmail.setText(customer.getEmail());
         lbCustWeb.setText(customer.getWeb());
-        //Bank Details
-        lbPayMethod.setText(customer.getPayMethod());
-        lbHolder.setText(bankAccount.getHolder());
-        lbBranch.setText(bankAccount.getBranch());
-        lbIBAN.setText(bankAccount.getIban());
-        lbDuedate.setText(invoice.getDuedate().toString());
+        //Notes
+        lbPaymentNote.setText(quote.getNotePayment());
+        lbDeliveryNote.setText(quote.getNoteDelivery());
     }
     
     private void setInvoiceInfo(){
-        lbDocDate.setText(invoice.getDocDate().format(formatter));
-        lbDocNumber.setText(invoice.getDocNumber());
+        lbDocDate.setText(quote.getDocDate().format(formatter));
+        lbDocNumber.setText(quote.getDocNumber());
     }
     
     private void getTotals(){
-        totalNet=invoice.getTotal();
-        totalVAT=invoice.getTotalVAT();
-        totalWithholding=invoice.getTotalWithholding();
-        totalInvoice=totalNet+totalVAT;
-        totalToPay=invoice.getTotalToPay();
+        totalNet=quote.getTotal();
+        totalQuote=totalNet+(totalNet*(customer.getDefaultVAT()/100));
     }
     
     private void setTotals(){
-        lbTotalInvoice2.setVisible(false);
-        lbTotalToPay2.setVisible(false);
-        
-        lbTotalNet.setText(String.format("%.2f"+changeRate.getCurrency1(),totalNet));
+        lbTotalNet.setText(String.format("%.2f"+quote.getCurrency(),totalNet));
         lbVAT.setText(String.format("%.2f%%",customer.getDefaultVAT()));
-        lbTotalVAT.setText(String.format("%.2f"+changeRate.getCurrency1(),totalVAT));
-        lbWithholding.setText(String.format("%.2f%%",customer.getDefaultWithholding()));
-        lbTotalWithholding.setText(String.format("%.2f"+changeRate.getCurrency1(),totalWithholding));
-        lbTotalInvoice.setText(String.format("%.2f"+changeRate.getCurrency1(),totalInvoice));
-        lbTotalToPay.setText(String.format("%.2f"+changeRate.getCurrency1(),totalToPay));
-        if(changeRate.getIdChangeRate()!=1){
-            lbTotalInvoice2.setVisible(true);
-            lbTotalToPay2.setVisible(true);
-            lbTotalInvoice2.setText(String.format("%.2f"+changeRate.getCurrency2(),totalInvoice*changeRate.getRate()));
-            lbTotalToPay2.setText(String.format("%.2f"+changeRate.getCurrency2(),totalToPay*changeRate.getRate()));
-        }
-   }
+        lbTotal.setText(String.format("%.2f"+quote.getCurrency(),totalQuote));
+    }
     
     private void setOrders(){
         FXMLLoader loader;
@@ -294,7 +269,7 @@ public class ViewInvoiceCustomerController implements Initializable {
                 Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
             }
             controller=loader.getController();
-            controller.initData(orders.get(i),changeRate);
+            controller.initData(orders.get(i),quote.getCurrency());
             
             vbOrders.getChildren().add(ordersListView);
         }
@@ -322,8 +297,6 @@ public class ViewInvoiceCustomerController implements Initializable {
     }
     
     private void setTitles(){
-        lbTitleTotalInvoice2.setVisible(false);
-        lbTitleTotalToPay2.setVisible(false);
         lbTitleName.setText(Translations.titleName[language]);
         lbTitleVATNumber.setText(Translations.titleVATNumber[language]);
         lbTitleAddress.setText(Translations.titleAddress[language]);
@@ -331,31 +304,18 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbTitleCountry.setText(Translations.titleCountry[language]);
         lbTitleEmail.setText(Translations.titleEmail[language]);
         lbTitleWeb.setText(Translations.titleWeb[language]);
-        lbTitleInvoice.setText(Translations.titleInvoice[language]);
+        lbTitleQuote.setText(Translations.titleQuote[language]);
         lbTitleNumber.setText(Translations.titleNumber[language]);
         lbTitlePage.setText(Translations.titlePage[language]);
         lbPageNumber.setText(String.valueOf(page));
         lbTitleOf.setText(Translations.titleOf[language]);
         lbPageTotal.setText(String.valueOf(pages));
         lbTitleDate.setText(Translations.titleDate[language]);
-        lbTitleBankDetails.setText(Translations.titleBankDetails[language]);
-        lbTitlePayMethod.setText(Translations.titlePayMethod[language]);
-        lbTitleHolder.setText(Translations.titleHolder[language]);
-        lbTitleBranch.setText(Translations.titleBranch[language]);
-        lbTitleDuedate.setText(Translations.titleDuedate[language]);
+        lbTitleDeliveryNote.setText(Translations.titleDelivery[language]);
+        lbTitlePaymentNote.setText(Translations.titlePayment[language]);
         lbTitleTotalNet.setText(Translations.titleTotalNet[language]);
         lbTitleVAT.setText(Translations.titleVAT[language]);
-        lbTitleTotalVAT.setText(Translations.titleTotalVAT[language]);
-        lbTitleWithholding.setText(Translations.titleWithholding[language]);
-        lbTitleTotalWithholding.setText(Translations.titleTotalWithholding[language]);
-        lbTitleTotalInvoice.setText(Translations.titleTotalInvoice[language]);
-        lbTitleTotalToPay.setText(Translations.titleTotalToPay[language]);
-        if(changeRate.getIdChangeRate()!=1){
-            lbTitleTotalInvoice2.setVisible(true);
-            lbTitleTotalToPay2.setVisible(true);
-            lbTitleTotalInvoice2.setText(Translations.titleTotalInvoice[language]);
-            lbTitleTotalToPay2.setText(Translations.titleTotalToPay[language]);
-        }
+        lbTitleTotal.setText(Translations.titleTotalQuote[language]);
     }
     
     private int getLanguage(String language){
@@ -405,7 +365,7 @@ public class ViewInvoiceCustomerController implements Initializable {
         }
         ordersIndex[pages]=orders.size();
     }
-
+    
     private void makeLabelEditable(Label label, TextField textField, String tableDB, String fieldDB) {
         textField.setVisible(false);
 
@@ -466,7 +426,8 @@ public class ViewInvoiceCustomerController implements Initializable {
     
     private void getQuery(Label label, String tableDB, String fieldDB){
         String newValue=label.getText();
-        query=query.concat("UPDATE "+tableDB+" SET "+fieldDB+"='"+newValue+"' WHERE idDocument="+invoice.getIdDocument()+";");
+        query=query.concat("UPDATE "+tableDB+" SET "+fieldDB+"='"+newValue+"' WHERE idDocument="+quote.getIdDocument()+";");
         changes=true;
     }
+    
 }
