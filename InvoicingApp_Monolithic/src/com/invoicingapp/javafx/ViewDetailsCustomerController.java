@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.bbdd.ConnectionDB;
+import com.invoicingapp.config.Translations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Customer;
@@ -70,7 +71,7 @@ public class ViewDetailsCustomerController implements Initializable {
             fieldPrice,fieldUnits,fieldFieldName,
             fieldIban,fieldSwift,fieldHolder,fieldBranch;
     @FXML private CheckBox cbEurope,cbEnabled;
-    @FXML private ChoiceBox cbLanguage;
+    @FXML private ChoiceBox<String> cbLanguage;
     @FXML private Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
             btnSchemeLeft,btnSchemeRight, btnNewScheme,btnNewBankAccount,btnAccountLeft,btnAccountRight,
             btnDeleteScheme,btnDeletePhone,btnDeleteContact,btnDeleteBankAccount;
@@ -132,7 +133,7 @@ public class ViewDetailsCustomerController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cbLanguage.getItems().addAll("Español", "English", "Français");
+        cbLanguage.getItems().addAll(Translations.languages);
         
         makeLabelEditable(lb_Company_ComName, fieldComName);
         makeLabelEditable(lb_Company_LegalName, fieldLegalName);
@@ -368,7 +369,7 @@ public class ViewDetailsCustomerController implements Initializable {
     @FXML protected void onClicSave(){
         ConnectionDB con=new ConnectionDB();
         
-        if(!query.equals("")){
+        if((!query.equals(""))&&changes){
             con.openConnection();
             con.noReturnQuery(query);
             con.closeConnection();

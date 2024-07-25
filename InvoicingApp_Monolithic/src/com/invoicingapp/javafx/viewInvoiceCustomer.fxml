@@ -3,15 +3,18 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -175,26 +178,36 @@
                         </VBox>
                      </children>
                   </GridPane>
-                  <HBox>
+                  <HBox spacing="15.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefWidth="210.0">
                            <children>
-                              <Label fx:id="lbTitleNumber" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Número:">
+                              <Label fx:id="lbTitleNumber" prefWidth="75.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Número:">
                                  <padding>
                                     <Insets right="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="lbInvoiceNumber1" text="2024-1.001" />
+                              <StackPane alignment="CENTER_LEFT">
+                                 <children>
+                                    <Label fx:id="lbDocNumber" text="label" />
+                                    <TextField fx:id="tfDocNumber" />
+                                 </children>
+                              </StackPane>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefWidth="210.0">
                            <children>
-                              <Label fx:id="lbTitleDate" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Fecha:">
+                              <Label fx:id="lbTitleDate" prefWidth="75.0" styleClass="title" stylesheets="@viewinvoicecustomer.css" text="Fecha:">
                                  <padding>
                                     <Insets right="5.0" />
                                  </padding>
                               </Label>
-                              <Label fx:id="lbDate1" text="31/06/2024" />
+                              <StackPane alignment="CENTER_LEFT">
+                                 <children>
+                                    <Label fx:id="lbDocDate" text="label" />
+                                    <DatePicker fx:id="dpDocDate" />
+                                 </children>
+                              </StackPane>
                            </children>
                            <HBox.margin>
                               <Insets />
@@ -427,6 +440,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#print" text="Imprimir" />
             <Button mnemonicParsing="false" onAction="#onClicBack" text="Volver" />
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#onClicSave" text="Guardar" />
          </children>
          <padding>
             <Insets bottom="15.0" />

@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.bbdd.ConnectionDB;
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
 import invoicingapp_monolithic.BankAccount;
@@ -18,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -34,9 +36,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
@@ -55,28 +61,33 @@ public class ViewInvoiceCustomerController implements Initializable {
     private Configuration config;
     private ChangeRate changeRate;
     private ArrayList<Orders> orders=new ArrayList();
-    private int imgSize=150;
+    private boolean changes=false;
     private int language;
     private int pages=1;
-    private int page=1;
-    private int maxLinesPerPage=24;
+    private int page=1;    
     private double totalNet=0;
     private double totalVAT=0;
     private double totalWithholding=0;
     private double totalInvoice=0;
     private double totalToPay=0;
+    private String query="";
     private int[] ordersIndex;
+    private final int maxLinesPerPage=24;
+    private final int imgSize=150;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
     @FXML private VBox paneInvoice,vbOrders,paneMain;
     @FXML private Label lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
             lbCustComName,lbCustLegalName,lbCustVATNumber,lbCustStreet,lbCustCPCity,lbCustStateCountry,lbCustEmail,lbCustWeb,
-            lbPageNumber,lbPageTotal,lbIBAN,lbHolder,lbBranch,lbPayMethod,lbDuedate,
+            lbDocDate,lbDocNumber,lbPageNumber,lbPageTotal,lbIBAN,lbHolder,lbBranch,lbPayMethod,lbDuedate,
             lbTotalNet,lbVAT,lbTotalVAT,lbWithholding,lbTotalWithholding,lbTotalInvoice,lbTotalToPay,lbTotalInvoice2,lbTotalToPay2,
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
             lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,lbTitleDuedate,
             lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2;
+    @FXML TextField tfDocNumber;
     @FXML Button btnPrev,btnNext;
     @FXML CheckBox cbPaid;
+    @FXML DatePicker dpDocDate;
     @FXML private ImageView ivLogo;
     
     public void initData(InvoiceCustomer invoice){
@@ -99,6 +110,9 @@ public class ViewInvoiceCustomerController implements Initializable {
         btnPrev.setVisible(false);
         btnNext.setVisible(true);
         config=Configuration.getConfiguration();
+        
+        makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber");
+        makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate");
     }
     
     @FXML protected void onClicPrev(){
@@ -170,6 +184,18 @@ public class ViewInvoiceCustomerController implements Initializable {
         setOrders();
     }
     
+    @FXML protected void onClicSave(){
+        ConnectionDB con=new ConnectionDB();
+        
+        if((!query.equals(""))&&changes){
+            con.openConnection();
+            con.noReturnQuery(query);
+            con.closeConnection();
+        }
+        query="";
+        changes=false;
+    }
+    
     @FXML protected void onClicPaid(){
         invoice.updateDB("paid", cbPaid.isSelected());
     }
@@ -207,6 +233,8 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbCountry.setText(user.getAddress().getCountry());
         lbEmail.setText(user.getEmail());
         lbWeb.setText(user.getWeb());
+        //Invoice info
+        setInvoiceInfo();
         //Customer info
         lbCustComName.setText(customer.getComName());
         lbCustLegalName.setText(customer.getLegalName());
@@ -224,10 +252,16 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbDuedate.setText(invoice.getDuedate().toString());
     }
     
+    private void setInvoiceInfo(){
+        lbDocDate.setText(invoice.getDocDate().format(formatter));
+        lbDocNumber.setText(invoice.getDocNumber());
+    }
+    
     private void getTotals(){
         totalNet=invoice.getTotal();
         totalVAT=invoice.getTotalVAT();
         totalWithholding=invoice.getTotalWithholding();
+        totalInvoice=totalNet+totalVAT;
         totalToPay=invoice.getTotalToPay();
     }
     
@@ -374,5 +408,68 @@ public class ViewInvoiceCustomerController implements Initializable {
         }
         ordersIndex[pages]=orders.size();
     }
+
+    private void makeLabelEditable(Label label, TextField textField, String tableDB, String fieldDB) {
+        textField.setVisible(false);
+
+        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                switchToTextField(label, textField);
+            }
+        });
+
+        textField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                switchToLabel(label, textField, tableDB, fieldDB);
+            }
+        });
+    }
     
+    private void switchToTextField(Label label, TextField textField) {
+        textField.setText(label.getText());
+        textField.setVisible(true);
+        textField.requestFocus();
+        label.setVisible(false);
+    }
+    
+    private void switchToLabel(Label label, TextField textField, String tableDB, String fieldDB) {
+        label.setText(textField.getText());
+        label.setVisible(true);
+        textField.setVisible(false);
+        getQuery(label,tableDB,fieldDB);
+    }
+    
+    private void makeLabelEditable(Label label, DatePicker datePicker, String tableDB, String fieldDB) {
+        datePicker.setVisible(false);
+        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getClickCount() == 2) {
+                switchToTextField(label, datePicker);
+            }
+        });
+
+        datePicker.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                switchToLabel(label, datePicker, tableDB, fieldDB);
+            }
+        });
+    }
+    
+    private void switchToTextField(Label label, DatePicker datePicker) {
+        datePicker.setVisible(true);
+        label.setVisible(false);
+    }
+    
+    private void switchToLabel(Label label, DatePicker datePicker, String tableDB, String fieldDB) {
+        label.setText(datePicker.getValue().toString());
+        label.setVisible(true);
+        datePicker.setVisible(false);
+        getQuery(label,tableDB,fieldDB);
+        label.setText(datePicker.getValue().format(formatter));
+    }
+    
+    private void getQuery(Label label, String tableDB, String fieldDB){
+        String newValue=label.getText();
+        query=query.concat("UPDATE "+tableDB+" SET "+fieldDB+"='"+newValue+"' WHERE idDocument="+invoice.getIdDocument()+";");
+        changes=true;
+    }
 }
