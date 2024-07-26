@@ -44,7 +44,7 @@
       <HBox alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#onCreateQuote" text="Nuevo Presupuesto" />
-            <Button mnemonicParsing="false" text="Ver Presupuesto">
+            <Button mnemonicParsing="false" onAction="#onSeeQuote" text="Ver Presupuesto">
                <HBox.margin>
                   <Insets left="25.0" />
                </HBox.margin>

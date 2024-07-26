@@ -6,12 +6,9 @@ package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
-import invoicingapp_monolithic.BankAccount;
-import invoicingapp_monolithic.ChangeRate;
 import invoicingapp_monolithic.Currency;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Customer;
-import invoicingapp_monolithic.InvoiceCustomer;
 import invoicingapp_monolithic.Orders;
 import invoicingapp_monolithic.Quotes;
 import invoicingapp_monolithic.Users;
@@ -216,7 +213,7 @@ public class ViewNewQuoteController implements Initializable {
             labelError.setVisible(true);
             control=false;
         }
-        quote.setAccepted(false);
+        quote.setStatus(0);
         quote.setLanguage(Translations.languages[language]);
         quote.setNotePayment(tfPayment.getText());
         quote.setNoteDelivery(tfDelivery.getText());

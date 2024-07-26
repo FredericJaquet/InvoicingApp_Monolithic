@@ -45,6 +45,11 @@ public class Translations {
     public static String[] titleVATNumber={"VAT","CIF","TVA"};
     public static String[] titleWeb={"Web","Web","Web"};
     public static String[] titleWithholding={"Withholding","Retención","Rétention"};    
+    public static String[][] status={
+                                        {"Pending","Accepted","Rejected"},
+                                        {"Pendiente","Aceptado","Rechazado"},
+                                        {"En attente","Accepté","Refusé"}
+                                    };
     public static Currency[] currencies={ new Currency("€","EUR"),
                                         new Currency("£","GBP"),
                                         new Currency("US$","USD"),

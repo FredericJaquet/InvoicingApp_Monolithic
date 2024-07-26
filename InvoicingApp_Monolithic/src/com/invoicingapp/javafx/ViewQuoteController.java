@@ -74,20 +74,24 @@ public class ViewQuoteController implements Initializable {
             lbTitleTotalNet,lbTitleVAT,lbTitleTotal;
     @FXML private TextField tfDocNumber;
     @FXML private Button btnPrev,btnNext;
-    @FXML private ChoiceBox status;
+    @FXML private ChoiceBox<String> cbStatus;
     @FXML private DatePicker dpDocDate;
     @FXML private ImageView ivLogo;
     
     public void initData(Quotes quote){
         this.quote=quote;
         language=getLanguage(quote.getLanguage());
-        
+        populateCbStatus();
+        cbStatus.getSelectionModel().select(quote.getStatus());
         getObjects();
         setLogo();
         setData();
         getTotals();
         setTotals();
         setPageNumber();
+        if(pages<2){
+            btnNext.setVisible(false);
+        }
         setTitles();
         setIndexOrdersPerPages();
         setOrders();
@@ -101,7 +105,6 @@ public class ViewQuoteController implements Initializable {
         btnPrev.setVisible(false);
         btnNext.setVisible(true);
         config=Configuration.getConfiguration();
-        
         makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber");
         makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate");
     }
@@ -187,10 +190,32 @@ public class ViewQuoteController implements Initializable {
         changes=false;
     }
     
-    @FXML protected void getSelectionCBStatus(){
-    completar
+    private void getSelectionCBStatus(String newValue){
+        quote.setStatus(getStatus(newValue));
+        quote.updateDB("status", quote.getStatus());
     }
     
+    private void populateCbStatus(){
+        System.out.println("viewQuote linea 196: "+language);
+        cbStatus.getItems().addAll(Translations.status[language]);
+        cbStatus.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            getSelectionCBStatus(newValue);
+        });
+    }
+    
+    private int getStatus(String status){
+        int result=0;
+        
+        if(status.equals(Translations.status[language][0])){
+            result=0;
+        }else if(status.equals(Translations.status[language][1])){
+            result=1;
+        }else if(status.equals(Translations.status[language][2])){
+            result=2;
+        }
+        return result;
+    }
+            
     private boolean printNode(Node node, PrinterJob job, PageLayout pageLayout){
         boolean success;
         double scaleX = pageLayout.getPrintableWidth() / node.getBoundsInParent().getWidth();
@@ -320,11 +345,13 @@ public class ViewQuoteController implements Initializable {
     
     private int getLanguage(String language){
         int l=0;
+        System.out.println("viewQuote linea 345: "+language);
         switch (language) {
             case "English":
                 l=0;
                 break;
             case "Español":
+                System.out.println("viewQuote linea 351: Hola");
                 l=1;
                 break;
             case "Français":
@@ -333,6 +360,7 @@ public class ViewQuoteController implements Initializable {
             default:
                 break;
         }
+        System.out.println("viewQuote linea 360: "+l);
         return l;
     }
     

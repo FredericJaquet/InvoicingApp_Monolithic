@@ -274,23 +274,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnProviders" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="10.0" />
-                    </GridPane.margin>
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnNewOrder" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="10.0" />
-                    </GridPane.margin>
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnInvoicesCustomer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnInvoicesCustomer" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>
@@ -298,15 +282,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnNewInvoiceProvider" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="10.0" />
-                    </GridPane.margin>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnQuotes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnQuotes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                        <Insets bottom="10.0" />
                     </GridPane.margin>
@@ -314,31 +290,7 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnNewPo" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="10.0" />
-                    </GridPane.margin>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnReportIncomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="10.0" />
-                    </GridPane.margin>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnReportOutcomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                    <GridPane.margin>
-                        <Insets bottom="10.0" />
-                    </GridPane.margin>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnReportPendings" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnProviders" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>
@@ -346,7 +298,23 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnGrafIncomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnNewInvoiceProvider" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" />
+                    </GridPane.margin>
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnNewPo" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" />
+                    </GridPane.margin>
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnNewOrder" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>
@@ -354,7 +322,39 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnGrafOutcomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnGrafIncomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" />
+                    </GridPane.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnGrafOutcomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" />
+                    </GridPane.margin>
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnReportPendings" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" />
+                    </GridPane.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnReportIncomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                    <GridPane.margin>
+                        <Insets bottom="10.0" />
+                    </GridPane.margin>
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnReportOutcomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>

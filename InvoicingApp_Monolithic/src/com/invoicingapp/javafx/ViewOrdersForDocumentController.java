@@ -68,7 +68,11 @@ public class ViewOrdersForDocumentController implements Initializable {
                 Logger.getLogger(ViewOrdersForDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
             controller=loader.getController();
-            controller.initData(order.getItems().get(i),changeRate,order.getPricePerUnit());
+            if(changeRate!=null){
+                controller.initData(order.getItems().get(i),changeRate,order.getPricePerUnit());
+            }else{
+                controller.initData(order.getItems().get(i),currency,order.getPricePerUnit());
+            }
             paneItems.getChildren().add(itemsListView);
         }
     }

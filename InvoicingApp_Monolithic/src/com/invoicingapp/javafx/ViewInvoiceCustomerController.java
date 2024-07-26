@@ -95,6 +95,9 @@ public class ViewInvoiceCustomerController implements Initializable {
         getTotals();
         setTotals();
         setPageNumber();
+        if(pages<2){
+            btnNext.setVisible(false);
+        }
         setTitles();
         setIndexOrdersPerPages();
         setOrders();

@@ -58,7 +58,7 @@ public class ViewQuotesController implements Initializable {
         populateCbCustomers();
         tableQuotes.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                //onSeeQuote();
+                onSeeQuote();
             }
         });
     }
@@ -78,7 +78,7 @@ public class ViewQuotesController implements Initializable {
         home.setCenter(newQuoteView);
     }
     
-    /*@FXML protected void onSeeQuote(){
+    @FXML protected void onSeeQuote(){
         FXMLLoader loader=new FXMLLoader();
         Parent quoteView=null;
         ViewQuoteController controller=null;
@@ -95,7 +95,7 @@ public class ViewQuotesController implements Initializable {
         controller.initData(tableQuotes.getSelectionModel().getSelectedItem());
         home=(BorderPane)paneQuotes.getParent();
         home.setCenter(quoteView);
-    }*/
+    }
     
     @FXML protected void onClicPending(){
         quotes=FXCollections.observableArrayList(Quotes.getAllQuotesFromDB(Quotes.PENDING));

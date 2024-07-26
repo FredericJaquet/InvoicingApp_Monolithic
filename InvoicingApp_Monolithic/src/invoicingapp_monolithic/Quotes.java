@@ -22,9 +22,8 @@ public class Quotes extends Document{
     public static final int ACCEPTED=1;
     public static final int REJECTED=2;
     private String noteDelivery, notePayment;
-    private int idQuotes;
+    private int idQuotes, status;
     private Customer customer=new Customer();
-    private boolean accepted;
     private String currency;
     private String comName;
     
@@ -49,7 +48,7 @@ public class Quotes extends Document{
         
         super.addToDB();
         
-        queryInsert="INSERT INTO Quotes (noteDelivery, notePayment, currency, accepted, idDocument) values('"+noteDelivery+"','"+notePayment+"','"+currency+"',"+accepted+","+getIdDocument()+")";
+        queryInsert="INSERT INTO Quotes (noteDelivery, notePayment, currency, status, idDocument) values('"+noteDelivery+"','"+notePayment+"','"+currency+"',"+status+","+getIdDocument()+")";
         con.openConnection();
         con.noReturnQuery(queryInsert);
         result=con.getResultSet(queryGetId);
@@ -83,7 +82,7 @@ public class Quotes extends Document{
                 noteDelivery=result.getString(2);
                 notePayment=result.getString(3);
                 currency=result.getString(4);
-                accepted=result.getBoolean(5);
+                status=result.getInt(5);
                 super.getFromDB(result.getInt(6));
             }
         } catch (SQLException ex) {
@@ -193,6 +192,8 @@ public class Quotes extends Document{
         ConnectionDB con=new ConnectionDB();
         String query="UPDATE Quotes SET "+field+"= "+newValue+" WHERE idQuotes="+idQuotes;
         
+        System.out.println("Quotes linea 195: "+query);
+        
         con.openConnection();
         con.noReturnQuery(query);
         con.closeConnection();
@@ -281,17 +282,17 @@ public class Quotes extends Document{
     }
 
     /**
-     * @return the accepted
+     * @return the status
      */
-    public boolean isAccepted() {
-        return accepted;
+    public int getStatus() {
+        return status;
     }
 
     /**
-     * @param accepted the accepted to set
+     * @param status the status to set
      */
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     /**
