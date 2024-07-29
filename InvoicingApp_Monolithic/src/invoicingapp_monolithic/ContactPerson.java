@@ -40,7 +40,7 @@ public class ContactPerson {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -86,7 +86,7 @@ public class ContactPerson {
         ConnectionDB con=new ConnectionDB();
         String query="DELETE FROM ContactPerson";
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -98,7 +98,7 @@ public class ContactPerson {
         String query="DELETE FROM ContactPerson WHERE idContactPerson="+getIdContactPerson();
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -112,7 +112,7 @@ public class ContactPerson {
         String query="UPDATE ContactPerson SET "+field+"= '"+newValue+"' where idContactPerson="+getIdContactPerson();
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(getIdContactPerson());
     }
@@ -122,7 +122,7 @@ public class ContactPerson {
         String query="UPDATE ContactPerson SET "+field+"= '"+newValue+"' where idContactPerson="+getIdContactPerson();
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(getIdContactPerson());
     }

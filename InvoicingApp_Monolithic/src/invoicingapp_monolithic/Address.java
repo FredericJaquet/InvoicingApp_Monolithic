@@ -58,7 +58,7 @@ public class Address {
         
         //If company does not exist in DB, insert the company in DB
         if(!exists){
-            con.noReturnQuery(queryInsert);
+            con.executeUpdate(queryInsert);
             result=con.getResultSet(queryGetId);
             try {
                 result.next();
@@ -106,7 +106,7 @@ public class Address {
         ConnectionDB con=new ConnectionDB();
         String query="DELETE FROM Address";
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -118,7 +118,7 @@ public class Address {
         String query="DELETE FROM Address WHERE idAddress="+idAddress;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -132,7 +132,7 @@ public class Address {
         String query="UPDATE Address SET "+field+"= '"+newValue+"' where idAddress="+idAddress;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idAddress);
     }

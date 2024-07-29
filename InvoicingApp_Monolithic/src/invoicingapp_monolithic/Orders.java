@@ -63,7 +63,7 @@ public class Orders {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -123,7 +123,7 @@ public class Orders {
         Item.deleteAllFromDB();
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -151,7 +151,7 @@ public class Orders {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -165,7 +165,7 @@ public class Orders {
         String query="UPDATE Orders SET "+field+"= '"+newValue+"' where idOrders="+idOrders;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idOrders);
     }
@@ -175,7 +175,7 @@ public class Orders {
         String query="UPDATE Orders SET "+field+"= "+newValue+" where idOrders="+idOrders;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idOrders);
     }
@@ -185,7 +185,7 @@ public class Orders {
         String query="UPDATE Orders SET "+field+"= "+newValue+" where idOrders="+idOrders;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idOrders);
     }
@@ -195,7 +195,7 @@ public class Orders {
         String query="UPDATE Orders SET "+field+"= "+newValue+" where idOrders="+idOrders;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idOrders);
     }

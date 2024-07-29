@@ -50,7 +50,7 @@ public class Quotes extends Document{
         
         queryInsert="INSERT INTO Quotes (noteDelivery, notePayment, currency, status, idDocument) values('"+noteDelivery+"','"+notePayment+"','"+currency+"',"+status+","+getIdDocument()+")";
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -153,7 +153,7 @@ public class Quotes extends Document{
         String query="DELETE FROM Quotes";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         
     }
@@ -167,7 +167,7 @@ public class Quotes extends Document{
         String query="DELETE FROM Quotes WHERE idQuotes="+idQuotes;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -182,7 +182,7 @@ public class Quotes extends Document{
         String query="UPDATE Quotes SET "+field+"= '"+newValue+"' WHERE idQuotes="+idQuotes;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idQuotes);
     }
@@ -195,7 +195,7 @@ public class Quotes extends Document{
         System.out.println("Quotes linea 195: "+query);
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idQuotes);
     }

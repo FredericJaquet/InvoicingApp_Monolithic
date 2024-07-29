@@ -53,7 +53,7 @@ public class Document {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -63,7 +63,7 @@ public class Document {
         }
         for(int i=0;i<orders.size();i++){
             QueryDocumentOrders="INSERT INTO DocumentOrders(idDocument, idOrders) VALUES("+idDocument+","+orders.get(i).getIdOrders()+");";
-            con.noReturnQuery(QueryDocumentOrders);
+            con.executeUpdate(QueryDocumentOrders);
         }
         con.closeConnection();
     }
@@ -120,8 +120,8 @@ public class Document {
         PurchaseOrder.deleteAllFromDB();
         
         con.openConnection();
-        con.noReturnQuery(query);
-        con.noReturnQuery(queryOrders);
+        con.executeUpdate(query);
+        con.executeUpdate(queryOrders);
         con.closeConnection();
     }
     
@@ -190,7 +190,7 @@ public class Document {
         } catch (SQLException ex) {
             Logger.getLogger(Document.class.getName()).log(Level.SEVERE, null, ex);
         }
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         
         for(int i=0;i<orders.size();i++){
@@ -211,7 +211,7 @@ public class Document {
         String query="UPDATE Document SET "+field+"= '"+newValue+"' where idDocument="+idDocument;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idDocument);
     }
@@ -221,7 +221,7 @@ public class Document {
         String query="UPDATE Document SET "+field+"= '"+newValue+"' where idDocument="+idDocument;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idDocument);  
     }
@@ -231,7 +231,7 @@ public class Document {
         String query="UPDATE Document SET "+field+"= '"+newValue+"' where idDocument="+idDocument;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idDocument);
     }
@@ -241,7 +241,7 @@ public class Document {
         String query="UPDATE Document SET "+field+"= '"+newValue+"' where idDocument="+idDocument;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idDocument);   
     }

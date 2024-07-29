@@ -53,7 +53,7 @@ public class Customer extends CustomProv {
         queryInsert="INSERT INTO Customer (invoicingMethod, dueDate, payMethod, idCustomProv) values('"+invoicingMethod+"',"+duedate+",'"+payMethod+"',"+getIdCustomProv()+")";
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -150,7 +150,7 @@ public class Customer extends CustomProv {
         String query="DELETE FROM Customer";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();    
     }
     
@@ -163,7 +163,7 @@ public class Customer extends CustomProv {
         String query="DELETE FROM Customer WHERE idCustomer="+idCustomer;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -190,7 +190,7 @@ public class Customer extends CustomProv {
         
         if(confirmation){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
             getFromDB(idCustomer);
         }
@@ -214,7 +214,7 @@ public class Customer extends CustomProv {
         
         if(confirmation){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
             getFromDB(idCustomer);
         }

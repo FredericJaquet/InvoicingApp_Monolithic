@@ -183,7 +183,7 @@ public class ViewQuoteController implements Initializable {
         
         if((!query.equals(""))&&changes){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
         }
         query="";

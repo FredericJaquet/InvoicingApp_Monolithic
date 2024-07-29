@@ -26,11 +26,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author frede
- */
 public class ViewProvidersController implements Initializable {
 
     private ObservableList<Provider> providers;

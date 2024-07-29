@@ -187,7 +187,7 @@ public class ViewInvoiceCustomerController implements Initializable {
         
         if((!query.equals(""))&&changes){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
         }
         query="";

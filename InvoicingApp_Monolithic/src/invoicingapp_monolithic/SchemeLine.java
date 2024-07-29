@@ -37,7 +37,7 @@ public class SchemeLine {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -82,7 +82,7 @@ public class SchemeLine {
         String query="DELETE FROM SchemeLine";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -94,7 +94,7 @@ public class SchemeLine {
         String query="DELETE FROM SchemeLine WHERE idSchemeLine="+idSchemeLine;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -108,7 +108,7 @@ public class SchemeLine {
         String query="UPDATE SchemeLine SET "+field+"= '"+newValue+"' WHERE idSchemeLine="+idSchemeLine;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idSchemeLine);
     }
@@ -118,7 +118,7 @@ public class SchemeLine {
         String query="UPDATE SchemeLine SET "+field+"= "+newValue+" WHERE idSchemeLine="+idSchemeLine;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idSchemeLine);
     }
@@ -128,7 +128,7 @@ public class SchemeLine {
         String query="UPDATE SchemeLine SET "+field+"= "+newValue+" WHERE idSchemeLine="+idSchemeLine;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idSchemeLine);
     }

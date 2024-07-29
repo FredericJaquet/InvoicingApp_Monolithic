@@ -49,7 +49,7 @@ public class Scheme {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -58,7 +58,7 @@ public class Scheme {
             Logger.getLogger(Scheme.class.getName()).log(Level.SEVERE, null, ex);
         }
         queryinsertSchemeCustomProv="INSERT INTO SchemeCustomProv (idCustomProv, idScheme) VALUES("+idCustomProv+","+idScheme+");";
-        con.noReturnQuery(queryinsertSchemeCustomProv);
+        con.executeUpdate(queryinsertSchemeCustomProv);
         
         con.closeConnection();
         
@@ -123,7 +123,7 @@ public class Scheme {
         SchemeLine.deleteAllFromDB();
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -152,8 +152,8 @@ public class Scheme {
             Logger.getLogger(Scheme.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        con.noReturnQuery(queryCustomProv);
-        con.noReturnQuery(queryScheme);
+        con.executeUpdate(queryCustomProv);
+        con.executeUpdate(queryScheme);
         con.closeConnection();
     }
     
@@ -167,7 +167,7 @@ public class Scheme {
         String query="UPDATE Scheme SET "+field+"= '"+newValue+"' where idScheme="+idScheme;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idScheme);
     }
@@ -177,7 +177,7 @@ public class Scheme {
         String query="UPDATE Scheme SET "+field+"= "+newValue+" where idScheme="+idScheme;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idScheme);
     }
@@ -187,7 +187,7 @@ public class Scheme {
         String query="UPDATE Scheme SET "+field+"= "+newValue+" where idScheme="+idScheme;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idScheme);
     }

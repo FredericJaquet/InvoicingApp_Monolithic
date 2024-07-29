@@ -64,7 +64,7 @@ public class Company {
         
         //If company does not exist in DB, insert the company in DB
         if(!exists){
-            con.noReturnQuery(queryInsert);
+            con.executeUpdate(queryInsert);
             result=con.getResultSet(queryGetId);
             try {
                 result.next();
@@ -173,7 +173,7 @@ public class Company {
         Phone.deleteAllFromDB();
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         
         Address.deleteAllFromDB();
@@ -223,7 +223,7 @@ public class Company {
         
         address.deleteFromDB();
         
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -237,7 +237,7 @@ public class Company {
         String query="UPDATE Company SET "+field+"= '"+newValue+"' where idCompany="+idCompany;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idCompany);
     }
@@ -249,7 +249,7 @@ public class Company {
         query="UPDATE Company SET "+field+"= "+newValue+" where idCompany="+idCompany;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idCompany);
     }

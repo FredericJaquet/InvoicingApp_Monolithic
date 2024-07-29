@@ -39,7 +39,7 @@ public class Item {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -85,7 +85,7 @@ public class Item {
         String query="DELETE FROM Item";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -97,7 +97,7 @@ public class Item {
         String query="DELETE FROM Item WHERE idItem="+idItem;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -111,7 +111,7 @@ public class Item {
         String query="UPDATE Item SET "+field+"= '"+newValue+"' WHERE idItem="+idItem;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idItem);
     }
@@ -121,7 +121,7 @@ public class Item {
         String query="UPDATE Item SET "+field+"= "+newValue+" WHERE idItem="+idItem;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idItem); 
     }

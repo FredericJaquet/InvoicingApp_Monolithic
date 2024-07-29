@@ -36,7 +36,7 @@ public class Phone {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         con.closeConnection();
     }
     
@@ -73,7 +73,7 @@ public class Phone {
         String query="DELETE FROM Phone";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -85,7 +85,7 @@ public class Phone {
         String query="DELETE FROM Phone WHERE phoneNumber LIKE '"+phoneNumber+"'";
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -99,7 +99,7 @@ public class Phone {
         String query="UPDATE phone SET "+field+"= '"+newValue+"' WHERE phoneNumber LIKE '"+phoneNumber+"'";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(phoneNumber); 
     }
@@ -109,7 +109,7 @@ public class Phone {
         String query="UPDATE Phone SET "+field+"= "+newValue+" WHERE phoneNumber LIKE '"+phoneNumber+"'";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(phoneNumber);
     }

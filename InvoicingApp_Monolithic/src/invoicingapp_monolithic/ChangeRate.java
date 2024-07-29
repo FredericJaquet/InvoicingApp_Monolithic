@@ -40,7 +40,7 @@ public class ChangeRate {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -109,8 +109,8 @@ public class ChangeRate {
         String queryUpdateDocument="UPDATE Document SET idChangeRate=null";
         
         con.openConnection();
-        con.noReturnQuery(queryUpdateDocument);
-        con.noReturnQuery(query);
+        con.executeUpdate(queryUpdateDocument);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -133,13 +133,13 @@ public class ChangeRate {
             if(result.next()){
                 idDocument=result.getInt(1);
                 queryUpdateDocument=queryUpdateDocument+idDocument;
-                con.noReturnQuery(queryUpdateDocument);
+                con.executeUpdate(queryUpdateDocument);
                 document.getFromDB(idDocument);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ChangeRate.class.getName()).log(Level.SEVERE, null, ex);
         }
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -153,7 +153,7 @@ public class ChangeRate {
         String query="UPDATE ChangeRate SET "+field+"= '"+newValue+"' where idChangeRate="+idChangeRate;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idChangeRate);
     }
@@ -163,7 +163,7 @@ public class ChangeRate {
         String query="UPDATE ChangeRate SET "+field+"= "+newValue+" where idChangeRate="+idChangeRate;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idChangeRate);
     }
@@ -238,7 +238,7 @@ public class ChangeRate {
         
         if(changeRate.getIdChangeRate()==0){
             con.openConnection();
-            con.noReturnQuery(queryInsert);
+            con.executeUpdate(queryInsert);
             con.closeConnection();
         }
     }

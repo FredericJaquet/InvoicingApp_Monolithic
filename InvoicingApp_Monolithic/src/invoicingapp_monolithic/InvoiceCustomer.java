@@ -55,7 +55,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         
         queryInsert="INSERT INTO InvoiceCustomer (withholding, paid, idDocument,idBankAccount) VALUES ("+withholding+","+paid+","+getIdDocument()+","+bankAccount.getIdBankAccount()+")";
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -167,7 +167,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         String query="DELETE FROM InvoiceCustomer";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -180,7 +180,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         String query="DELETE FROM InvoiceCustomer WHERE idInvoiceCustomer="+idInvoiceCustomer;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -195,7 +195,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         String query="UPDATE InvoiceCustomer SET "+field+"= "+newValue+" WHERE idInvoiceCustomer="+idInvoiceCustomer;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idInvoiceCustomer);
     }
@@ -206,7 +206,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         String query="UDPATE InvoiceCustomer SET "+field+"= "+newValue+" WHERE idInvoiceCustomer="+idInvoiceCustomer;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idInvoiceCustomer);
     }
@@ -216,7 +216,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         String query="UDPATE InvoiceCustomer SET "+field+"= "+newValue+" WHERE idInvoiceCustomer="+idInvoiceCustomer;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idInvoiceCustomer);
     }
@@ -226,7 +226,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         String query="UPDATE InvoiceCustomer SET "+field+"="+newValue+" WHERE idInvoiceCustomer="+idInvoiceCustomer;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idInvoiceCustomer);
     }

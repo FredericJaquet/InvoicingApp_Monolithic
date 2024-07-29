@@ -46,7 +46,7 @@ public class Provider extends CustomProv{
         queryInsert="INSERT INTO Provider(idCustomProv) VALUES("+getIdCustomProv()+")";
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -139,7 +139,7 @@ public class Provider extends CustomProv{
         String query="DELETE FROM Provider";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -152,7 +152,7 @@ public class Provider extends CustomProv{
         String query="DELETE FROM Provider WHERE idProvider="+idProvider;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -179,7 +179,7 @@ public class Provider extends CustomProv{
         
         if(confirmation){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
             getFromDB(idProvider);
         }
@@ -203,7 +203,7 @@ public class Provider extends CustomProv{
         
         if(confirmation){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
             getFromDB(idProvider);
         }

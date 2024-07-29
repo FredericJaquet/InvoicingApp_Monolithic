@@ -4,11 +4,6 @@
  */
 package com.invoicingapp.bbdd;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java.io.Reader;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,7 +50,7 @@ public class ConnectionDB {
         return results;
     }
     
-    public void noReturnQuery(String query){
+    /*public void noReturnQuery(String query){
         PreparedStatement stmnt=null;
                 
         try{
@@ -65,41 +60,6 @@ public class ConnectionDB {
         }catch (SQLException ex) {
             Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    /*public void runScript(String scriptPath){
-        ScriptRunner scriptRunner = new ScriptRunner(con);
-        Reader reader=null; 
-       
-        // Optionnal: configure ScriptRunner
-        scriptRunner.setLogWriter(new PrintWriter(System.out)); // Para no mostrar logs por consola
-        scriptRunner.setErrorLogWriter(new PrintWriter(System.err)); // Para no mostrar errores por consola
-        try{
-            // Read the file of the script
-            reader = new BufferedReader(new FileReader(scriptPath));
-        }catch(FileNotFoundException ex) {
-            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // Execute the script
-        scriptRunner.runScript(reader);    
-        System.out.println("Script executed successfully.");
-    }*/
-    
-    /*public ObservableList getData(String query, String attribute){
-        
-        ResultSet results=getResultSet(query);         
-        ObservableList<String> resultsList=FXCollections.observableArrayList();
-   
-        try {
-            while(results.next()){
-                resultsList.add(results.getString(attribute));
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        return resultsList;
-        
     }*/
 
     /**

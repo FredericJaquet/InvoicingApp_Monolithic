@@ -28,7 +28,7 @@ public class BankAccount {
         ResultSet result=null;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         result=con.getResultSet(queryGetId);
         try{
             result.next();
@@ -67,7 +67,7 @@ public class BankAccount {
         String query="DELETE FROM BankAccount";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();    
     }
     
@@ -76,7 +76,7 @@ public class BankAccount {
         String query="DELETE FROM BankAccount WHERE idBankAccount="+idBankAccount;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     

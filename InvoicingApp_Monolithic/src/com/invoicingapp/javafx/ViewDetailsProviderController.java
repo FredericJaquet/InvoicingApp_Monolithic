@@ -366,7 +366,7 @@ public class ViewDetailsProviderController implements Initializable {
         
         if(!query.equals("")){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
         }
         

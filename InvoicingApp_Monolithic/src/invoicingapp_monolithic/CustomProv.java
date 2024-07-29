@@ -72,7 +72,7 @@ public class CustomProv extends Company{
         queryInsert="INSERT INTO CustomProv (defaultVAT, defaultWithholding, europe, enabled, idCompany) values("+defaultVAT+","+defaultWithholding+","+europe+","+enabled+","+getIdCompany()+")";
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -236,7 +236,7 @@ public class CustomProv extends Company{
         Provider.deleteAllFromDB();
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection(); 
     }
     
@@ -280,7 +280,7 @@ public class CustomProv extends Company{
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -307,7 +307,7 @@ public class CustomProv extends Company{
         
         if(confirmation){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
             getFromDB(idCustomProv);
         }
@@ -331,7 +331,7 @@ public class CustomProv extends Company{
         
         if(confirmation){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
             getFromDB(idCustomProv);
         }
@@ -354,7 +354,7 @@ public class CustomProv extends Company{
         
         if(confirmation){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
             getFromDB(idCustomProv);
         }
@@ -377,7 +377,7 @@ public class CustomProv extends Company{
         
         if(confirmation){
             con.openConnection();
-            con.noReturnQuery(query);
+            con.executeUpdate(query);
             con.closeConnection();
             getFromDB(idCustomProv);
         }

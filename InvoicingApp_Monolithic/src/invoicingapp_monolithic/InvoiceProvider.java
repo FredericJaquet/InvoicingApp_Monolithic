@@ -44,7 +44,7 @@ public class InvoiceProvider extends Document{
         
         queryInsert="INSERT INTO InvoiceProvider (withholding, idDocument,idBankAccount) values("+withholding+","+getIdDocument()+","+bankAccount.getIdBankAccount()+")";
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -104,7 +104,7 @@ public class InvoiceProvider extends Document{
         String query="DELETE FROM InvoiceProvider";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -117,7 +117,7 @@ public class InvoiceProvider extends Document{
         String query="DELETE FROM InvoiceProvider WHERE idInvoiceProvider="+idInvoiceProvider;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -132,7 +132,7 @@ public class InvoiceProvider extends Document{
         String query="UPDATE InvoiceProvider SET "+field+"= '"+newValue+"' WHERE idInvoiceProvider="+idInvoiceProvider;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idInvoiceProvider);
     }
@@ -143,7 +143,7 @@ public class InvoiceProvider extends Document{
         String query="UPDATE InvoiceProvider SET "+field+"= "+newValue+" WHERE idInvoiceProvider="+idInvoiceProvider;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idInvoiceProvider); 
     }
@@ -153,7 +153,7 @@ public class InvoiceProvider extends Document{
         String query="UPDATE InvoiceProvider SET "+field+"= "+newValue+" WHERE idInvoiceProvider="+idInvoiceProvider;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idInvoiceProvider); 
     }

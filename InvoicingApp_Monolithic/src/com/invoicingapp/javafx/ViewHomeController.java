@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.tools.ButtonFeatures;
 import invoicingapp_monolithic.Customer;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,18 +52,18 @@ public class ViewHomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        makeButtonFocusable(btnCustomers,"Clientes","../img/Customers.png","../img/Customers_Focused.png");
-        makeButtonFocusable(btnProviders,"Proveedores","../img/Providers.png","../img/Providers_Focused.png");
-        makeButtonFocusable(btnNewOrder,"Pedidos","../img/NewOrder.png","../img/NewOrder_Focused.png");
-        makeButtonFocusable(btnInvoicesCustomer,"Facturas Clientes","../img/NewInvoiceCustomer.png","../img/NewInvoiceCustomer_Focused.png");
-        makeButtonFocusable(btnNewInvoiceProvider,"Facturas Proveedores","../img/NewInvoiceProvider.png","../img/NewInvoiceProvider_Focused.png");
-        makeButtonFocusable(btnQuotes,"Presupuesto","../img/NewQuote.png","../img/NewQuote_Focused.png");
-        makeButtonFocusable(btnNewPo,"Orden de Pedido","../img/NewPo.png","../img/NewPo_Focused.png");
-        makeButtonFocusable(btnReportIncomes,"Informe Ingresos","../img/ReportIncomes.png","../img/ReportIncomes_Focused.png");
-        makeButtonFocusable(btnReportOutcomes,"Informe Gastos","../img/ReportOutcomes.png","../img/ReportOutcomes_Focused.png");
-        makeButtonFocusable(btnReportPendings,"Informes Pagos Pendientes","../img/ReportPendings.png","../img/ReportPendings_Focused.png");
-        makeButtonFocusable(btnGrafIncomes,"Gráfico Ingresos","../img/GrafIncomes.png","../img/GrafIncomes_Focused.png");
-        makeButtonFocusable(btnGrafOutcomes,"Gráfico Gastos","../img/GrafOutcomes.png","../img/GrafOutcomes_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnCustomers,"Clientes","../img/Customers.png","../img/Customers_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnProviders,"Proveedores","../img/Providers.png","../img/Providers_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnNewOrder,"Pedidos","../img/NewOrder.png","../img/NewOrder_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnInvoicesCustomer,"Facturas Clientes","../img/NewInvoiceCustomer.png","../img/NewInvoiceCustomer_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnNewInvoiceProvider,"Facturas Proveedores","../img/NewInvoiceProvider.png","../img/NewInvoiceProvider_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnQuotes,"Presupuesto","../img/NewQuote.png","../img/NewQuote_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnNewPo,"Orden de Pedido","../img/NewPo.png","../img/NewPo_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnReportIncomes,"Informe Ingresos","../img/ReportIncomes.png","../img/ReportIncomes_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnReportOutcomes,"Informe Gastos","../img/ReportOutcomes.png","../img/ReportOutcomes_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnReportPendings,"Informes Pagos Pendientes","../img/ReportPendings.png","../img/ReportPendings_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnGrafIncomes,"Gráfico Ingresos","../img/GrafIncomes.png","../img/GrafIncomes_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnGrafOutcomes,"Gráfico Gastos","../img/GrafOutcomes.png","../img/GrafOutcomes_Focused.png");
     }
     
     @FXML protected void onFocus(MouseEvent e){
@@ -125,27 +126,6 @@ public class ViewHomeController implements Initializable {
         if(e.getCode()== KeyCode.ENTER){
             openViewDetailsCustomer(fieldCompany.getText());
         }
-    }
-    
-    private void makeButtonFocusable(Button button,String title,String pathImgUnfocused,String pathImgFocused){
-        setImageButton(button, pathImgUnfocused);
-        button.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
-                switchState(button,title,pathImgFocused);
-            });
-        button.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
-                switchState(button,"",pathImgUnfocused);
-            });
-    }
-    
-    private void switchState(Button button,String title,String pathImg){
-        setImageButton(button, pathImg);
-        button.setText(title);
-    }
-    
-    private void setImageButton(Button button, String path){
-        InputStream inputStream=getClass().getResourceAsStream(path);
-        Image img=new Image(inputStream, imgSize, imgSize, true, true);
-        button.setGraphic(new ImageView(img));
     }
     
     private void openViewDetailsCustomer(String input){

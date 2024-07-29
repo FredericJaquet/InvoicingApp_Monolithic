@@ -46,7 +46,7 @@ public class Users extends Company {
         queryInsert="INSERT INTO Users (userName, passwd, idCompany) values('"+userName+"','"+passwd.getHashed()+"',"+getIdCompany()+")";
         
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -92,7 +92,7 @@ public class Users extends Company {
         String query="DELETE FROM Users";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -105,7 +105,7 @@ public class Users extends Company {
         String query="DELETE FROM Users WHERE idUsers="+idUsers;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -120,7 +120,7 @@ public class Users extends Company {
         String query="UPDATE Users SET "+field+"= '"+newValue+"' WHERE idUsers="+idUsers;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idUsers);
     }
@@ -131,7 +131,7 @@ public class Users extends Company {
         String query="UPDATE Users SET "+field+"= "+newValue+" WHERE idUsers="+idUsers;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idUsers);
     }
@@ -154,7 +154,7 @@ public class Users extends Company {
         query="UPDATE Users SET passwd= '"+hashed+"' WHERE idUsers="+idUsers;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idUsers);
     }

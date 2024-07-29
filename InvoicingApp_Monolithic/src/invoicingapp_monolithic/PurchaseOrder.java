@@ -43,7 +43,7 @@ public class PurchaseOrder extends Document{
         
         queryInsert="INSERT INTO PurchaseOrder (deadline, idDocument) values('"+deadline.toString()+"',"+getIdDocument()+")";
         con.openConnection();
-        con.noReturnQuery(queryInsert);
+        con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
         try {
             result.next();
@@ -101,7 +101,7 @@ public class PurchaseOrder extends Document{
         String query="DELETE FROM PurchaseOrder";
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -114,7 +114,7 @@ public class PurchaseOrder extends Document{
         String query="DELETE FROM PurchaseOrder WHERE idPurchaseOrder="+idPurchaseOrder;
                 
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
     }
     
@@ -129,7 +129,7 @@ public class PurchaseOrder extends Document{
         String query="UPDATE PurchaseOrder SET "+field+"= '"+newValue+"' WHERE idPurchaseOrder="+idPurchaseOrder;
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idPurchaseOrder);   
     }
@@ -142,7 +142,7 @@ public class PurchaseOrder extends Document{
         System.out.println(query);
         
         con.openConnection();
-        con.noReturnQuery(query);
+        con.executeUpdate(query);
         con.closeConnection();
         getFromDB(idPurchaseOrder);
     }
