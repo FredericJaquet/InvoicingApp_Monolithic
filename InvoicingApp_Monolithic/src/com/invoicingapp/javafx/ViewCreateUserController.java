@@ -6,6 +6,7 @@ package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
@@ -115,32 +116,7 @@ public class ViewCreateUserController implements Initializable {
     }
     
     @FXML protected void onClicNextFromUser(){
-        boolean control=true;
-        labelIntro.setText(introCompany);
-        labelError.setVisible(false);
-        fieldUsername.getStyleClass().remove("error");
-        fieldPasswd1.getStyleClass().remove("error");
-        
-        if(fieldUsername.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
-            labelError.setVisible(true);
-            fieldUsername.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldPasswd1.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
-            labelError.setVisible(true);
-            fieldPasswd1.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldPasswd2.getText().isEmpty()){
-            labelError.setText("Falta un dato obligatorio.");
-            labelError.setVisible(true);
-            fieldPasswd2.getStyleClass().add("error");
-            control=false;
-        }
-        
-        if(control){
+        if(Validations.isNotEmpty(fieldUsername,labelError,errorEmpty)&&Validations.isNotEmpty(fieldPasswd1,labelError,errorEmpty)&&Validations.isNotEmpty(fieldPasswd2,labelError,errorEmpty)){
             if(fieldPasswd1.getText().equals(fieldPasswd2.getText())){
                 user.setUserName(fieldUsername.getText());
                 user.setPasswd(fieldPasswd1.getText());
@@ -161,24 +137,16 @@ public class ViewCreateUserController implements Initializable {
     @FXML protected void onClicSave(){
         control=true;
         labelError.setVisible(false);
-        fieldVATNumber.getStyleClass().remove("error");
-        fieldLegalName.getStyleClass().remove("error");
         
         if(user.getAddress().getStreet()==null){
             labelError.setText(errorAddress);
             labelError.setVisible(true);
             control=false;
         }
-        if(fieldVATNumber.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            fieldVATNumber.getStyleClass().add("error");
+        if(!Validations.isNotEmpty(fieldVATNumber,labelError,errorEmpty)){
             control=false;
         }
-        if(fieldLegalName.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            fieldLegalName.getStyleClass().add("error");
+        if(!Validations.isNotEmpty(fieldLegalName,labelError,errorEmpty)){
             control=false;
         }
         

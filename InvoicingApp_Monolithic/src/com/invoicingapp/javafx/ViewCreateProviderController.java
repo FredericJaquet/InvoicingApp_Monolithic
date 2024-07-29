@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.Company;
 import invoicingapp_monolithic.ContactPerson;
@@ -77,26 +78,7 @@ public class ViewCreateProviderController implements Initializable {
     }
     
     @FXML protected void onClicNext(){
-        control=true;
-        
-        labelIntro.setText(introFiscalData);
-        labelError.setVisible(false);
-        fieldVATNumber.getStyleClass().remove("error");
-        fieldLegalName.getStyleClass().remove("error");
-        
-        if(fieldVATNumber.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            fieldVATNumber.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldLegalName.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            fieldLegalName.getStyleClass().add("error");
-            control=false;
-        }
-        if(control){
+        if(Validations.isNotEmpty(fieldVATNumber,labelError,errorEmpty)&&Validations.isNotEmpty(fieldLegalName,labelError,errorEmpty)){
             provider.setVatNumber(fieldVATNumber.getText());
             provider.setComName(fieldComName.getText());
             provider.setLegalName(fieldLegalName.getText());
@@ -107,7 +89,7 @@ public class ViewCreateProviderController implements Initializable {
             paneFootCompany.setVisible(false);
             paneFiscalData.setVisible(true);
             paneFootFiscalData.setVisible(true);
-        }        
+        }  
     }
     
     @FXML protected void onClicBack(){
@@ -120,38 +102,22 @@ public class ViewCreateProviderController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        double defaultVAT=0,defaultWithholding=0;
-        
         control=true;
-        labelError.setVisible(false);
-        fieldDefaultVAT.getStyleClass().remove("error");
-        fieldDefaultWithholding.getStyleClass().remove("error");
         
         if(provider.getAddress().getStreet()==null){
             labelError.setText(errorAddress);
             labelError.setVisible(true);
             control=false;
         }
-        try{
-            defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
-        }catch(NumberFormatException ex){
-            fieldDefaultVAT.getStyleClass().add("error");
-            labelError.setText(errorFormat);
-            labelError.setVisible(true);
+        if(!Validations.isDouble(fieldDefaultVAT, labelError, errorFormat)){
             control=false;
         }
-        try{
-            defaultWithholding=Double.parseDouble(fieldDefaultWithholding.getText());
-        }catch(NumberFormatException ex){
-            fieldDefaultWithholding.getStyleClass().add("error");
-            labelError.setText(errorFormat);
-            labelError.setVisible(true);
+        if(!Validations.isDouble(fieldDefaultWithholding, labelError, errorFormat)){
             control=false;
         }
-        
         if(control){
-            provider.setDefaultVAT(defaultVAT);
-            provider.setDefaultWithholding(defaultWithholding);
+            provider.setDefaultVAT(Double.parseDouble(fieldDefaultVAT.getText()));
+            provider.setDefaultWithholding(Double.parseDouble(fieldDefaultWithholding.getText()));
             provider.setEurope(cbEurope.isSelected());
             provider.setEnabled(cbEnabled.isSelected());
             provider.setDefaultLanguage(cbDefaultLanguage.getValue());

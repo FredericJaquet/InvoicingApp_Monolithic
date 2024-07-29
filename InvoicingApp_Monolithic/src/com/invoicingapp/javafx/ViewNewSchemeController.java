@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
 import java.net.URL;
@@ -71,21 +72,7 @@ public class ViewNewSchemeController implements Initializable {
         fieldDiscount.getStyleClass().remove("error");
         fieldDescription.getStyleClass().remove("error");
         if (event.getCode() == KeyCode.ENTER) {
-            if(fieldDescription.getText().isEmpty()){
-                fieldDescription.getStyleClass().add("error");
-                labelError.setText(errorEmpty);
-                labelError.setVisible(true);
-                controlLines=false;
-            }
-            try{
-                discount=Double.parseDouble(fieldDiscount.getText());
-            }catch(NumberFormatException ex){
-                fieldDiscount.getStyleClass().add("error");
-                labelError.setText(errorFormat);
-                labelError.setVisible(true);
-                controlLines=false;
-            }
-            if(controlLines){
+            if(Validations.isNotEmpty(fieldDescription,labelError,errorEmpty)&&Validations.isDouble(fieldDiscount, labelError, errorFormat)){
                 line=new SchemeLine(fieldDescription.getText(),discount);
                 schemeLines.add(line);
                 scheme.addLine(line);
@@ -93,7 +80,9 @@ public class ViewNewSchemeController implements Initializable {
                 fieldDescription.clear();
                 fieldDiscount.clear();
                 fieldDescription.requestFocus();
-            } 
+            }else{
+                controlLines=false;
+            }
         }
     }
     
@@ -113,16 +102,13 @@ public class ViewNewSchemeController implements Initializable {
         fieldDescription.getStyleClass().remove("error");
         fieldDiscount.getStyleClass().remove("error");
             
-        if(fieldSchemeName.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            fieldSchemeName.getStyleClass().add("error");
+        if(!Validations.isNotEmpty(fieldSchemeName, labelError, errorEmpty)){
             control=false;
         }
-        if(fieldPrice.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            fieldPrice.getStyleClass().add("error");
+        if(!Validations.isNotEmpty(fieldPrice, labelError, errorEmpty)){
+            control=false;
+        }
+        if(!Validations.isDouble(fieldPrice, labelError, errorFormat)){
             control=false;
         }
         if(schemeLines.isEmpty()){
@@ -132,14 +118,7 @@ public class ViewNewSchemeController implements Initializable {
             fieldDiscount.getStyleClass().add("error");
             control=false;
         }
-        try{
-            price=Double.parseDouble(fieldPrice.getText());
-        }catch(NumberFormatException ex){
-            labelError.setText(errorFormat);
-            labelError.setVisible(true);
-            fieldPrice.getStyleClass().add("error");
-            control=false;
-        }
+        
         if(control&&controlLines){
             scheme.setName(fieldSchemeName.getText());
             scheme.setPrice(price);

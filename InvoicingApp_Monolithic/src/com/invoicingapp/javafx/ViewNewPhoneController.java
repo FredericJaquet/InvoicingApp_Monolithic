@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.Phone;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -50,25 +51,10 @@ public class ViewNewPhoneController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        saveData();
-        if(control){
-            closeWindow();
-        }
-    }
-    
-    private void saveData(){
-        control=true;
-        labelError.setVisible(false);
-        fieldPhoneNumber.getStyleClass().remove("error");
-        
-        if(fieldPhoneNumber.getText().isEmpty()){
-            labelError.setVisible(true);
-            fieldPhoneNumber.getStyleClass().add("error");
-            control=false;
-        }
-        if(control){
+        if(Validations.isNotEmpty(fieldPhoneNumber,labelError,errorEmpty)){
             phone.setPhoneNumber(fieldPhoneNumber.getText());
             phone.setKind(fieldPhoneKind.getText());
+            closeWindow();
         }
     }
     

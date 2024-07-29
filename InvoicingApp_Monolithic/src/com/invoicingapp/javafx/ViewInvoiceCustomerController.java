@@ -7,6 +7,7 @@ package com.invoicingapp.javafx;
 import com.invoicingapp.bbdd.ConnectionDB;
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.LabelFeatures;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ChangeRate;
 import invoicingapp_monolithic.Customer;
@@ -41,8 +42,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
@@ -55,7 +54,9 @@ public class ViewInvoiceCustomerController implements Initializable {
     private BankAccount bankAccount;
     private Configuration config;
     private ChangeRate changeRate;
+    private LabelFeatures lbFeatures=new LabelFeatures();
     private ArrayList<Orders> orders=new ArrayList();
+    private ArrayList<String> query=new ArrayList();
     private boolean changes=false;
     private int language;
     private int pages=1;
@@ -65,7 +66,6 @@ public class ViewInvoiceCustomerController implements Initializable {
     private double totalWithholding=0;
     private double totalInvoice=0;
     private double totalToPay=0;
-    private String query="";
     private int[] ordersIndex;
     private final int maxLinesPerPage=24;
     private final int imgSize=150;
@@ -89,6 +89,9 @@ public class ViewInvoiceCustomerController implements Initializable {
         this.invoice=invoice;
         language=getLanguage(invoice.getLanguage());
         
+        lbFeatures.makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber",invoice.getIdDocument());
+        lbFeatures.makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate",invoice.getIdDocument());
+        
         getObjects();
         setLogo();
         setData();
@@ -108,9 +111,6 @@ public class ViewInvoiceCustomerController implements Initializable {
         btnPrev.setVisible(false);
         btnNext.setVisible(true);
         config=Configuration.getConfiguration();
-        
-        makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber");
-        makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate");
     }
     
     @FXML protected void onClicPrev(){
@@ -184,14 +184,16 @@ public class ViewInvoiceCustomerController implements Initializable {
     
     @FXML protected void onClicSave(){
         ConnectionDB con=new ConnectionDB();
-        
-        if((!query.equals(""))&&changes){
+        query.addAll(lbFeatures.getQuery());
+        if(!query.isEmpty()){
             con.openConnection();
-            con.executeUpdate(query);
+            for(int i=0;i<query.size();i++){
+                con.executeUpdate(query.get(i));
+            }
             con.closeConnection();
         }
-        query="";
-        changes=false;
+        lbFeatures.resetQuery();
+        query.clear();
     }
     
     @FXML protected void onClicPaid(){
@@ -407,69 +409,5 @@ public class ViewInvoiceCustomerController implements Initializable {
             }
         }
         ordersIndex[pages]=orders.size();
-    }
-
-    private void makeLabelEditable(Label label, TextField textField, String tableDB, String fieldDB) {
-        textField.setVisible(false);
-
-        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getClickCount() == 2) {
-                switchToTextField(label, textField);
-            }
-        });
-
-        textField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                switchToLabel(label, textField, tableDB, fieldDB);
-            }
-        });
-    }
-    
-    private void switchToTextField(Label label, TextField textField) {
-        textField.setText(label.getText());
-        textField.setVisible(true);
-        textField.requestFocus();
-        label.setVisible(false);
-    }
-    
-    private void switchToLabel(Label label, TextField textField, String tableDB, String fieldDB) {
-        label.setText(textField.getText());
-        label.setVisible(true);
-        textField.setVisible(false);
-        getQuery(label,tableDB,fieldDB);
-    }
-    
-    private void makeLabelEditable(Label label, DatePicker datePicker, String tableDB, String fieldDB) {
-        datePicker.setVisible(false);
-        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getClickCount() == 2) {
-                switchToDatePicker(label, datePicker);
-            }
-        });
-
-        datePicker.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                switchToLabel(label, datePicker, tableDB, fieldDB);
-            }
-        });
-    }
-    
-    private void switchToDatePicker(Label label, DatePicker datePicker) {
-        datePicker.setVisible(true);
-        label.setVisible(false);
-    }
-    
-    private void switchToLabel(Label label, DatePicker datePicker, String tableDB, String fieldDB) {
-        label.setText(datePicker.getValue().toString());
-        label.setVisible(true);
-        datePicker.setVisible(false);
-        getQuery(label,tableDB,fieldDB);
-        label.setText(datePicker.getValue().format(formatter));
-    }
-    
-    private void getQuery(Label label, String tableDB, String fieldDB){
-        String newValue=label.getText();
-        query=query.concat("UPDATE "+tableDB+" SET "+fieldDB+"='"+newValue+"' WHERE idDocument="+invoice.getIdDocument()+";");
-        changes=true;
     }
 }

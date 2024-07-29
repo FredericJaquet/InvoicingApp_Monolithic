@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.CustomProv;
@@ -72,26 +73,7 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicNext(){
-        control=true;
-        
-        labelIntro.setText(introFiscalData);
-        labelError.setVisible(false);
-        fieldVATNumber.getStyleClass().remove("error");
-        fieldLegalName.getStyleClass().remove("error");
-        
-        if(fieldVATNumber.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            fieldVATNumber.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldLegalName.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            fieldLegalName.getStyleClass().add("error");
-            control=false;
-        }
-        if(control){
+        if(Validations.isNotEmpty(fieldVATNumber,labelError,errorEmpty)&&Validations.isNotEmpty(fieldLegalName,labelError,errorEmpty)){
             customer.setVatNumber(fieldVATNumber.getText());
             customer.setComName(fieldComName.getText());
             customer.setLegalName(fieldLegalName.getText());
@@ -115,53 +97,32 @@ public class ViewCreateCustomerController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        double defaultVAT=0,defaultWithholding=0;
-        int duedate=0;
-        
         control=true;
         labelError.setVisible(false);
-        fieldDefaultVAT.getStyleClass().remove("error");
-        fieldDefaultWithholding.getStyleClass().remove("error");
-        fieldDuedate.getStyleClass().remove("error");
         
         if(customer.getAddress().getStreet()==null){
             labelError.setText(errorAddress);
             labelError.setVisible(true);
             control=false;
         }
-        try{
-            defaultVAT=Double.parseDouble(fieldDefaultVAT.getText());
-        }catch(NumberFormatException ex){
-            fieldDefaultVAT.getStyleClass().add("error");
-            labelError.setText(errorFormat);
-            labelError.setVisible(true);
+        if(!Validations.isDouble(fieldDefaultVAT, labelError, errorFormat)){
             control=false;
         }
-        try{
-            defaultWithholding=Double.parseDouble(fieldDefaultWithholding.getText());
-        }catch(NumberFormatException ex){
-            fieldDefaultWithholding.getStyleClass().add("error");
-            labelError.setText(errorFormat);
-            labelError.setVisible(true);
+        if(!Validations.isDouble(fieldDefaultWithholding, labelError, errorFormat)){
             control=false;
         }
-        try{
-            duedate=Integer.parseInt(fieldDuedate.getText());
-        }catch(NumberFormatException ex){
-            fieldDuedate.getStyleClass().add("error");
-            labelError.setText(errorFormat);
-            labelError.setVisible(true);
+        if(!Validations.isInteger(fieldDuedate, labelError, errorFormat)){
             control=false;
         }
         
         if(control){
-            customer.setDefaultVAT(defaultVAT);
-            customer.setDefaultWithholding(defaultWithholding);
+            customer.setDefaultVAT(Double.parseDouble(fieldDefaultVAT.getText()));
+            customer.setDefaultWithholding(Double.parseDouble(fieldDefaultWithholding.getText()));
             customer.setEurope(cbEurope.isSelected());
             customer.setEnabled(cbEnabled.isSelected());
             customer.setInvoicingMethod(fieldInvoicingMethod.getText());
             customer.setPayMethod(fieldPayMethod.getText());
-            customer.setDuedate(duedate);
+            customer.setDuedate(Integer.parseInt(fieldDuedate.getText()));
             customer.setDefaultLanguage(cbDefaultLanguage.getValue());
             customer.addToDB();
             

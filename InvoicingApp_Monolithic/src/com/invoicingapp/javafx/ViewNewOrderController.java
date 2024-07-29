@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.tools.DoubleStringConverter;
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
@@ -112,8 +113,6 @@ public class ViewNewOrderController implements Initializable {
     }
     
     @FXML protected void onCommitLine(KeyEvent event){
-        double discount=0;
-        double quantity=0;
         newLine=new Item();
         
         controlLines=true;
@@ -121,42 +120,8 @@ public class ViewNewOrderController implements Initializable {
         tfLineDescription.getStyleClass().remove("error");
         tfQuantity.getStyleClass().remove("error");
         tfDiscount.getStyleClass().remove("error");
-        if (event.getCode()==KeyCode.ENTER) {
-            if(tfLineDescription.getText().isEmpty()){
-                tfLineDescription.getStyleClass().add("error");
-                labelError.setText(errorEmpty);
-                labelError.setVisible(true);
-                controlLines=false;
-            }
-            if(tfQuantity.getText().isEmpty()){
-                tfQuantity.getStyleClass().add("error");
-                labelError.setText(errorEmpty);
-                labelError.setVisible(true);
-                controlLines=false;
-            }
-            if(tfDiscount.getText().isEmpty()){
-                tfDiscount.getStyleClass().add("error");
-                labelError.setText(errorEmpty);
-                labelError.setVisible(true);
-                controlLines=false;
-            }
-            try{
-                discount=Double.parseDouble(tfDiscount.getText());
-            }catch(NumberFormatException ex){
-                tfDiscount.getStyleClass().add("error");
-                labelError.setText(errorFormat);
-                labelError.setVisible(true);
-                controlLines=false;
-            }
-            try{
-                quantity=Double.parseDouble(tfQuantity.getText());
-            }catch(NumberFormatException ex){
-                tfQuantity.getStyleClass().add("error");
-                labelError.setText(errorFormat);
-                labelError.setVisible(true);
-                controlLines=false;
-            }
-            if(controlLines){
+        if(event.getCode()==KeyCode.ENTER) {
+            if(Validations.isNotEmpty(tfLineDescription,labelError,errorEmpty)&&Validations.isNotEmpty(tfQuantity,labelError,errorEmpty)&&Validations.isNotEmpty(tfDiscount,labelError,errorEmpty)&&Validations.isDouble(tfDiscount, labelError, errorFormat)&&Validations.isDouble(tfQuantity, labelError, errorFormat)){
                 newLine=new Item(tfLineDescription.getText(),Double.parseDouble(tfQuantity.getText()),Double.parseDouble(tfDiscount.getText()));
                 if(newLine.getQuantity()>0){
                     order.addItem(newLine);
@@ -170,6 +135,8 @@ public class ViewNewOrderController implements Initializable {
                 tfLineDescription.requestFocus();
                 updateSchemeLine();
                 updateTotalOrder();
+            }else{
+                controlLines=false;
             }
         }
     }
@@ -370,42 +337,25 @@ public class ViewNewOrderController implements Initializable {
         tfPrice.getStyleClass().remove("error");
     }
     
-    private void saveData(){
-        double price=0;
-        
+    private void saveData(){        
         control=true;
         labelError.setVisible(false);
         tfDescription.getStyleClass().remove("error");
         tfPrice.getStyleClass().remove("error");
         dpDateOrder.getStyleClass().remove("error");
         
-        if(tfDescription.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            tfDescription.getStyleClass().add("error");
+        if(!Validations.isNotEmpty(tfDescription, labelError, errorEmpty)){
             control=false;
         }
-        if(tfPrice.getText().isEmpty()){
-            labelError.setText(errorEmpty);
-            labelError.setVisible(true);
-            tfPrice.getStyleClass().add("error");
+        if(!Validations.isNotEmpty(tfPrice, labelError, errorEmpty)){
             control=false;
         }
-        try{
-            price=Double.parseDouble(tfPrice.getText());
-        }catch(NumberFormatException ex){
-            labelError.setText(errorFormat);
-            labelError.setVisible(true);
-            tfPrice.getStyleClass().add("error");
+        if(!Validations.isDouble(tfPrice, labelError, errorFormat)){
             control=false;
         }
-        if(dpDateOrder.getValue()==null){
-            labelError.setText(errorDateOrder);
-            labelError.setVisible(true);
-            dpDateOrder.getStyleClass().add("error");
+        if(!Validations.isNotNull(dpDateOrder,labelError,errorDateOrder)){
             control=false;
         }
-        
         if(order.getItems().isEmpty()){
             control=false;
             labelError.setText(errorNoLines);

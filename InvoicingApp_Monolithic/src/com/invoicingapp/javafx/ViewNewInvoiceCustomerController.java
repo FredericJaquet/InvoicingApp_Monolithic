@@ -6,6 +6,7 @@ package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ChangeRate;
 import invoicingapp_monolithic.CustomProv;
@@ -64,12 +65,12 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private InvoiceCustomer invoice=new InvoiceCustomer();
     private Configuration config;
     private String logoPath;
-    private String errorDate="Falta la fecha.";
-    private String errorNumber="Falta el numero de factura.";
-    private String errorNoOrders="La factura no tiene pedidos asignados.";
-    private String invoiceSaved="La factura se ha guardado correctamente.";
-    private String invoiceNotSaved="La factura no se ha guardado, es necesario guadar la factura antes de poder verla.";
-    private int imgSize=175;
+    private final String errorDate="Falta la fecha.";
+    private final String errorNumber="Falta el numero de factura.";
+    private final String errorNoOrders="La factura no tiene pedidos asignados.";
+    private final String invoiceSaved="La factura se ha guardado correctamente.";
+    private final String invoiceNotSaved="La factura no se ha guardado, es necesario guadar la factura antes de poder verla.";
+    private final int imgSize=175;
     private int language=1;
     private boolean saved=false;
     
@@ -168,7 +169,6 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         updateData();
         getOrders();
         invoice.setCustomer(customer);
-        
     }
     
     @FXML protected void getSelectionCBBankAccounts(){
@@ -252,19 +252,15 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         
         invoice.setChangeRate(changeRate);
         invoice.setCustomer(customer);
-        if(dpDocDate.getValue()!=null){
+        if(Validations.isNotNull(dpDocDate,labelError,errorDate)){
             invoice.setDocDate(dpDocDate.getValue());
             invoice.setDuedate(dpDocDate.getValue().plusDays(customer.getDuedate()));
         }else{
-            labelError.setText(errorDate);
-            labelError.setVisible(true);
             control=false;
         }
-        if(!tfDocNumber.getText().isEmpty()){
+        if(Validations.isNotEmpty(tfDocNumber,labelError,errorNumber)){
             invoice.setDocNumber(tfDocNumber.getText());
         }else{
-            labelError.setText(errorNumber);
-            labelError.setVisible(true);
             control=false;
         }
         invoice.setPaid(false);

@@ -341,20 +341,20 @@ public class ViewDetailsCustomerController implements Initializable {
     
     @FXML protected void onClicSave(){
         ConnectionDB con=new ConnectionDB();
-        query=lbFeatures.getQuery();
         getQuery();
-        
-        for(int i=0;i<query.size();i++){
+        if(!query.isEmpty()){
             con.openConnection();
-            con.executeUpdate(query.get(i));
+            for(int i=0;i<query.size();i++){
+                con.executeUpdate(query.get(i));
+            }
             con.closeConnection();
+            contactController.resetQuery();
+            phonesController.resetQuery();
+            schemesController.resetQuery();
+            accountsController.resetQuery();
+            lbFeatures.resetQuery();
+            query.clear();
         }
-        contactController.resetQuery();
-        phonesController.resetQuery();
-        schemesController.resetQuery();
-        accountsController.resetQuery();
-        lbFeatures.resetQuery();
-        query.clear();
         
         for(int i=0;i<newContacts.size();i++){
             newContacts.get(i).addToDB();
@@ -593,6 +593,7 @@ public class ViewDetailsCustomerController implements Initializable {
     }
     
     private void getQuery(){
+        query=lbFeatures.getQuery();
         if(contactController!=null){
             query.addAll(contactController.getQuery());
         }

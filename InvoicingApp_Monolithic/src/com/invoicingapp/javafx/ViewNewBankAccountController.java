@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -51,33 +52,12 @@ public class ViewNewBankAccountController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        saveData();
-        if(control){
-            closeWindow();
-        }
-    }
-    
-    private void saveData(){
-        control=true;
-        labelError.setVisible(false);
-        tfIban.getStyleClass().remove("error");
-        tfHolder.getStyleClass().remove("error");
-        
-        if(tfIban.getText().isEmpty()){
-            labelError.setVisible(true);
-            tfIban.getStyleClass().add("error");
-            control=false;
-        }
-        if(tfHolder.getText().isEmpty()){
-            labelError.setVisible(true);
-            tfHolder.getStyleClass().add("error");
-            control=false;
-        }
-        if(control){
+        if(Validations.isNotEmpty(tfIban,labelError,errorEmpty)&&Validations.isNotEmpty(tfHolder,labelError,errorEmpty)){
             account.setIban(tfIban.getText());
             account.setSwift(tfSwift.getText());
             account.setHolder(tfHolder.getText());
             account.setBranch(tfBranch.getText());
+            closeWindow();
         }
     }
     

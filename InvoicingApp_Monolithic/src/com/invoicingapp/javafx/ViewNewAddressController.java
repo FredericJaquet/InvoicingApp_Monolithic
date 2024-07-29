@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.Address;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +23,6 @@ import javafx.stage.Stage;
 public class ViewNewAddressController implements Initializable {
 
     private Address address;
-    private boolean control=true;
     private final String errorEmpty="Falta un dato obligatorio.";
    
     @FXML private Label labelError;
@@ -52,47 +52,8 @@ public class ViewNewAddressController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        saveData();
-        if(control){
-            closeWindow();
-        }
-    }
-    
-    private void saveData(){
-        control=true;
-        labelError.setVisible(false);
-        fieldStreet.getStyleClass().remove("error");
-        fieldStNumber.getStyleClass().remove("error");
-        fieldCP.getStyleClass().remove("error");
-        fieldCity.getStyleClass().remove("error");
-        fieldCountry.getStyleClass().remove("error");
         
-        if(fieldStreet.getText().isEmpty()){
-            labelError.setVisible(true);
-            fieldStreet.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldStNumber.getText().isEmpty()){
-            labelError.setVisible(true);
-            fieldStNumber.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldCP.getText().isEmpty()){
-            labelError.setVisible(true);
-            fieldCP.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldCity.getText().isEmpty()){
-            labelError.setVisible(true);
-            fieldCity.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldCountry.getText().isEmpty()){
-            labelError.setVisible(true);
-            fieldCountry.getStyleClass().add("error");
-            control=false;
-        }
-        if(control){
+        if(Validations.isNotEmpty(fieldStreet,labelError,errorEmpty)&&Validations.isNotEmpty(fieldStNumber,labelError,errorEmpty)&&Validations.isNotEmpty(fieldCP,labelError,errorEmpty)&&Validations.isNotEmpty(fieldCity,labelError,errorEmpty)&&Validations.isNotEmpty(fieldCountry,labelError,errorEmpty)){
             address.setStreet(fieldStreet.getText());
             address.setStNumber(fieldStNumber.getText());
             address.setApt(fieldApt.getText());
@@ -100,6 +61,7 @@ public class ViewNewAddressController implements Initializable {
             address.setCity(fieldCity.getText());
             address.setState(fieldState.getText());
             address.setCountry(fieldCountry.getText());
+            closeWindow();
         }
     }
     

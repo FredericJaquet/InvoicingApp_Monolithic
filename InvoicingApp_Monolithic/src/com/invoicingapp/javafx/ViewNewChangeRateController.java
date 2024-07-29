@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.ChangeRate;
 import invoicingapp_monolithic.Currency;
 import java.net.URL;
@@ -51,21 +52,9 @@ public class ViewNewChangeRateController implements Initializable {
     }
     
     @FXML protected void save(){
-        boolean control=true;
         Stage stage;
         
-        tfRate.getStyleClass().remove("error");
-        labelError.setVisible(false);
-        try{
-            changeRate.setRate(Double.parseDouble(tfRate.getText()));
-        }catch(NumberFormatException ex){
-            tfRate.getStyleClass().add("error");
-            labelError.setText(errorFormat);
-            labelError.setVisible(true);
-            control=false;
-        }
-        
-        if(control){
+        if(Validations.isDouble(tfRate,labelError,errorFormat)){
             changeRate.setCurrency1(cbCurrency1.getSelectionModel().getSelectedItem().getSymbol());
             changeRate.setCurrency2(cbCurrency2.getSelectionModel().getSelectedItem().getSymbol());
             changeRate.addToDB();

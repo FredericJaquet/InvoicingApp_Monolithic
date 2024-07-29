@@ -7,6 +7,7 @@ package com.invoicingapp.javafx;
 import com.invoicingapp.bbdd.ConnectionDB;
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.LabelFeatures;
 import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Orders;
 import invoicingapp_monolithic.Quotes;
@@ -52,14 +53,16 @@ public class ViewQuoteController implements Initializable {
     private Customer customer;
     private Users user;
     private Configuration config;
+    private LabelFeatures lbFeatures=new LabelFeatures();
     private ArrayList<Orders> orders=new ArrayList();
+    private ArrayList<String> query=new ArrayList();
     private boolean changes=false;
     private int language;
     private int pages=1;
     private int page=1;    
     private double totalNet=0;
     private double totalQuote=0;
-    private String query="";
+    
     private int[] ordersIndex;
     private final int maxLinesPerPage=24;
     private final int imgSize=150;
@@ -83,6 +86,10 @@ public class ViewQuoteController implements Initializable {
         language=getLanguage(quote.getLanguage());
         populateCbStatus();
         cbStatus.getSelectionModel().select(quote.getStatus());
+        
+        lbFeatures.makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber",quote.getIdDocument());
+        lbFeatures.makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate",quote.getIdDocument());
+        
         getObjects();
         setLogo();
         setData();
@@ -105,8 +112,6 @@ public class ViewQuoteController implements Initializable {
         btnPrev.setVisible(false);
         btnNext.setVisible(true);
         config=Configuration.getConfiguration();
-        makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber");
-        makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate");
     }
     
     @FXML protected void onClicPrev(){
@@ -180,14 +185,16 @@ public class ViewQuoteController implements Initializable {
     
     @FXML protected void onClicSave(){
         ConnectionDB con=new ConnectionDB();
-        
-        if((!query.equals(""))&&changes){
+        query.addAll(lbFeatures.getQuery());
+        if(!query.isEmpty()){
             con.openConnection();
-            con.executeUpdate(query);
+            for(int i=0;i<query.size();i++){
+                con.executeUpdate(query.get(i));
+            }
             con.closeConnection();
         }
-        query="";
-        changes=false;
+        lbFeatures.resetQuery();
+        query.clear();
     }
     
     private void getSelectionCBStatus(String newValue){
@@ -196,7 +203,6 @@ public class ViewQuoteController implements Initializable {
     }
     
     private void populateCbStatus(){
-        System.out.println("viewQuote linea 196: "+language);
         cbStatus.getItems().addAll(Translations.status[language]);
         cbStatus.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             getSelectionCBStatus(newValue);
@@ -345,13 +351,11 @@ public class ViewQuoteController implements Initializable {
     
     private int getLanguage(String language){
         int l=0;
-        System.out.println("viewQuote linea 345: "+language);
         switch (language) {
             case "English":
                 l=0;
                 break;
             case "Español":
-                System.out.println("viewQuote linea 351: Hola");
                 l=1;
                 break;
             case "Français":
@@ -360,7 +364,6 @@ public class ViewQuoteController implements Initializable {
             default:
                 break;
         }
-        System.out.println("viewQuote linea 360: "+l);
         return l;
     }
     
@@ -392,70 +395,6 @@ public class ViewQuoteController implements Initializable {
             }
         }
         ordersIndex[pages]=orders.size();
-    }
-    
-    private void makeLabelEditable(Label label, TextField textField, String tableDB, String fieldDB) {
-        textField.setVisible(false);
-
-        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getClickCount() == 2) {
-                switchToTextField(label, textField);
-            }
-        });
-
-        textField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                switchToLabel(label, textField, tableDB, fieldDB);
-            }
-        });
-    }
-    
-    private void switchToTextField(Label label, TextField textField) {
-        textField.setText(label.getText());
-        textField.setVisible(true);
-        textField.requestFocus();
-        label.setVisible(false);
-    }
-    
-    private void switchToLabel(Label label, TextField textField, String tableDB, String fieldDB) {
-        label.setText(textField.getText());
-        label.setVisible(true);
-        textField.setVisible(false);
-        getQuery(label,tableDB,fieldDB);
-    }
-    
-    private void makeLabelEditable(Label label, DatePicker datePicker, String tableDB, String fieldDB) {
-        datePicker.setVisible(false);
-        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getClickCount() == 2) {
-                switchToDatePicker(label, datePicker);
-            }
-        });
-
-        datePicker.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                switchToLabel(label, datePicker, tableDB, fieldDB);
-            }
-        });
-    }
-    
-    private void switchToDatePicker(Label label, DatePicker datePicker) {
-        datePicker.setVisible(true);
-        label.setVisible(false);
-    }
-    
-    private void switchToLabel(Label label, DatePicker datePicker, String tableDB, String fieldDB) {
-        label.setText(datePicker.getValue().toString());
-        label.setVisible(true);
-        datePicker.setVisible(false);
-        getQuery(label,tableDB,fieldDB);
-        label.setText(datePicker.getValue().format(formatter));
-    }
-    
-    private void getQuery(Label label, String tableDB, String fieldDB){
-        String newValue=label.getText();
-        query=query.concat("UPDATE "+tableDB+" SET "+fieldDB+"='"+newValue+"' WHERE idDocument="+quote.getIdDocument()+";");
-        changes=true;
     }
     
 }

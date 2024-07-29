@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.ContactPerson;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -53,34 +54,13 @@ public class ViewNewContactController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        saveData();
-        if(control){
-            closeWindow();
-        }
-    }
-    
-    private void saveData(){
-        control=true;
-        labelError.setVisible(false);
-        fieldFirstname.getStyleClass().remove("error");
-        fieldMiddlename.getStyleClass().remove("error");
-        
-        if(fieldFirstname.getText().isEmpty()){
-            labelError.setVisible(true);
-            fieldFirstname.getStyleClass().add("error");
-            control=false;
-        }
-        if(fieldMiddlename.getText().isEmpty()){
-            labelError.setVisible(true);
-            fieldMiddlename.getStyleClass().add("error");
-            control=false;
-        }
-        if(control){
+        if(Validations.isNotEmpty(fieldFirstname,labelError,errorEmpty)&&Validations.isNotEmpty(fieldMiddlename,labelError,errorEmpty)){
             contact.setFirstname(fieldFirstname.getText());
             contact.setMiddlename(fieldMiddlename.getText());
             contact.setLastname(fieldLastname.getText());
             contact.setRole(fieldRole.getText());
             contact.setEmail(fieldEmail.getText());
+            closeWindow();
         }
     }
     

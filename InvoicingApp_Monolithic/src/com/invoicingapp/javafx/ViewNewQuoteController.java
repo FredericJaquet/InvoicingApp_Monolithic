@@ -6,6 +6,7 @@ package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.Currency;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Customer;
@@ -165,29 +166,30 @@ public class ViewNewQuoteController implements Initializable {
         getOrders();
     }
     
-    /*@FXML protected void onClicSee(){
+    @FXML protected void onClicSee(){
         labelError.setVisible(false);
         if(saved){
             FXMLLoader loader=new FXMLLoader();
             Parent quoteView=null;
             ViewQuoteController controller=null;
-            BorderPane home=(BorderPane)paneNewQuote.getParent();
+            BorderPane home=null;
         
             loader.setLocation(getClass().getResource("viewQuote.fxml"));
             try {
                 quoteView=loader.load();
             } catch (IOException ex) {
-                Logger.getLogger(ViewNewQuoteController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ViewQuotesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         
             controller=loader.getController();
             controller.initData(quote);
+            home=(BorderPane)paneNewQuote.getParent();
             home.setCenter(quoteView);
         }else{
             labelError.setText(quoteNotSaved);
             labelError.setVisible(true);
         }
-    }*/
+    }
     
     @FXML protected void getSelectionCurrency(){
         currency=cbCurrency.getSelectionModel().getSelectedItem().getSymbol();
@@ -199,18 +201,14 @@ public class ViewNewQuoteController implements Initializable {
         labelError.setVisible(false);
         
         quote.setCustomer(customer);
-        if(dpDocDate.getValue()!=null){
+        if(Validations.isNotNull(dpDocDate,labelError,errorDate)){
             quote.setDocDate(dpDocDate.getValue());
         }else{
-            labelError.setText(errorDate);
-            labelError.setVisible(true);
             control=false;
         }
-        if(!tfDocNumber.getText().isEmpty()){
+        if(Validations.isNotEmpty(tfDocNumber,labelError,errorNumber)){
             quote.setDocNumber(tfDocNumber.getText());
         }else{
-            labelError.setText(errorNumber);
-            labelError.setVisible(true);
             control=false;
         }
         quote.setStatus(0);
