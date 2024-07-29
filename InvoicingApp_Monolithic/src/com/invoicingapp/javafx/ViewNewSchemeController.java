@@ -59,21 +59,19 @@ public class ViewNewSchemeController implements Initializable {
     
     @FXML protected void onClicSave(){
         saveData();
-        if(control){
+        if(control&&controlLines){
             closeWindow();
         }
     }
     
     @FXML protected void commitLine(KeyEvent event) {
-        double discount=0;
-        
         controlLines=true;
         labelError.setVisible(false);
         fieldDiscount.getStyleClass().remove("error");
         fieldDescription.getStyleClass().remove("error");
-        if (event.getCode() == KeyCode.ENTER) {
+        if(event.getCode() == KeyCode.ENTER) {
             if(Validations.isNotEmpty(fieldDescription,labelError,errorEmpty)&&Validations.isDouble(fieldDiscount, labelError, errorFormat)){
-                line=new SchemeLine(fieldDescription.getText(),discount);
+                line=new SchemeLine(fieldDescription.getText(),Double.parseDouble(fieldDiscount.getText()));
                 schemeLines.add(line);
                 scheme.addLine(line);
                 
@@ -121,7 +119,7 @@ public class ViewNewSchemeController implements Initializable {
         
         if(control&&controlLines){
             scheme.setName(fieldSchemeName.getText());
-            scheme.setPrice(price);
+            scheme.setPrice(Double.parseDouble(fieldPrice.getText()));
             scheme.setUnits(fieldUnits.getText());
             scheme.setField(fieldFieldName.getText());
             scheme.setSourceLanguage(fieldSourceLanguage.getText());

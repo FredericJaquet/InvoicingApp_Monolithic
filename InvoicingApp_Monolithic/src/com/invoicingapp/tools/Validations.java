@@ -51,8 +51,6 @@ public class Validations {
         
         return control;
     }
-    
-    
         
     public static boolean isNotEmpty(TextField field,Label lbError,String message){
         boolean control=true;
@@ -73,7 +71,7 @@ public class Validations {
         boolean control=true;
         
         lbError.setVisible(false);
-        if(dp.getValue()!=null){
+        if(dp.getValue()==null){
             lbError.setVisible(true);
             lbError.setText(message);
             control=false;
