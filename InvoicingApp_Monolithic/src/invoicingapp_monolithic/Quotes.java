@@ -21,11 +21,10 @@ public class Quotes extends Document{
     public static final int PENDING=0;
     public static final int ACCEPTED=1;
     public static final int REJECTED=2;
-    private String noteDelivery, notePayment;
     private int idQuotes, status;
-    private Customer customer=new Customer();
-    private String currency;
+    private String noteDelivery, notePayment;
     private String comName;
+    private Customer customer=new Customer();
     
     public Quotes(){}
     
@@ -48,7 +47,7 @@ public class Quotes extends Document{
         
         super.addToDB();
         
-        queryInsert="INSERT INTO Quotes (noteDelivery, notePayment, currency, status, idDocument) values('"+noteDelivery+"','"+notePayment+"','"+currency+"',"+status+","+getIdDocument()+")";
+        queryInsert="INSERT INTO Quotes (noteDelivery, notePayment, status, idDocument) values('"+noteDelivery+"','"+notePayment+"',"+status+","+getIdDocument()+")";
         con.openConnection();
         con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
@@ -81,9 +80,8 @@ public class Quotes extends Document{
                 idQuotes=result.getInt(1);
                 noteDelivery=result.getString(2);
                 notePayment=result.getString(3);
-                currency=result.getString(4);
-                status=result.getInt(5);
-                super.getFromDB(result.getInt(6));
+                status=result.getInt(4);
+                super.getFromDB(result.getInt(5));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Quotes.class.getName()).log(Level.SEVERE, null, ex);
@@ -293,20 +291,6 @@ public class Quotes extends Document{
      */
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    /**
-     * @return the currency
-     */
-    public String getCurrency() {
-        return currency;
-    }
-
-    /**
-     * @param currency the currency to set
-     */
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     /**

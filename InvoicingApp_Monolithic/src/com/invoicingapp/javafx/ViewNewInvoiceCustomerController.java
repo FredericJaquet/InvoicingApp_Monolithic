@@ -58,6 +58,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private ArrayList<Customer> companies=new ArrayList();
     private ArrayList<ChangeRate> changeRates=new ArrayList();
     private ArrayList<BankAccount> accounts=new ArrayList();
+    private ArrayList<ViewOrdersListController> OrderControllers=new ArrayList();
     private Customer customer;
     private ChangeRate changeRate=new ChangeRate();
     private BankAccount bankAccount=new BankAccount();
@@ -111,7 +112,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     }
     
     /**
-     * Initializes the controller class.
+     * Initializes the OrderController class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -131,7 +132,9 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         populateCbLanguages();
         populateCbChangeRates();
         cbChangeRates.getSelectionModel().select(0);
-        changeRate.getFromDB(1);
+        changeRate.getFromDB(cbChangeRates.getSelectionModel().getSelectedItem().getIdChangeRate());
+        invoice.setChangeRate(changeRate);
+        invoice.setCurrency(changeRate.getCurrency1());
         
         lbLastInvoice.setText(InvoiceCustomer.getLastInvoiceNumber());
         lbLegalName.setText(user.getLegalName());
@@ -181,8 +184,10 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         changeRate=cbChangeRates.getSelectionModel().getSelectedItem();
         invoice.setChangeRate(changeRate);
         try{
+            invoice.setCurrency(changeRate.getCurrency1());
             updateTotals();
             setTitles();
+            setCurrencyToOrders();
         }catch(NullPointerException e){}
     }
     
@@ -191,6 +196,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             pendingOrders.get(i).setSelected(cbSelectAll.isSelected());
         }
         getOrders();
+        setCurrencyToOrders();
     }
     
     @FXML protected void onClicAddChangeRate(){
@@ -217,9 +223,18 @@ public class ViewNewInvoiceCustomerController implements Initializable {
                 paneNewInvoice.getParent().setDisable(false);
                 this.changeRate=chgRate;
                 changeRates.add(chgRate);
+                invoice.setChangeRate(chgRate);
+                invoice.setCurrency(changeRate.getCurrency1());
                 populateCbChangeRates();
                 cbChangeRates.getSelectionModel().selectLast();
+                try{
+                    updateTotals();
+                    setTitles();
+                    setCurrencyToOrders();
+                }catch(NullPointerException e){}
+                
                 updateTotals();
+                setCurrencyToOrders();
             });
         paneNewInvoice.getParent().setDisable(true);
     }
@@ -252,7 +267,8 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         boolean control=true;
         labelError.setVisible(false);
         
-        invoice.setChangeRate(changeRate);
+        //invoice.setChangeRate(changeRate);
+        //invoice.setCurrency(changeRate.getCurrency1());
         invoice.setCustomer(customer);
         if(Validations.isNotNull(dpDocDate,labelError,errorDate)){
             invoice.setDocDate(dpDocDate.getValue());
@@ -419,7 +435,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private void getOrders(){
         FXMLLoader loader;
         Parent ordersListView=null;
-        ViewOrdersListController controller=null;
+        ViewOrdersListController OrderController=null;
         
         vbItems.getChildren().clear();
         for (int j=0;j<pendingOrders.size();j++) {
@@ -430,8 +446,9 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            controller=loader.getController();
-            controller.initData(pendingOrders.get(j),this);
+            OrderController=loader.getController();
+            OrderController.initData(pendingOrders.get(j),this);
+            OrderControllers.add(OrderController);
             vbItems.getChildren().add(ordersListView);
         }
         updateTotals();
@@ -476,7 +493,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         lbTotalWithholding.setText(String.format("%.2f"+changeRate.getCurrency1(),totalWithholding));
         lbTotalInvoice.setText(String.format("%.2f"+changeRate.getCurrency1(),totalInvoice));
         lbTotalToPay.setText(String.format("%.2f"+changeRate.getCurrency1(),totalToPay));
-        if(changeRate.getIdChangeRate()!=1){
+        if(!(changeRate.getCurrency1().equals(changeRate.getCurrency2()))){
             lbTotalInvoice2.setVisible(true);
             lbTotalToPay2.setVisible(true);
             lbTotalInvoice2.setText(String.format("%.2f"+changeRate.getCurrency2(),totalInvoice*changeRate.getRate()));
@@ -534,7 +551,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         lbTitleTotalWithholding.setText(Translations.titleTotalWithholding[language]);
         lbTitleTotalInvoice.setText(Translations.titleTotalInvoice[language]);
         lbTitleTotalToPay.setText(Translations.titleTotalToPay[language]);
-        if(changeRate.getIdChangeRate()!=1){
+        if(!(changeRate.getCurrency1().equals(changeRate.getCurrency2()))){
             lbTitleTotalInvoice2.setVisible(true);
             lbTitleTotalToPay2.setVisible(true);
             lbTitleTotalInvoice2.setText(Translations.titleTotalInvoice[language]);
@@ -559,6 +576,12 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         controller.initData(customer);
         home=(BorderPane)paneNewInvoice.getParent();
         home.setCenter(detailsCustomerView);
+    }
+    
+    private void setCurrencyToOrders(){
+        for(int i=0;i<OrderControllers.size();i++){
+            OrderControllers.get(i).setCurrency(invoice.getCurrency());
+        }
     }
     
 }

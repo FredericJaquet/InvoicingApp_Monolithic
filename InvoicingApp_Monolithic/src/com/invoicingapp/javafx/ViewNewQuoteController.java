@@ -53,20 +53,21 @@ public class ViewNewQuoteController implements Initializable {
 
     private ArrayList<Orders> pendingOrders=new ArrayList();
     private ArrayList<Customer> companies=new ArrayList();
+    private ArrayList<ViewOrdersListController> OrderControllers=new ArrayList();
     private Customer customer;
     private Users user=new Users();
     private Quotes quote=new Quotes();
     private Configuration config;
     private String currency;
     private String logoPath;
-    private String errorDate="Falta la fecha.";
-    private String errorNumber="Falta el numero de presupuesto.";
-    private String errorNoOrders="El presupuesto no tiene pedidos asignados.";
-    private String quoteSaved="El presupuesto se ha guardado correctamente.";
-    private String quoteNotSaved="El presupuesto no se ha guardado, es necesario guadar el presupuesto antes de poder verlo.";
-    private int imgSize=175;
+    private final int imgSize=175;
     private int language=1;
     private boolean saved=false;
+    private final String errorDate="Falta la fecha.";
+    private final String errorNumber="Falta el numero de presupuesto.";
+    private final String errorNoOrders="El presupuesto no tiene pedidos asignados.";
+    private final String quoteSaved="El presupuesto se ha guardado correctamente.";
+    private final String quoteNotSaved="El presupuesto no se ha guardado, es necesario guadar el presupuesto antes de poder verlo.";
     
     @FXML private ScrollPane paneNewQuote;
     @FXML private VBox vbItems;
@@ -103,7 +104,7 @@ public class ViewNewQuoteController implements Initializable {
     }
     
     /**
-     * Initializes the controller class.
+     * Initializes the NewQuoteController class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -194,6 +195,9 @@ public class ViewNewQuoteController implements Initializable {
     @FXML protected void getSelectionCurrency(){
         currency=cbCurrency.getSelectionModel().getSelectedItem().getSymbol();
         updateTotals();
+        for(int i=0;i<OrderControllers.size();i++){
+            OrderControllers.get(i).setCurrency(currency);
+        }
     }
     
     @FXML protected void save(){
@@ -328,7 +332,7 @@ public class ViewNewQuoteController implements Initializable {
     private void getOrders(){
         FXMLLoader loader;
         Parent ordersListView=null;
-        ViewOrdersListController controller=null;
+        ViewOrdersListController OrderController=null;
         
         vbItems.getChildren().clear();
         for (int j=0;j<pendingOrders.size();j++){
@@ -339,8 +343,9 @@ public class ViewNewQuoteController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(ViewNewQuoteController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            controller=loader.getController();
-            controller.initData(pendingOrders.get(j),this);
+            OrderController=loader.getController();
+            OrderController.initData(pendingOrders.get(j),this);
+            OrderControllers.add(OrderController);
             vbItems.getChildren().add(ordersListView);
         }
         updateTotals();
@@ -392,7 +397,6 @@ public class ViewNewQuoteController implements Initializable {
     }
     
     private void setTitles(){
-        
         lbTitleLastQuote.setText(Translations.titleLastQuote[language]);
         lbTitleName.setText(Translations.titleName[language]);
         lbTitleVATNumber.setText(Translations.titleVATNumber[language]);
@@ -430,6 +434,5 @@ public class ViewNewQuoteController implements Initializable {
         home=(BorderPane)paneNewQuote.getParent();
         home.setCenter(detailsCustomerView);
     }
-    
     
 }

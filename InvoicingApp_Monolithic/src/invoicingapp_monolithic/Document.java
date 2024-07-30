@@ -20,7 +20,7 @@ public class Document {
     public static int PAID=1;
     public static int NOTPAID=2;
     public static int ALL=3;
-    private String docNumber,language,totalString;
+    private String docNumber,language,totalString,currency;
     private double vat;
     private LocalDate docDate;
     private Users user=new Users();
@@ -47,7 +47,7 @@ public class Document {
     */
     protected void addToDB(){
         ConnectionDB con=new ConnectionDB();
-        String queryInsert="INSERT INTO Document (docNumber, docDate, language, vat, idUsers, idChangeRate) values('"+docNumber+"','"+docDate.toString()+"','"+language+"',"+vat+","+user.getIdUsers()+","+changeRate.getIdChangeRate()+")";
+        String queryInsert="INSERT INTO Document (docNumber, docDate, language, vat, currency, idUsers, idChangeRate) values('"+docNumber+"','"+docDate.toString()+"','"+language+"',"+vat+",'"+currency+"',"+user.getIdUsers()+","+changeRate.getIdChangeRate()+")";
         String queryGetId="SELECT MAX(idDocument) FROM Document";
         String QueryDocumentOrders;
         ResultSet result=null;
@@ -89,9 +89,10 @@ public class Document {
                 docDate=LocalDate.parse(result.getString(3));
                 language=result.getString(4);
                 vat=result.getDouble(5);
-                user.setIdUsers(result.getInt(6));
+                currency=result.getString(6);
+                user.setIdUsers(result.getInt(7));
                 user.getFromDB(user.getIdUsers());
-                changeRate.setIdChangeRate(result.getInt(7));
+                changeRate.setIdChangeRate(result.getInt(8));
                 changeRate.getFromDB(changeRate.getIdChangeRate());
             }
         } catch (SQLException ex) {
@@ -421,6 +422,21 @@ public class Document {
      */
     public void setChangeRate(ChangeRate changeRate) {
         this.changeRate = changeRate;
+    }
+    
+    
+    /**
+     * @return the currency
+     */
+    public String getCurrency() {
+        return currency;
+    }
+
+    /**
+     * @param currency the currency to set
+     */
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     /**

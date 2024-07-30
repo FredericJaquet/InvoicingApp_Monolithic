@@ -51,8 +51,7 @@ public class ViewOrdersListController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    }
     
     @FXML protected void getSelection(){
         order.setSelected(cbSelected.isSelected());
@@ -61,6 +60,10 @@ public class ViewOrdersListController implements Initializable {
         }else if(mainQuoteController!=null){
             mainQuoteController.updateTotals();
         }
+    }
+    
+    public void setCurrency(String currency){
+        lbTotal.setText(String.format("%.2f"+currency,order.getTotalOrder()));
     }
     
 }

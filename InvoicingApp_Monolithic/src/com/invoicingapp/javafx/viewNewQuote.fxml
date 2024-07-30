@@ -27,7 +27,7 @@
                <children>
                   <Label fx:id="lbTitleLastQuote" styleClass="title" stylesheets="@viewnewinvoicecustomer.css" text="Último Presupuesto" />
                   <Label fx:id="lbLastQuote" text="Label" />
-                  <ComboBox fx:id="cbCurrency" />
+                  <ComboBox fx:id="cbCurrency" onAction="#getSelectionCurrency" />
                   <ChoiceBox fx:id="cbLanguages" />
                </children>
             </HBox>

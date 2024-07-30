@@ -269,13 +269,13 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbTotalInvoice2.setVisible(false);
         lbTotalToPay2.setVisible(false);
         
-        lbTotalNet.setText(String.format("%.2f"+changeRate.getCurrency1(),totalNet));
+        lbTotalNet.setText(String.format("%.2f"+invoice.getCurrency(),totalNet));
         lbVAT.setText(String.format("%.2f%%",customer.getDefaultVAT()));
-        lbTotalVAT.setText(String.format("%.2f"+changeRate.getCurrency1(),totalVAT));
+        lbTotalVAT.setText(String.format("%.2f"+invoice.getCurrency(),totalVAT));
         lbWithholding.setText(String.format("%.2f%%",customer.getDefaultWithholding()));
-        lbTotalWithholding.setText(String.format("%.2f"+changeRate.getCurrency1(),totalWithholding));
-        lbTotalInvoice.setText(String.format("%.2f"+changeRate.getCurrency1(),totalInvoice));
-        lbTotalToPay.setText(String.format("%.2f"+changeRate.getCurrency1(),totalToPay));
+        lbTotalWithholding.setText(String.format("%.2f"+invoice.getCurrency(),totalWithholding));
+        lbTotalInvoice.setText(String.format("%.2f"+invoice.getCurrency(),totalInvoice));
+        lbTotalToPay.setText(String.format("%.2f"+invoice.getCurrency(),totalToPay));
         if(changeRate.getIdChangeRate()!=1){
             lbTotalInvoice2.setVisible(true);
             lbTotalToPay2.setVisible(true);
