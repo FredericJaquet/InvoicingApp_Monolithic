@@ -298,6 +298,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     
     private void populateCbChangeRates(){
         ObservableList<ChangeRate> list =FXCollections.observableArrayList(changeRates);
+        
         cbChangeRates.setItems(list);
         
         cbChangeRates.setCellFactory(new Callback<ListView<ChangeRate>, ListCell<ChangeRate>>() {

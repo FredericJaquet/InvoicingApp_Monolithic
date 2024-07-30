@@ -12,11 +12,11 @@
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0">
          <children>
-            <Label text="Moneda 1" />
+            <Label fx:id="lbCurrency1" text="Moneda 1" />
             <ComboBox fx:id="cbCurrency1" />
-            <Label text="Moneda2" />
+            <Label fx:id="lbCurrency2" text="Moneda 2" />
             <ComboBox fx:id="cbCurrency2" />
-            <Label text="Cambio" />
+            <Label fx:id="lbRate" text="Cambio" />
             <TextField fx:id="tfRate" />
          </children>
       </HBox>

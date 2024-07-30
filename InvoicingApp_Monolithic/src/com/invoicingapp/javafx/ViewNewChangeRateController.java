@@ -57,6 +57,7 @@ public class ViewNewChangeRateController implements Initializable {
         if(Validations.isDouble(tfRate,labelError,errorFormat)){
             changeRate.setCurrency1(cbCurrency1.getSelectionModel().getSelectedItem().getSymbol());
             changeRate.setCurrency2(cbCurrency2.getSelectionModel().getSelectedItem().getSymbol());
+            changeRate.setRate(Double.parseDouble(tfRate.getText()));
             changeRate.addToDB();
             stage=(Stage)paneChangeRate.getScene().getWindow();
             stage.close();
