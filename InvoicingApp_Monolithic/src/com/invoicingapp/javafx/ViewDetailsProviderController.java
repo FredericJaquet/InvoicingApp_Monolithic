@@ -5,20 +5,19 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.bbdd.ConnectionDB;
+import com.invoicingapp.config.Translations;
+import com.invoicingapp.tools.LabelFeatures;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Phone;
 import invoicingapp_monolithic.Provider;
 import invoicingapp_monolithic.Scheme;
-import invoicingapp_monolithic.SchemeLine;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,14 +28,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
@@ -51,40 +45,53 @@ public class ViewDetailsProviderController implements Initializable {
     private ArrayList<Scheme> newSchemes=new ArrayList();
     private ArrayList<BankAccount> accounts=new ArrayList();
     private ArrayList<BankAccount> newAccounts=new ArrayList();
-    private int iContacts=0,iPhones=0,iSchemes=0,iAccounts=0;;
-    private String query="";
+    private int iContacts=0,iPhones=0,iSchemes=0,iAccounts=0;
+    private ArrayList<String> query=new ArrayList();
     private boolean changes=false;
+    private LabelFeatures lbFeatures=new LabelFeatures();
+    private ViewContactController contactController=null;
+    private ViewPhonesController phonesController=null;
+    private ViewSchemesController schemesController=null;
+    private ViewAccountsController accountsController=null;
     
-    @FXML Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_Company_DefaultLanguage,
-            lb_CustomProv_DefaultVAT,lb_CustomProv_DefaultWithholding,lb_CustomProv_Europe,
-            lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country,
-            lb_ContactPerson_Firstname,lb_ContactPerson_Middlename,lb_ContactPerson_Lastname,lb_ContactPerson_Role,lb_ContactPerson_Email,
-            lb_Phone_PhoneNumber,lb_Phone_Kind,lb_Scheme_SchemeName,lb_Scheme_SourceLanguage,lb_Scheme_TargetLanguage,
-            lb_Scheme_Price,lb_Scheme_Units,lb_Scheme_FieldName,
-            lb_BankAccount_Iban,lb_BankAccount_Swift,lb_BankAccount_Holder,lb_BankAccount_Branch;
-    @FXML TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
-            fieldDefaultWithholding,fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry,
-            fieldFirstname,fieldMiddlename,fieldLastname,fieldRole,fieldContactEmail,
-            fieldPhoneNumber,fieldKind,fieldSchemeName,fieldSourceLanguage,fieldTargetLanguage,
-            fieldPrice,fieldUnits,fieldFieldName,
-            fieldIban,fieldSwift,fieldHolder,fieldBranch;
-    @FXML CheckBox cbEurope,cbEnabled;
-    @FXML ChoiceBox cbLanguage;
-    @FXML Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
+    @FXML private Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_CustomProv_DefaultVAT,lb_Company_DefaultLanguage,
+            lb_CustomProv_DefaultWithholding,lb_CustomProv_Europe,
+            lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country;
+    @FXML private TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,fieldDefaultWithholding,
+            fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry;
+    @FXML private CheckBox cbEurope,cbEnabled;
+    @FXML private ChoiceBox<String> cbLanguage;
+    @FXML private Button btnContactLeft,btnContactRight,btnPhoneLeft,btnPhoneRight,btnNewContact,btnNewPhone,
             btnSchemeLeft,btnSchemeRight, btnNewScheme,btnNewBankAccount,btnAccountLeft,btnAccountRight,
             btnDeleteScheme,btnDeletePhone,btnDeleteContact,btnDeleteBankAccount;
-    @FXML GridPane gridContacts,gridPhones,gridScheme,gridAccounts;
-    @FXML ScrollPane paneDetailsProvider;
-    @FXML TableView<SchemeLine> tableSchemeLines;
-    @FXML TableColumn<SchemeLine,String> columnDescription;
-    @FXML TableColumn<SchemeLine,Double> columnDiscount;
+    @FXML private ScrollPane paneDetailsProvider;
+    @FXML private StackPane paneContacts,panePhones,paneSchemes,paneAccounts;
     
     public void initData(Provider provider){
+        
         this.provider=provider;
         contacts=provider.getContacts();
         phones=provider.getPhones();
         schemes=provider.getSchemes();
         accounts=provider.getBankAccounts();
+        
+        lbFeatures.makeLabelEditable(lb_Company_ComName, fieldComName,"Company","comName",provider.getIdCompany());
+        lbFeatures.makeLabelEditable(lb_Company_LegalName, fieldLegalName,"Company","legalName",provider.getIdCompany());
+        lbFeatures.makeLabelEditable(lb_Company_Web, fieldWeb,"Company","web",provider.getIdCompany());
+        lbFeatures.makeLabelEditable(lb_Company_Email, fieldCompEmail,"Company","email",provider.getIdCompany());
+        lbFeatures.makeLabelEditable(lb_Company_VATNumber, fieldVATNumber,"Company","vatNumber",provider.getIdCompany());
+        lbFeatures.makeLabelEditable(lb_Company_DefaultLanguage,cbLanguage,"Company","defaultLanguage",provider.getIdCompany());
+        lbFeatures.makeLabelEditable(lb_CustomProv_DefaultVAT, fieldDefaultVAT,"CustomeProv","defaultVAT",provider.getIdCustomProv());
+        lbFeatures.makeLabelEditable(lb_CustomProv_DefaultWithholding, fieldDefaultWithholding,"CustomProv","defaultWithholding",provider.getIdCustomProv());
+        lbFeatures.makeLabelEditable(lb_CustomProv_Europe, cbEurope,"CustomProv","europe",provider.getIdCustomProv());
+        lbFeatures.makeLabelEditable(lb_CustomProv_Enabled, cbEnabled,"CustomProv","enabled",provider.getIdCustomProv());
+        lbFeatures.makeLabelEditable(lb_Address_Street, fieldStreet,"Address","street",provider.getAddress().getIdAddress());
+        lbFeatures.makeLabelEditable(lb_Address_StNumber, fieldStNumber,"Address","stNumber",provider.getAddress().getIdAddress());
+        lbFeatures.makeLabelEditable(lb_Address_City, fieldCity,"Address","city",provider.getAddress().getIdAddress());
+        lbFeatures.makeLabelEditable(lb_Address_State, fieldState,"Address","state",provider.getAddress().getIdAddress());
+        lbFeatures.makeLabelEditable(lb_Address_Apt, fieldApt,"Address","apt",provider.getAddress().getIdAddress());
+        lbFeatures.makeLabelEditable(lb_Address_CP, fieldCP,"Address","cp",provider.getAddress().getIdAddress());
+        lbFeatures.makeLabelEditable(lb_Address_Country, fieldCountry,"Address","country",provider.getAddress().getIdAddress());
         
         //Company data
         lb_Company_ComName.setText(provider.getComName());
@@ -95,6 +102,7 @@ public class ViewDetailsProviderController implements Initializable {
         lb_Company_DefaultLanguage.setText(provider.getDefaultLanguage());
         lb_CustomProv_DefaultVAT.setText(String.valueOf(provider.getDefaultVAT())+"%");
         lb_CustomProv_DefaultWithholding.setText(String.valueOf(provider.getDefaultWithholding())+"%");
+        //ADdress data
         lb_Address_Street.setText(provider.getAddress().getStreet());
         lb_Address_StNumber.setText(provider.getAddress().getStNumber());
         lb_Address_City.setText(provider.getAddress().getCity());
@@ -102,6 +110,7 @@ public class ViewDetailsProviderController implements Initializable {
         lb_Address_Apt.setText(provider.getAddress().getApt());
         lb_Address_CP.setText(provider.getAddress().getCp());
         lb_Address_Country.setText(provider.getAddress().getCountry());
+        //Others
         if(provider.isEurope()){
             lb_CustomProv_Europe.setText("Sí");
         }else{
@@ -119,54 +128,16 @@ public class ViewDetailsProviderController implements Initializable {
         //Phone data
         showPhones();
         
-        //Scheme
+        //Scheme data
         showSchemes();
         
         //Bank Accounts data
         showAccounts();
     }
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cbLanguage.getItems().addAll("Español", "English", "Français");
-        
-        makeLabelEditable(lb_Company_ComName, fieldComName);
-        makeLabelEditable(lb_Company_LegalName, fieldLegalName);
-        makeLabelEditable(lb_Company_Web, fieldWeb);
-        makeLabelEditable(lb_Company_Email, fieldCompEmail);
-        makeLabelEditable(lb_Company_VATNumber, fieldVATNumber);
-        makeLabelEditable(lb_Company_DefaultLanguage,cbLanguage);
-        makeLabelEditable(lb_CustomProv_DefaultVAT, fieldDefaultVAT);
-        makeLabelEditable(lb_CustomProv_DefaultWithholding, fieldDefaultWithholding);
-        makeLabelEditable(lb_CustomProv_Europe, cbEurope);
-        makeLabelEditable(lb_CustomProv_Enabled, cbEnabled);
-        makeLabelEditable(lb_Address_Street, fieldStreet);
-        makeLabelEditable(lb_Address_StNumber, fieldStNumber);
-        makeLabelEditable(lb_Address_City, fieldCity);
-        makeLabelEditable(lb_Address_State, fieldState);
-        makeLabelEditable(lb_Address_Apt, fieldApt);
-        makeLabelEditable(lb_Address_CP, fieldCP);
-        makeLabelEditable(lb_Address_Country, fieldCountry);
-        makeLabelEditable(lb_ContactPerson_Firstname, fieldFirstname);
-        makeLabelEditable(lb_ContactPerson_Middlename, fieldMiddlename);
-        makeLabelEditable(lb_ContactPerson_Lastname, fieldLastname);
-        makeLabelEditable(lb_ContactPerson_Role, fieldRole);
-        makeLabelEditable(lb_ContactPerson_Email, fieldContactEmail);
-        makeLabelEditable(lb_Phone_PhoneNumber, fieldPhoneNumber);
-        makeLabelEditable(lb_Phone_Kind, fieldKind);
-        makeLabelEditable(lb_Scheme_SchemeName, fieldSchemeName);
-        makeLabelEditable(lb_Scheme_SourceLanguage, fieldSourceLanguage);
-        makeLabelEditable(lb_Scheme_TargetLanguage, fieldTargetLanguage);
-        makeLabelEditable(lb_Scheme_Price, fieldPrice);
-        makeLabelEditable(lb_Scheme_Units, fieldUnits);
-        makeLabelEditable(lb_Scheme_FieldName, fieldFieldName);
-        makeLabelEditable(lb_BankAccount_Iban,fieldIban);
-        makeLabelEditable(lb_BankAccount_Swift,fieldSwift);
-        makeLabelEditable(lb_BankAccount_Holder,fieldHolder);
-        makeLabelEditable(lb_BankAccount_Branch,fieldBranch);
+        cbLanguage.getItems().addAll(Translations.languages);
     }
     
     @FXML protected void onNextScheme(){
@@ -181,12 +152,12 @@ public class ViewDetailsProviderController implements Initializable {
     
     @FXML protected void onNextContact(){
         iContacts++;
-        showContacts();
+        updateContacts();
     }
     
     @FXML protected void onPrevContact(){
         iContacts--;
-        showContacts();
+        updateContacts();
     }
     
     @FXML protected void onNextPhone(){
@@ -221,7 +192,7 @@ public class ViewDetailsProviderController implements Initializable {
         try {
             root=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
@@ -259,7 +230,7 @@ public class ViewDetailsProviderController implements Initializable {
         try {
             root=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
@@ -297,7 +268,7 @@ public class ViewDetailsProviderController implements Initializable {
         try {
             root=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewCreateCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
@@ -312,7 +283,7 @@ public class ViewDetailsProviderController implements Initializable {
                     changes=true;
                     provider.addScheme(scheme);
                     newSchemes.add(scheme);
-                } 
+                }                
                 showSchemes();
             });
         
@@ -320,7 +291,7 @@ public class ViewDetailsProviderController implements Initializable {
     }
     
     @FXML protected void onClicDeleteScheme(){
-        ConfirmationDialog.show("¿Está seguro de querer eliminar este esquema?", this::delecteScheme, () -> {});
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este esquema?", this::deleteScheme, () -> {});
     }
     
     @FXML protected void onClicAddBankAccount(){
@@ -335,7 +306,7 @@ public class ViewDetailsProviderController implements Initializable {
         try {
             root=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
@@ -363,11 +334,19 @@ public class ViewDetailsProviderController implements Initializable {
     
     @FXML protected void onClicSave(){
         ConnectionDB con=new ConnectionDB();
-        
-        if(!query.equals("")){
+        getQuery();
+        if(!query.isEmpty()){
             con.openConnection();
-            con.executeUpdate(query);
+            for(int i=0;i<query.size();i++){
+                con.executeUpdate(query.get(i));
+            }
             con.closeConnection();
+            contactController.resetQuery();
+            phonesController.resetQuery();
+            schemesController.resetQuery();
+            accountsController.resetQuery();
+            lbFeatures.resetQuery();
+            query.clear();
         }
         
         for(int i=0;i<newContacts.size();i++){
@@ -378,24 +357,23 @@ public class ViewDetailsProviderController implements Initializable {
             newPhones.get(j).addToDB();
         }
         
-        for(int k=0;k<schemes.size();k++){
+        for(int k=0;k<newSchemes.size();k++){
             newSchemes.get(k).addToDB();
         }
         
         for(int l=0;l<newAccounts.size();l++){
             newAccounts.get(l).addToDB();
         }
-        
-        query="";
         changes=false;
     }
     
     @FXML protected void onClicDelete(){
-        ConfirmationDialog.show("¿Está seguro de querer eliminar este cliente?", this::deleteProvider, () -> {});
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este cliente?", this::deleteCustomer, () -> {});
     }
     
     @FXML protected void onClicback(){
-        if(changes){
+        getQuery();
+        if(changes&&!query.isEmpty()){
             ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::backToViewProviders, () -> {});
         }else{
             backToViewProviders();
@@ -439,94 +417,88 @@ public class ViewDetailsProviderController implements Initializable {
     }
     
     @FXML protected void onClicNewPO(){
+        /*FXMLLoader loader=new FXMLLoader();
+        Parent newPOView=null;
+        ViewNewPOController controller=null;
         BorderPane home=(BorderPane)paneDetailsProvider.getParent();
-        Parent customersView;
+        
+        loader.setLocation(getClass().getResource("viewNewPO.fxml"));
         try {
-            customersView=FXMLLoader.load(getClass().getResource("viewNewPo.fxml"));
-            home.setCenter(customersView);
+            newPOView=loader.load();
+            home.setCenter(newPOView);
         } catch (IOException ex) {
-            Logger.getLogger(ViewCreateProviderController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        controller=loader.getController();
+        controller.initData(provider);
+        home.setCenter(newPOView);*/
     }
     
     private void showContacts(){
-        btnContactLeft.setVisible(true);
-        btnContactRight.setVisible(true);
-        btnDeleteContact.setVisible(true);
+        FXMLLoader loader=new FXMLLoader();
+        Parent contactsView=null;
         
-        if(iContacts==0){
-            btnContactLeft.setVisible(false);
+        paneContacts.getChildren().clear();
+        loader.setLocation(getClass().getResource("viewContact.fxml"));
+        try{
+            contactsView=loader.load();
+        }catch (IOException ex) {
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        if(iContacts<contacts.size()){
-            gridContacts.setDisable(false);
-            btnNewContact.setVisible(false);
-            lb_ContactPerson_Firstname.setText(contacts.get(iContacts).getFirstname());
-            lb_ContactPerson_Middlename.setText(contacts.get(iContacts).getMiddlename());
-            lb_ContactPerson_Lastname.setText(contacts.get(iContacts).getLastname());
-            lb_ContactPerson_Role.setText(contacts.get(iContacts).getRole());
-            lb_ContactPerson_Email.setText(contacts.get(iContacts).getEmail());
-        }
-        else{
-            gridContacts.setDisable(true);
-            btnNewContact.setVisible(true);
-            btnContactRight.setVisible(false);
-            btnDeleteContact.setVisible(false);
-        }
+        contactController=loader.getController();
+        paneContacts.getChildren().add(contactsView);
+        updateContacts();
     }
     
     private void showPhones(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent phonesView=null;
         
-        btnPhoneLeft.setVisible(true);
-        btnPhoneRight.setVisible(true);
-        btnDeletePhone.setVisible(true);
-        
-        if(iPhones==0){
-            btnPhoneLeft.setVisible(false);
+        panePhones.getChildren().clear();
+        loader.setLocation(getClass().getResource("viewPhones.fxml"));
+        try{
+            phonesView=loader.load();
+        }catch (IOException ex) {
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(iPhones<phones.size()){
-            gridPhones.setDisable(false);
-            btnNewPhone.setVisible(false);
-            lb_Phone_Kind.setText(phones.get(iPhones).getPhoneNumber());
-            lb_Phone_PhoneNumber.setText(phones.get(iPhones).getKind());
-        }
-        else{
-            gridPhones.setDisable(true);
-            btnNewPhone.setVisible(true);
-            btnPhoneRight.setVisible(false);
-            btnDeletePhone.setVisible(false);
-        }
+        phonesController=loader.getController();
+        panePhones.getChildren().add(phonesView);
+        updatePhones();
     }
     
     private void showSchemes(){
-        btnSchemeLeft.setVisible(true);
-        btnSchemeRight.setVisible(true);
-        btnDeleteScheme.setVisible(true);
+        FXMLLoader loader=new FXMLLoader();
+        Parent schemesView=null;
         
-        if(iSchemes==0){
-            btnSchemeLeft.setVisible(false);
+        paneSchemes.getChildren().clear();
+        loader.setLocation(getClass().getResource("viewSchemes.fxml"));
+        try{
+            schemesView=loader.load();
+        }catch (IOException ex) {
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(iSchemes<schemes.size()){
-            gridScheme.setDisable(false);
-            btnNewScheme.setVisible(false);
-            lb_Scheme_SchemeName.setText(schemes.get(iSchemes).getName());
-            lb_Scheme_SourceLanguage.setText(schemes.get(iSchemes).getSourceLanguage());
-            lb_Scheme_TargetLanguage.setText(schemes.get(iSchemes).getTargetLanguage());
-            lb_Scheme_Price.setText(String.valueOf(schemes.get(iSchemes).getPrice()));
-            lb_Scheme_Units.setText(schemes.get(iSchemes).getUnits());
-            lb_Scheme_FieldName.setText(schemes.get(iSchemes).getField());
-            createTableSchemeLines(schemes.get(iSchemes));
-        }else{
-            gridScheme.setDisable(true);
-            btnNewScheme.setVisible(true);
-            btnSchemeRight.setVisible(false);
-            btnDeleteScheme.setVisible(false);
-        }
+        schemesController=loader.getController();
+        paneSchemes.getChildren().add(schemesView);
+        updateSchemes();
     }
     
     private void showAccounts(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent accountsView=null;
+        
+        paneAccounts.getChildren().clear();
+        loader.setLocation(getClass().getResource("viewAccounts.fxml"));
+        try{
+            accountsView=loader.load();
+        }catch (IOException ex) {
+            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        accountsController=loader.getController();
+        paneAccounts.getChildren().add(accountsView);
+        updateAccounts();
+    }
+    
+    public void updateAccounts(){        
         btnAccountLeft.setVisible(true);
         btnAccountRight.setVisible(true);
         btnDeleteBankAccount.setVisible(true);
@@ -536,164 +508,100 @@ public class ViewDetailsProviderController implements Initializable {
         }
             
         if(iAccounts<accounts.size()){
-            gridAccounts.setDisable(false);
+            paneAccounts.setDisable(false);
             btnNewBankAccount.setVisible(false);
-            lb_BankAccount_Iban.setText(accounts.get(iAccounts).getIban());
-            lb_BankAccount_Swift.setText(accounts.get(iAccounts).getSwift());
-            lb_BankAccount_Holder.setText(accounts.get(iAccounts).getHolder());
-            lb_BankAccount_Branch.setText(accounts.get(iAccounts).getBranch());
+            accountsController.initData(accounts.get(iAccounts));
+            if(iAccounts==0){
+                btnAccountLeft.setVisible(false);
+            }
         }else{
-            gridAccounts.setDisable(true);
+            paneAccounts.setDisable(true);
             btnNewBankAccount.setVisible(true);
             btnAccountRight.setVisible(false);
             btnDeleteBankAccount.setVisible(false);
         }
     }
     
-    private void createTableSchemeLines(Scheme scheme){
-        ObservableList<SchemeLine> lines=FXCollections.observableArrayList(scheme.getLines());
+    private void updateSchemes(){
+        btnSchemeLeft.setVisible(true);
+        btnSchemeRight.setVisible(true);
+        btnDeleteScheme.setVisible(true);
         
-        columnDescription.setCellValueFactory(new PropertyValueFactory<SchemeLine, String>("description"));
-        columnDiscount.setCellValueFactory(new PropertyValueFactory<SchemeLine,Double>("discount"));
-        
-        tableSchemeLines.setItems(lines);
-    }
-    
-    private void makeLabelEditable(Label label, TextField textField) {
-        textField.setVisible(false);
-
-        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getClickCount() == 2) {
-                switchToTextField(label, textField);
+        if(iSchemes<schemes.size()){
+            paneSchemes.setDisable(false);
+            btnNewScheme.setVisible(false);
+            schemesController.initData(schemes.get(iSchemes));
+            if(iSchemes==0){
+               btnSchemeLeft.setVisible(false);
             }
-        });
-
-        textField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                switchToLabel(label, textField);
-            }
-        });
-    }
-    
-    private void makeLabelEditable(Label label, CheckBox checkBox) {
-        checkBox.setVisible(false);
-
-        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getClickCount() == 2) {
-                switchToCheckBox(label, checkBox);
-            }
-        });
-
-        checkBox.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                switchToLabel(label, checkBox);
-            }
-        });
-    }
-    
-    private void makeLabelEditable(Label label,ChoiceBox choiceBox){
-        choiceBox.setVisible(false);
-        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (event.getClickCount() == 2) {
-                switchToChoiceBox(label, choiceBox);
-            }
-        });
-        
-        choiceBox.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                switchToLabel(label, choiceBox);
-            }
-        });
-    }
-    
-    private void switchToTextField(Label label, TextField textField) {
-        textField.setText(label.getText());
-        textField.setVisible(true);
-        textField.requestFocus();
-        label.setVisible(false);
-    }
-    
-    private void switchToCheckBox(Label label, CheckBox checkBox) {
-        if(label.getText().equals("Sí")){
-            checkBox.setSelected(true);
         }else{
-            checkBox.setSelected(false);
+            paneSchemes.setDisable(true);
+            btnNewScheme.setVisible(true);
+            btnSchemeRight.setVisible(false);
+            btnDeleteScheme.setVisible(false);
         }
-        checkBox.requestFocus();
-        checkBox.setVisible(true);
-        label.setVisible(false);
     }
     
-    private void switchToChoiceBox(Label label, ChoiceBox choiceBox){
-        choiceBox.getSelectionModel().select(label.getText());
-        choiceBox.setVisible(true);
-        label.setVisible(false);
-    }
-    
-    private void switchToLabel(Label label, TextField textField) {
-        label.setText(textField.getText());
-        label.setVisible(true);
-        textField.setVisible(false);
-        
-        getQuery(label);
-    }
-    
-    private void switchToLabel(Label label, CheckBox checkBox) {
-        if(checkBox.isSelected()){
-            label.setText("Sí");
-        }else{
-            label.setText("No");
-        }
-        
-        label.setVisible(true);
-        checkBox.setVisible(false);
-        
-        getQuery(label);
-    }
-    
-    private void switchToLabel(Label label, ChoiceBox choiceBox){
-        label.setText(choiceBox.getValue().toString());
-        label.setVisible(true);
-        choiceBox.setVisible(false);
-        
-        getQuery(label);
-    }
-    
-    private void getQuery(Label label){
-        String fixId=label.getId();
-        String table=fixId.substring(fixId.indexOf("_",0)+1,fixId.indexOf("_",3));
-        String field=fixId.substring(fixId.indexOf("_",3)+1);
-        String newValue=label.getText();
-        if(table.equals("Phone")){
-            query=query.concat("UPDATE Phone SET"+field+"="+newValue+" WHERE PhoneNumber="+provider.getPhones().get(iPhones).getPhoneNumber()+";");
-        }else{
-            if(field.equals("Europe")||field.equals("Enabled")){
-                if(newValue.equals("Sí")){
-                    newValue="1";
-                }else if(newValue.equals("No")){
-                    newValue="0";
-                }
+    private void updateContacts(){
+        btnContactLeft.setVisible(true);
+        btnContactRight.setVisible(true);
+        btnDeleteContact.setVisible(true);
+
+        if(iContacts<contacts.size()){
+            paneContacts.setDisable(false);
+            btnNewContact.setVisible(false);
+            contactController.initData(contacts.get(iContacts));
+            if(iContacts==0){
+                btnContactLeft.setVisible(false);
             }
-            query=query.concat("UPDATE "+table+" SET "+field+"='"+newValue+"' WHERE id"+table+"="+getID(table)+";");
         }
-        changes=true;
+        else{
+            paneContacts.setDisable(true);
+            btnNewContact.setVisible(true);
+            btnContactRight.setVisible(false);
+            btnDeleteContact.setVisible(false);
+        }
     }
     
-    private int getID(String table){
-        int id=0;
+    private void updatePhones(){
+        btnPhoneLeft.setVisible(true);
+        btnPhoneRight.setVisible(true);
+        btnDeletePhone.setVisible(true);
         
-        switch(table){
-            case("Address"):id=provider.getAddress().getIdAddress();break;
-            case("Company"):id=provider.getIdCompany();break;
-            case("CustomProv"):id=provider.getIdCustomProv();break;
-            case("ContactPerson"):id=provider.getContacts().get(iContacts).getIdContactPerson();break;
-            case("Scheme"):id=provider.getSchemes().get(iSchemes).getIdScheme();break;
-            case("BankAccount"):id=provider.getBankAccounts().get(iAccounts).getIdBankAccount();break;
+        if(iPhones<phones.size()){
+            panePhones.setDisable(false);
+            btnNewPhone.setVisible(false);
+            
+            phonesController.initData(phones.get(iPhones));
+            if(iPhones==0){
+                btnPhoneLeft.setVisible(false);
+            }
         }
-        return id;
+        else{
+            panePhones.setDisable(true);
+            btnNewPhone.setVisible(true);
+            btnPhoneRight.setVisible(false);
+            btnDeletePhone.setVisible(false);
+        }
     }
     
-    private void deleteProvider(){
+    private void getQuery(){
+        query=lbFeatures.getQuery();
+        if(contactController!=null){
+            query.addAll(contactController.getQuery());
+        }
+        if(phonesController!=null){
+            query.addAll(phonesController.getQuery());
+        }
+        if(schemesController!=null){
+            query.addAll(schemesController.getQuery());
+        }
+        if(accountsController!=null){
+            query.addAll(accountsController.getQuery());
+        }
+    }
+    
+    private void deleteCustomer(){
         provider.deleteFromDB();
         backToViewProviders();
     }
@@ -716,7 +624,7 @@ public class ViewDetailsProviderController implements Initializable {
         showPhones();
     }
     
-    private void delecteScheme(){
+    private void deleteScheme(){
         schemes.get(iSchemes).deleteFromDB();
         schemes.remove(iSchemes);
         if(iSchemes>0){
@@ -736,13 +644,13 @@ public class ViewDetailsProviderController implements Initializable {
     
     private void backToViewProviders(){
         BorderPane home=(BorderPane)paneDetailsProvider.getParent();
-        Parent customersView;
+        Parent providersView;
         try {
-            customersView=FXMLLoader.load(getClass().getResource("viewProviders.fxml"));
-            home.setCenter(customersView);
+            providersView=FXMLLoader.load(getClass().getResource("viewProviders.fxml"));
+            home.setCenter(providersView);
         } catch (IOException ex) {
-            Logger.getLogger(ViewDetailsProviderController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewDetailsCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+        
 }

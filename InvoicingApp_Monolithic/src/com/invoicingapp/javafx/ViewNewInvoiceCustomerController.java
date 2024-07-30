@@ -179,9 +179,11 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     
     @FXML protected void getSelectionCBChangeRates(){
         changeRate=cbChangeRates.getSelectionModel().getSelectedItem();
-        updateTotals();
-        setTitles();
         invoice.setChangeRate(changeRate);
+        try{
+            updateTotals();
+            setTitles();
+        }catch(NullPointerException e){}
     }
     
     @FXML protected void selectAllOrders(){
@@ -192,7 +194,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     }
     
     @FXML protected void onClicAddChangeRate(){
-        ChangeRate changeRate=new ChangeRate();
+        ChangeRate chgRate=new ChangeRate();
         FXMLLoader loader=new FXMLLoader();
         Parent root=null;
         Stage viewNewChangeRate=new Stage();
@@ -206,15 +208,15 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
         controller=loader.getController();
-        controller.initData(changeRate);
+        controller.initData(chgRate);
         scene=new Scene(root);
         viewNewChangeRate.setScene(scene);
         viewNewChangeRate.show();
         
         viewNewChangeRate.setOnHiding(event -> {
                 paneNewInvoice.getParent().setDisable(false);
-                this.changeRate=changeRate;
-                changeRates.add(changeRate);
+                this.changeRate=chgRate;
+                changeRates.add(chgRate);
                 populateCbChangeRates();
                 cbChangeRates.getSelectionModel().selectLast();
                 updateTotals();
@@ -466,6 +468,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             totalInvoice=totalNet+totalVAT;
             totalToPay=totalNet+totalVAT-totalWithholding;
         }
+        
         lbTotalNet.setText(String.format("%.2f"+changeRate.getCurrency1(),totalNet));
         lbVAT.setText(String.format("%.2f%%",customer.getDefaultVAT()));
         lbTotalVAT.setText(String.format("%.2f"+changeRate.getCurrency1(),totalVAT));

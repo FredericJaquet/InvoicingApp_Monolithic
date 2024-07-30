@@ -7,8 +7,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -52,86 +50,6 @@
                               <Insets left="15.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Nombre fiscal" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="CIF" GridPane.columnIndex="2">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Email" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Web" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="IVA" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Calle" GridPane.rowIndex="6">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Número" GridPane.rowIndex="7">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Piso" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="CP" GridPane.columnIndex="2" GridPane.rowIndex="8">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Ciudad" GridPane.rowIndex="8">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Provincia" GridPane.rowIndex="9">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="País" GridPane.columnIndex="2" GridPane.rowIndex="9">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Retención" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
-                        </Label>
-                        <Label prefHeight="28.0" prefWidth="45.0" text="Europa" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Habilitado" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="5">
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </Separator>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <Label fx:id="lb_Company_ComName" text="Label">
@@ -142,6 +60,11 @@
                               <TextField fx:id="fieldComName" visible="false" />
                            </children>
                         </StackPane>
+                        <Label text="Nombre fiscal" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
                               <Label fx:id="lb_Company_LegalName" text="Label">
@@ -152,6 +75,11 @@
                               <TextField fx:id="fieldLegalName" visible="false" />
                            </children>
                         </StackPane>
+                        <Label text="Web" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
                               <Label fx:id="lb_Company_Web" text="Label">
@@ -162,6 +90,11 @@
                               <TextField fx:id="fieldWeb" visible="false" />
                            </children>
                         </StackPane>
+                        <Label text="Email" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
                               <Label fx:id="lb_Company_Email" text="Label">
@@ -172,127 +105,6 @@
                               <TextField fx:id="fieldCompEmail" visible="false" />
                            </children>
                         </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
-                           <children>
-                              <Label fx:id="lb_Company_VATNumber" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldVATNumber" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <children>
-                              <Label fx:id="lb_CustomProv_DefaultVAT" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldDefaultVAT" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <children>
-                              <Label fx:id="lb_CustomProv_DefaultWithholding" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldDefaultWithholding" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                           <children>
-                              <Label fx:id="lb_CustomProv_Europe" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <CheckBox fx:id="cbEurope" mnemonicParsing="false" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                           <children>
-                              <Label fx:id="lb_CustomProv_Enabled" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <CheckBox fx:id="cbEnabled" mnemonicParsing="false" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
-                           <children>
-                              <Label fx:id="lb_Address_Street" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldStreet" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                           <children>
-                              <Label fx:id="lb_Address_StNumber" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldStNumber" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                           <children>
-                              <Label fx:id="lb_Address_City" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldCity" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                           <children>
-                              <Label fx:id="lb_Address_State" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldState" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
-                           <children>
-                              <Label fx:id="lb_Address_Apt" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldApt" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
-                           <children>
-                              <Label fx:id="lb_Address_CP" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldCP" visible="false" />
-                           </children>
-                        </StackPane>
-                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
-                           <children>
-                              <Label fx:id="lb_Address_Country" text="Label">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="fieldCountry" visible="false" />
-                           </children>
-                        </StackPane>
-                        <Separator prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="10" />
                         <Label text="Idioma" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets left="15.0" />
@@ -308,135 +120,204 @@
                               <ChoiceBox fx:id="cbLanguage" visible="false" />
                            </children>
                         </StackPane>
+                        <Label text="CIF" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
+                           <children>
+                              <Label fx:id="lb_Company_VATNumber" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldVATNumber" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="IVA" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <children>
+                              <Label fx:id="lb_CustomProv_DefaultVAT" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldDefaultVAT" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="Retención" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets left="15.0" />
+                           </padding>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <children>
+                              <Label fx:id="lb_CustomProv_DefaultWithholding" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldDefaultWithholding" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label prefHeight="28.0" prefWidth="45.0" text="Europa" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <children>
+                              <Label fx:id="lb_CustomProv_Europe" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox fx:id="cbEurope" mnemonicParsing="false" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="Habilitado" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <children>
+                              <Label fx:id="lb_CustomProv_Enabled" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <CheckBox fx:id="cbEnabled" mnemonicParsing="false" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </Separator>
+                        <Label text="Calle" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
+                           <children>
+                              <Label fx:id="lb_Address_Street" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldStreet" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="Número" GridPane.rowIndex="7">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <children>
+                              <Label fx:id="lb_Address_StNumber" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldStNumber" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="Ciudad" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <children>
+                              <Label fx:id="lb_Address_City" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldCity" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="Provincia" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <children>
+                              <Label fx:id="lb_Address_State" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldState" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="Piso" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                           <children>
+                              <Label fx:id="lb_Address_Apt" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldApt" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="CP" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                           <children>
+                              <Label fx:id="lb_Address_CP" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldCP" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Label text="País" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                           <children>
+                              <Label fx:id="lb_Address_Country" text="Label">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="fieldCountry" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Separator prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="10" />
                      </children>
                   </GridPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  <StackPane>
                      <children>
-                        <GridPane fx:id="gridScheme">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label fx:id="lb_Scheme_SchemeName" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldSchemeName" visible="false" />
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <TextField fx:id="fieldSourceLanguage" visible="false" />
-                                    <Label fx:id="lb_Scheme_SourceLanguage" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <children>
-                                    <TextField fx:id="fieldTargetLanguage" visible="false" />
-                                    <Label fx:id="lb_Scheme_TargetLanguage" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
-                                 <children>
-                                    <TextField fx:id="fieldPrice" visible="false" />
-                                    <Label fx:id="lb_Scheme_Price" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                                 <children>
-                                    <TextField fx:id="fieldUnits" visible="false" />
-                                    <Label fx:id="lb_Scheme_Units" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                                 <children>
-                                    <TextField fx:id="fieldFieldName" visible="false" />
-                                    <Label fx:id="lb_Scheme_FieldName" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <TableView fx:id="tableSchemeLines" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="3" GridPane.rowSpan="4">
-                                 <columns>
-                                    <TableColumn fx:id="columnDescription" prefWidth="250.0" text="Description" />
-                                    <TableColumn fx:id="columnDiscount" prefWidth="75.0" text="Discount" />
-                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <Label text="Nombre Esquema">
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Idioma Origen" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Idioma Destino" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Precio Base" GridPane.columnIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Unidades" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Sector" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="15.0" />
-                                 </GridPane.margin>
-                              </Label>
-                           </children>
-                        </GridPane>
+                        <StackPane fx:id="paneSchemes" />
                         <Button fx:id="btnNewScheme" mnemonicParsing="false" onAction="#onClicAddScheme" text="Crear Esquema" visible="false" />
                      </children>
                   </StackPane>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
                         <Button fx:id="btnSchemeLeft" mnemonicParsing="false" onAction="#onPrevScheme" text="&lt;" />
-                        <Button fx:id="btnDeleteScheme" mnemonicParsing="false" onAction="#onClicDeleteScheme" styleClass="binButton" stylesheets="@viewdetailsprovider.css" />
+                        <Button fx:id="btnDeleteScheme" mnemonicParsing="false" onAction="#onClicDeleteScheme" styleClass="binButton" stylesheets="@viewdetailscustomer.css" />
                         <Button fx:id="btnSchemeRight" mnemonicParsing="false" onAction="#onNextScheme" text="&gt;" />
                      </children>
                   </HBox>
@@ -446,124 +327,14 @@
                <children>
                   <StackPane>
                      <children>
-                        <GridPane fx:id="gridContacts" styleClass="table" stylesheets="@viewdetailscustomer.css">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="55.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Label text="Nombre">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Apellido 1" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Apellido 2" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Función" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="email" GridPane.rowIndex="4">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Label>
-                              <StackPane alignment="CENTER_LEFT" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label fx:id="lb_ContactPerson_Firstname" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldFirstname" visible="false" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin>
-                              </StackPane>
-                              <StackPane fx:id="labelMiddleName" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <Label fx:id="lb_ContactPerson_Middlename" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldMiddlename" visible="false" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <children>
-                                    <Label fx:id="lb_ContactPerson_Lastname" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldLastname" visible="false" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <children>
-                                    <Label fx:id="lb_ContactPerson_Role" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldRole" visible="false" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                 <children>
-                                    <Label fx:id="lb_ContactPerson_Email" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldContactEmail" visible="false" />
-                                 </children>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin>
-                              </StackPane>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                           <StackPane.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </StackPane.margin>
-                        </GridPane>
+                        <StackPane fx:id="paneContacts" />
                         <Button fx:id="btnNewContact" mnemonicParsing="false" onAction="#onClicAddContact" text="Crear Contacto" visible="false" />
                      </children>
                   </StackPane>
                   <HBox alignment="CENTER" spacing="5.0">
                      <children>
                         <Button fx:id="btnContactLeft" alignment="CENTER" mnemonicParsing="false" onAction="#onPrevContact" text="&lt;" />
-                        <Button fx:id="btnDeleteContact" mnemonicParsing="false" onAction="#onClicDeteleContact" styleClass="binButton" stylesheets="@viewdetailsprovider.css" />
+                        <Button fx:id="btnDeleteContact" mnemonicParsing="false" onAction="#onClicDeteleContact" styleClass="binButton" stylesheets="@viewdetailscustomer.css" />
                         <Button fx:id="btnContactRight" alignment="CENTER" mnemonicParsing="false" onAction="#onNextContact" text="&gt;" />
                      </children>
                      <VBox.margin>
@@ -572,58 +343,14 @@
                   </HBox>
                   <StackPane>
                      <children>
-                        <GridPane fx:id="gridPhones" styleClass="table" stylesheets="@viewdetailscustomer.css">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="55.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Label text="Teléfono">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Label>
-                              <Label text="Tipo" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </Label>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label fx:id="lb_Phone_PhoneNumber" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldPhoneNumber" visible="false" />
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <Label fx:id="lb_Phone_Kind" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldKind" visible="false" />
-                                 </children>
-                              </StackPane>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </GridPane>
+                        <StackPane fx:id="panePhones" />
                         <Button fx:id="btnNewPhone" mnemonicParsing="false" onAction="#onClicAddPhone" text="Crear Teléfono" visible="false" />
                      </children>
                   </StackPane>
                   <HBox alignment="CENTER" prefHeight="25.0" prefWidth="25.0" spacing="5.0">
                      <children>
                         <Button fx:id="btnPhoneLeft" mnemonicParsing="false" onAction="#onPrevPhone" text="&lt;" />
-                        <Button fx:id="btnDeletePhone" mnemonicParsing="false" onAction="#onClicDeletePhone" styleClass="binButton" stylesheets="@viewdetailsprovider.css" />
+                        <Button fx:id="btnDeletePhone" mnemonicParsing="false" onAction="#onClicDeletePhone" styleClass="binButton" stylesheets="@viewdetailscustomer.css" />
                         <Button fx:id="btnPhoneRight" mnemonicParsing="false" onAction="#onNextPhone" text="&gt;" />
                      </children>
                      <VBox.margin>
@@ -632,74 +359,14 @@
                   </HBox>
                   <StackPane>
                      <children>
-                        <GridPane fx:id="gridAccounts" styleClass="table" stylesheets="@viewdetailscustomer.css">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label text="IBAN" />
-                              <Label text="SWIFT" GridPane.rowIndex="1" />
-                              <Label text="Titular" GridPane.rowIndex="2" />
-                              <Label text="Sucursal" GridPane.rowIndex="3" />
-                              <StackPane alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <Label fx:id="lb_BankAccount_Iban" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldIban" visible="false" />
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <children>
-                                    <Label fx:id="lb_BankAccount_Swift" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldSwift" visible="false" />
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <children>
-                                    <Label fx:id="lb_BankAccount_Holder" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldHolder" visible="false" />
-                                 </children>
-                              </StackPane>
-                              <StackPane alignment="CENTER_LEFT" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <children>
-                                    <Label fx:id="lb_BankAccount_Branch" text="Label">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="fieldBranch" visible="false" />
-                                 </children>
-                              </StackPane>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                        </GridPane>
+                        <StackPane fx:id="paneAccounts" />
                         <Button fx:id="btnNewBankAccount" mnemonicParsing="false" onAction="#onClicAddBankAccount" text="Crear Cuenta bancaria" visible="false" />
                      </children>
                   </StackPane>
                   <HBox alignment="CENTER" spacing="5.0">
                      <children>
                         <Button fx:id="btnAccountLeft" mnemonicParsing="false" onAction="#onPrevAccount" text="&lt;" />
-                        <Button fx:id="btnDeleteBankAccount" mnemonicParsing="false" onAction="#onClicDeleteBankAccount" styleClass="binButton" stylesheets="@viewdetailsprovider.css" />
+                        <Button fx:id="btnDeleteBankAccount" mnemonicParsing="false" onAction="#onClicDeleteBankAccount" styleClass="binButton" stylesheets="@viewdetailscustomer.css" />
                         <Button fx:id="btnAccountRight" mnemonicParsing="false" onAction="#onNextAccount" text="&gt;" />
                      </children>
                   </HBox>
@@ -721,6 +388,9 @@
                            </HBox.margin>
                         </Button>
                      </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0">
                      <children>
