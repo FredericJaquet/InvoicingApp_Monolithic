@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="gridScheme" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewSchemesController">
+<GridPane fx:id="gridScheme" stylesheets="@viewschemes.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewSchemesController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="125.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />

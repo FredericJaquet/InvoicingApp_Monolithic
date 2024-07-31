@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="gridPhones" styleClass="table" stylesheets="@viewdetailscustomer.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewPhonesController">
+<GridPane fx:id="gridPhones" styleClass="table" stylesheets="@viewphones.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewPhonesController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="55.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneCreateCustomer" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewCreateCustomerController">
+<VBox fx:id="paneCreateCustomer" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@viewcreatecustomer.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewCreateCustomerController">
    <children>
       <Label fx:id="labelTitle" text="Crear un Cliente">
          <font>
@@ -58,7 +58,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldDefaultVAT" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="1">
+                  <TextField fx:id="fieldDefaultVAT" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -68,7 +68,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldDefaultWithholding" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="3">
+                  <TextField fx:id="fieldDefaultWithholding" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -90,7 +90,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldDuedate" stylesheets="@viewcreatecustomer.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="fieldDuedate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <CheckBox fx:id="cbEurope" mnemonicParsing="false" selected="true" text="Es Europeo" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets top="15.0" />
@@ -126,7 +126,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldVATNumber" promptText="Obligatorio" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="2">
+                  <TextField fx:id="fieldVATNumber" promptText="Obligatorio" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -146,7 +146,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldLegalName" promptText="Obligatorio" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="6">
+                  <TextField fx:id="fieldLegalName" promptText="Obligatorio" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>

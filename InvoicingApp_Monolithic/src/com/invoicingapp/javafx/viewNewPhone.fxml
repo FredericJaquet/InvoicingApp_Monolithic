@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneNewPhone" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewPhoneController">
+<VBox fx:id="paneNewPhone" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@viewnewphone.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewPhoneController">
    <children>
       <Label fx:id="labelTitle" text="Nuevo teléfono">
          <font>
@@ -47,7 +47,7 @@
          </rowConstraints>
          <children>
             <Label text="Teléfono" />
-            <TextField fx:id="fieldPhoneNumber" promptText="Obligatorio" stylesheets="@viewnewphone.css" GridPane.rowIndex="1">
+            <TextField fx:id="fieldPhoneNumber" promptText="Obligatorio" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneCreateProvider" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewCreateProviderController">
+<VBox fx:id="paneCreateProvider" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@viewcreateprovider.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewCreateProviderController">
    <children>
       <Label fx:id="labelTitle" text="Crear un Proveedor">
          <font>
@@ -59,7 +59,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldDefaultVAT" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="1">
+                  <TextField fx:id="fieldDefaultVAT" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -69,7 +69,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldDefaultWithholding" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="3">
+                  <TextField fx:id="fieldDefaultWithholding" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -113,7 +113,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldVATNumber" promptText="Obligatorio" stylesheets="@viewcreateprovider.css" GridPane.rowIndex="2">
+                  <TextField fx:id="fieldVATNumber" promptText="Obligatorio" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -137,10 +137,6 @@
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
-                     <stylesheets>
-                        <URL value="@viewdetailsprovider.css" />
-                        <URL value="@viewcreateprovider.css" />
-                     </stylesheets>
                   </TextField>
                   <Label text="Email" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>

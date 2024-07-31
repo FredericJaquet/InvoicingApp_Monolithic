@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="paneNewOrder" alignment="CENTER" hgap="5.0" maxWidth="600.0" vgap="5.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewOrderController">
+<GridPane fx:id="paneNewOrder" alignment="CENTER" hgap="5.0" maxWidth="600.0" vgap="5.0" stylesheets="@viewneworder.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewOrderController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -48,29 +48,29 @@
    <children>
       <ComboBox fx:id="cbCustomProvs" onAction="#getSelectionCBCustomProvs" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
       <ComboBox fx:id="cbSchemes" onAction="#getSelectionCBSchemes" prefWidth="150.0" GridPane.columnIndex="4" GridPane.columnSpan="2" />
-      <TextField fx:id="tfDescription" promptText="Obligatorio" stylesheets="@viewneworder.css" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+      <TextField fx:id="tfDescription" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
       <DatePicker fx:id="dpDateOrder" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-      <TextField fx:id="tfPrice" promptText="Obligatorio" stylesheets="@viewneworder.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextField fx:id="tfPrice" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <TextField fx:id="tfUnits" GridPane.columnIndex="3" GridPane.rowIndex="4" />
       <TextField fx:id="tfFieldName" GridPane.columnIndex="5" GridPane.rowIndex="4" />
       <TextField fx:id="tfSourceLanguage" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <TextField fx:id="tfTargetLanguage" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Empresa" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Nombre" GridPane.rowIndex="1" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="CIF" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Esquema" GridPane.columnIndex="3" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Descripción" GridPane.rowIndex="3" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Idioma Destino" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Idioma Origen" GridPane.rowIndex="5" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Precio" GridPane.rowIndex="4" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Unidades" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Fecha" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+      <Label styleClass="labels" text="Empresa" />
+      <Label styleClass="labels" text="Nombre" GridPane.rowIndex="1" />
+      <Label styleClass="labels" text="CIF" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <Label styleClass="labels" text="Esquema" GridPane.columnIndex="3" />
+      <Label styleClass="labels" text="Descripción" GridPane.rowIndex="3" />
+      <Label styleClass="labels" text="Idioma Destino" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+      <Label styleClass="labels" text="Idioma Origen" GridPane.rowIndex="5" />
+      <Label styleClass="labels" text="Precio" GridPane.rowIndex="4" />
+      <Label styleClass="labels" text="Unidades" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Label styleClass="labels" text="Fecha" GridPane.columnIndex="4" GridPane.rowIndex="3" />
       <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="2" />
       <Label fx:id="lbLegalName" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
       <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Sector" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+      <Label styleClass="labels" text="Sector" GridPane.columnIndex="4" GridPane.rowIndex="4" />
       <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6" />
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Artículos" GridPane.rowIndex="7" />
+      <Label styleClass="labels" text="Artículos" GridPane.rowIndex="7" />
       <TableView fx:id="tvItems" GridPane.columnSpan="6" GridPane.rowIndex="9" GridPane.rowSpan="6">
         <columns>
             <TableColumn fx:id="columnDescription" prefWidth="417.9999803304672" text="Descripción" />
@@ -81,9 +81,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextField fx:id="tfLineDescription" promptText="Descripción" stylesheets="@viewneworder.css" GridPane.columnSpan="4" GridPane.rowIndex="8" />
-      <TextField fx:id="tfDiscount" promptText="Descuento" stylesheets="@viewneworder.css" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-      <TextField fx:id="tfQuantity" onKeyPressed="#onCommitLine" promptText="Cantidad" stylesheets="@viewneworder.css" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+      <TextField fx:id="tfLineDescription" promptText="Descripción" GridPane.columnSpan="4" GridPane.rowIndex="8" />
+      <TextField fx:id="tfDiscount" promptText="Descuento" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+      <TextField fx:id="tfQuantity" onKeyPressed="#onCommitLine" promptText="Cantidad" GridPane.columnIndex="5" GridPane.rowIndex="8" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="16">
          <children>
             <Button layoutX="15.0" layoutY="3.0" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar" />
@@ -94,7 +94,7 @@
             <Button layoutX="16.0" layoutY="3.0" mnemonicParsing="false" onAction="#onClicSave" text="Guardar" />
          </children>
       </AnchorPane>
-      <Label styleClass="labels" stylesheets="@viewneworder.css" text="Total" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+      <Label styleClass="labels" text="Total" GridPane.columnIndex="4" GridPane.rowIndex="7" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
          <children>
             <Label fx:id="lbUpdatedTotal" layoutX="36.0" layoutY="5.0" text="Label" />

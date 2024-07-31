@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="500.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewOrdersForDocumentController">
+<VBox maxHeight="500.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="5.0" stylesheets="@viewordersfordocument.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewOrdersForDocumentController">
    <children>
-      <HBox styleClass="TitleOrder" stylesheets="@viewordersfordocument.css">
+      <HBox styleClass="TitleOrder" >
          <children>
             <Label fx:id="lbDescription" maxWidth="390.0" prefWidth="390.0" text="Label">
                <padding>

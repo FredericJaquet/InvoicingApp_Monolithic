@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneNewBankAccount" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewBankAccountController">
+<VBox fx:id="paneNewBankAccount" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@viewnewbankaccount.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewBankAccountController">
    <children>
       <Label fx:id="labelTitle" text="Nueva Cuenta Bancaria">
          <font>
@@ -51,7 +51,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="tfIban" promptText="Obligatorio" stylesheets="@viewnewbankaccount.css" GridPane.rowIndex="1">
+            <TextField fx:id="tfIban" promptText="Obligatorio" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -61,7 +61,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="tfHolder" promptText="Obligatorio" stylesheets="@viewnewbankaccount.css" GridPane.rowIndex="3">
+            <TextField fx:id="tfHolder" promptText="Obligatorio" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>

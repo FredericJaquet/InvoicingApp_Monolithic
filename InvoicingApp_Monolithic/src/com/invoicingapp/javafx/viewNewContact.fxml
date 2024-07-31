@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneNewContact" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewContactController">
+<VBox fx:id="paneNewContact" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@viewnewcontact.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewContactController">
    <children>
       <Label fx:id="labelTitle" text="Nuevo Contacto">
          <font>
@@ -51,7 +51,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldFirstname" promptText="Obligatorio" stylesheets="@viewnewcontact.css" GridPane.rowIndex="1">
+            <TextField fx:id="fieldFirstname" promptText="Obligatorio" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -61,7 +61,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldMiddlename" promptText="Obligatorio" stylesheets="@viewnewcontact.css" GridPane.rowIndex="3">
+            <TextField fx:id="fieldMiddlename" promptText="Obligatorio" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneNewScheme" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewSchemeController">
+<VBox fx:id="paneNewScheme" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@viewnewscheme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewSchemeController">
    <children>
       <Label fx:id="labelTitle" minHeight="-Infinity" text="Crear un Esquema de facturación" wrapText="true">
          <font>
@@ -57,7 +57,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldSchemeName" promptText="Obligatorio" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="1">
+            <TextField fx:id="fieldSchemeName" promptText="Obligatorio" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -67,13 +67,13 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldPrice" promptText="Obligatorio" stylesheets="@viewnewscheme.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="fieldPrice" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Idioma Origen" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldSourceLanguage" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="3">
+            <TextField fx:id="fieldSourceLanguage" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -89,7 +89,7 @@
                   <Insets top="15.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="fieldFieldName" stylesheets="@viewcreatecustomer.css" GridPane.rowIndex="5">
+            <TextField fx:id="fieldFieldName" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -120,12 +120,12 @@
       </GridPane>
       <HBox fx:id="boxLines" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="fieldDescription" prefWidth="270.0" promptText="Nueva línea" stylesheets="@viewnewscheme.css">
+            <TextField fx:id="fieldDescription" prefWidth="270.0" promptText="Nueva línea" >
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </TextField>
-            <TextField fx:id="fieldDiscount" onKeyPressed="#commitLine" prefWidth="75.0" promptText="Descuento" stylesheets="@viewnewscheme.css">
+            <TextField fx:id="fieldDiscount" onKeyPressed="#commitLine" prefWidth="75.0" promptText="Descuento" >
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>

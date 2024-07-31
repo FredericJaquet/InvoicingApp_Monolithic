@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneCreateUser" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewCreateUserController">
+<VBox fx:id="paneCreateUser" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" stylesheets="@viewcreateuser.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewCreateUserController">
    <children>
       <Label fx:id="labelTitle" text="Crear un usuario">
          <font>
@@ -55,7 +55,7 @@
                      <GridPane.margin>
                         <Insets top="15.0" />
                      </GridPane.margin></Label>
-                  <TextField fx:id="fieldUsername" promptText="Obligatorio" stylesheets="@viewcreateuser.css" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
+                  <TextField fx:id="fieldUsername" promptText="Obligatorio" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
@@ -70,17 +70,17 @@
                      </GridPane.margin></Label>
                   <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
-                        <PasswordField fx:id="fieldPasswd1" promptText="Obligatorio" stylesheets="@viewcreateuser.css" />
+                        <PasswordField fx:id="fieldPasswd1" promptText="Obligatorio" />
                         <TextField fx:id="textFieldPW1" />
                      </children>
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="5">
                      <children>
-                        <PasswordField fx:id="fieldPasswd2" promptText="Obligatorio" stylesheets="@viewcreateuser.css" />
+                        <PasswordField fx:id="fieldPasswd2" promptText="Obligatorio" />
                         <TextField fx:id="textFieldPW2" />
                      </children>
                   </StackPane>
-                  <Button fx:id="btnSeePD" minWidth="-Infinity" mnemonicParsing="false" onMousePressed="#onPressedSeePW" onMouseReleased="#onReleaseSeePW" prefWidth="25.0" styleClass="btnSeePD" stylesheets="@viewcreateuser.css" text="Button" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="5" GridPane.vgrow="NEVER">
+                  <Button fx:id="btnSeePD" minWidth="-Infinity" mnemonicParsing="false" onMousePressed="#onPressedSeePW" onMouseReleased="#onReleaseSeePW" prefWidth="25.0" styleClass="btnSeePD" text="Button" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="5" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
@@ -112,7 +112,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldVATNumber" promptText="Obligatorio" stylesheets="@viewcreateuser.css" GridPane.rowIndex="2">
+                  <TextField fx:id="fieldVATNumber" promptText="Obligatorio" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -132,7 +132,7 @@
                         <Insets top="15.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="fieldLegalName" promptText="Obligatorio" stylesheets="@viewcreateuser.css" GridPane.rowIndex="6">
+                  <TextField fx:id="fieldLegalName" promptText="Obligatorio" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
