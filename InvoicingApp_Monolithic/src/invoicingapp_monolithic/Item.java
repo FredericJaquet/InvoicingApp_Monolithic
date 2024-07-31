@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
@@ -16,16 +18,16 @@ import java.util.logging.Logger;
  */
 public class Item {
     
-    private String description;
-    private double discount, quantity;
+    private SimpleStringProperty description;
+    private SimpleDoubleProperty  discount, quantity;
     private int idItem, idOrders;
     
     public Item(){}
     
     public Item(String description, double quantity, double discount){
-        this.description=description;
-        this.discount=discount;
-        this.quantity=quantity;
+        this.description=new SimpleStringProperty(description);
+        this.discount=new SimpleDoubleProperty(discount);
+        this.quantity=new SimpleDoubleProperty(quantity);
     }
     
     /**
@@ -34,7 +36,7 @@ public class Item {
     */
     protected void addToDB(){
         ConnectionDB con=new ConnectionDB();
-        String queryInsert="INSERT INTO Item (descrip, qty, discount, idOrders) values('"+description+"',"+quantity+","+discount+","+idOrders+")";
+        String queryInsert="INSERT INTO Item (descrip, qty, discount, idOrders) values('"+description.get()+"',"+quantity.get()+","+discount.get()+","+idOrders+")";
         String queryGetId="SELECT MAX(idItem) FROM Item";
         ResultSet result=null;
         
@@ -66,9 +68,9 @@ public class Item {
         try {
             if(result.next()){
                 idItem=result.getInt(1);
-                description=result.getString(2);
-                quantity=result.getDouble(3);
-                discount=result.getDouble(4);
+                description=new SimpleStringProperty(result.getString(2));
+                quantity=new SimpleDoubleProperty(result.getDouble(3));
+                discount=new SimpleDoubleProperty(result.getDouble(4));
                 idOrders=result.getInt(5);
             }
         } catch (SQLException ex) {
@@ -130,42 +132,42 @@ public class Item {
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     /**
      * @param description the description to set
      */
     public void setDescription(String description) {
-        this.description = description;
+        this.description = new SimpleStringProperty(description);
     }
 
     /**
      * @return the discount
      */
     public double getDiscount() {
-        return discount;
+        return discount.get();
     }
 
     /**
      * @param discount the discount to set
      */
     public void setDiscount(double discount) {
-        this.discount = discount;
+        this.discount = new SimpleDoubleProperty(discount);
     }
 
     /**
      * @return the quantity
      */
     public double getQuantity() {
-        return quantity;
+        return quantity.get();
     }
 
     /**
      * @param quantity the quantity to set
      */
     public void setQuantity(double quantity) {
-        this.quantity = quantity;
+        this.quantity = new SimpleDoubleProperty(quantity);
     }
 
     /**

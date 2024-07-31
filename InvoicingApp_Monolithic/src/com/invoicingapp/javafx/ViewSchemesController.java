@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 /**
  * FXML Controller class
@@ -60,15 +61,14 @@ public class ViewSchemesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
     
-    public Scheme fetScheme(){
+    public Scheme getScheme(){
         return scheme;
     }
     
     public ArrayList<String> getQuery(){
-        query=lbFeatures.getQuery();
+        query.addAll(lbFeatures.getQuery());
         return query;
     }
     
@@ -79,9 +79,25 @@ public class ViewSchemesController implements Initializable {
     private void createTableSchemeLines(){
         ObservableList<SchemeLine> lines=FXCollections.observableArrayList(scheme.getLines());
         
-        columnDescription.setCellValueFactory(new PropertyValueFactory<SchemeLine, String>("description"));
-        columnDiscount.setCellValueFactory(new PropertyValueFactory<SchemeLine,Double>("discount"));
+        columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        columnDiscount.setCellValueFactory(new PropertyValueFactory<>("discount"));
         
+        columnDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnDescription.setOnEditCommit(
+                (TableColumn.CellEditEvent<SchemeLine, String> t) -> {
+                    t.getTableView().getItems().get(t.getTablePosition().getRow()).setDescription(t.getNewValue());
+                    query.add("UPDATE SchemeLine SET descrip = '"+t.getNewValue()+"' WHERE idSchemeLine="+t.getTableView().getItems().get(t.getTablePosition().getRow()).getIdSchemeLine());
+                });
+        
+        columnDiscount.setCellFactory(TextFieldTableCell.forTableColumn(new javafx.util.converter.DoubleStringConverter()));
+        columnDiscount.setOnEditCommit(
+                (TableColumn.CellEditEvent<SchemeLine, Double> t) -> {
+                    t.getTableView().getItems().get(t.getTablePosition().getRow()).setDiscount(t.getNewValue());
+                    query.add("UPDATE SchemeLine SET discount = "+t.getNewValue()+" WHERE idSchemeLine="+t.getTableView().getItems().get(t.getTablePosition().getRow()).getIdSchemeLine());
+                });
+
+        
+        tableSchemeLines.setEditable(true);
         tableSchemeLines.setItems(lines);
     }
     

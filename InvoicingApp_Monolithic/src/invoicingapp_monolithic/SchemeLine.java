@@ -9,21 +9,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
  * @author frede
  */
 public class SchemeLine {
-    private String description;
-    private double discount;
+    private SimpleStringProperty description;
+    private SimpleDoubleProperty discount;
     private int idSchemeLine, idScheme;
     
     public SchemeLine(){}
     
     public SchemeLine(String description, double discount){
-        this.description=description;
-        this.discount=discount;
+        this.description=new SimpleStringProperty(description);
+        this.discount=new SimpleDoubleProperty(discount);
     }
     
     /**
@@ -32,7 +34,7 @@ public class SchemeLine {
     */
     protected void addToDB(){
         ConnectionDB con=new ConnectionDB();
-        String queryInsert="INSERT INTO SchemeLine (descrip, discount, idScheme) values('"+description+"',"+discount+","+idScheme+")";
+        String queryInsert="INSERT INTO SchemeLine (descrip, discount, idScheme) values('"+description.get()+"',"+discount.get()+","+idScheme+")";
         String queryGetId="SELECT MAX(idSchemeLine) FROM SchemeLine";
         ResultSet result=null;
         
@@ -64,8 +66,8 @@ public class SchemeLine {
         try {
             if(result.next()){
                 idSchemeLine=result.getInt(1);
-                description=result.getString(2);
-                discount=result.getDouble(3);
+                description=new SimpleStringProperty(result.getString(2));
+                discount=new SimpleDoubleProperty(result.getDouble(3));
                 idScheme=result.getInt(4);
             }
         } catch (SQLException ex) {
@@ -137,28 +139,28 @@ public class SchemeLine {
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     /**
      * @param description the description to set
      */
     public void setDescription(String description) {
-        this.description = description;
+        this.description = new SimpleStringProperty(description);
     }
 
     /**
      * @return the discount
      */
     public double getDiscount() {
-        return discount;
+        return discount.get();
     }
 
     /**
      * @param discount the discount to set
      */
     public void setDiscount(double discount) {
-        this.discount = discount;
+        this.discount = new SimpleDoubleProperty(discount);
     }
 
     /**

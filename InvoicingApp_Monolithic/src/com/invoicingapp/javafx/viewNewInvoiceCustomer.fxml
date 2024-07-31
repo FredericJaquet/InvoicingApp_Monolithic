@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="paneNewInvoice" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewInvoiceCustomerController">
+<ScrollPane fx:id="paneNewInvoice" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewNewInvoiceProviderController">
    <content>
       <VBox fx:id="VBoxNewInvoice" alignment="TOP_CENTER" spacing="15.0">
          <children>

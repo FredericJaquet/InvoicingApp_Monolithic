@@ -267,8 +267,6 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         boolean control=true;
         labelError.setVisible(false);
         
-        //invoice.setChangeRate(changeRate);
-        //invoice.setCurrency(changeRate.getCurrency1());
         invoice.setCustomer(customer);
         if(Validations.isNotNull(dpDocDate,labelError,errorDate)){
             invoice.setDocDate(dpDocDate.getValue());

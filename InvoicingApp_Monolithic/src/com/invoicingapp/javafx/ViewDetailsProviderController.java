@@ -373,7 +373,7 @@ public class ViewDetailsProviderController implements Initializable {
     
     @FXML protected void onClicback(){
         getQuery();
-        if(changes&&!query.isEmpty()){
+        if(!changes||!query.isEmpty()){
             ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::backToViewProviders, () -> {});
         }else{
             backToViewProviders();
@@ -399,7 +399,7 @@ public class ViewDetailsProviderController implements Initializable {
     }
     
     @FXML protected void onClicNewInvoice(){
-        /*FXMLLoader loader=new FXMLLoader();
+        FXMLLoader loader=new FXMLLoader();
         Parent invoiceProviderView=null;
         ViewNewInvoiceProviderController controller=null;
         BorderPane home=(BorderPane)paneDetailsProvider.getParent();
@@ -413,7 +413,7 @@ public class ViewDetailsProviderController implements Initializable {
         
         controller=loader.getController();
         controller.initData(provider);
-        home.setCenter(invoiceProviderView);*/
+        home.setCenter(invoiceProviderView);
     }
     
     @FXML protected void onClicNewPO(){

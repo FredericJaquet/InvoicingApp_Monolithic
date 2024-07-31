@@ -21,7 +21,8 @@ import javafx.scene.layout.HBox;
 public class ViewOrdersListController implements Initializable {
 
     private Orders order;
-    private ViewNewInvoiceCustomerController mainInvoiceController;
+    private ViewNewInvoiceCustomerController mainInvoiceCustomerController;
+    private ViewNewInvoiceProviderController mainInvoiceProviderController;
     private ViewNewQuoteController mainQuoteController;
     
     @FXML Label lbDescription,lbDate,lbTotal;
@@ -33,7 +34,7 @@ public class ViewOrdersListController implements Initializable {
         lbDescription.setText(order.getDescription());
         lbDate.setText(order.getDateOrder().toString());
         lbTotal.setText(String.format("%.2f€",order.getTotalOrder()));
-        mainInvoiceController = mainController;
+        mainInvoiceCustomerController = mainController;
         cbSelected.setSelected(order.isSelected());
     }
     
@@ -46,6 +47,15 @@ public class ViewOrdersListController implements Initializable {
         cbSelected.setSelected(order.isSelected());
     }
     
+    public void initData(Orders order,ViewNewInvoiceProviderController mainController){
+        this.order=order;
+        lbDescription.setText(order.getDescription());
+        lbDate.setText(order.getDateOrder().toString());
+        lbTotal.setText(String.format("%.2f€",order.getTotalOrder()));
+        mainInvoiceProviderController = mainController;
+        cbSelected.setSelected(order.isSelected());
+    }
+    
     /**
      * Initializes the controller class.
      */
@@ -55,10 +65,12 @@ public class ViewOrdersListController implements Initializable {
     
     @FXML protected void getSelection(){
         order.setSelected(cbSelected.isSelected());
-        if(mainInvoiceController!=null){
-            mainInvoiceController.updateTotals();
+        if(mainInvoiceCustomerController!=null){
+            mainInvoiceCustomerController.updateTotals();
         }else if(mainQuoteController!=null){
             mainQuoteController.updateTotals();
+        }else if(mainInvoiceProviderController!=null){
+            mainInvoiceProviderController.updateTotals();
         }
     }
     

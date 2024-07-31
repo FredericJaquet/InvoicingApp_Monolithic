@@ -380,7 +380,7 @@ public class ViewDetailsCustomerController implements Initializable {
     
     @FXML protected void onClicback(){
         getQuery();
-        if(changes&&!query.isEmpty()){
+        if(!changes||!query.isEmpty()){
             ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::backToViewCustomers, () -> {});
         }else{
             backToViewCustomers();
