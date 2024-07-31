@@ -23,6 +23,7 @@ public class Provider extends CustomProv{
     
     private int idProvider;
     private ArrayList<InvoiceProvider> invoicesProvider=new ArrayList();
+    private ArrayList<PurchaseOrder> pos=new ArrayList();
     
     public Provider(){}
     
@@ -211,6 +212,7 @@ public class Provider extends CustomProv{
     
     /**
     * Gets a Map of idCustomer and comName of all Customers from DB
+     * @return 
     */
     public static Map<Integer,Provider> getMap(){
         ConnectionDB con=new ConnectionDB();
@@ -259,7 +261,7 @@ public class Provider extends CustomProv{
         double totalWithholding=0;
         
         for(int i=0;i<invoicesProvider.size();i++){
-            totalWithholding=totalWithholding+invoicesProvider.get(i).getTotalWithholdingInvoiceProvider();
+            totalWithholding=totalWithholding+invoicesProvider.get(i).getTotalWithholding();
         }
         return totalWithholding;
     }
@@ -287,6 +289,55 @@ public class Provider extends CustomProv{
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }   
+    }
+    
+    /**
+    * gets all the invoices of this customer
+    */
+    public void getInvoicesFromDB(){ 
+        ConnectionDB con=new ConnectionDB();
+        String query="SELECT InvoiceProvider.idInvoiceProvider FROM InvoiceProvider JOIN Document ON (Document.idDocument = InvoiceProvider.idDocument) JOIN DocumentOrders ON (Document.idDocument=DocumentOrders.idDocument) JOIN Orders ON (DocumentOrders.idOrders=Orders.idOrders) WHERE Orders.idCustomProv="+getIdCustomProv()+" GROUP BY idInvoiceProvider;";
+        InvoiceProvider invoiceProvider= new InvoiceProvider();
+        ResultSet result=null;
+        con.openConnection();
+        result=con.getResultSet(query);
+        invoicesProvider.clear();
+        try {
+            while(result.next()){
+                invoiceProvider=new InvoiceProvider();
+                invoiceProvider.getFromDB(result.getInt(1));
+                invoicesProvider.add(invoiceProvider);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Provider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+    * gets all the quotes of this customer instance
+    */
+    public void getPOsFromDB(){ 
+        ConnectionDB con=new ConnectionDB();
+        String query="SELECT PurchaseOrder.idPurchaseOrder FROM PurchaseOrder JOIN Document ON (Document.idDocument = PurchaseOrder.idDocument) JOIN DocumentOrders ON (Document.idDocument=DocumentOrders.idDocument) JOIN Orders ON (DocumentOrders.idOrders=Orders.idOrders) WHERE Orders.idCustomProv="+getIdCustomProv()+" GROUP BY idQuotes";
+        PurchaseOrder po= new PurchaseOrder();
+        ResultSet result=null;
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        pos.clear();
+        try {
+            while(result.next()){
+                po=new PurchaseOrder();
+                po.getFromDB(result.getInt(1));
+                pos.add(po);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Provider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public ArrayList<InvoiceProvider> getInvoices(){
+        return invoicesProvider;
     }
     
     /**

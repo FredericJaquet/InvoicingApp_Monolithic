@@ -222,6 +222,7 @@ public class Customer extends CustomProv {
     
     /**
     * Gets a Map of idCustomer and comName of all Customers from DB
+     * @return 
     */
     public static Map<Integer,Customer> getMap(){
         ConnectionDB con=new ConnectionDB();

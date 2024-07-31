@@ -7,6 +7,8 @@ package com.invoicingapp.javafx;
 import invoicingapp_monolithic.CustomProv;
 import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.InvoiceCustomer;
+import invoicingapp_monolithic.InvoiceProvider;
+import invoicingapp_monolithic.Provider;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -30,27 +32,32 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+/**
+ * FXML Controller class
+ *
+ * @author frede
+ */
+public class ViewInvoicesProviderController implements Initializable {
 
-public class ViewInvoicesCustomerController implements Initializable {
-
-    private ObservableList<InvoiceCustomer> invoices;
-    private ArrayList<Customer> companies=new ArrayList();
-    private Customer customer;
+    private ObservableList<InvoiceProvider> invoices;
+    private ArrayList<Provider> companies=new ArrayList();
+    private Provider provider;
     
-    @FXML private TableView<InvoiceCustomer> tableInvoices;
-    @FXML private TableColumn<InvoiceCustomer, String> columnComName, columnNbr,columnTotal;
-    @FXML private TableColumn<InvoiceCustomer, LocalDate> columnDate;
-    @FXML private ComboBox<Customer> cbCustomers;
-    @FXML private VBox paneInvoicesCustomer;
+    @FXML private TableView<InvoiceProvider> tableInvoices;
+    @FXML private TableColumn<InvoiceProvider, String> columnComName, columnNbr,columnTotal;
+    @FXML private TableColumn<InvoiceProvider, LocalDate> columnDate;
+    @FXML private ComboBox<Provider> cbProviders;
+    @FXML private VBox paneInvoicesProvider;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        onClicAll();
-        companies=Customer.getAllCustomersFromDB(CustomProv.ENABLED);
+        companies=Provider.getAllProvidersFromDB(CustomProv.ENABLED);
         populateCbCustomers();
+        invoices=FXCollections.observableArrayList(InvoiceProvider.getAllInvoicesFromDB());
+        createTableInvoices();
         tableInvoices.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 onSeeInvoice();
@@ -64,53 +71,38 @@ public class ViewInvoicesCustomerController implements Initializable {
         BorderPane home=null;
         
         try {
-            newInvoiceView = FXMLLoader.load(getClass().getResource("viewNewInvoiceCustomer.fxml"));
+            newInvoiceView = FXMLLoader.load(getClass().getResource("viewNewInvoiceProvider.fxml"));
         } catch (IOException ex) {
-            Logger.getLogger(ViewInvoicesCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewInvoicesProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        home=(BorderPane)paneInvoicesCustomer.getParent();
+        home=(BorderPane)paneInvoicesProvider.getParent();
         home.setCenter(newInvoiceView);
     }
     
     @FXML protected void onSeeInvoice(){
         FXMLLoader loader=new FXMLLoader();
         Parent invoiceView=null;
-        ViewInvoiceCustomerController controller=null;
+        ViewInvoiceProviderController controller=null;
         BorderPane home=null;
         
-        loader.setLocation(getClass().getResource("viewInvoiceCustomer.fxml"));
+        loader.setLocation(getClass().getResource("viewInvoiceProvider.fxml"));
         try {
             invoiceView=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewInvoicesCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewInvoicesProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
         controller.initData(tableInvoices.getSelectionModel().getSelectedItem());
-        home=(BorderPane)paneInvoicesCustomer.getParent();
+        home=(BorderPane)paneInvoicesProvider.getParent();
         home.setCenter(invoiceView);
     }
     
-    @FXML protected void onClicPaid(){
-        invoices=FXCollections.observableArrayList(InvoiceCustomer.getAllInvoicesFromDB(InvoiceCustomer.PAID));
-        createTableInvoices();
-    }
-    
-    @FXML protected void onClicNotPaid(){
-        invoices=FXCollections.observableArrayList(InvoiceCustomer.getAllInvoicesFromDB(InvoiceCustomer.NOTPAID));
-        createTableInvoices();
-    }
-    
-    @FXML protected void onClicAll(){
-        invoices=FXCollections.observableArrayList(InvoiceCustomer.getAllInvoicesFromDB());
-        createTableInvoices();
-    }
-    
-    @FXML protected void getSelectionCBCustomers(){
-        customer=cbCustomers.getSelectionModel().getSelectedItem();
-        customer.getInvoicesFromDB();
-        invoices=FXCollections.observableArrayList(customer.getInvoices());
+    @FXML protected void getSelectionCBProviders(){
+        provider=cbProviders.getSelectionModel().getSelectedItem();
+        provider.getInvoicesFromDB();
+        invoices=FXCollections.observableArrayList(provider.getInvoices());
         createTableInvoices();
     }
     
@@ -128,15 +120,15 @@ public class ViewInvoicesCustomerController implements Initializable {
     }
     
     private void populateCbCustomers(){
-        ObservableList<Customer> list =FXCollections.observableArrayList(companies);
-        cbCustomers.setItems(list);
+        ObservableList<Provider> list =FXCollections.observableArrayList(companies);
+        cbProviders.setItems(list);
         
-        cbCustomers.setCellFactory(new Callback<ListView<Customer>, ListCell<Customer>>() {
+        cbProviders.setCellFactory(new Callback<ListView<Provider>, ListCell<Provider>>() {
             @Override
-            public ListCell<Customer> call(ListView<Customer> p) {
-                return new ListCell<Customer>() {
+            public ListCell<Provider> call(ListView<Provider> p) {
+                return new ListCell<Provider>() {
                     @Override
-                    protected void updateItem(Customer item, boolean empty) {
+                    protected void updateItem(Provider item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item.getComName());
@@ -148,9 +140,9 @@ public class ViewInvoicesCustomerController implements Initializable {
             }
         });
         
-        cbCustomers.setButtonCell(new ListCell<Customer>() {
+        cbProviders.setButtonCell(new ListCell<Provider>() {
             @Override
-            protected void updateItem(Customer item, boolean empty) {
+            protected void updateItem(Provider item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
                     setText(item.getComName());
@@ -159,5 +151,6 @@ public class ViewInvoicesCustomerController implements Initializable {
                 }
             }
         });
-    }
+    }  
+    
 }

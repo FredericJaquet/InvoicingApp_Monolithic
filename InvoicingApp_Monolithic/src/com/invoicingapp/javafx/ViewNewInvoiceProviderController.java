@@ -7,20 +7,13 @@ package com.invoicingapp.javafx;
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.Validations;
-import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ChangeRate;
 import invoicingapp_monolithic.CustomProv;
-import invoicingapp_monolithic.Customer;
-import invoicingapp_monolithic.InvoiceCustomer;
 import invoicingapp_monolithic.InvoiceProvider;
 import invoicingapp_monolithic.Orders;
 import invoicingapp_monolithic.Provider;
 import invoicingapp_monolithic.Users;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -42,8 +35,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -208,7 +199,7 @@ public class ViewNewInvoiceProviderController implements Initializable {
     }
     
     @FXML protected void onClicSee(){
-        /*labelError.setVisible(false);
+        labelError.setVisible(false);
         if(saved){
             FXMLLoader loader=new FXMLLoader();
             Parent invoiceProviderView=null;
@@ -217,7 +208,7 @@ public class ViewNewInvoiceProviderController implements Initializable {
         
             loader.setLocation(getClass().getResource("viewInvoiceProvider.fxml"));
             try {
-                invoiceCustomerView=loader.load();
+                invoiceProviderView=loader.load();
             } catch (IOException ex) {
                 Logger.getLogger(ViewNewInvoiceProviderController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -228,7 +219,7 @@ public class ViewNewInvoiceProviderController implements Initializable {
         }else{
             labelError.setText(invoiceNotSaved);
             labelError.setVisible(true);
-        }*/
+        }
     }
     
     @FXML protected void save(){

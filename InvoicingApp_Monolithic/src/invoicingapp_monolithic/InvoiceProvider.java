@@ -8,6 +8,7 @@ import com.invoicingapp.bbdd.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,8 +20,9 @@ import java.util.logging.Logger;
 public class InvoiceProvider extends Document{
     private double withholding;
     private int idInvoiceProvider;
+    private String comName;
     private Provider provider=new Provider();
-    private BankAccount bankAccount=new BankAccount();
+    
     
     public InvoiceProvider(){}
     
@@ -42,7 +44,7 @@ public class InvoiceProvider extends Document{
         
         super.addToDB();
         
-        queryInsert="INSERT INTO InvoiceProvider (withholding, idDocument,idBankAccount) values("+withholding+","+getIdDocument()+","+bankAccount.getIdBankAccount()+")";
+        queryInsert="INSERT INTO InvoiceProvider (withholding, idDocument) values("+withholding+","+getIdDocument()+")";
         con.openConnection();
         con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
@@ -77,23 +79,45 @@ public class InvoiceProvider extends Document{
                 idInvoiceProvider=result.getInt(1);
                 withholding=result.getDouble(2);
                 super.getFromDB(result.getInt(3));
-                bankAccount.getFromDB(result.getInt(4));
             }
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        queryGetIdProvider="SELECT Provider.idProvider FROM Provider JOIN CustomProv ON (CustomProv.idCustomProv=Provider.idCustomProv) WHERE CustomProv.idCustomprov="+getOrders().get(1).getIdCustomProv();
+        queryGetIdProvider="SELECT Provider.idProvider FROM Provider JOIN CustomProv ON (CustomProv.idCustomProv=Provider.idCustomProv) WHERE CustomProv.idCustomprov="+getOrders().get(0).getIdCustomProv();
         result=con.getResultSet(queryGetIdProvider);
         try{
             if(result.next()){
                 provider.getFromDB(result.getInt(1));
+                super.setCompany(provider);
             }
         }catch (SQLException ex) {
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         con.closeConnection();
+    }
+    
+    public static ArrayList<InvoiceProvider> getAllInvoicesFromDB(){
+        ArrayList<InvoiceProvider> list=new ArrayList();
+        String query="SELECT idInvoiceProvider FROM InvoiceProvider;";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        InvoiceProvider invoice=new InvoiceProvider();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                invoice=new InvoiceProvider();
+                invoice.getFromDB(result.getInt(1));
+                list.add(invoice);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceProvider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     
     /**
@@ -158,10 +182,18 @@ public class InvoiceProvider extends Document{
         getFromDB(idInvoiceProvider); 
     }
     
-    public double getTotalWithholdingInvoiceProvider(){
+    public double getTotalWithholding(){
         double totalWithholdingInvoiceProvider=0;
         totalWithholdingInvoiceProvider=getTotal()*withholding/100;
         return totalWithholdingInvoiceProvider;
+    }
+    
+    public double getTotalToPay(){
+        double total=0;
+        
+        total=getTotal()+getTotalVAT()-getTotalWithholding();
+        
+        return total;
     }
 
     /**
@@ -204,20 +236,14 @@ public class InvoiceProvider extends Document{
      */
     public void setProvider(Provider provider) {
         this.provider=provider;
+        super.setCompany(provider);
     }
 
     /**
-     * @return the bankAccount
+     * @param comName the comName to set
      */
-    public BankAccount getBankAccount() {
-        return bankAccount;
-    }
-
-    /**
-     * @param bankAccount the bankAccount to set
-     */
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
+    public void setComName(String comName) {
+        this.comName = comName;
     }
      
 }

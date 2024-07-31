@@ -8,17 +8,12 @@ import com.invoicingapp.bbdd.ConnectionDB;
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.LabelFeatures;
-import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ChangeRate;
-import invoicingapp_monolithic.Customer;
-import invoicingapp_monolithic.InvoiceCustomer;
+import invoicingapp_monolithic.InvoiceProvider;
 import invoicingapp_monolithic.Orders;
+import invoicingapp_monolithic.Provider;
 import invoicingapp_monolithic.Users;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -36,22 +31,23 @@ import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
 
-public class ViewInvoiceCustomerController implements Initializable {
+/**
+ * FXML Controller class
+ *
+ * @author frede
+ */
+public class ViewInvoiceProviderController implements Initializable {
 
-    private InvoiceCustomer invoice;
-    private Customer customer;
+    private InvoiceProvider invoice;
+    private Provider provider;
     private Users user;
-    private BankAccount bankAccount;
     private Configuration config;
     private ChangeRate changeRate;
     private LabelFeatures lbFeatures=new LabelFeatures();
@@ -73,19 +69,17 @@ public class ViewInvoiceCustomerController implements Initializable {
     
     @FXML private VBox paneInvoice,vbOrders,paneMain;
     @FXML private Label lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
-            lbCustComName,lbCustLegalName,lbCustVATNumber,lbCustStreet,lbCustCPCity,lbCustStateCountry,lbCustEmail,lbCustWeb,
-            lbDocDate,lbDocNumber,lbPageNumber,lbPageTotal,lbIBAN,lbHolder,lbBranch,lbPayMethod,lbDuedate,
+            lbProvLegalName,lbProvVATNumber,lbProvStreet,lbProvCPCity,lbProvStateCountry,lbProvEmail,lbProvWeb,
+            lbDocDate,lbDocNumber,lbPageNumber,lbPageTotal,
             lbTotalNet,lbVAT,lbTotalVAT,lbWithholding,lbTotalWithholding,lbTotalInvoice,lbTotalToPay,lbTotalInvoice2,lbTotalToPay2,
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
-            lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,lbTitleBankDetails,lbTitlePayMethod,lbTitleHolder,lbTitleBranch,lbTitleDuedate,
+            lbTitleInvoice,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,
             lbTitleTotalNet,lbTitleVAT,lbTitleTotalVAT,lbTitleWithholding,lbTitleTotalWithholding,lbTitleTotalInvoice,lbTitleTotalToPay,lbTitleTotalInvoice2,lbTitleTotalToPay2;
     @FXML private TextField tfDocNumber;
     @FXML private Button btnPrev,btnNext;
-    @FXML private CheckBox cbPaid;
     @FXML private DatePicker dpDocDate;
-    @FXML private ImageView ivLogo;
     
-    public void initData(InvoiceCustomer invoice){
+    public void initData(InvoiceProvider invoice){
         this.invoice=invoice;
         language=getLanguage(invoice.getLanguage());
         
@@ -93,7 +87,6 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbFeatures.makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate",invoice.getIdDocument());
         
         getObjects();
-        setLogo();
         setData();
         getTotals();
         setTotals();
@@ -137,21 +130,21 @@ public class ViewInvoiceCustomerController implements Initializable {
     
     @FXML protected void onClicBack(){
         FXMLLoader loader=new FXMLLoader();
-        Parent detailsCustomerView=null;
-        ViewDetailsCustomerController controller=null;
+        Parent detailsProviderView=null;
+        ViewDetailsProviderController controller=null;
         BorderPane home=null;
         
-        loader.setLocation(getClass().getResource("viewDetailsCustomer.fxml"));
+        loader.setLocation(getClass().getResource("viewDetailsProvider.fxml"));
         try {
-            detailsCustomerView=loader.load();
+            detailsProviderView=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewInvoiceProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
-        controller.initData(customer);
+        controller.initData(provider);
         home=(BorderPane)paneMain.getParent();
-        home.setCenter(detailsCustomerView);
+        home.setCenter(detailsProviderView);
     }
     
     @FXML protected void print() {
@@ -196,10 +189,6 @@ public class ViewInvoiceCustomerController implements Initializable {
         query.clear();
     }
     
-    @FXML protected void onClicPaid(){
-        invoice.updateDB("paid", cbPaid.isSelected());
-    }
-    
     private boolean printNode(Node node, PrinterJob job, PageLayout pageLayout){
         boolean success;
         double scaleX = pageLayout.getPrintableWidth() / node.getBoundsInParent().getWidth();
@@ -217,9 +206,8 @@ public class ViewInvoiceCustomerController implements Initializable {
     }
     
     private void getObjects(){
-        customer=invoice.getCustomer();
+        provider=invoice.getProvider();
         user=invoice.getUser();
-        bankAccount=invoice.getBankAccount();
         changeRate=invoice.getChangeRate();
         orders=invoice.getOrders();        
     }
@@ -236,20 +224,13 @@ public class ViewInvoiceCustomerController implements Initializable {
         //Invoice info
         setInvoiceInfo();
         //Customer info
-        lbCustComName.setText(customer.getComName());
-        lbCustLegalName.setText(customer.getLegalName());
-        lbCustVATNumber.setText(customer.getVatNumber());
-        lbCustStreet.setText(customer.getAddress().getStreet()+" "+customer.getAddress().getStNumber()+" "+customer.getAddress().getApt());
-        lbCustCPCity.setText(customer.getAddress().getCp()+" / "+customer.getAddress().getCity());
-        lbCustStateCountry.setText(customer.getAddress().getState()+" / "+customer.getAddress().getCountry());
-        lbCustEmail.setText(customer.getEmail());
-        lbCustWeb.setText(customer.getWeb());
-        //Bank Details
-        lbPayMethod.setText(customer.getPayMethod());
-        lbHolder.setText(bankAccount.getHolder());
-        lbBranch.setText(bankAccount.getBranch());
-        lbIBAN.setText(bankAccount.getIban());
-        lbDuedate.setText(invoice.getDuedate().toString());
+        lbProvLegalName.setText(provider.getLegalName());
+        lbProvVATNumber.setText(provider.getVatNumber());
+        lbProvStreet.setText(provider.getAddress().getStreet()+" "+provider.getAddress().getStNumber()+" "+provider.getAddress().getApt());
+        lbProvCPCity.setText(provider.getAddress().getCp()+" / "+provider.getAddress().getCity());
+        lbProvStateCountry.setText(provider.getAddress().getState()+" / "+provider.getAddress().getCountry());
+        lbProvEmail.setText(provider.getEmail());
+        lbProvWeb.setText(provider.getWeb());
     }
     
     private void setInvoiceInfo(){
@@ -270,9 +251,9 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbTotalToPay2.setVisible(false);
         
         lbTotalNet.setText(String.format("%.2f"+invoice.getCurrency(),totalNet));
-        lbVAT.setText(String.format("%.2f%%",customer.getDefaultVAT()));
+        lbVAT.setText(String.format("%.2f%%",provider.getDefaultVAT()));
         lbTotalVAT.setText(String.format("%.2f"+invoice.getCurrency(),totalVAT));
-        lbWithholding.setText(String.format("%.2f%%",customer.getDefaultWithholding()));
+        lbWithholding.setText(String.format("%.2f%%",provider.getDefaultWithholding()));
         lbTotalWithholding.setText(String.format("%.2f"+invoice.getCurrency(),totalWithholding));
         lbTotalInvoice.setText(String.format("%.2f"+invoice.getCurrency(),totalInvoice));
         lbTotalToPay.setText(String.format("%.2f"+invoice.getCurrency(),totalToPay));
@@ -305,27 +286,6 @@ public class ViewInvoiceCustomerController implements Initializable {
         }
     }
     
-    private void setLogo(){
-        InputStream isImage=null;
-        File img=null;
-        try {
-            img=new File(config.getLogoPath());
-            isImage = (InputStream) new FileInputStream(img);
-            ivLogo.setImage(new Image(isImage));
-            ivLogo.setFitWidth(imgSize);
-            ivLogo.setFitHeight(imgSize);
-            ivLogo.setPreserveRatio(true);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                isImage.close();
-            } catch (IOException ex) {
-                Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
     private void setTitles(){
         lbTitleTotalInvoice2.setVisible(false);
         lbTitleTotalToPay2.setVisible(false);
@@ -343,11 +303,6 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbTitleOf.setText(Translations.titleOf[language]);
         lbPageTotal.setText(String.valueOf(pages));
         lbTitleDate.setText(Translations.titleDate[language]);
-        lbTitleBankDetails.setText(Translations.titleBankDetails[language]);
-        lbTitlePayMethod.setText(Translations.titlePayMethod[language]);
-        lbTitleHolder.setText(Translations.titleHolder[language]);
-        lbTitleBranch.setText(Translations.titleBranch[language]);
-        lbTitleDuedate.setText(Translations.titleDuedate[language]);
         lbTitleTotalNet.setText(Translations.titleTotalNet[language]);
         lbTitleVAT.setText(Translations.titleVAT[language]);
         lbTitleTotalVAT.setText(Translations.titleTotalVAT[language]);
@@ -410,4 +365,5 @@ public class ViewInvoiceCustomerController implements Initializable {
         }
         ordersIndex[pages]=orders.size();
     }
+    
 }

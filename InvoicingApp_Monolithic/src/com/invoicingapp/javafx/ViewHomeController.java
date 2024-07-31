@@ -7,7 +7,6 @@ package com.invoicingapp.javafx;
 import com.invoicingapp.tools.ButtonFeatures;
 import invoicingapp_monolithic.Customer;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -20,8 +19,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -35,12 +32,12 @@ import javafx.scene.layout.GridPane;
  */
 public class ViewHomeController implements Initializable {
 
-    private int imgSize=100;
+    private final int imgSize=100;
     
     @FXML private GridPane paneCentral;
     @FXML private BorderPane mainPane;
     @FXML private Button btnCustomers,btnProviders,btnNewOrder,
-            btnInvoicesCustomer,btnNewInvoiceProvider,btnQuotes, 
+            btnInvoicesCustomer,btnInvoicesProvider,btnQuotes, 
             btnNewPo,btnReportIncomes,btnReportOutcomes,btnHome,
             btnReportPendings,btnGrafIncomes,btnGrafOutcomes;
     @FXML TextField fieldCompany;
@@ -56,7 +53,7 @@ public class ViewHomeController implements Initializable {
         ButtonFeatures.makeButtonFocusable(btnProviders,"Proveedores","../img/Providers.png","../img/Providers_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnNewOrder,"Pedidos","../img/NewOrder.png","../img/NewOrder_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnInvoicesCustomer,"Facturas Clientes","../img/NewInvoiceCustomer.png","../img/NewInvoiceCustomer_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnNewInvoiceProvider,"Facturas Proveedores","../img/NewInvoiceProvider.png","../img/NewInvoiceProvider_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnInvoicesProvider,"Facturas Proveedores","../img/NewInvoiceProvider.png","../img/NewInvoiceProvider_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnQuotes,"Presupuesto","../img/NewQuote.png","../img/NewQuote_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnNewPo,"Orden de Pedido","../img/NewPo.png","../img/NewPo_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnReportIncomes,"Informe Ingresos","../img/ReportIncomes.png","../img/ReportIncomes_Focused.png");

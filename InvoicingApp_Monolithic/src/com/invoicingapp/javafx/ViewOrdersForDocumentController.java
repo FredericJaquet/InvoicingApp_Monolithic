@@ -8,6 +8,7 @@ import invoicingapp_monolithic.ChangeRate;
 import invoicingapp_monolithic.Orders;
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,7 @@ public class ViewOrdersForDocumentController implements Initializable {
     private String currency;
     private Orders order;
     private ChangeRate changeRate;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
     @FXML private VBox paneItems;
     @FXML private Label lbDescription,lbDate,lbQuantity,lbTotal;
@@ -79,7 +81,7 @@ public class ViewOrdersForDocumentController implements Initializable {
     
     private void setData(){
         lbDescription.setText(order.getDescription());
-        lbDate.setText(order.getDateOrder().toString());
+        lbDate.setText(order.getDateOrder().format(formatter));
         lbQuantity.setText(String.format("%.2f",order.getQuantity()));
         if(changeRate!=null){
             lbTotal.setText(String.format("%.2f"+changeRate.getCurrency1(),order.getTotalOrder()));

@@ -156,9 +156,7 @@ CREATE TABLE IF NOT EXISTS InvoiceProvider(
 idInvoiceProvider	INT(10) AUTO_INCREMENT, 
 withholding		double,
 idDocument		INT(10) UNIQUE,
-idBankAccount		INT(10),
 PRIMARY KEY		(idInvoiceProvider),
-FOREIGN KEY		(idBankAccount)	REFERENCES BankAccount(idBankAccount)	ON UPDATE CASCADE,
 FOREIGN KEY		(idDocument)	REFERENCES Document(idDocument) ON UPDATE CASCADE
 );
 

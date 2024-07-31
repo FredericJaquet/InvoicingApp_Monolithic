@@ -24,7 +24,6 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
     private LocalDate duedate;
     private BankAccount bankAccount=new BankAccount();
     private int comparableValue;
-    private String comName;
     
     public InvoiceCustomer(){}
     
@@ -101,6 +100,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         try{
             if(result.next()){
                 customer.getFromDB(result.getInt(1));
+                super.setCompany(customer);
                 duedate=getDocDate().plusDays(customer.getDuedate());
             }
         }catch (SQLException ex) {
@@ -334,6 +334,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
      */
     public void setCustomer(Customer customer) {
         this.customer=customer;
+        super.setCompany(customer);
     }
 
     /**
@@ -376,14 +377,6 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
      */
     public void setBankAccount(BankAccount bankAccount) {
         this.bankAccount = bankAccount;
-    }
-
-    public void setComName(){
-        comName=customer.getComName();
-    }
-     
-    public String getComName(){
-        return comName;
     }
     
     @Override

@@ -152,7 +152,7 @@
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Factura Proveedor" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <Button fx:id="bInvoicesProvider" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Factura Proveedor" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <effect>
                         <ColorAdjust />
                      </effect>
@@ -298,7 +298,7 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnNewInvoiceProvider" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnInvoicesProvider" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>

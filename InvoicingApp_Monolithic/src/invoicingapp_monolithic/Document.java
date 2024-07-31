@@ -20,13 +20,16 @@ public class Document {
     public static int PAID=1;
     public static int NOTPAID=2;
     public static int ALL=3;
-    private String docNumber,language,totalString,currency;
+    private String docNumber,language,totalString,currency,comName;
     private double vat;
+    private int idDocument;
     private LocalDate docDate;
     private Users user=new Users();
+    private Company company=new Company();
     private ChangeRate changeRate=new ChangeRate();
-    private int idDocument;
+    
     private ArrayList<Orders> orders=new ArrayList();
+    
     
     public Document(){
         changeRate.getFromDB(1);
@@ -451,6 +454,28 @@ public class Document {
      */
     public void setIdDocument(int idDocument) {
         this.idDocument = idDocument;
+    }
+    
+    public void setComName(){
+        comName=company.getComName();
+    }
+     
+    public String getComName(){
+        return comName;
+    }
+
+    /**
+     * @return the company
+     */
+    public Company getCompany() {
+        return company;
+    }
+
+    /**
+     * @param company the company to set
+     */
+    public void setCompany(Company company) {
+        this.company = company;
     }
     
 }
