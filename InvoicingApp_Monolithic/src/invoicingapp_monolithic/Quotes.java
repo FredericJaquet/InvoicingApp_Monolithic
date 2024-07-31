@@ -101,7 +101,7 @@ public class Quotes extends Document{
     
     public static ArrayList<Quotes> getAllQuotesFromDB(int accepted){
         ArrayList<Quotes> list=new ArrayList();
-        String query="SELECT idQuotes FROM Quotes WHERE accepted="+accepted;
+        String query="SELECT idQuotes FROM Quotes WHERE status="+accepted;
         ConnectionDB con=new ConnectionDB();
         ResultSet result=null;
         Quotes quote=new Quotes();

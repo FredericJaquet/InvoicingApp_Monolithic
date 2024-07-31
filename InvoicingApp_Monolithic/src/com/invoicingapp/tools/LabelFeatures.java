@@ -39,7 +39,7 @@ public class LabelFeatures {
         });
     }
     
-    public void makeLabelEditable(Label label, TextField textField,String table,String field, String id) {
+    public void makeLabelEditable(Label label,TextField textField,String table,String field, String id) {
         textField.setVisible(false);
 
         label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

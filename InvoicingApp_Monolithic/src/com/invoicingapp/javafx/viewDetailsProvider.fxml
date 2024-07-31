@@ -370,6 +370,7 @@
                         <Button fx:id="btnAccountRight" mnemonicParsing="false" onAction="#onNextAccount" text="&gt;" />
                      </children>
                   </HBox>
+                  <Label fx:id="lbError" text="Label" textFill="RED" visible="false" />
                   <HBox alignment="BOTTOM_RIGHT" spacing="15.0">
                      <children>
                         <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onClicNewOrder" prefHeight="25.0" prefWidth="59.0" text="Pedido">

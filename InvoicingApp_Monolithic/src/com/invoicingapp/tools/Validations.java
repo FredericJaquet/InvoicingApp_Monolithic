@@ -33,15 +33,34 @@ public class Validations {
         return control;
     }
     
-    public static boolean isInteger(TextField field,Label lbError,String message){
+    public static boolean isDouble(Label field,Label lbError,String message){
         String dl=field.getText();
-        int duedate;
+        double result;
         boolean control=true;
         
         lbError.setVisible(false);
         field.getStyleClass().remove("error");
         try{
-            duedate=Integer.parseInt(field.getText());
+            result=Double.parseDouble(dl);
+        }catch(NumberFormatException e){
+            lbError.setVisible(true);
+            lbError.setText(message);
+            field.getStyleClass().add("error");
+            control=false;
+        }
+        
+        return control;
+    }
+    
+    public static boolean isInteger(TextField field,Label lbError,String message){
+        String dl=field.getText();
+        int result;
+        boolean control=true;
+        
+        lbError.setVisible(false);
+        field.getStyleClass().remove("error");
+        try{
+            result=Integer.parseInt(field.getText());
         }catch(NumberFormatException ex){
             lbError.setVisible(true);
             lbError.setText(message);

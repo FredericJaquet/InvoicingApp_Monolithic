@@ -7,6 +7,7 @@ package com.invoicingapp.javafx;
 import com.invoicingapp.bbdd.ConnectionDB;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.LabelFeatures;
+import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
 import invoicingapp_monolithic.ContactPerson;
 import invoicingapp_monolithic.Customer;
@@ -35,8 +36,6 @@ import javafx.stage.Stage;
 
 
 public class ViewDetailsCustomerController implements Initializable {
-
-    private Customer customer;
     private ArrayList<Phone> phones=new ArrayList();
     private ArrayList<Phone> newPhones=new ArrayList();
     private ArrayList<ContactPerson> contacts=new ArrayList();
@@ -45,9 +44,11 @@ public class ViewDetailsCustomerController implements Initializable {
     private ArrayList<Scheme> newSchemes=new ArrayList();
     private ArrayList<BankAccount> accounts=new ArrayList();
     private ArrayList<BankAccount> newAccounts=new ArrayList();
-    private int iContacts=0,iPhones=0,iSchemes=0,iAccounts=0;
     private ArrayList<String> query=new ArrayList();
+    private final String errorFormat="Uno de los datos introducidos no es correcto.";
+    private int iContacts=0,iPhones=0,iSchemes=0,iAccounts=0;
     private boolean changes=false;
+    private Customer customer;
     private LabelFeatures lbFeatures=new LabelFeatures();
     private ViewContactController contactController=null;
     private ViewPhonesController phonesController=null;
@@ -56,7 +57,8 @@ public class ViewDetailsCustomerController implements Initializable {
     
     @FXML private Label lb_Company_ComName,lb_Company_LegalName,lb_Company_Web,lb_Company_Email,lb_Company_VATNumber,lb_CustomProv_DefaultVAT,lb_Company_DefaultLanguage,
             lb_Customer_Duedate,lb_CustomProv_DefaultWithholding,lb_Customer_InvoicingMethod,lb_Customer_PayMethod,lb_CustomProv_Europe,
-            lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country;
+            lb_CustomProv_Enabled,lb_Address_Street,lb_Address_StNumber,lb_Address_City,lb_Address_State,lb_Address_Apt,lb_Address_CP,lb_Address_Country,
+            lbError;
     @FXML private TextField fieldComName,fieldLegalName,fieldWeb,fieldCompEmail,fieldVATNumber,fieldDefaultVAT,
             fieldDuedate,fieldDefaultWithholding,fieldInvoicingMethod,fieldPayMethod,
             fieldStreet,fieldStNumber,fieldCity,fieldState,fieldApt,fieldCP,fieldCountry;
@@ -82,7 +84,7 @@ public class ViewDetailsCustomerController implements Initializable {
         lbFeatures.makeLabelEditable(lb_Company_Email, fieldCompEmail,"Company","email",customer.getIdCompany());
         lbFeatures.makeLabelEditable(lb_Company_VATNumber, fieldVATNumber,"Company","vatNumber",customer.getIdCompany());
         lbFeatures.makeLabelEditable(lb_Company_DefaultLanguage,cbLanguage,"Company","defaultLanguage",customer.getIdCompany());
-        lbFeatures.makeLabelEditable(lb_CustomProv_DefaultVAT, fieldDefaultVAT,"CustomeProv","defaultVAT",customer.getIdCustomProv());
+        lbFeatures.makeLabelEditable(lb_CustomProv_DefaultVAT, fieldDefaultVAT,"CustomProv","defaultVAT",customer.getIdCustomProv());
         lbFeatures.makeLabelEditable(lb_Customer_Duedate, fieldDuedate,"Customer","dueDate",customer.getIdCustomer());
         lbFeatures.makeLabelEditable(lb_CustomProv_DefaultWithholding, fieldDefaultWithholding,"CustomProv","defaultWithholding",customer.getIdCustomProv());
         lbFeatures.makeLabelEditable(lb_Customer_InvoicingMethod, fieldInvoicingMethod,"Customer","invoicingMethod",customer.getIdCustomer());
@@ -343,35 +345,36 @@ public class ViewDetailsCustomerController implements Initializable {
         ConnectionDB con=new ConnectionDB();
         getQuery();
         if(!query.isEmpty()){
-            con.openConnection();
-            for(int i=0;i<query.size();i++){
-                con.executeUpdate(query.get(i));
+            if(Validations.isDouble(lb_CustomProv_DefaultVAT, lbError, errorFormat)&&Validations.isDouble(lb_CustomProv_DefaultWithholding, lbError, errorFormat)){
+                con.openConnection();
+                for(int i=0;i<query.size();i++){
+                    con.executeUpdate(query.get(i));
+                }
+                con.closeConnection();
+                contactController.resetQuery();
+                phonesController.resetQuery();
+                schemesController.resetQuery();
+                accountsController.resetQuery();
+                lbFeatures.resetQuery();
+                query.clear();
+                for(int i=0;i<newContacts.size();i++){
+                    newContacts.get(i).addToDB();
+                }
+        
+                for(int j=0;j<newPhones.size();j++){
+                    newPhones.get(j).addToDB();
+                }
+                
+                for(int k=0;k<newSchemes.size();k++){
+                    newSchemes.get(k).addToDB();
+                }
+                
+                for(int l=0;l<newAccounts.size();l++){
+                    newAccounts.get(l).addToDB();
+                }
+                changes=false;
             }
-            con.closeConnection();
-            contactController.resetQuery();
-            phonesController.resetQuery();
-            schemesController.resetQuery();
-            accountsController.resetQuery();
-            lbFeatures.resetQuery();
-            query.clear();
         }
-        
-        for(int i=0;i<newContacts.size();i++){
-            newContacts.get(i).addToDB();
-        }
-        
-        for(int j=0;j<newPhones.size();j++){
-            newPhones.get(j).addToDB();
-        }
-        
-        for(int k=0;k<newSchemes.size();k++){
-            newSchemes.get(k).addToDB();
-        }
-        
-        for(int l=0;l<newAccounts.size();l++){
-            newAccounts.get(l).addToDB();
-        }
-        changes=false;
     }
     
     @FXML protected void onClicDelete(){

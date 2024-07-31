@@ -6,6 +6,13 @@
 
 }
 
+.table{
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-radius: 10px;
+}
+
 .binButton{
     -fx-background-image: url(../img/logo_bin.png);
     -fx-background-repeat: no-repeat;
@@ -14,4 +21,10 @@
     -fx-padding: 5;
     -fx-pref-width: 25px;
     -fx-pref-height: 25px;
+}
+
+.error{
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-text-fill: red
 }
