@@ -64,7 +64,7 @@ public class ViewLoginController implements Initializable {
     @FXML protected void onActionEnter(){
         Map<String,Integer> mapUsers=Users.getMap();
         String passwd;
-        int idUser=-1;
+        int idUser;
         
         if(mapUsers.get(fieldUser.getText())!=null){
             idUser=mapUsers.get(fieldUser.getText());
@@ -83,6 +83,9 @@ public class ViewLoginController implements Initializable {
             }
         }else{
             labelInfo.setText("User does not exist");
+            fieldPasswd.clear();
+            checkRemindme.setSelected(false);
+            control=false;
         }
         
         if(control){

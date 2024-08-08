@@ -179,7 +179,7 @@ public class ViewNewQuoteController implements Initializable {
             try {
                 quoteView=loader.load();
             } catch (IOException ex) {
-                Logger.getLogger(ViewQuotesController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ViewNewQuoteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         
             controller=loader.getController();
@@ -426,7 +426,7 @@ public class ViewNewQuoteController implements Initializable {
         try {
             detailsCustomerView=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewNewQuoteController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();

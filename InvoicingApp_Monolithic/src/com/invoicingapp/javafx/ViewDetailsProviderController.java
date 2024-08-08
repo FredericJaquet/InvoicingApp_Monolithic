@@ -420,7 +420,7 @@ public class ViewDetailsProviderController implements Initializable {
     }
     
     @FXML protected void onClicNewPO(){
-        /*FXMLLoader loader=new FXMLLoader();
+        FXMLLoader loader=new FXMLLoader();
         Parent newPOView=null;
         ViewNewPOController controller=null;
         BorderPane home=(BorderPane)paneDetailsProvider.getParent();
@@ -434,7 +434,7 @@ public class ViewDetailsProviderController implements Initializable {
         }
         controller=loader.getController();
         controller.initData(provider);
-        home.setCenter(newPOView);*/
+        home.setCenter(newPOView);
     }
     
     private void showContacts(){

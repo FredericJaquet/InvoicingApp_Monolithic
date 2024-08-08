@@ -146,6 +146,31 @@ public class PurchaseOrder extends Document{
         con.closeConnection();
         getFromDB(idPurchaseOrder);
     }
+    
+    public static String getLastPONumber(){
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        String lastNumber="";
+        String query="SELECT docNumber "
+                + "FROM document JOIN PurchaseOrder "
+                + "ON(document.idDocument=PurchaseOrder.idDocument) "
+                + "WHERE docDate=(SELECT docDate FROM Document "
+                + "JOIN PurchaseOrder ON(Document.idDocument=PurchaseOrder.idDocument)"
+                + "ORDER BY docDate DESC LIMIT 1);";
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            if(result.next()){
+                lastNumber=result.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return lastNumber;
+    }
 
     /**
      * @return the idPurchaseOrder
@@ -185,8 +210,8 @@ public class PurchaseOrder extends Document{
     /**
      * @param idProvider of the Provider to set
      */
-    public void setProvider(int idProvider) {
-        provider.getFromDB(idProvider);
+    public void setProvider(Provider provider) {
+        this.provider=provider;
     }
     
 }

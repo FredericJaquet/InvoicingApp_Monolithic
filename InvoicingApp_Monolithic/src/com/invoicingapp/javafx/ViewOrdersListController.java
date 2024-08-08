@@ -24,6 +24,7 @@ public class ViewOrdersListController implements Initializable {
     private ViewNewInvoiceCustomerController mainInvoiceCustomerController;
     private ViewNewInvoiceProviderController mainInvoiceProviderController;
     private ViewNewQuoteController mainQuoteController;
+    private ViewNewPOController mainPOController;
     
     @FXML Label lbDescription,lbDate,lbTotal;
     @FXML CheckBox cbSelected;
@@ -56,6 +57,15 @@ public class ViewOrdersListController implements Initializable {
         cbSelected.setSelected(order.isSelected());
     }
     
+    public void initData(Orders order,ViewNewPOController mainController){
+        this.order=order;
+        lbDescription.setText(order.getDescription());
+        lbDate.setText(order.getDateOrder().toString());
+        lbTotal.setText(String.format("%.2f€",order.getTotalOrder()));
+        mainPOController = mainController;
+        cbSelected.setSelected(order.isSelected());
+    }
+    
     /**
      * Initializes the controller class.
      */
@@ -71,6 +81,8 @@ public class ViewOrdersListController implements Initializable {
             mainQuoteController.updateTotals();
         }else if(mainInvoiceProviderController!=null){
             mainInvoiceProviderController.updateTotals();
+        }else if(mainPOController!=null){
+            mainPOController.updateTotals();
         }
     }
     

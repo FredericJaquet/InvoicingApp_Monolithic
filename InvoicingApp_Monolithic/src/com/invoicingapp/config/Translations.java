@@ -13,7 +13,6 @@ import invoicingapp_monolithic.Currency;
 public class Translations {
     
     public static String[] languages={"English","Español", "Français"};
-    
     public static String[] titleAddress={"Address","Dirección","Adresse"};
     public static String[] titleBankDetails={"Bank Account Number","Número de cuenta bancaria","Número de compte bancaire"};
     public static String[] titleBranch={"Branch","Sucursal","Banque"};
@@ -26,6 +25,7 @@ public class Translations {
     public static String[] titleHolder={"Holder","Titular","Titulaire"};
     public static String[] titleInvoice={"Invoice","Factura","Facture"};
     public static String[] titleLastInvoice={"Last Invoice","Última Factura","Dernière Facture"};
+    public static String[] titleLastPO={"Last Purchase Order","Última Orden de Pedido","Dernier Bon de Commande"};
     public static String[] titleLastQuote={"Last Quote","Último Presupuesto","Dernier devis"};
     public static String[] titleName={"Name","Nombre","Nom"};
     public static String[] titleNumber={"Number","Número","Numéro"};
@@ -33,6 +33,7 @@ public class Translations {
     public static String[] titlePage={"Page","Página","Page"};
     public static String[] titlePayMethod={"Payment method","Método de pago","Méthode de payement"};
     public static String[] titlePayment={"Payment note","Nota de pago","Note de payment"};
+    public static String[] titlePO={"Purchase Order","Orden de Pedido","Bon de Commande"};
     public static String[] titleQuote={"Quote","Presupuesto","Devis"};
     public static String[] titleSelectAll={"Select All","Seleccionar todo","Tout sélectionner"};
     public static String[] titleTotalInvoice={"Total Invoice","Total Factura","Total Facture"};

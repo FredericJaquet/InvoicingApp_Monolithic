@@ -64,6 +64,7 @@ public class ViewNewOrderController implements Initializable {
     private final String errorEmpty="Falta un dato obligatorio.";
     private final String errorDateOrder="Falta la Fecha.";
     private final String errorNoLines="El pedido no tiene artículos.";
+    
     @FXML ComboBox cbCustomProvs, cbSchemes;
     @FXML TextField tfDescription,tfLineDescription, tfDiscount,tfQuantity,tfPrice,tfUnits,tfFieldName,tfSourceLanguage,tfTargetLanguage;
     @FXML Label lbLegalName,lbVATNumber,lbUpdatedTotal,labelError;
