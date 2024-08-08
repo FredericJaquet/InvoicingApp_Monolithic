@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author frede
  */
-public class Provider extends CustomProv{ 
+public class Provider extends CustomProv{
     
     private int idProvider;
     private ArrayList<InvoiceProvider> invoicesProvider=new ArrayList();
@@ -318,7 +318,7 @@ public class Provider extends CustomProv{
     */
     public void getPOsFromDB(){ 
         ConnectionDB con=new ConnectionDB();
-        String query="SELECT PurchaseOrder.idPurchaseOrder FROM PurchaseOrder JOIN Document ON (Document.idDocument = PurchaseOrder.idDocument) JOIN DocumentOrders ON (Document.idDocument=DocumentOrders.idDocument) JOIN Orders ON (DocumentOrders.idOrders=Orders.idOrders) WHERE Orders.idCustomProv="+getIdCustomProv()+" GROUP BY idQuotes";
+        String query="SELECT PurchaseOrder.idPurchaseOrder FROM PurchaseOrder JOIN Document ON (Document.idDocument = PurchaseOrder.idDocument) JOIN DocumentOrders ON (Document.idDocument=DocumentOrders.idDocument) JOIN Orders ON (DocumentOrders.idOrders=Orders.idOrders) WHERE Orders.idCustomProv="+getIdCustomProv()+" GROUP BY idPurchaseOrder";
         PurchaseOrder po= new PurchaseOrder();
         ResultSet result=null;
         con.openConnection();
@@ -352,6 +352,20 @@ public class Provider extends CustomProv{
      */
     public void setIdProvider(int id) {
         this.idProvider = id;
+    }
+    
+     /**
+     * @return the pos
+     */
+    public ArrayList<PurchaseOrder> getPos() {
+        return pos;
+    }
+
+    /**
+     * @param pos the pos to set
+     */
+    public void setPos(ArrayList<PurchaseOrder> pos) {
+        this.pos = pos;
     }
 
 }

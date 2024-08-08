@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="paneMain" alignment="TOP_CENTER" fillWidth="false" spacing="10.0" stylesheets="@viewquote.css"xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewQuoteController">
+<VBox fx:id="paneMain" alignment="TOP_CENTER" fillWidth="false" spacing="10.0" stylesheets="@viewquote.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewQuoteController">
    <children>
       <HBox alignment="CENTER_RIGHT" maxWidth="700.0" prefWidth="700.0" spacing="15.0" VBox.vgrow="NEVER">
          <children>

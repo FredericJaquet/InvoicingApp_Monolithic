@@ -18,9 +18,6 @@ import java.util.logging.Logger;
  */
 public class Quotes extends Document{
     
-    public static final int PENDING=0;
-    public static final int ACCEPTED=1;
-    public static final int REJECTED=2;
     private int idQuotes, status;
     private String noteDelivery, notePayment;
     private String comName;
@@ -190,8 +187,6 @@ public class Quotes extends Document{
         ConnectionDB con=new ConnectionDB();
         String query="UPDATE Quotes SET "+field+"= "+newValue+" WHERE idQuotes="+idQuotes;
         
-        System.out.println("Quotes linea 195: "+query);
-        
         con.openConnection();
         con.executeUpdate(query);
         con.closeConnection();
@@ -296,10 +291,12 @@ public class Quotes extends Document{
     /**
      * @return the comName
      */
+    @Override
     public String getComName() {
         return comName;
     }
     
+    @Override
     public void setComName(){
         comName=customer.getComName();
     }

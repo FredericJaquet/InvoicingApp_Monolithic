@@ -8,6 +8,7 @@ import com.invoicingapp.bbdd.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,8 +19,11 @@ import java.util.logging.Logger;
 public class PurchaseOrder extends Document{
     
     private int idPurchaseOrder;
+    private int status=0;
+    private String comName;
     private LocalDate deadline;
     private Provider provider=new Provider();
+    
     
     public PurchaseOrder(){}
     
@@ -41,7 +45,7 @@ public class PurchaseOrder extends Document{
         
         super.addToDB();
         
-        queryInsert="INSERT INTO PurchaseOrder (deadline, idDocument) values('"+deadline.toString()+"',"+getIdDocument()+")";
+        queryInsert="INSERT INTO PurchaseOrder (deadline, status, idDocument) values('"+deadline.toString()+"',"+status+","+getIdDocument()+")";
         con.openConnection();
         con.executeUpdate(queryInsert);
         result=con.getResultSet(queryGetId);
@@ -75,13 +79,14 @@ public class PurchaseOrder extends Document{
             if(result.next()){
                 idPurchaseOrder=result.getInt(1);
                 deadline=LocalDate.parse(result.getString(2));
-                super.getFromDB(result.getInt(3));
+                status=result.getInt(3);
+                super.getFromDB(result.getInt(4));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        queryGetIdProvider="SELECT Provider.idProvider FROM Provider JOIN CustomProv ON (CustomProv.idCustomProv=Provider.idCustomProv) WHERE CustomProv.idCustomprov="+getOrders().get(1).getIdCustomProv();
+        queryGetIdProvider="SELECT Provider.idProvider FROM Provider JOIN CustomProv ON (CustomProv.idCustomProv=Provider.idCustomProv) WHERE CustomProv.idCustomprov="+getOrders().get(0).getIdCustomProv();
         result=con.getResultSet(queryGetIdProvider);
         try{
             if(result.next()){
@@ -91,6 +96,50 @@ public class PurchaseOrder extends Document{
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+    }
+    
+    public static ArrayList<PurchaseOrder> getAllPOsFromDB(int accepted){
+        ArrayList<PurchaseOrder> list=new ArrayList();
+        String query="SELECT idPurchaseOrder FROM PurchaseOrder WHERE status="+accepted;
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        PurchaseOrder po=new PurchaseOrder();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                po=new PurchaseOrder();
+                po.getFromDB(result.getInt(1));
+                list.add(po);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public static ArrayList<PurchaseOrder> getAllPOsFromDB(){
+        ArrayList<PurchaseOrder> list=new ArrayList();
+        String query="SELECT idPurchaseOrder FROM PurchaseOrder";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        PurchaseOrder po=new PurchaseOrder();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                po=new PurchaseOrder();
+                po.getFromDB(result.getInt(1));
+                list.add(po);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     
     /**
@@ -208,10 +257,23 @@ public class PurchaseOrder extends Document{
     }
 
     /**
-     * @param idProvider of the Provider to set
+     * @param provider the Provider to set
      */
     public void setProvider(Provider provider) {
         this.provider=provider;
+    }
+    
+    /**
+     * @return the comName
+     */
+    @Override
+    public String getComName() {
+        return comName;
+    }
+    
+    @Override
+    public void setComName(){
+        comName=provider.getComName();
     }
     
 }

@@ -173,6 +173,7 @@ FOREIGN KEY 	(idDocument)	REFERENCES Document(idDocument) ON UPDATE CASCADE
 CREATE TABLE IF NOT EXISTS PurchaseOrder(
 idPurchaseOrder	INT(10) AUTO_INCREMENT, 
 deadline	DATE,
+status		boolean 	DEFAULT 0,
 idDocument	INT(10) UNIQUE,
 PRIMARY KEY	(idPurchaseOrder),
 FOREIGN KEY 	(idDocument)	REFERENCES Document(idDocument) ON UPDATE CASCADE

@@ -5,9 +5,9 @@
 package com.invoicingapp.javafx;
 
 import invoicingapp_monolithic.CustomProv;
-import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Document;
-import invoicingapp_monolithic.Quotes;
+import invoicingapp_monolithic.Provider;
+import invoicingapp_monolithic.PurchaseOrder;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -35,113 +35,115 @@ import javafx.scene.layout.VBox;
  *
  * @author frede
  */
-public class ViewQuotesController implements Initializable {
+public class ViewPOsController implements Initializable {
 
-    private ObservableList<Quotes> quotes;
-    private ArrayList<Customer> companies=new ArrayList();
-    private Customer customer;
+    private ObservableList<PurchaseOrder> pos;
+    private ArrayList<Provider> companies=new ArrayList();
+    private Provider provider;
     
-    @FXML private TableView<Quotes> tableQuotes;
-    @FXML private TableColumn<Quotes, String> columnComName, columnNbr,columnTotal;
-    @FXML private TableColumn<Quotes, LocalDate> columnDate;
-    @FXML private ComboBox<Customer> cbCustomers;
-    @FXML private VBox paneQuotes;
+    @FXML private TableView<PurchaseOrder> tablePOs;
+    @FXML private TableColumn<PurchaseOrder, String> columnComName, columnNbr,columnTotal;
+    @FXML private TableColumn<PurchaseOrder, LocalDate> columnDate;
+    @FXML private ComboBox<Provider> cbProviders;
+    @FXML private VBox panePO;
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         onClicAll();
-        companies=Customer.getAllCustomersFromDB(CustomProv.ENABLED);
+        companies=Provider.getAllProvidersFromDB(CustomProv.ENABLED);
         populateCbCustomers();
-        tableQuotes.setOnMouseClicked(event -> {
+        tablePOs.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                onSeeQuote();
+                onSeePO();
             }
         });
     }
     
-    @FXML protected void onCreateQuote(){
-        Parent newQuoteView=null;
+    @FXML protected void onCreatePO(){
+        Parent newPOView=null;
         BorderPane home=null;
         
         try {
-            newQuoteView = FXMLLoader.load(getClass().getResource("viewNewQuote.fxml"));
+            newPOView = FXMLLoader.load(getClass().getResource("viewNewPO.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(ViewQuotesController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        home=(BorderPane)paneQuotes.getParent();
-        home.setCenter(newQuoteView);
+        home=(BorderPane)panePO.getParent();
+        home.setCenter(newPOView);
     }
     
-    @FXML protected void onSeeQuote(){
-        FXMLLoader loader=new FXMLLoader();
-        Parent quoteView=null;
-        ViewQuoteController controller=null;
+    @FXML protected void onSeePO(){
+        /*FXMLLoader loader=new FXMLLoader();
+        Parent poView=null;
+        ViewPOController controller=null;
         BorderPane home=null;
         
-        loader.setLocation(getClass().getResource("viewQuote.fxml"));
+        loader.setLocation(getClass().getResource("viewPO.fxml"));
         try {
-            quoteView=loader.load();
+            poView=loader.load();
         } catch (IOException ex) {
             Logger.getLogger(ViewQuotesController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
-        controller.initData(tableQuotes.getSelectionModel().getSelectedItem());
-        home=(BorderPane)paneQuotes.getParent();
-        home.setCenter(quoteView);
+        controller.initData(tablePOs.getSelectionModel().getSelectedItem());
+        home=(BorderPane)panePO.getParent();
+        home.setCenter(poView);*/
     }
     
     @FXML protected void onClicPending(){
-        quotes=FXCollections.observableArrayList(Quotes.getAllQuotesFromDB(Document.PENDING));
-        createTableQuotes();
+        pos=FXCollections.observableArrayList(PurchaseOrder.getAllPOsFromDB(Document.PENDING));
+        createTablePOs();
     }
     
     @FXML protected void onClicAccepted(){
-        quotes=FXCollections.observableArrayList(Quotes.getAllQuotesFromDB(Document.ACCEPTED));
-        createTableQuotes();
+        pos=FXCollections.observableArrayList(PurchaseOrder.getAllPOsFromDB(Document.ACCEPTED));
+        createTablePOs();
     }
     
     @FXML protected void onClicRejected(){
-        quotes=FXCollections.observableArrayList(Quotes.getAllQuotesFromDB(Document.REJECTED));
-        createTableQuotes();
+        pos=FXCollections.observableArrayList(PurchaseOrder.getAllPOsFromDB(Document.REJECTED));
+        createTablePOs();
     }
     
     @FXML protected void onClicAll(){
-        quotes=FXCollections.observableArrayList(Quotes.getAllQuotesFromDB());
-        createTableQuotes();
+        pos=FXCollections.observableArrayList(PurchaseOrder.getAllPOsFromDB());
+        createTablePOs();
     }
     
     @FXML protected void getSelectionCBCustomers(){
-        customer=cbCustomers.getSelectionModel().getSelectedItem();
-        customer.getQuotesFromDB();
-        quotes=FXCollections.observableArrayList(customer.getQuotes());
-        createTableQuotes();
+        provider=cbProviders.getSelectionModel().getSelectedItem();
+        provider.getPOsFromDB();
+        pos=FXCollections.observableArrayList(provider.getPos());
+        createTablePOs();
     }
     
-    private void createTableQuotes(){
-        for(int i=0;i<quotes.size();i++){
-            quotes.get(i).setComName();
-            quotes.get(i).setTotalString();
+    private void createTablePOs(){
+        for(int i=0;i<pos.size();i++){
+            pos.get(i).setComName();
+            pos.get(i).setTotalString();
         }
         columnComName.setCellValueFactory(new PropertyValueFactory<>("comName"));
         columnNbr.setCellValueFactory(new PropertyValueFactory<>("docNumber"));
         columnDate.setCellValueFactory(new PropertyValueFactory<>("docDate"));
         columnTotal.setCellValueFactory(new PropertyValueFactory<>("totalString"));
                 
-        tableQuotes.setItems(quotes);
+        tablePOs.setItems(pos);
     }
     
     private void populateCbCustomers(){
-        ObservableList<Customer> list =FXCollections.observableArrayList(companies);
-        cbCustomers.setItems(list);
+        ObservableList<Provider> list =FXCollections.observableArrayList(companies);
+        cbProviders.setItems(list);
         
-        cbCustomers.setCellFactory((ListView<Customer> p) -> new ListCell<Customer>() {
+        cbProviders.setCellFactory((ListView<Provider> p) -> new ListCell<Provider>() {
             @Override
-            protected void updateItem(Customer item, boolean empty) {
+            protected void updateItem(Provider item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
                     setText(item.getComName());
@@ -151,9 +153,9 @@ public class ViewQuotesController implements Initializable {
             }
         });
         
-        cbCustomers.setButtonCell(new ListCell<Customer>() {
+        cbProviders.setButtonCell(new ListCell<Provider>() {
             @Override
-            protected void updateItem(Customer item, boolean empty) {
+            protected void updateItem(Provider item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item != null) {
                     setText(item.getComName());
@@ -162,6 +164,6 @@ public class ViewQuotesController implements Initializable {
                 }
             }
         });
-    }
+    }  
     
 }

@@ -17,6 +17,9 @@ import java.util.logging.Logger;
  * @author frede
  */
 public class Document {
+    public static final int PENDING=0;
+    public static final int ACCEPTED=1;
+    public static final int REJECTED=2;
     public static int PAID=1;
     public static int NOTPAID=2;
     public static int ALL=3;
