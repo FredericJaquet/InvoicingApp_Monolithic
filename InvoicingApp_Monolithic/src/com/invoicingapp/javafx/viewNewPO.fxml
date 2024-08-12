@@ -90,7 +90,7 @@
                         </AnchorPane>
                         <VBox spacing="5.0" styleClass="withBorder" GridPane.columnIndex="1" GridPane.rowSpan="2">
                            <children>
-                              <ComboBox fx:id="cbProviders" onAction="#getSelectionCBCustomers" promptText="Proveedor" />
+                              <ComboBox fx:id="cbProviders" onAction="#getSelectionCBProviders" promptText="Proveedor" />
                               <Label fx:id="lbProvLegalName" text="Label" />
                               <Label fx:id="lbProvVATNumber" text="Label" />
                               <Label fx:id="lbProvStreet" text="Label" />
@@ -178,7 +178,7 @@
                   <Label fx:id="labelError" text="Label" textFill="RED" visible="false" />
                   <HBox alignment="CENTER_RIGHT" spacing="15.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Ver" />
+                        <Button mnemonicParsing="false" onAction="#onClicSee" text="Ver" />
                         <Button mnemonicParsing="false" onAction="#cancel" text="Volver" />
                         <Button mnemonicParsing="false" onAction="#save" text="Guardar" />
                      </children>

@@ -79,7 +79,7 @@ public class ViewPOsController implements Initializable {
     }
     
     @FXML protected void onSeePO(){
-        /*FXMLLoader loader=new FXMLLoader();
+        FXMLLoader loader=new FXMLLoader();
         Parent poView=null;
         ViewPOController controller=null;
         BorderPane home=null;
@@ -94,7 +94,7 @@ public class ViewPOsController implements Initializable {
         controller=loader.getController();
         controller.initData(tablePOs.getSelectionModel().getSelectedItem());
         home=(BorderPane)panePO.getParent();
-        home.setCenter(poView);*/
+        home.setCenter(poView);
     }
     
     @FXML protected void onClicPending(){

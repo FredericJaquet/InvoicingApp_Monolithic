@@ -30,7 +30,6 @@ public class Document {
     private Users user=new Users();
     private Company company=new Company();
     private ChangeRate changeRate=new ChangeRate();
-    
     private ArrayList<Orders> orders=new ArrayList();
     
     
@@ -298,6 +297,7 @@ public class Document {
         int idOrders;
         Orders order=new Orders();
         
+        orders.clear();
         con.openConnection();
         result=con.getResultSet(query);
         
@@ -310,7 +310,8 @@ public class Document {
             }
         }catch (SQLException ex) {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+        }
+        
     }
     
     public void setOrdersToBilled(){

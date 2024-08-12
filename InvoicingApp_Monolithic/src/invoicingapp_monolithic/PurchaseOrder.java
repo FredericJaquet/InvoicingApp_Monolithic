@@ -24,7 +24,6 @@ public class PurchaseOrder extends Document{
     private LocalDate deadline;
     private Provider provider=new Provider();
     
-    
     public PurchaseOrder(){}
     
     public PurchaseOrder(String docNumber, String title, double vat, LocalDate docDate, LocalDate deadline){
@@ -188,8 +187,6 @@ public class PurchaseOrder extends Document{
         ConnectionDB con=new ConnectionDB();
         String query="UPDATE PurchaseOrder SET "+field+"= "+newValue+" WHERE idPurchaseOrder="+idPurchaseOrder;
         
-        System.out.println(query);
-        
         con.openConnection();
         con.executeUpdate(query);
         con.closeConnection();
@@ -250,12 +247,12 @@ public class PurchaseOrder extends Document{
     }
 
     /**
-     * @return the Provider
+     * @return the provider
      */
-    public Provider Provider() {
+    public Provider getProvider() {
         return provider;
     }
-
+    
     /**
      * @param provider the Provider to set
      */
@@ -274,6 +271,20 @@ public class PurchaseOrder extends Document{
     @Override
     public void setComName(){
         comName=provider.getComName();
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
     
 }

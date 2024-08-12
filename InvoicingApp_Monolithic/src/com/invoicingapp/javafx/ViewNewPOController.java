@@ -19,7 +19,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -43,7 +42,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -61,9 +59,9 @@ public class ViewNewPOController implements Initializable {
     private Configuration config;
     private String currency;
     private String logoPath;
-    private final int imgSize=175;
     private int language=1;
     private boolean saved=false;
+    private final int imgSize=175;
     private final String errorDate="Falta la fecha.";
     private final String errorNumber="Falta el numero de Orden de Pedido.";
     private final String errorNoOrders="La Orden de Pedido no tiene pedidos asignados.";
@@ -106,6 +104,8 @@ public class ViewNewPOController implements Initializable {
     
     /**
      * Initializes the NewQuoteController class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -150,7 +150,7 @@ public class ViewNewPOController implements Initializable {
         }
     }
     
-    @FXML protected void getSelectionCBCustomers(){
+    @FXML protected void getSelectionCBProviders(){
         provider=cbProviders.getSelectionModel().getSelectedItem();
         language=getLanguage(provider.getDefaultLanguage());
         cbLanguages.getSelectionModel().select(language);
@@ -169,7 +169,7 @@ public class ViewNewPOController implements Initializable {
     }
     
     @FXML protected void onClicSee(){
-        /*labelError.setVisible(false);
+        labelError.setVisible(false);
         if(saved){
             FXMLLoader loader=new FXMLLoader();
             Parent poView=null;
@@ -190,7 +190,7 @@ public class ViewNewPOController implements Initializable {
         }else{
             labelError.setText(poNotSaved);
             labelError.setVisible(true);
-        }*/
+        }
     }
     
     @FXML protected void getSelectionCurrency(){
@@ -251,20 +251,15 @@ public class ViewNewPOController implements Initializable {
         ObservableList<Provider> list =FXCollections.observableArrayList(companies);
         cbProviders.setItems(list);
         
-        cbProviders.setCellFactory(new Callback<ListView<Provider>, ListCell<Provider>>() {
+        cbProviders.setCellFactory((ListView<Provider> p) -> new ListCell<Provider>() {
             @Override
-            public ListCell<Provider> call(ListView<Provider> p) {
-                return new ListCell<Provider>() {
-                    @Override
-                    protected void updateItem(Provider item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null) {
-                            setText(item.getComName());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Provider item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item.getComName());
+                } else {
+                    setText(null);
+                }
             }
         });
         
@@ -285,20 +280,15 @@ public class ViewNewPOController implements Initializable {
         ObservableList<Currency> currenciesObs =FXCollections.observableArrayList(Translations.currencies);
         cbCurrency.setItems(currenciesObs);
         
-        cbCurrency.setCellFactory(new Callback<ListView<Currency>, ListCell<Currency>>() {
+        cbCurrency.setCellFactory((ListView<Currency> p) -> new ListCell<Currency>() {
             @Override
-            public ListCell<Currency> call(ListView<Currency> p) {
-                return new ListCell<Currency>() {
-                    @Override
-                    protected void updateItem(Currency item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null) {
-                            setText(item.toString());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Currency item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item.toString());
+                } else {
+                    setText(null);
+                }
             }
         });
         

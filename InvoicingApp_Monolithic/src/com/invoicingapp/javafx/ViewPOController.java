@@ -8,9 +8,9 @@ import com.invoicingapp.bbdd.ConnectionDB;
 import com.invoicingapp.config.Configuration;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.LabelFeatures;
-import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Orders;
-import invoicingapp_monolithic.Quotes;
+import invoicingapp_monolithic.Provider;
+import invoicingapp_monolithic.PurchaseOrder;
 import invoicingapp_monolithic.Users;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,11 +44,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
 
+/**
+ * FXML Controller class
+ *
+ * @author frede
+ */
+public class ViewPOController implements Initializable {
 
-public class ViewQuoteController implements Initializable {
-
-    private Quotes quote;
-    private Customer customer;
+    private PurchaseOrder po;
+    private Provider provider;
     private Users user;
     private Configuration config;
     private LabelFeatures lbFeatures=new LabelFeatures();
@@ -59,18 +63,19 @@ public class ViewQuoteController implements Initializable {
     private int pages=1;
     private int page=1;    
     private double totalNet=0;
-    private double totalQuote=0;
+    private double totalPO=0;
+    
     private int[] ordersIndex;
     private final int maxLinesPerPage=24;
     private final int imgSize=150;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
-    @FXML private VBox paneQuote,vbOrders,paneMain;
+    @FXML private VBox panePO,vbOrders,paneMain;
     @FXML private Label lbVATNumber,lbStreet,lbCityCp,lbCountry,lbEmail,lbWeb,lbLegalName,
-            lbCustComName,lbCustLegalName,lbCustVATNumber,lbCustStreet,lbCustCPCity,lbCustStateCountry,lbCustEmail,lbCustWeb,
-            lbDocDate,lbDocNumber,lbPageNumber,lbPageTotal,lbPaymentNote,lbDeliveryNote,lbTotalNet,lbVAT,lbTotal,
+            lbProvComName,lbProvLegalName,lbProvVATNumber,lbProvStreet,lbProvCPCity,lbProvStateCountry,lbProvEmail,lbProvWeb,
+            lbDocDate,lbDocNumber,lbPageNumber,lbPageTotal,lbDeliveryNote,lbTotalNet,lbVAT,lbTotal,
             lbTitleName,lbTitleVATNumber,lbTitleAddress,lbTitleCPCity,lbTitleCountry,lbTitleEmail,lbTitleWeb,
-            lbTitleQuote,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,lbTitlePaymentNote,lbTitleDeliveryNote,
+            lbTitlePO,lbTitleNumber,lbTitleDate,lbTitlePage,lbTitleOf,lbTitleDeliveryNote,
             lbTitleTotalNet,lbTitleVAT,lbTitleTotal;
     @FXML private TextField tfDocNumber;
     @FXML private Button btnPrev,btnNext;
@@ -78,14 +83,14 @@ public class ViewQuoteController implements Initializable {
     @FXML private DatePicker dpDocDate;
     @FXML private ImageView ivLogo;
     
-    public void initData(Quotes quote){
-        this.quote=quote;
-        language=getLanguage(quote.getLanguage());
+    public void initData(PurchaseOrder po){
+        this.po=po;
+        language=getLanguage(po.getLanguage());
         populateCbStatus();
-        cbStatus.getSelectionModel().select(quote.getStatus());
+        cbStatus.getSelectionModel().select(po.getStatus());
         
-        lbFeatures.makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber",quote.getIdDocument());
-        lbFeatures.makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate",quote.getIdDocument());
+        lbFeatures.makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber",po.getIdDocument());
+        lbFeatures.makeLabelEditable(lbDocDate, dpDocDate, "Document","docDate",po.getIdDocument());
         
         getObjects();
         setLogo();
@@ -103,6 +108,8 @@ public class ViewQuoteController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -135,21 +142,21 @@ public class ViewQuoteController implements Initializable {
     
     @FXML protected void onClicBack(){
         FXMLLoader loader=new FXMLLoader();
-        Parent detailsCustomerView=null;
-        ViewDetailsCustomerController controller=null;
+        Parent detailsProviderView=null;
+        ViewDetailsProviderController controller=null;
         BorderPane home=null;
         
-        loader.setLocation(getClass().getResource("viewDetailsCustomer.fxml"));
+        loader.setLocation(getClass().getResource("viewDetailsProvider.fxml"));
         try {
-            detailsCustomerView=loader.load();
+            detailsProviderView=loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(ViewQuoteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewPOController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         controller=loader.getController();
-        controller.initData(customer);
+        controller.initData(provider);
         home=(BorderPane)paneMain.getParent();
-        home.setCenter(detailsCustomerView);
+        home.setCenter(detailsProviderView);
     }
     
     @FXML protected void print() {
@@ -157,11 +164,11 @@ public class ViewQuoteController implements Initializable {
         PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
         PrinterJob job = PrinterJob.createPrinterJob();
         
-        if (job != null && job.showPrintDialog(paneQuote.getScene().getWindow())) {
+        if (job != null && job.showPrintDialog(panePO.getScene().getWindow())) {
             boolean success = true;
 
             for (int i=0;i<pages;i++) {
-                success = success && printNode(paneQuote, job, pageLayout);
+                success = success && printNode(panePO, job, pageLayout);
                 if (!success) {
                     break;
                 }
@@ -195,8 +202,8 @@ public class ViewQuoteController implements Initializable {
     }
     
     private void getSelectionCBStatus(String newValue){
-        quote.setStatus(getStatus(newValue));
-        quote.updateDB("status", quote.getStatus());
+        po.setStatus(getStatus(newValue));
+        po.updateDB("status", po.getStatus());
     }
     
     private void populateCbStatus(){
@@ -236,9 +243,10 @@ public class ViewQuoteController implements Initializable {
     }
     
     private void getObjects(){
-        customer=quote.getCustomer();
-        user=quote.getUser();
-        orders=quote.getOrders();        
+        provider=po.getProvider();
+        user=po.getUser();
+        orders=po.getOrders();
+        System.out.println("POController linea 249: "+orders.size());
     }
     
     private void setData(){ 
@@ -251,35 +259,34 @@ public class ViewQuoteController implements Initializable {
         lbEmail.setText(user.getEmail());
         lbWeb.setText(user.getWeb());
         //Invoice info
-        setQuoteInfo();
+        setPOInfo();
         //Customer info
-        lbCustComName.setText(customer.getComName());
-        lbCustLegalName.setText(customer.getLegalName());
-        lbCustVATNumber.setText(customer.getVatNumber());
-        lbCustStreet.setText(customer.getAddress().getStreet()+" "+customer.getAddress().getStNumber()+" "+customer.getAddress().getApt());
-        lbCustCPCity.setText(customer.getAddress().getCp()+" / "+customer.getAddress().getCity());
-        lbCustStateCountry.setText(customer.getAddress().getState()+" / "+customer.getAddress().getCountry());
-        lbCustEmail.setText(customer.getEmail());
-        lbCustWeb.setText(customer.getWeb());
+        lbProvComName.setText(provider.getComName());
+        lbProvLegalName.setText(provider.getLegalName());
+        lbProvVATNumber.setText(provider.getVatNumber());
+        lbProvStreet.setText(provider.getAddress().getStreet()+" "+provider.getAddress().getStNumber()+" "+provider.getAddress().getApt());
+        lbProvCPCity.setText(provider.getAddress().getCp()+" / "+provider.getAddress().getCity());
+        lbProvStateCountry.setText(provider.getAddress().getState()+" / "+provider.getAddress().getCountry());
+        lbProvEmail.setText(provider.getEmail());
+        lbProvWeb.setText(provider.getWeb());
         //Notes
-        lbPaymentNote.setText(quote.getNotePayment());
-        lbDeliveryNote.setText(quote.getNoteDelivery());
+        lbDeliveryNote.setText(po.getDeadline().format(formatter));
     }
     
-    private void setQuoteInfo(){
-        lbDocDate.setText(quote.getDocDate().format(formatter));
-        lbDocNumber.setText(quote.getDocNumber());
+    private void setPOInfo(){
+        lbDocDate.setText(po.getDocDate().format(formatter));
+        lbDocNumber.setText(po.getDocNumber());
     }
     
     private void getTotals(){
-        totalNet=quote.getTotal();
-        totalQuote=totalNet+(totalNet*(customer.getDefaultVAT()/100));
+        totalNet=po.getTotal();
+        totalPO=totalNet+(totalNet*(provider.getDefaultVAT()/100));
     }
     
     private void setTotals(){
-        lbTotalNet.setText(String.format("%.2f"+quote.getCurrency(),totalNet));
-        lbVAT.setText(String.format("%.2f%%",customer.getDefaultVAT()));
-        lbTotal.setText(String.format("%.2f"+quote.getCurrency(),totalQuote));
+        lbTotalNet.setText(String.format("%.2f"+po.getCurrency(),totalNet));
+        lbVAT.setText(String.format("%.2f%%",provider.getDefaultVAT()));
+        lbTotal.setText(String.format("%.2f"+po.getCurrency(),totalPO));
     }
     
     private void setOrders(){
@@ -297,7 +304,7 @@ public class ViewQuoteController implements Initializable {
                 Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
             }
             controller=loader.getController();
-            controller.initData(orders.get(i),quote.getCurrency());
+            controller.initData(orders.get(i),po.getCurrency());
             
             vbOrders.getChildren().add(ordersListView);
         }
@@ -332,7 +339,7 @@ public class ViewQuoteController implements Initializable {
         lbTitleCountry.setText(Translations.titleCountry[language]);
         lbTitleEmail.setText(Translations.titleEmail[language]);
         lbTitleWeb.setText(Translations.titleWeb[language]);
-        lbTitleQuote.setText(Translations.titleQuote[language]);
+        lbTitlePO.setText(Translations.titlePO[language]);
         lbTitleNumber.setText(Translations.titleNumber[language]);
         lbTitlePage.setText(Translations.titlePage[language]);
         lbPageNumber.setText(String.valueOf(page));
@@ -340,7 +347,6 @@ public class ViewQuoteController implements Initializable {
         lbPageTotal.setText(String.valueOf(pages));
         lbTitleDate.setText(Translations.titleDate[language]);
         lbTitleDeliveryNote.setText(Translations.titleDelivery[language]);
-        lbTitlePaymentNote.setText(Translations.titlePayment[language]);
         lbTitleTotalNet.setText(Translations.titleTotalNet[language]);
         lbTitleVAT.setText(Translations.titleVAT[language]);
         lbTitleTotal.setText(Translations.titleTotalQuote[language]);
@@ -392,6 +398,6 @@ public class ViewQuoteController implements Initializable {
             }
         }
         ordersIndex[pages]=orders.size();
-    }
+    }  
     
 }
