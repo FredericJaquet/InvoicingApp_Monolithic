@@ -117,6 +117,8 @@ public class InvoiceProvider extends Document{
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
         return list;
     }
     

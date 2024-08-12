@@ -19,6 +19,8 @@ import java.util.logging.Logger;
  * @author frede
  */
 public class Orders {
+    public static final int CUSTOMERS=1;
+    public static final int PROVIDERS=2;
     private String description, units, fieldName, sourceLanguage, targetLanguage;
     private double pricePerUnit;
     private boolean billed;
@@ -110,6 +112,58 @@ public class Orders {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+    }
+    
+    public static ArrayList<Orders> getAllOrdersFromDB(){
+        ArrayList<Orders> list=new ArrayList();
+        ConnectionDB con=new ConnectionDB();
+        String query="SELECT idOrders FROM Orders";
+        ResultSet result=null;
+        Orders order=new Orders();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                order=new Orders();
+                order.getFromDB(result.getInt(1));
+                list.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        con.closeConnection();
+        
+        return list;
+    }
+    
+    public static ArrayList<Orders> getAllOrdersFromDB(int CompanyKind){
+        ArrayList<Orders> list=new ArrayList();
+        ConnectionDB con=new ConnectionDB();
+        String query="SELECT idOrders FROM Orders WHERE idCustomProv IN (SELECT idCustomProv FROM";
+        ResultSet result=null;
+        Orders order=new Orders();
+        
+        switch(CompanyKind){
+            case(CUSTOMERS):query=query.concat(" Customer);");break;
+            case(PROVIDERS):query=query.concat(" Provider);");break;
+        }
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                order=new Orders();
+                order.getFromDB(result.getInt(1));
+                list.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        con.closeConnection();
+        
+        return list;
     }
     
     /**
@@ -250,6 +304,27 @@ public class Orders {
         return mapOrders;
     }
     
+    public String getComName(){
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        String query="SELECT comName FROM Company JOIN CustomProv ON(Company.idCompany=CustomProv.idCompany) WHERE CustomProv.idCustomProv="+idCustomProv;
+        String comName="";
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try{
+            if(result.next()){
+                comName=result.getString(1);
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        con.closeConnection();
+        
+        return comName;
+    }
+    
     @Override
     public String toString(){
         return idOrders+" "+description+" "+dateOrder.toString();
@@ -266,6 +341,10 @@ public class Orders {
         }
         
         return totalOrder;
+    }
+    
+    public String getTotalString(){
+        return String.format("%.2f€",getTotalOrder());
     }
     
     public double getQuantity(){

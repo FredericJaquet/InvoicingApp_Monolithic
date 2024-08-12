@@ -129,6 +129,8 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
         return list;
     }
     
@@ -156,6 +158,8 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
         return list;
     }
     

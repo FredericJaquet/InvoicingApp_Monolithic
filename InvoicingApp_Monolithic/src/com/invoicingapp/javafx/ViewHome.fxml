@@ -314,7 +314,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnNewOrder" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnOrders" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>

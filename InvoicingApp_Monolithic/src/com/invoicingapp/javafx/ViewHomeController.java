@@ -36,7 +36,7 @@ public class ViewHomeController implements Initializable {
     
     @FXML private GridPane paneCentral;
     @FXML private BorderPane mainPane;
-    @FXML private Button btnCustomers,btnProviders,btnNewOrder,
+    @FXML private Button btnCustomers,btnProviders,btnOrders,
             btnInvoicesCustomer,btnInvoicesProvider,btnQuotes, 
             btnPOs,btnReportIncomes,btnReportOutcomes,btnHome,
             btnReportPendings,btnGrafIncomes,btnGrafOutcomes;
@@ -51,7 +51,7 @@ public class ViewHomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ButtonFeatures.makeButtonFocusable(btnCustomers,"Clientes","../img/Customers.png","../img/Customers_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnProviders,"Proveedores","../img/Providers.png","../img/Providers_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnNewOrder,"Pedidos","../img/NewOrder.png","../img/NewOrder_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnOrders,"Pedidos","../img/NewOrder.png","../img/NewOrder_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnInvoicesCustomer,"Facturas Clientes","../img/NewInvoiceCustomer.png","../img/NewInvoiceCustomer_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnInvoicesProvider,"Facturas Proveedores","../img/NewInvoiceProvider.png","../img/NewInvoiceProvider_Focused.png");
         ButtonFeatures.makeButtonFocusable(btnQuotes,"Presupuesto","../img/NewQuote.png","../img/NewQuote_Focused.png");

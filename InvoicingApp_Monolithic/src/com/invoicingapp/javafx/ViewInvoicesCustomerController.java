@@ -28,7 +28,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 
 public class ViewInvoicesCustomerController implements Initializable {
@@ -45,6 +44,8 @@ public class ViewInvoicesCustomerController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -131,20 +132,15 @@ public class ViewInvoicesCustomerController implements Initializable {
         ObservableList<Customer> list =FXCollections.observableArrayList(companies);
         cbCustomers.setItems(list);
         
-        cbCustomers.setCellFactory(new Callback<ListView<Customer>, ListCell<Customer>>() {
+        cbCustomers.setCellFactory((ListView<Customer> p) -> new ListCell<Customer>() {
             @Override
-            public ListCell<Customer> call(ListView<Customer> p) {
-                return new ListCell<Customer>() {
-                    @Override
-                    protected void updateItem(Customer item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null) {
-                            setText(item.getComName());
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
+            protected void updateItem(Customer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item != null) {
+                    setText(item.getComName());
+                } else {
+                    setText(null);
+                }
             }
         });
         

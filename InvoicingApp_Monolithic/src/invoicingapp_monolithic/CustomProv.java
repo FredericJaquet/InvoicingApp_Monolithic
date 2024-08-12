@@ -512,4 +512,18 @@ public class CustomProv extends Company{
         this.idCustomProv = id;
     }
 
+    /**
+     * @return the orders
+     */
+    public ArrayList<Orders> getOrders() {
+        return orders;
+    }
+
+    /**
+     * @param orders the orders to set
+     */
+    public void setOrders(ArrayList<Orders> orders) {
+        this.orders = orders;
+    }
+
 }
