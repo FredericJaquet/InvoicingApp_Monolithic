@@ -88,6 +88,8 @@ public class ViewNewOrderController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -128,7 +130,7 @@ public class ViewNewOrderController implements Initializable {
                     order.addItem(newLine);
                     changes=true;
                 }
-                createTableSchemeLines();
+                createTableItems();
                 
                 tfLineDescription.clear();
                 tfDiscount.clear();
@@ -301,12 +303,12 @@ public class ViewNewOrderController implements Initializable {
         });
     }
     
-    private void createTableSchemeLines(){
+    private void createTableItems(){
         ObservableList<Item> items=FXCollections.observableArrayList(order.getItems());
         
-        columnDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
-        columnDiscount.setCellValueFactory(new PropertyValueFactory<Item,Double>("discount"));
-        columnQuantity.setCellValueFactory(new PropertyValueFactory<Item,Double>("quantity"));
+        columnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        columnDiscount.setCellValueFactory(new PropertyValueFactory<>("discount"));
+        columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
                 
         tvItems.setItems(items);
     }
@@ -332,7 +334,7 @@ public class ViewNewOrderController implements Initializable {
         dpDateOrder.setValue(LocalDate.now());
         cbCustomProvs.setValue(null);
         cbSchemes.setValue(null);
-        createTableSchemeLines();
+        createTableItems();
         
         tfDescription.getStyleClass().remove("error");
         tfPrice.getStyleClass().remove("error");
@@ -380,11 +382,11 @@ public class ViewNewOrderController implements Initializable {
     
     private void closeWindow(){
         BorderPane home=(BorderPane)paneNewOrder.getParent();
-        Parent DetailsCustomerView;
+        Parent detailsCustomerView;
         
         try {
-            DetailsCustomerView=FXMLLoader.load(getClass().getResource(prevView));
-            home.setCenter(DetailsCustomerView);
+            detailsCustomerView=FXMLLoader.load(getClass().getResource(prevView));
+            home.setCenter(detailsCustomerView);
         } catch (IOException ex) {
             Logger.getLogger(ViewNewOrderController.class.getName()).log(Level.SEVERE, null, ex);
         }

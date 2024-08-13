@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<GridPane fx:id="paneOrder" alignment="CENTER" hgap="5.0" maxWidth="600.0" stylesheets="@vieworder.css" vgap="5.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewOrderController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.0" minWidth="10.0" prefWidth="82.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+   <children>
+      <Label styleClass="labels" text="Nombre" />
+      <Label fx:id="lbLegalName" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+      <Label styleClass="labels" text="CIF" GridPane.columnIndex="4" />
+      <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="5" />
+      <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="1" />
+      <Label styleClass="labels" text="Descripción" GridPane.rowIndex="2" />
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <children>
+            <TextField fx:id="tfDescription" promptText="Obligatorio" visible="false" />
+            <Label fx:id="lbDescription" text="Label" />
+         </children>
+      </StackPane>
+      <Label styleClass="labels" text="Precio" GridPane.rowIndex="3" />
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <TextField fx:id="tfPrice" promptText="Obligatorio" visible="false" />
+            <Label fx:id="lbPrice" text="Label" />
+         </children>
+      </StackPane>
+      <Label styleClass="labels" text="Unidades" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+         <children>
+            <TextField fx:id="tfUnits" visible="false" />
+            <Label fx:id="lbUnits" text="Label" />
+         </children>
+      </StackPane>
+      <Label styleClass="labels" text="Sector" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+         <children>
+            <TextField fx:id="tfFieldName" visible="false" />
+            <Label fx:id="lbFieldName" text="Label" />
+         </children>
+      </StackPane>
+      <Label styleClass="labels" text="Idioma Origen" GridPane.rowIndex="4" />
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <children>
+            <Label fx:id="lbSourceLanguage" text="Label" />
+            <TextField fx:id="tfSourceLanguage" visible="false" />
+         </children>
+      </StackPane>
+      <Label styleClass="labels" text="Idioma Destino" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+         <children>
+            <TextField fx:id="tfTargetLanguage" visible="false" />
+            <Label fx:id="lbTargetLanguage" text="Label" />
+         </children>
+      </StackPane>
+      <Label styleClass="labels" text="Fecha" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+         <children>
+            <DatePicker fx:id="dpDateOrder" visible="false" />
+            <Label fx:id="lbDate" text="Label" />
+         </children>
+      </StackPane>
+      <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="5" />
+      <Label styleClass="labels" text="Artículos" GridPane.rowIndex="6" />
+      <Label styleClass="labels" text="Total" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+         <children>
+            <Label fx:id="lbUpdatedTotal" layoutX="36.0" layoutY="5.0" text="Label" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="tvItems" GridPane.columnSpan="6" GridPane.rowIndex="7" GridPane.rowSpan="6">
+         <columns>
+            <TableColumn fx:id="columnDescription" prefWidth="417.9999803304672" text="Descripción" />
+            <TableColumn fx:id="columnDiscount" prefWidth="105.3333740234375" text="Descuento" />
+            <TableColumn fx:id="columnQuantity" prefWidth="101.3333740234375" text="Cantidad" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label fx:id="lbError" text="Label" textFill="RED" visible="false" GridPane.columnSpan="6" GridPane.rowIndex="13" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="14">
+         <children>
+            <Button layoutX="16.0" layoutY="4.0" mnemonicParsing="false" onAction="#onClicCancel" text="Cancelar" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="14">
+         <children>
+            <Button layoutX="18.0" layoutY="4.0" mnemonicParsing="false" onAction="#onClicSave" text="Guardar" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="14">
+         <children>
+            <Button layoutX="8.0" layoutY="4.0" mnemonicParsing="false" onAction="#onClicDelete" text="Eliminar" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

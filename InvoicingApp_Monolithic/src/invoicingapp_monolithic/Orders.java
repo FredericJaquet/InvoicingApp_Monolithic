@@ -304,6 +304,13 @@ public class Orders {
         return mapOrders;
     }
     
+    public CustomProv getCompany(){
+        CustomProv company=new CustomProv();
+        company.getFromDB(idCustomProv);
+        
+        return company;        
+    }
+    
     public String getComName(){
         ConnectionDB con=new ConnectionDB();
         ResultSet result=null;
