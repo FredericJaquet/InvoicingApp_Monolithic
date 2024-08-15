@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@viewreportpending.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewReportPendingController">
+   <content>
+      <VBox fx:id="paneReport" spacing="15.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onClicUpdate" text="Actualizar" />
+               </children>
+            </HBox>
+            <Label styleClass="labels" text="Informe de facturas Pendientes">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Label styleClass="labels" text="Total Pendiente:">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <Label fx:id="lbTotalPending" text="Label">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <VBox fx:id="paneMonthlyReport" />
+         </children>
+      </VBox>
+   </content>
+   <padding>
+      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+   </padding>
+</ScrollPane>

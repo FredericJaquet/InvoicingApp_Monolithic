@@ -22,6 +22,15 @@ public class ReportPendingPerMonth {
     public void addInvoice(InvoiceCustomer invoice){
         invoices.add(invoice);
     }
+    
+    public double getTotal(){
+        double total=0;
+        for(int i=0;i<invoices.size();i++){
+            total=total+(invoices.get(i).getTotalToPayInLocalCurrency());
+        }
+        
+        return total;
+    }
 
     /**
      * @return the invoices
@@ -64,11 +73,5 @@ public class ReportPendingPerMonth {
     public void setYear(int year) {
         this.year = year;
     }
-    
-
-
-
-    
-    
     
 }

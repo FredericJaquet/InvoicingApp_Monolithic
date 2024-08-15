@@ -23,6 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -39,7 +40,7 @@ import javafx.scene.layout.GridPane;
  * @author frede
  */
 public class ViewOrderController implements Initializable {
-    
+    private ArrayList<String> queries=new ArrayList();
     private Orders order=new Orders();
     private CustomProv company;
     private LabelFeatures lbFeatures=new LabelFeatures();
@@ -67,7 +68,7 @@ public class ViewOrderController implements Initializable {
         company=order.getCompany();
         updateData();
         createTableItems();
-        lbFeatures.makeLabelEditable(lbDescription, tfDescription,"Orders","description",order.getIdOrders());
+        lbFeatures.makeLabelEditable(lbDescription, tfDescription,"Orders","descrip",order.getIdOrders());
         lbFeatures.makeLabelEditable(lbDate,dpDateOrder,"Orders","dateOrder",order.getIdOrders());
         lbFeatures.makeLabelEditable(lbPrice, tfPrice,"Orders","price",order.getIdOrders());
         lbFeatures.makeLabelEditable(lbUnits, tfUnits,"Orders","units",order.getIdOrders());
@@ -88,8 +89,8 @@ public class ViewOrderController implements Initializable {
     } 
     
     @FXML protected void onClicCancel(){
-        System.out.println("ViewOrder linea 91 Hola"+ changes);changes no cambia de estado
-        if(changes){
+        queries.addAll(lbFeatures.getQuery());
+        if(!queries.isEmpty()){
             ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::closeWindow, () -> {});
         }else{
             closeWindow();
@@ -97,7 +98,8 @@ public class ViewOrderController implements Initializable {
     }
     
     @FXML protected void onClicSave(){
-        if(changes){
+        queries.addAll(lbFeatures.getQuery());
+        if(!queries.isEmpty()){
             saveData();
         }
     }
@@ -122,7 +124,7 @@ public class ViewOrderController implements Initializable {
     
     private void updateTotalOrder(){
         double price=0;
-        boolean control=true;
+        boolean controlTotal=true;
         updatedTotal=0;
         tfPrice.getStyleClass().remove("error");
         
@@ -130,9 +132,9 @@ public class ViewOrderController implements Initializable {
             price=Double.parseDouble(tfPrice.getText());
         }catch(NumberFormatException ex){
             tfPrice.getStyleClass().add("error");
-            control=false;
+            controlTotal=false;
         }
-        if(control){
+        if(controlTotal){
             for(int i=0;i<order.getItems().size();i++){
                 updatedTotal=updatedTotal+price*order.getItems().get(i).getQuantity()*(100-order.getItems().get(i).getDiscount())/100;
                 lbUpdatedTotal.setText(String.format("%.2f€", updatedTotal));
@@ -152,13 +154,15 @@ public class ViewOrderController implements Initializable {
         columnDescription.setOnEditCommit(event -> {
             Item item = event.getRowValue();
             item.setDescription(event.getNewValue());
+            queries.add("UPDATE Item SET descrip="+event.getNewValue()+" WHERE idItem="+item.getIdItem());
         });
 
-        columnDiscount.setOnEditCommit(event -> {
+        columnDiscount.setOnEditCommit((var event) -> {
             Item item = event.getRowValue();
             try {
                 double discount = event.getNewValue();
                 item.setDiscount(discount);
+                queries.add("UPDATE Item SET discount="+discount+" WHERE idItem="+item.getIdItem());
             } catch (NumberFormatException ex) {
                 lbError.setVisible(true);
             }
@@ -170,6 +174,7 @@ public class ViewOrderController implements Initializable {
                 double quantity = event.getNewValue();
                 item.setQuantity(quantity);
                 updateTotalOrder();
+                queries.add("UPDATE Item SET qty="+quantity+" WHERE idItem="+item.getIdItem());
             } catch (NumberFormatException ex) {
                 lbError.setVisible(true);
             }
@@ -187,41 +192,42 @@ public class ViewOrderController implements Initializable {
     }
     
     private void saveData(){        
+        String price=lbPrice.getText();
         control=true;
         lbError.setVisible(false);
         tfDescription.getStyleClass().remove("error");
         tfPrice.getStyleClass().remove("error");
         dpDateOrder.getStyleClass().remove("error");
         
-        if(!Validations.isNotEmpty(tfDescription, lbError, errorEmpty)){
+        
+        if(!Validations.isNotEmpty(lbDescription, lbError, errorEmpty)){
             control=false;
         }
-        if(!Validations.isNotEmpty(tfPrice, lbError, errorEmpty)){
+        if(control&&(!Validations.isNotEmpty(lbPrice, lbError, errorEmpty))){
             control=false;
         }
-        if(!Validations.isDouble(tfPrice, lbError, errorFormat)){
+        lbPrice.setText(price.replace(",", ".").replace("€",""));
+        if(control&&(!Validations.isDouble(lbPrice, lbError, errorFormat))){
             control=false;
         }
-        if(!Validations.isNotNull(dpDateOrder,lbError,errorDateOrder)){
+        lbPrice.setText(price);
+        if(control&&(!Validations.isNotEmpty(lbDate,lbError,errorDateOrder))){
             control=false;
         }
-        if(order.getItems().isEmpty()){
+        if(control&&order.getItems().isEmpty()){
             control=false;
             lbError.setText(errorNoLines);
             lbError.setVisible(true);
         }
         if(control){
             ConnectionDB con=new ConnectionDB();
-            ArrayList<String> query=lbFeatures.getQuery();
             
             con.openConnection();
-            for(int i=0;i<query.size();i++){
-                con.executeUpdate(query.get(i));
+            for(int i=0;i<queries.size();i++){
+                con.executeUpdate(queries.get(i));
             }
             con.closeConnection();
-            query.clear();
-            
-            changes=false;
+            queries.clear();
         }
     }
     
@@ -230,11 +236,12 @@ public class ViewOrderController implements Initializable {
         closeWindow();
     }
     
-    private void closeWindow(){No funciona
+    private void closeWindow(){
         BorderPane home=(BorderPane)paneOrder.getParent();
-        System.out.println("ViewOrder linea 233 Hola"+ changes);
+        Parent ordersView;
         try {
-            home=FXMLLoader.load(getClass().getResource("ViewHome.fxml"));
+            ordersView=FXMLLoader.load(getClass().getResource("viewOrders.fxml"));
+            home.setCenter(ordersView);
         } catch (IOException ex) {
             Logger.getLogger(ViewOrderController.class.getName()).log(Level.SEVERE, null, ex);
         }

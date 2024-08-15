@@ -52,13 +52,15 @@ public class ViewLoginController implements Initializable {
         
         textFieldPW.setVisible(false);
         user.getFromDB(config.getIdUser());
-        checkRemindme.setSelected(config.isReminder());
         
-        if(config.isReminder()){
+        if(config.isReminder()&&user.getUserName()!=null){
             fieldUser.setText(user.getUserName());
             fieldPasswd.setText("This is not a Password");
             control=true;
+        }else{
+            config.setReminder(false);
         }
+        checkRemindme.setSelected(config.isReminder());
     }
     
     @FXML protected void onActionEnter(){

@@ -275,13 +275,17 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
     public double getTotalToPay(){
         double total=0;
         
-        total=getTotal()+getTotalVAT()-getTotalWithholding();
+        total=(getTotal()+getTotalVAT()-getTotalWithholding());
         
         return total;
     }
     
+    public double getTotalToPayInLocalCurrency(){
+        return getTotalToPay()*getChangeRate().getRate();
+    }
+    
     public void setComparableValueToDuedate(){
-        comparableValue=duedate.getDayOfYear();
+        comparableValue=duedate.getYear()+duedate.getDayOfYear();
     }
     
     /**

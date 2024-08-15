@@ -57,7 +57,6 @@ public class ViewInvoiceCustomerController implements Initializable {
     private LabelFeatures lbFeatures=new LabelFeatures();
     private ArrayList<Orders> orders=new ArrayList();
     private ArrayList<String> query=new ArrayList();
-    private boolean changes=false;
     private int language;
     private int pages=1;
     private int page=1;    

@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class ReportPending {
     private ArrayList<InvoiceCustomer> invoices=new ArrayList();
-    private ArrayList<ReportPendingPerMonth> invoicesPerMonth=new ArrayList();
+    private ArrayList<ReportPendingPerMonth> monthlyReport=new ArrayList();
     
     public ReportPending(){
         getAllUnpaid();
@@ -44,6 +44,7 @@ public class ReportPending {
         }catch (SQLException ex) {
             Logger.getLogger(ReportPending.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
         Collections.sort(invoices);
     }
     
@@ -61,15 +62,16 @@ public class ReportPending {
                 if((year==invoices.get(i-1).getDuedate().getYear())&&(month==invoices.get(i-1).getDuedate().getMonthValue())){
                     report.addInvoice(invoices.get(i));
                 }else{
-                    invoicesPerMonth.add(report);
+                    monthlyReport.add(report);
                     report=new ReportPendingPerMonth(month,year);
                     report.addInvoice(invoices.get(i));
                 }
             }
         }
+        monthlyReport.add(report);
     }
     
-    private double getNetTotal(){
+    public double getNetTotal(){
         double total=0;
         
         for(int i=0; i<invoices.size();i++){
@@ -79,14 +81,42 @@ public class ReportPending {
         return total;
     }
     
-    private double getTotalToPay(){
+    public double getTotalToBePaid(){
         double total=0;
         
         for(int i=0; i<invoices.size();i++){
-            total=total+invoices.get(i).getTotalToPay();
+            total=total+invoices.get(i).getTotalToPayInLocalCurrency();
         }
         
         return total;
+    }
+
+    /**
+     * @return the monthlyReport
+     */
+    public ArrayList<ReportPendingPerMonth> getMonthlyReport() {
+        return monthlyReport;
+    }
+
+    /**
+     * @param monthlyReport the monthlyReport to set
+     */
+    public void setMonthlyReport(ArrayList<ReportPendingPerMonth> monthlyReport) {
+        this.monthlyReport = monthlyReport;
+    }
+
+    /**
+     * @return the invoices
+     */
+    public ArrayList<InvoiceCustomer> getInvoices() {
+        return invoices;
+    }
+
+    /**
+     * @param invoices the invoices to set
+     */
+    public void setInvoices(ArrayList<InvoiceCustomer> invoices) {
+        this.invoices = invoices;
     }
     
 }

@@ -50,11 +50,17 @@
       <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="5" />
       <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="1" />
       <Label styleClass="labels" text="Descripción" GridPane.rowIndex="2" />
-      <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
          <children>
             <TextField fx:id="tfDescription" promptText="Obligatorio" visible="false" />
             <Label fx:id="lbDescription" text="Label" />
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="32.0" />
+         </padding>
       </StackPane>
       <Label styleClass="labels" text="Precio" GridPane.rowIndex="3" />
       <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">

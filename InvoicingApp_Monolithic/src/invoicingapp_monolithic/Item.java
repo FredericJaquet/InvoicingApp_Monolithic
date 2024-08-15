@@ -118,7 +118,12 @@ public class Item {
         getFromDB(idItem);
     }
     
-    public void updateDB(String field, int newValue){
+    /**
+     *
+     * @param field
+     * @param newValue
+     */
+    public void updateDB(String field, double newValue){
         ConnectionDB con=new ConnectionDB();
         String query="UPDATE Item SET "+field+"= "+newValue+" WHERE idItem="+idItem;
         

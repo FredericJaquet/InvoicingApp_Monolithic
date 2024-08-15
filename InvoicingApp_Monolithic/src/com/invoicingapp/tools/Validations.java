@@ -34,14 +34,15 @@ public class Validations {
     }
     
     public static boolean isDouble(Label field,Label lbError,String message){
-        String dl=field.getText();
+        String text=field.getText();
         double result;
         boolean control=true;
         
         lbError.setVisible(false);
         field.getStyleClass().remove("error");
+        
         try{
-            result=Double.parseDouble(dl);
+            result=Double.parseDouble(text);
         }catch(NumberFormatException e){
             lbError.setVisible(true);
             lbError.setText(message);
@@ -72,6 +73,21 @@ public class Validations {
     }
         
     public static boolean isNotEmpty(TextField field,Label lbError,String message){
+        boolean control=true;
+        
+        field.getStyleClass().remove("error");
+        lbError.setVisible(false);
+        if(field.getText().isEmpty()){
+            lbError.setVisible(true);
+            lbError.setText(message);
+            field.getStyleClass().add("error");
+            control=false;
+        }
+          
+        return control;
+    }
+    
+    public static boolean isNotEmpty(Label field,Label lbError,String message){
         boolean control=true;
         
         field.getStyleClass().remove("error");

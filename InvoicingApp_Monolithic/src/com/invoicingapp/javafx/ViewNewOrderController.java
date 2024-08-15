@@ -249,7 +249,7 @@ public class ViewNewOrderController implements Initializable {
     
     private void updateTotalOrder(){
         double price=0;
-        boolean control=true;
+        boolean controlTotal=true;
         updatedTotal=0;
         tfPrice.getStyleClass().remove("error");
         
@@ -257,9 +257,9 @@ public class ViewNewOrderController implements Initializable {
             price=Double.parseDouble(tfPrice.getText());
         }catch(NumberFormatException ex){
             tfPrice.getStyleClass().add("error");
-            control=false;
+            controlTotal=false;
         }
-        if(control){
+        if(controlTotal){
             for(int i=0;i<order.getItems().size();i++){
                 updatedTotal=updatedTotal+price*order.getItems().get(i).getQuantity()*(100-order.getItems().get(i).getDiscount())/100;
                 lbUpdatedTotal.setText(String.format("%.2f€", updatedTotal));
@@ -350,16 +350,16 @@ public class ViewNewOrderController implements Initializable {
         if(!Validations.isNotEmpty(tfDescription, labelError, errorEmpty)){
             control=false;
         }
-        if(!Validations.isNotEmpty(tfPrice, labelError, errorEmpty)){
+        if(control&&!Validations.isNotEmpty(tfPrice, labelError, errorEmpty)){
             control=false;
         }
-        if(!Validations.isDouble(tfPrice, labelError, errorFormat)){
+        if(control&&!Validations.isDouble(tfPrice, labelError, errorFormat)){
             control=false;
         }
-        if(!Validations.isNotNull(dpDateOrder,labelError,errorDateOrder)){
+        if(control&&!Validations.isNotNull(dpDateOrder,labelError,errorDateOrder)){
             control=false;
         }
-        if(order.getItems().isEmpty()){
+        if(control&&order.getItems().isEmpty()){
             control=false;
             labelError.setText(errorNoLines);
             labelError.setVisible(true);
