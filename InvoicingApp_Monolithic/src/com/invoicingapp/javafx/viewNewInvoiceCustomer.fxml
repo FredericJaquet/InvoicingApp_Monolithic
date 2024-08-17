@@ -67,14 +67,14 @@
                               <Label fx:id="lbTitleEmail" styleClass="title" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <Label fx:id="lbTitleWeb" styleClass="title" text="Web" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <ImageView fx:id="ivLogo" pickOnBounds="true" preserveRatio="true" styleClass="logo" GridPane.rowSpan="6" />
-                              <Label fx:id="lbLegalName" text="Label" GridPane.columnIndex="2" />
-                              <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label fx:id="lbStreet" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <Label fx:id="lbCityCp" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                              <Label fx:id="lbEmail" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                              <Label fx:id="lbWeb" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                              <Label fx:id="lbLegalName" GridPane.columnIndex="2" />
+                              <Label fx:id="lbVATNumber" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label fx:id="lbStreet" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Label fx:id="lbCityCp" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <Label fx:id="lbEmail" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                              <Label fx:id="lbWeb" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                               <Label fx:id="lbTitleCountry" styleClass="title" text="Country" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label fx:id="lbCountry" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                              <Label fx:id="lbCountry" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                         <AnchorPane styleClass="withBorder" GridPane.rowIndex="1">

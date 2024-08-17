@@ -64,13 +64,13 @@
                               <Label fx:id="lbTitleCountry" styleClass="title" text="State/Country" GridPane.rowIndex="5" />
                               <Label fx:id="lbTitleEmail" styleClass="title" text="Email" GridPane.rowIndex="6" />
                               <Label fx:id="lbTitleWeb" styleClass="title" text="Web" GridPane.rowIndex="7" />
-                              <Label fx:id="lbProvLegalName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label fx:id="lbProvVATNumber" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Label fx:id="lbProvStreet" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Label fx:id="lbProvCPCity" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Label fx:id="lbProvEmail" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <Label fx:id="lbProvWeb" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <Label fx:id="lbProvStateCountry" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label fx:id="lbProvLegalName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="lbProvVATNumber" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label fx:id="lbProvStreet" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label fx:id="lbProvCPCity" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label fx:id="lbProvEmail" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Label fx:id="lbProvWeb" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <Label fx:id="lbProvStateCountry" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <ComboBox fx:id="cbProviders" onAction="#getSelectionCBCustomers" promptText="Proveedor" />
                            </children>
                         </GridPane>

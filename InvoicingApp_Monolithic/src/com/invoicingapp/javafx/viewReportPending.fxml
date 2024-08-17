@@ -8,37 +8,39 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="paneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@viewreportpending.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewReportPendingController">
-   <content>
-      <VBox fx:id="paneReport" spacing="15.0">
+<VBox fx:id="paneMain" spacing="15.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewReportPendingController">
+   <children>
+      <HBox alignment="CENTER_RIGHT" spacing="15.0">
          <children>
-            <HBox alignment="CENTER_RIGHT" spacing="15.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#onClicUpdate" text="Actualizar" />
-               </children>
-            </HBox>
-            <Label styleClass="labels" text="Informe de facturas Pendientes">
+            <Button mnemonicParsing="false" onAction="#onClicUpdate" text="Actualizar" />
+         </children>
+      </HBox>
+      <Label styleClass="labels" text="Informe de facturas Pendientes">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER_RIGHT" spacing="15.0">
+         <children>
+            <Label styleClass="labels" text="Total Pendiente:">
                <font>
-                  <Font size="18.0" />
+                  <Font size="16.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER_RIGHT" spacing="15.0">
-               <children>
-                  <Label styleClass="labels" text="Total Pendiente:">
-                     <font>
-                        <Font size="16.0" />
-                     </font></Label>
-                  <Label fx:id="lbTotalPending" text="Label">
-                     <font>
-                        <Font size="16.0" />
-                     </font></Label>
-               </children>
-            </HBox>
-            <VBox fx:id="paneMonthlyReport" />
+            <Label fx:id="lbTotalPending" text="Label">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
-      </VBox>
-   </content>
+      </HBox>
+      <ScrollPane maxHeight="1.7976931348623157E308">
+         <content>
+            <VBox fx:id="paneMonthlyReport" spacing="25.0" />
+         </content>
+      </ScrollPane>
+   </children>
    <padding>
-      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
-</ScrollPane>
+</VBox>

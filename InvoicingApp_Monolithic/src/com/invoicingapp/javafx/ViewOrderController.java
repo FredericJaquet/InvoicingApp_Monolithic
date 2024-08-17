@@ -154,7 +154,7 @@ public class ViewOrderController implements Initializable {
         columnDescription.setOnEditCommit(event -> {
             Item item = event.getRowValue();
             item.setDescription(event.getNewValue());
-            queries.add("UPDATE Item SET descrip="+event.getNewValue()+" WHERE idItem="+item.getIdItem());
+            queries.add("UPDATE Item SET descrip='"+event.getNewValue()+"' WHERE idItem="+item.getIdItem());
         });
 
         columnDiscount.setOnEditCommit((var event) -> {

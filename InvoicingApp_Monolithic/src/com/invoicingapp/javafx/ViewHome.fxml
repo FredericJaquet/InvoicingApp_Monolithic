@@ -100,6 +100,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="iconMenu">
@@ -147,56 +148,56 @@
                      </image>
                   </ImageView>
                   <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Documentos" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Button fx:id="bInvoicesCustomer" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Factura cliente" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <Button fx:id="bInvoicesCustomer" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Factura cliente" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <effect>
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button fx:id="bInvoicesProvider" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Factura Proveedor" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <Button fx:id="bInvoicesProvider" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Factura Proveedor" GridPane.columnIndex="1" GridPane.rowIndex="9">
                      <effect>
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button fx:id="bQuotes" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Presupuesto" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                  <Button fx:id="bQuotes" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Presupuesto" GridPane.columnIndex="1" GridPane.rowIndex="10">
                      <effect>
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button fx:id="bPOs" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Orden de pedido" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                  <Button fx:id="bPOs" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Orden de pedido" GridPane.columnIndex="1" GridPane.rowIndex="11">
                      <effect>
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Separator layoutX="10.0" layoutY="102.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="11" />
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="iconMenu" GridPane.rowIndex="12">
+                  <Separator layoutX="10.0" layoutY="102.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="12" />
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="iconMenu" GridPane.rowIndex="13">
                      <image>
                         <Image url="@../img/reports.png" />
                      </image>
                   </ImageView>
-                  <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Informes" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Ingresos" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                  <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Informes" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Ingresos" GridPane.columnIndex="1" GridPane.rowIndex="14">
                      <effect>
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Gastos" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Gastos" GridPane.columnIndex="1" GridPane.rowIndex="15">
                      <effect>
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Button fx:id="bReportPending" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Pagos pendientes" GridPane.columnIndex="1" GridPane.rowIndex="15">
+                  <Button fx:id="bReportPending" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Pagos pendientes" GridPane.columnIndex="1" GridPane.rowIndex="16">
                      <effect>
                         <ColorAdjust />
                      </effect>
                   </Button>
-                  <Separator layoutX="10.0" layoutY="210.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="16" />
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="iconMenu" GridPane.rowIndex="17">
+                  <Separator layoutX="10.0" layoutY="210.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="17" />
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="iconMenu" GridPane.rowIndex="18">
                      <image>
                         <Image url="@../img/analytics.png" />
                      </image>
                   </ImageView>
-                  <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Graficos" GridPane.columnIndex="1" GridPane.rowIndex="17" />
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="18">
+                  <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Graficos" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="19">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                      </columnConstraints>
@@ -211,7 +212,7 @@
                         </Button>
                      </children>
                   </GridPane>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="19">
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="20">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                      </columnConstraints>
@@ -226,13 +227,14 @@
                         </Button>
                      </children>
                   </GridPane>
-                  <Separator layoutX="10.0" layoutY="282.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="20" />
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="iconMenu" GridPane.rowIndex="21">
+                  <Separator layoutX="10.0" layoutY="282.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="21" />
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="iconMenu" GridPane.rowIndex="22">
                      <image>
                         <Image url="@../img/settings.png" />
                      </image>
                   </ImageView>
-                  <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Ajustes" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+                  <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Ajustes" GridPane.columnIndex="1" GridPane.rowIndex="22" />
+                  <Button fx:id="bOrders" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" text="Pedido" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                </children>
                <VBox.margin>
                   <Insets />

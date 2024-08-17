@@ -33,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -228,7 +229,7 @@ public class ViewCreateProviderController implements Initializable {
         Scene scene;
         Stage newStage=new Stage();
         
-        stage=(Stage)paneCreateProvider.getScene().getWindow();
+        //stage=(Stage)paneCreateProvider.getScene().getWindow();
         
         loader.setLocation(getClass().getResource(path));
         try {
@@ -238,6 +239,7 @@ public class ViewCreateProviderController implements Initializable {
         }
         
         scene=new Scene(root);
+        newStage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
         newStage.setScene(scene);
         newStage.show();
         

@@ -4,7 +4,6 @@
  */
 package com.invoicingapp.javafx;
 
-import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Provider;
 import java.io.IOException;
 import java.net.URL;
@@ -45,9 +44,9 @@ public class ViewProvidersController implements Initializable {
     }
     
     @FXML protected void onCreateProvider(){
-            Parent root=null;
-            Scene scene=null;
-            Stage stage=new Stage();
+        Parent root=null;
+        Scene scene=null;
+        Stage stage=new Stage();
             
         try {
             root = FXMLLoader.load(getClass().getResource("viewCreateProvider.fxml"));
