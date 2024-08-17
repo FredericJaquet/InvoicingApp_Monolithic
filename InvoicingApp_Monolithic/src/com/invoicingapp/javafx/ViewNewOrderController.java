@@ -400,6 +400,9 @@ public class ViewNewOrderController implements Initializable {
     }
     
     private void backToPrevious(){
+        if(company==null){
+            lastView=3;
+        }
         switch(lastView){
             case(1):backToViewDetailsCustomer();break;
             case(2):backToViewDetailsProvider();break;

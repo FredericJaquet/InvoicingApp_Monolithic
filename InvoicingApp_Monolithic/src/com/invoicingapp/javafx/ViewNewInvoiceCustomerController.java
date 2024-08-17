@@ -73,7 +73,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private final String invoiceNotSaved="La factura no se ha guardado, es necesario guadar la factura antes de poder verla.";
     private final int imgSize=150;
     private int language=1;
-    private int prev;
+    private int lastView;
     private boolean saved=false;
     
     @FXML private ScrollPane paneNewInvoice;
@@ -97,7 +97,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     
     public void initData(Customer customer, int prev){
         this.customer=customer;
-        this.prev=prev;
+        this.lastView=prev;
         pendingOrders=customer.getOrdersFromDB(CustomProv.NOTBILLED);
         
         for(int i=0;i<companies.size();i++){
@@ -114,7 +114,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     }
     
     public void initData(int prev){
-        this.prev=prev;
+        this.lastView=prev;
     }
     
     /**
@@ -567,7 +567,10 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     }
     
     private void backToPrevious(){
-        switch(prev){
+        if(customer==null){
+            lastView=2;
+        }
+        switch(lastView){
             case(1):backToViewDetailsCustomer();break;
             case(2):backToInvoicesCustomer();break;
         }
