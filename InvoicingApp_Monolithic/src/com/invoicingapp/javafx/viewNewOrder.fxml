@@ -51,9 +51,9 @@
       <Label styleClass="labels" text="Esquema" GridPane.columnIndex="3" />
       <ComboBox fx:id="cbSchemes" onAction="#getSelectionCBSchemes" prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="2" />
       <Label styleClass="labels" text="Nombre" GridPane.rowIndex="1" />
-      <Label fx:id="lbLegalName" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+      <Label fx:id="lbLegalName" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
       <Label styleClass="labels" text="CIF" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-      <Label fx:id="lbVATNumber" text="Label" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+      <Label fx:id="lbVATNumber" GridPane.columnIndex="5" GridPane.rowIndex="1" />
       <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="2" />
       <Label styleClass="labels" text="Descripción" GridPane.rowIndex="3" />
       <TextField fx:id="tfDescription" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />

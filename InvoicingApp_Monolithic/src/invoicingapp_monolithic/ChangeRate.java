@@ -96,6 +96,8 @@ public class ChangeRate {
         } catch (SQLException ex) {
             Logger.getLogger(ChangeRate.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
         return list;        
     }
     

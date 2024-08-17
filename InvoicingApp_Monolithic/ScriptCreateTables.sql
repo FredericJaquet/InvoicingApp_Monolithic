@@ -104,7 +104,7 @@ PRIMARY KEY 	(idScheme)
 
 CREATE TABLE IF NOT EXISTS SchemeLine(
 idSchemeLine	INT(10) AUTO_INCREMENT,
-descrip		VARCHAR(25),
+descrip		VARCHAR(255),
 discount	DOUBLE,
 idScheme	INT(10) 	NOT NULL,
 PRIMARY KEY 	(idSchemeLine),

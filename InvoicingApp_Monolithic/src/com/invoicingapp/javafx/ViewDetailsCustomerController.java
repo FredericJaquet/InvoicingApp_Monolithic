@@ -404,7 +404,7 @@ public class ViewDetailsCustomerController implements Initializable {
         }
         
         controller=loader.getController();
-        controller.initData(customer,0);
+        controller.initData(customer,1);
         home.setCenter(newOrderView);
     }
     
@@ -422,7 +422,7 @@ public class ViewDetailsCustomerController implements Initializable {
         }
         
         controller=loader.getController();
-        controller.initData(customer);
+        controller.initData(customer,1);
         home.setCenter(invoiceCustomerView);
     }
     

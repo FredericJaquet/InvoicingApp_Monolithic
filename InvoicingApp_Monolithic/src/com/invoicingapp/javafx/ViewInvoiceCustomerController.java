@@ -223,7 +223,9 @@ public class ViewInvoiceCustomerController implements Initializable {
         orders=invoice.getOrders();        
     }
     
-    private void setData(){ 
+    private void setData(){
+        //isPaid
+        cbPaid.setSelected(invoice.isPaid());
         //User info
         lbLegalName.setText(user.getLegalName());
         lbVATNumber.setText(user.getVatNumber());
@@ -248,7 +250,7 @@ public class ViewInvoiceCustomerController implements Initializable {
         lbHolder.setText(bankAccount.getHolder());
         lbBranch.setText(bankAccount.getBranch());
         lbIBAN.setText(bankAccount.getIban());
-        lbDuedate.setText(invoice.getDuedate().toString());
+        lbDuedate.setText(invoice.getDuedate().format(formatter));
     }
     
     private void setInvoiceInfo(){

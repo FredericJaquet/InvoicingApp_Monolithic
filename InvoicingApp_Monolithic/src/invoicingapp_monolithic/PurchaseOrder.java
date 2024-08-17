@@ -116,6 +116,8 @@ public class PurchaseOrder extends Document{
         } catch (SQLException ex) {
             Logger.getLogger(PurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
         return list;
     }
     
@@ -138,6 +140,8 @@ public class PurchaseOrder extends Document{
         } catch (SQLException ex) {
             Logger.getLogger(PurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
         return list;
     }
     
@@ -214,6 +218,7 @@ public class PurchaseOrder extends Document{
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
         
         return lastNumber;
     }

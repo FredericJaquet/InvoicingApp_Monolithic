@@ -71,8 +71,9 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private final String errorNoOrders="La factura no tiene pedidos asignados.";
     private final String invoiceSaved="La factura se ha guardado correctamente.";
     private final String invoiceNotSaved="La factura no se ha guardado, es necesario guadar la factura antes de poder verla.";
-    private final int imgSize=175;
+    private final int imgSize=150;
     private int language=1;
+    private int prev;
     private boolean saved=false;
     
     @FXML private ScrollPane paneNewInvoice;
@@ -94,8 +95,9 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     @FXML private DatePicker dpDocDate;
     @FXML private TextField tfDocNumber;
     
-    public void initData(Customer customer){
+    public void initData(Customer customer, int prev){
         this.customer=customer;
+        this.prev=prev;
         pendingOrders=customer.getOrdersFromDB(CustomProv.NOTBILLED);
         
         for(int i=0;i<companies.size();i++){
@@ -111,8 +113,14 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         setTitles();
     }
     
+    public void initData(int prev){
+        this.prev=prev;
+    }
+    
     /**
      * Initializes the OrderController class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -301,14 +309,15 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             saved=true;
             labelError.setText(invoiceSaved);
             labelError.setVisible(true);
+            
         }
     }
     
     @FXML protected void cancel(){
         if(!saved){
-            ConfirmationDialog.show("¿Está seguro de querer volver sin guardar?", this::backToViewDetailsCustomer, () -> {});
+            ConfirmationDialog.show("¿Está seguro de querer volver sin guardar?", this::backToPrevious, () -> {});
         }else{
-            backToViewDetailsCustomer();
+            backToPrevious();
         }
     }
     
@@ -557,6 +566,13 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         }
     }
     
+    private void backToPrevious(){
+        switch(prev){
+            case(1):backToViewDetailsCustomer();break;
+            case(2):backToInvoicesCustomer();break;
+        }
+    }
+    
     private void backToViewDetailsCustomer(){
         FXMLLoader loader=new FXMLLoader();
         Parent detailsCustomerView=null;
@@ -574,6 +590,19 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         controller.initData(customer);
         home=(BorderPane)paneNewInvoice.getParent();
         home.setCenter(detailsCustomerView);
+    }
+    
+    private void backToInvoicesCustomer(){        
+        Parent invoicesCustomerView=null;
+        BorderPane home=null;
+        try {
+            invoicesCustomerView=FXMLLoader.load(getClass().getResource("viewInvoicesCustomer.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        home=(BorderPane)paneNewInvoice.getParent();
+        home.setCenter(invoicesCustomerView);
     }
     
     private void setCurrencyToOrders(){

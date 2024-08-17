@@ -37,10 +37,10 @@ public class Validations {
         String text=field.getText();
         double result;
         boolean control=true;
-        
         lbError.setVisible(false);
         field.getStyleClass().remove("error");
         
+        text=text.replace(",", ".").replace("€","").replace("%","");
         try{
             result=Double.parseDouble(text);
         }catch(NumberFormatException e){

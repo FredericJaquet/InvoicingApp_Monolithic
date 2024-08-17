@@ -69,22 +69,24 @@ public class ViewCustomersController implements Initializable {
     }
     
     @FXML protected void onSeeDetails(){
-        FXMLLoader loader=new FXMLLoader();
-        Parent detailsCustomerView=null;
-        ViewDetailsCustomerController controller=null;
-        BorderPane home=null;
+        if(tableCustomers.getSelectionModel().getSelectedItem()!=null){
+            FXMLLoader loader=new FXMLLoader();
+            Parent detailsCustomerView=null;
+            ViewDetailsCustomerController controller=null;
+            BorderPane home=null;
         
-        loader.setLocation(getClass().getResource("viewDetailsCustomer.fxml"));
-        try {
-            detailsCustomerView=loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewCustomersController.class.getName()).log(Level.SEVERE, null, ex);
+            loader.setLocation(getClass().getResource("viewDetailsCustomer.fxml"));
+            try {
+                detailsCustomerView=loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ViewCustomersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+            controller=loader.getController();
+            controller.initData(tableCustomers.getSelectionModel().getSelectedItem());
+            home=(BorderPane)paneCustomers.getParent();
+            home.setCenter(detailsCustomerView);
         }
-        
-        controller=loader.getController();
-        controller.initData(tableCustomers.getSelectionModel().getSelectedItem());
-        home=(BorderPane)paneCustomers.getParent();
-        home.setCenter(detailsCustomerView);
     }
     
     @FXML protected void onClicEnabled(){

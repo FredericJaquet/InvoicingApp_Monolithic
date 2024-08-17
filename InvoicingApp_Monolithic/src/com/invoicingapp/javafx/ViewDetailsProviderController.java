@@ -397,7 +397,7 @@ public class ViewDetailsProviderController implements Initializable {
         }
         
         controller=loader.getController();
-        controller.initData(provider,1);
+        controller.initData(provider,2);
         home.setCenter(newOrderView);
     }
     
@@ -415,7 +415,7 @@ public class ViewDetailsProviderController implements Initializable {
         }
         
         controller=loader.getController();
-        controller.initData(provider);
+        controller.initData(provider,2);
         home.setCenter(invoiceProviderView);
     }
     

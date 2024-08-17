@@ -54,7 +54,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <Label fx:id="lb_Company_ComName" text="Label">
+                              <Label fx:id="lb_Company_ComName" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -69,7 +69,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <Label fx:id="lb_Company_LegalName" text="Label">
+                              <Label fx:id="lb_Company_LegalName" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -84,7 +84,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <Label fx:id="lb_Company_Web" text="Label">
+                              <Label fx:id="lb_Company_Web" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -99,7 +99,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <Label fx:id="lb_Company_Email" text="Label">
+                              <Label fx:id="lb_Company_Email" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -114,7 +114,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <Label fx:id="lb_Customer_InvoicingMethod" text="Label">
+                              <Label fx:id="lb_Customer_InvoicingMethod" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -129,7 +129,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
-                              <Label fx:id="lb_Customer_PayMethod" text="Label">
+                              <Label fx:id="lb_Customer_PayMethod" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -144,7 +144,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <children>
-                              <Label fx:id="lb_Company_DefaultLanguage" text="Label">
+                              <Label fx:id="lb_Company_DefaultLanguage" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -159,7 +159,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
-                              <Label fx:id="lb_Company_VATNumber" text="Label">
+                              <Label fx:id="lb_Company_VATNumber" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -174,7 +174,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <children>
-                              <Label fx:id="lb_CustomProv_DefaultVAT" text="Label">
+                              <Label fx:id="lb_CustomProv_DefaultVAT" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -189,7 +189,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                            <children>
-                              <Label fx:id="lb_CustomProv_DefaultWithholding" text="Label">
+                              <Label fx:id="lb_CustomProv_DefaultWithholding" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -204,7 +204,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                            <children>
-                              <Label fx:id="lb_Customer_Duedate" text="Label">
+                              <Label fx:id="lb_Customer_Duedate" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -219,7 +219,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                            <children>
-                              <Label fx:id="lb_CustomProv_Europe" text="Label">
+                              <Label fx:id="lb_CustomProv_Europe" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -234,7 +234,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                            <children>
-                              <Label fx:id="lb_CustomProv_Enabled" text="Label">
+                              <Label fx:id="lb_CustomProv_Enabled" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -254,7 +254,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
                            <children>
-                              <Label fx:id="lb_Address_Street" text="Label">
+                              <Label fx:id="lb_Address_Street" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -269,7 +269,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <children>
-                              <Label fx:id="lb_Address_StNumber" text="Label">
+                              <Label fx:id="lb_Address_StNumber" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -284,7 +284,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
                            <children>
-                              <Label fx:id="lb_Address_City" text="Label">
+                              <Label fx:id="lb_Address_City" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -299,7 +299,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
                            <children>
-                              <Label fx:id="lb_Address_State" text="Label">
+                              <Label fx:id="lb_Address_State" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -314,7 +314,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
                            <children>
-                              <Label fx:id="lb_Address_Apt" text="Label">
+                              <Label fx:id="lb_Address_Apt" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -329,7 +329,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="10">
                            <children>
-                              <Label fx:id="lb_Address_CP" text="Label">
+                              <Label fx:id="lb_Address_CP" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -344,7 +344,7 @@
                         </Label>
                         <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="11">
                            <children>
-                              <Label fx:id="lb_Address_Country" text="Label">
+                              <Label fx:id="lb_Address_Country" minWidth="10.0" text="Label">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>

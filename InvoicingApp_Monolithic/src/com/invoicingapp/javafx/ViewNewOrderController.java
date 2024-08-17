@@ -7,10 +7,12 @@ package com.invoicingapp.javafx;
 import com.invoicingapp.tools.DoubleStringConverter;
 import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.CustomProv;
+import invoicingapp_monolithic.Customer;
 import invoicingapp_monolithic.Scheme;
 import invoicingapp_monolithic.SchemeLine;
 import invoicingapp_monolithic.Item;
 import invoicingapp_monolithic.Orders;
+import invoicingapp_monolithic.Provider;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -56,6 +58,7 @@ public class ViewNewOrderController implements Initializable {
     private ArrayList<SchemeLine> lines=new ArrayList();
     private ArrayList<CustomProv> companies=new ArrayList();
     private int iLine=0;
+    private int lastView;
     private double updatedTotal=0;
     private boolean control=true;
     private boolean controlLines=true;
@@ -74,8 +77,9 @@ public class ViewNewOrderController implements Initializable {
     @FXML TableColumn<Item,Double> columnDiscount,columnQuantity;
     @FXML private GridPane paneNewOrder;
     
-    public void initData(CustomProv company, int lastView){
-        this.company=company;
+    public void initData(Customer customer, int lastView){
+        this.company=customer;
+        this.lastView=lastView;
         updateData();
         for(int i=0;i<companies.size();i++){
             if(companies.get(i).getIdCustomProv()==company.getIdCustomProv()){
@@ -83,7 +87,22 @@ public class ViewNewOrderController implements Initializable {
             }
         }
         popuplateCbSchemes();
-        prevView=views[lastView];
+    }
+    
+    public void initData(Provider provider, int lastView){
+        this.company=provider;
+        this.lastView=lastView;
+        updateData();
+        for(int i=0;i<companies.size();i++){
+            if(companies.get(i).getIdCustomProv()==company.getIdCustomProv()){
+                cbCustomProvs.getSelectionModel().select(i);
+            }
+        }
+        popuplateCbSchemes();
+    }
+    
+    public void initData(int lastView){
+        this.lastView=lastView;
     }
     
     /**
@@ -146,9 +165,9 @@ public class ViewNewOrderController implements Initializable {
     
     @FXML protected void onClicCancel(){
         if(changes){
-            ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::closeWindow, () -> {});
+            ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer volver sin guardar los cambios?", this::backToPrevious, () -> {});
         }else{
-            closeWindow();
+            backToPrevious();
         }
     }
     
@@ -380,15 +399,63 @@ public class ViewNewOrderController implements Initializable {
         }
     }
     
-    private void closeWindow(){
-        BorderPane home=(BorderPane)paneNewOrder.getParent();
-        Parent detailsCustomerView;
+    private void backToPrevious(){
+        switch(lastView){
+            case(1):backToViewDetailsCustomer();break;
+            case(2):backToViewDetailsProvider();break;
+            case(3):backToViewOrders();break;
+        }
+    }
+    
+    private void backToViewDetailsCustomer(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent detailsCustomerView=null;
+        ViewDetailsCustomerController controller=null;
+        BorderPane home=null;
         
+        loader.setLocation(getClass().getResource("viewDetailsCustomer.fxml"));
         try {
-            detailsCustomerView=FXMLLoader.load(getClass().getResource(prevView));
-            home.setCenter(detailsCustomerView);
+            detailsCustomerView=loader.load();
         } catch (IOException ex) {
             Logger.getLogger(ViewNewOrderController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        controller=loader.getController();
+        controller.initData((Customer)company);
+        home=(BorderPane)paneNewOrder.getParent();
+        home.setCenter(detailsCustomerView);
+    }
+    
+    private void backToViewDetailsProvider(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent detailsCustomerView=null;
+        ViewDetailsProviderController controller=null;
+        BorderPane home=null;
+        
+        loader.setLocation(getClass().getResource("viewDetailsProvider.fxml"));
+        try {
+            detailsCustomerView=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewNewOrderController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData((Provider)company);
+        home=(BorderPane)paneNewOrder.getParent();
+        home.setCenter(detailsCustomerView);
+    }
+    
+    private void backToViewOrders(){
+        Parent ordersView=null;
+        BorderPane home=null;
+        try {
+            ordersView=FXMLLoader.load(getClass().getResource("viewOrders.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(ViewNewOrderController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        home=(BorderPane)paneNewOrder.getParent();
+        home.setCenter(ordersView);
+        
     }
 }

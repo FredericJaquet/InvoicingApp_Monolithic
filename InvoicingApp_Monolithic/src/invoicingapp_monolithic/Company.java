@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class Company {
+public class Company implements Comparable<Company> {
     
     private String vatNumber, comName, legalName, email, web, defaultLanguage;
     private Address address=new Address();
@@ -506,6 +506,11 @@ public class Company {
      */
     public void setDefaultLanguage(String defaultLanguage) {
         this.defaultLanguage = defaultLanguage;
+    }
+
+    @Override
+    public int compareTo(Company o) {
+        return comName.compareTo(o.getComName());
     }
     
 }

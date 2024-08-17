@@ -30,7 +30,7 @@
    <children>
       <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
          <children>
-            <Label fx:id="lb_SchemeName" text="Label">
+            <Label fx:id="lb_SchemeName" minWidth="10.0" text="Label">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -41,7 +41,7 @@
       <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <TextField fx:id="fieldSourceLanguage" visible="false" />
-            <Label fx:id="lb_SourceLanguage" text="Label">
+            <Label fx:id="lb_SourceLanguage" minWidth="10.0" text="Label">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -51,7 +51,7 @@
       <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
             <TextField fx:id="fieldTargetLanguage" visible="false" />
-            <Label fx:id="lb_TargetLanguage" text="Label">
+            <Label fx:id="lb_TargetLanguage" minWidth="10.0" text="Label">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -61,7 +61,7 @@
       <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
          <children>
             <TextField fx:id="fieldPrice" visible="false" />
-            <Label fx:id="lb_Price" text="Label">
+            <Label fx:id="lb_Price" minWidth="10.0" text="Label">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -71,7 +71,7 @@
       <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
          <children>
             <TextField fx:id="fieldUnits" visible="false" />
-            <Label fx:id="lb_Units" text="Label">
+            <Label fx:id="lb_Units" minWidth="10.0" text="Label">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -81,7 +81,7 @@
       <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
          <children>
             <TextField fx:id="fieldFieldName" visible="false" />
-            <Label fx:id="lb_FieldName" text="Label">
+            <Label fx:id="lb_FieldName" minWidth="10.0" text="Label">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -101,6 +102,9 @@ public class Provider extends CustomProv{
         } catch (SQLException ex) {
             Logger.getLogger(Provider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        Collections.sort(list);
+        
         return list;
     }
     
@@ -129,6 +133,9 @@ public class Provider extends CustomProv{
         } catch (SQLException ex) {
             Logger.getLogger(Provider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        Collections.sort(list);
+        
         return list;
     }
     

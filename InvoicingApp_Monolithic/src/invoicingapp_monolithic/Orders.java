@@ -79,6 +79,7 @@ public class Orders {
             items.get(i).setIdOrders(idOrders);
             items.get(i).addToDB();//añadir el idOrders
         }
+        con.closeConnection();
     }
     
     /**
@@ -277,7 +278,8 @@ public class Orders {
             }
         }catch (SQLException ex) {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+        con.closeConnection();
     }
     
     public static Map<Integer,Orders> getMap(int idCustomProv){

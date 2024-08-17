@@ -67,17 +67,20 @@ public class ViewInvoicesProviderController implements Initializable {
     
     @FXML protected void onCreateInvoice(){
         FXMLLoader loader=new FXMLLoader();
-        Parent newInvoiceView=null;
-        BorderPane home=null;
+        Parent invoiceProviderView=null;
+        ViewNewInvoiceProviderController controller=null;
+        BorderPane home=(BorderPane)paneInvoicesProvider.getParent();
         
+        loader.setLocation(getClass().getResource("viewNewInvoiceProvider.fxml"));
         try {
-            newInvoiceView = FXMLLoader.load(getClass().getResource("viewNewInvoiceProvider.fxml"));
+            invoiceProviderView=loader.load();
         } catch (IOException ex) {
             Logger.getLogger(ViewInvoicesProviderController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        home=(BorderPane)paneInvoicesProvider.getParent();
-        home.setCenter(newInvoiceView);
+        controller=loader.getController();
+        controller.initData(2);
+        home.setCenter(invoiceProviderView);
     }
     
     @FXML protected void onSeeInvoice(){

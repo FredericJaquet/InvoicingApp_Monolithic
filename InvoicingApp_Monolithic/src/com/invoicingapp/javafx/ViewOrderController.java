@@ -199,7 +199,6 @@ public class ViewOrderController implements Initializable {
         tfPrice.getStyleClass().remove("error");
         dpDateOrder.getStyleClass().remove("error");
         
-        
         if(!Validations.isNotEmpty(lbDescription, lbError, errorEmpty)){
             control=false;
         }

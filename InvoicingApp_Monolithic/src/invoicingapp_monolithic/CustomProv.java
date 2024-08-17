@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -138,6 +139,9 @@ public class CustomProv extends Company{
         } catch (SQLException ex) {
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
+        Collections.sort(list);
         
         return list;
     }
@@ -167,6 +171,9 @@ public class CustomProv extends Company{
         } catch (SQLException ex) {
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
+        Collections.sort(list);
         
         return list;
     }
@@ -191,6 +198,8 @@ public class CustomProv extends Company{
         }catch (SQLException ex) {
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
         return orders;
     }
     
@@ -220,6 +229,8 @@ public class CustomProv extends Company{
         }catch (SQLException ex) {
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        con.closeConnection();
         return orders;
     }
     
@@ -401,7 +412,7 @@ public class CustomProv extends Company{
         }catch(SQLException ex){
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        con.closeConnection();
         
         return totalCustomprov;
     }
@@ -433,6 +444,7 @@ public class CustomProv extends Company{
         } catch (SQLException ex) {
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
     }
     
     /**

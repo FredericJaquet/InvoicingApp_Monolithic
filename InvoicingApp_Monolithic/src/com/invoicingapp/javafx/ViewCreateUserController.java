@@ -261,26 +261,26 @@ public class ViewCreateUserController implements Initializable {
     }
     
     @FXML protected void handleImportLogo() {
-        FileChooser fileChooser = new FileChooser();
+        FileChooser fileChooser=new FileChooser();
         fileChooser.setTitle("Seleccionar Logo");
         fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
 
-        Stage stage = (Stage) btnImportLogo.getScene().getWindow();
-        File selectedFile = fileChooser.showOpenDialog(stage);
+        Stage stage=(Stage) btnImportLogo.getScene().getWindow();
+        File selectedFile=fileChooser.showOpenDialog(stage);
 
-        if (selectedFile != null) {
+        if (selectedFile!=null) {
             try {
                 File destDir = new File("src/com/invoicingapp/img/");
                 if (!destDir.exists()) {
                     destDir.mkdirs(); 
                 }
 
-                File destFile = new File(destDir, selectedFile.getName());
+                File destFile=new File(destDir, selectedFile.getName());
                 Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-                logoPath = destFile.getAbsolutePath();
+                logoPath=destFile.getAbsolutePath();
                 
                 labelError.setText("Logo importado correctamente");
             } catch (IOException e) {

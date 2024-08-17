@@ -65,15 +65,18 @@ public class ViewOrdersController implements Initializable {
     @FXML protected void onCreateOrder(){
         FXMLLoader loader=new FXMLLoader();
         Parent newOrderView=null;
-        BorderPane home=null;
+        ViewNewOrderController controller=null;
+        BorderPane home=(BorderPane)paneOrders.getParent();
         
+        loader.setLocation(getClass().getResource("viewNewOrder.fxml"));
         try {
-            newOrderView = FXMLLoader.load(getClass().getResource("viewNewOrder.fxml"));
+            newOrderView=loader.load();
         } catch (IOException ex) {
             Logger.getLogger(ViewOrdersController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        home=(BorderPane)paneOrders.getParent();
+        controller=loader.getController();
+        controller.initData(3);
         home.setCenter(newOrderView);
     }
     

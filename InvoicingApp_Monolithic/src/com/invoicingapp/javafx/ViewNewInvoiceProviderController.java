@@ -64,6 +64,7 @@ public class ViewNewInvoiceProviderController implements Initializable {
     private final String invoiceNotSaved="La factura no se ha guardado, es necesario guadar la factura antes de poder verla.";
     private final int imgSize=175;
     private int language=1;
+    private int prev;
     private boolean saved=false;
     
     @FXML private ScrollPane paneNewInvoice;
@@ -82,8 +83,9 @@ public class ViewNewInvoiceProviderController implements Initializable {
     @FXML private DatePicker dpDocDate;
     @FXML private TextField tfDocNumber;
     
-    public void initData(Provider provider){
+    public void initData(Provider provider, int prev){
         this.provider=provider;
+        this.prev=prev;
         pendingOrders=provider.getOrdersFromDB(CustomProv.NOTBILLED);
         
         for(int i=0;i<companies.size();i++){
@@ -97,6 +99,10 @@ public class ViewNewInvoiceProviderController implements Initializable {
         updateData();
         getOrders();
         setTitles();
+    }
+    
+    public void initData(int prev){
+        this.prev=prev;
     }
     
     /**
@@ -262,9 +268,9 @@ public class ViewNewInvoiceProviderController implements Initializable {
     
     @FXML protected void cancel(){
         if(!saved){
-            ConfirmationDialog.show("¿Está seguro de querer volver sin guardar?", this::backToViewDetailsProvider, () -> {});
+            ConfirmationDialog.show("¿Está seguro de querer volver sin guardar?", this::backToPrevious, () -> {});
         }else{
-            backToViewDetailsProvider();
+            backToPrevious();
         }
     }
     
@@ -465,6 +471,13 @@ public class ViewNewInvoiceProviderController implements Initializable {
         }
     }
     
+    private void backToPrevious(){
+        switch(prev){
+            case(1):backToViewDetailsProvider();break;
+            case(2):backToInvoicesProvider();break;
+        }
+    }
+    
     private void backToViewDetailsProvider(){
         FXMLLoader loader=new FXMLLoader();
         Parent detailsProviderView=null;
@@ -482,6 +495,19 @@ public class ViewNewInvoiceProviderController implements Initializable {
         controller.initData(provider);
         home=(BorderPane)paneNewInvoice.getParent();
         home.setCenter(detailsProviderView);
+    }
+    
+    private void backToInvoicesProvider(){        
+        Parent invoicesProviderView=null;
+        BorderPane home=null;
+        try {
+            invoicesProviderView=FXMLLoader.load(getClass().getResource("viewInvoicesProvider.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(ViewNewInvoiceProviderController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        home=(BorderPane)paneNewInvoice.getParent();
+        home.setCenter(invoicesProviderView);
     }
     
     private void setCurrencyToOrders(){

@@ -95,7 +95,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        queryGetIdCustomer="SELECT Customer.idCustomer FROM Customer JOIN CustomProv ON (CustomProv.idCustomProv=Customer.idCustomProv) WHERE CustomProv.idCustomprov="+getOrders().get(1).getIdCustomProv();
+        queryGetIdCustomer="SELECT Customer.idCustomer FROM Customer JOIN CustomProv ON (CustomProv.idCustomProv=Customer.idCustomProv) WHERE CustomProv.idCustomprov="+getOrders().get(0).getIdCustomProv();
         result=con.getResultSet(queryGetIdCustomer);
         try{
             if(result.next()){
@@ -242,9 +242,8 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         String query="SELECT docNumber "
                 + "FROM Document JOIN InvoiceCustomer "
                 + "ON(Document.idDocument=InvoiceCustomer.idDocument) "
-                + "WHERE docDate=(SELECT docDate FROM Document "
-                + "JOIN InvoiceCustomer ON(Document.idDocument=InvoiceCustomer.idDocument)"
-                + "ORDER BY docDate DESC LIMIT 1);";
+                + "WHERE idInvoiceCustomer=(SELECT InvoiceCustomer.idInvoiceCustomer FROM InvoiceCustomer "
+                + "ORDER BY InvoiceCustomer.idInvoiceCustomer DESC LIMIT 1);";
         
         con.openConnection();
         result=con.getResultSet(query);
@@ -256,6 +255,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
         
         return lastNumber;
     }

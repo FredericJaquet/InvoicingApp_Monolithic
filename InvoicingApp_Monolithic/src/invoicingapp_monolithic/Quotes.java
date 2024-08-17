@@ -115,6 +115,8 @@ public class Quotes extends Document{
         } catch (SQLException ex) {
             Logger.getLogger(Quotes.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
         return list;
     }
     
@@ -214,6 +216,7 @@ public class Quotes extends Document{
         } catch (SQLException ex) {
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
         
         return lastNumber;
     }
