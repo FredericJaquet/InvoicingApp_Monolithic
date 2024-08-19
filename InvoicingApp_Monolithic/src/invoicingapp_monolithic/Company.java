@@ -510,7 +510,7 @@ public class Company implements Comparable<Company> {
 
     @Override
     public int compareTo(Company o) {
-        return comName.compareTo(o.getComName());
+        return comName.compareToIgnoreCase(o.getComName());
     }
     
 }

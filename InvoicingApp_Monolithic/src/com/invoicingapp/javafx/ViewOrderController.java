@@ -31,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -66,11 +67,11 @@ public class ViewOrderController implements Initializable {
     public void initData(Orders order){
         this.order=order;
         company=order.getCompany();
-        updateData();
+        setData();
         createTableItems();
         lbFeatures.makeLabelEditable(lbDescription, tfDescription,"Orders","descrip",order.getIdOrders());
         lbFeatures.makeLabelEditable(lbDate,dpDateOrder,"Orders","dateOrder",order.getIdOrders());
-        lbFeatures.makeLabelEditable(lbPrice, tfPrice,"Orders","price",order.getIdOrders());
+        lbFeatures.makeLabelEditable(lbPrice, tfPrice,"Orders","pricePerUnit",order.getIdOrders());
         lbFeatures.makeLabelEditable(lbUnits, tfUnits,"Orders","units",order.getIdOrders());
         lbFeatures.makeLabelEditable(lbFieldName, tfFieldName,"Orders","fieldName",order.getIdOrders());
         lbFeatures.makeLabelEditable(lbSourceLanguage, tfSourceLanguage,"Orders","sourceLanguage",order.getIdOrders());
@@ -86,6 +87,11 @@ public class ViewOrderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         lbUpdatedTotal.setText(String.valueOf(0.00)+"€");
         makeTableViewEditable();
+        tfPrice.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                updateTotalOrder();
+            }
+        });
     } 
     
     @FXML protected void onClicCancel(){
@@ -108,10 +114,9 @@ public class ViewOrderController implements Initializable {
         ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer eliminar este pedido?", this::deleteOrder, () -> {});
     }
     
-    private void updateData(){
+    private void setData(){
         lbLegalName.setText(company.getLegalName());
         lbVATNumber.setText(company.getVatNumber());
-        
         lbDescription.setText(order.getDescription());
         lbDate.setText(order.getDateOrder().format(formatter));
         lbPrice.setText(String.format("%.2f€",order.getPricePerUnit()));
@@ -119,7 +124,14 @@ public class ViewOrderController implements Initializable {
         lbFieldName.setText(order.getFieldName());
         lbSourceLanguage.setText(order.getSourceLanguage());
         lbTargetLanguage.setText(order.getTargetLanguage());
-        updateTotalOrder();
+        setTotalOrder();
+    }
+    
+    private void setTotalOrder(){
+        for(int i=0;i<order.getItems().size();i++){
+            updatedTotal=updatedTotal+order.getPricePerUnit()*order.getItems().get(i).getQuantity()*(100-order.getItems().get(i).getDiscount())/100;
+        }
+        lbUpdatedTotal.setText(String.format("%.2f€", updatedTotal));
     }
     
     private void updateTotalOrder(){
@@ -129,16 +141,16 @@ public class ViewOrderController implements Initializable {
         tfPrice.getStyleClass().remove("error");
         
         try{
-            price=Double.parseDouble(tfPrice.getText());
+            price=Double.parseDouble(lbPrice.getText().replace(",",".").replace("€",""));
         }catch(NumberFormatException ex){
-            tfPrice.getStyleClass().add("error");
+            lbPrice.getStyleClass().add("error");
             controlTotal=false;
         }
         if(controlTotal){
             for(int i=0;i<order.getItems().size();i++){
                 updatedTotal=updatedTotal+price*order.getItems().get(i).getQuantity()*(100-order.getItems().get(i).getDiscount())/100;
-                lbUpdatedTotal.setText(String.format("%.2f€", updatedTotal));
             }
+            lbUpdatedTotal.setText(String.format("%.2f€", updatedTotal));
         }
     }
     

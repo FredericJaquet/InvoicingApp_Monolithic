@@ -59,7 +59,8 @@ public class ViewInvoiceCustomerController implements Initializable {
     private ArrayList<String> query=new ArrayList();
     private int language;
     private int pages=1;
-    private int page=1;    
+    private int page=1;  
+    private int lastView;
     private double totalNet=0;
     private double totalVAT=0;
     private double totalWithholding=0;
@@ -84,8 +85,9 @@ public class ViewInvoiceCustomerController implements Initializable {
     @FXML private DatePicker dpDocDate;
     @FXML private ImageView ivLogo;
     
-    public void initData(InvoiceCustomer invoice){
+    public void initData(InvoiceCustomer invoice, int lastView){
         this.invoice=invoice;
+        this.lastView=lastView;
         language=getLanguage(invoice.getLanguage());
         
         lbFeatures.makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber",invoice.getIdDocument());
@@ -135,22 +137,10 @@ public class ViewInvoiceCustomerController implements Initializable {
     }
     
     @FXML protected void onClicBack(){
-        FXMLLoader loader=new FXMLLoader();
-        Parent detailsCustomerView=null;
-        ViewDetailsCustomerController controller=null;
-        BorderPane home=null;
-        
-        loader.setLocation(getClass().getResource("viewDetailsCustomer.fxml"));
-        try {
-            detailsCustomerView=loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        switch(lastView){
+            case(1):backToDetailsCustomer();break;
+            case(2):backToInvoicesCustomer();break;
         }
-        
-        controller=loader.getController();
-        controller.initData(customer);
-        home=(BorderPane)paneMain.getParent();
-        home.setCenter(detailsCustomerView);
     }
     
     @FXML protected void print() {
@@ -213,6 +203,38 @@ public class ViewInvoiceCustomerController implements Initializable {
         node.setTranslateY(0);
         
         return success;
+    }
+    
+    private void backToDetailsCustomer(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent detailsCustomerView=null;
+        ViewDetailsCustomerController controller=null;
+        BorderPane home=null;
+        
+        loader.setLocation(getClass().getResource("viewDetailsCustomer.fxml"));
+        try {
+            detailsCustomerView=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(customer);
+        home=(BorderPane)paneMain.getParent();
+        home.setCenter(detailsCustomerView);
+    }
+    
+    private void backToInvoicesCustomer(){
+        Parent invoicesView=null;
+        BorderPane home=null;
+        try {
+            invoicesView=FXMLLoader.load(getClass().getResource("viewInvoicesCustomer.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        home=(BorderPane)paneMain.getParent();
+        home.setCenter(invoicesView);
     }
     
     private void getObjects(){

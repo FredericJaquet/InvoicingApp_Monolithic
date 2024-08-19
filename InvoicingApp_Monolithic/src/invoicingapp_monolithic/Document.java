@@ -201,7 +201,6 @@ public class Document {
         
         for(int i=0;i<orders.size();i++){
             orders.get(i).setBilled(false);
-            //orders.get(i).setIdDocument(0);
             orders.get(i).updateDB("billed",false);
             orders.get(i).updateDB("idDocument",null);
         }

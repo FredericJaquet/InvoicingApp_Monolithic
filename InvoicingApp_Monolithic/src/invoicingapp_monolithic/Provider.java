@@ -296,6 +296,7 @@ public class Provider extends CustomProv{
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }   
+        con.closeConnection();
     }
     
     /**
@@ -318,6 +319,7 @@ public class Provider extends CustomProv{
         } catch (SQLException ex) {
             Logger.getLogger(Provider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
     }
     
     /**
@@ -341,6 +343,7 @@ public class Provider extends CustomProv{
         } catch (SQLException ex) {
             Logger.getLogger(Provider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
     }
     
     public ArrayList<InvoiceProvider> getInvoices(){

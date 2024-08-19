@@ -175,6 +175,7 @@ public class Users extends Company {
         } catch (SQLException ex) {
             Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
         
         return mapUsers;
     }

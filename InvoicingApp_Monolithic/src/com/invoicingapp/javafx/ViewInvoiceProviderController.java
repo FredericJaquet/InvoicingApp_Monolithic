@@ -56,7 +56,8 @@ public class ViewInvoiceProviderController implements Initializable {
     private boolean changes=false;
     private int language;
     private int pages=1;
-    private int page=1;    
+    private int page=1;
+    private int lastView;
     private double totalNet=0;
     private double totalVAT=0;
     private double totalWithholding=0;
@@ -79,8 +80,9 @@ public class ViewInvoiceProviderController implements Initializable {
     @FXML private Button btnPrev,btnNext;
     @FXML private DatePicker dpDocDate;
     
-    public void initData(InvoiceProvider invoice){
+    public void initData(InvoiceProvider invoice, int lastView){
         this.invoice=invoice;
+        this.lastView=lastView;
         language=getLanguage(invoice.getLanguage());
         
         lbFeatures.makeLabelEditable(lbDocNumber, tfDocNumber, "Document","docNumber",invoice.getIdDocument());
@@ -129,22 +131,10 @@ public class ViewInvoiceProviderController implements Initializable {
     }
     
     @FXML protected void onClicBack(){
-        FXMLLoader loader=new FXMLLoader();
-        Parent detailsProviderView=null;
-        ViewDetailsProviderController controller=null;
-        BorderPane home=null;
-        
-        loader.setLocation(getClass().getResource("viewDetailsProvider.fxml"));
-        try {
-            detailsProviderView=loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewInvoiceProviderController.class.getName()).log(Level.SEVERE, null, ex);
+        switch(lastView){
+            case(1):backToDetailsProvider();break;
+            case(2):backToInvoicesProvider();break;
         }
-        
-        controller=loader.getController();
-        controller.initData(provider);
-        home=(BorderPane)paneMain.getParent();
-        home.setCenter(detailsProviderView);
     }
     
     @FXML protected void print() {
@@ -187,6 +177,38 @@ public class ViewInvoiceProviderController implements Initializable {
         }
         lbFeatures.resetQuery();
         query.clear();
+    }
+    
+    private void backToDetailsProvider(){
+        FXMLLoader loader=new FXMLLoader();
+        Parent detailsProviderView=null;
+        ViewDetailsProviderController controller=null;
+        BorderPane home=null;
+        
+        loader.setLocation(getClass().getResource("viewDetailsProvider.fxml"));
+        try {
+            detailsProviderView=loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(ViewInvoiceProviderController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        controller=loader.getController();
+        controller.initData(provider);
+        home=(BorderPane)paneMain.getParent();
+        home.setCenter(detailsProviderView);
+    }
+    
+    private void backToInvoicesProvider(){
+        Parent invoicesView=null;
+        BorderPane home=null;
+        try {
+            invoicesView=FXMLLoader.load(getClass().getResource("viewInvoicesProvider.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(ViewInvoiceProviderController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        home=(BorderPane)paneMain.getParent();
+        home.setCenter(invoicesView);
     }
     
     private boolean printNode(Node node, PrinterJob job, PageLayout pageLayout){

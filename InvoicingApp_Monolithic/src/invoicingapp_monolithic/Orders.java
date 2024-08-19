@@ -79,7 +79,6 @@ public class Orders {
             items.get(i).setIdOrders(idOrders);
             items.get(i).addToDB();//añadir el idOrders
         }
-        con.closeConnection();
     }
     
     /**

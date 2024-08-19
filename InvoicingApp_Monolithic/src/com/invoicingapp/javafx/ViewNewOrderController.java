@@ -48,9 +48,7 @@ import javafx.util.Callback;
  * @author frede
  */
 public class ViewNewOrderController implements Initializable {
-
-    private String[] views={"viewCustomers.fxml","viewProviders.fxml"};
-    private String prevView;
+    
     private Orders order=new Orders();
     private Item newLine=new Item();
     private CustomProv company;
@@ -255,6 +253,7 @@ public class ViewNewOrderController implements Initializable {
             tfFieldName.setText(scheme.getField());
             tfSourceLanguage.setText(scheme.getSourceLanguage());
             tfTargetLanguage.setText(scheme.getTargetLanguage());
+            
         }
     }
 
@@ -263,6 +262,9 @@ public class ViewNewOrderController implements Initializable {
             tfLineDescription.setText(lines.get(iLine).getDescription());
             tfDiscount.setText(String.valueOf(lines.get(iLine).getDiscount()));
             iLine++;
+        }else{
+            tfLineDescription.clear();
+            tfDiscount.clear();
         }
     }
     
@@ -305,6 +307,7 @@ public class ViewNewOrderController implements Initializable {
             try {
                 double discount = event.getNewValue();
                 item.setDiscount(discount);
+                updateTotalOrder();
             } catch (NumberFormatException ex) {
                 labelError.setVisible(true);
             }
@@ -338,6 +341,7 @@ public class ViewNewOrderController implements Initializable {
         scheme=new Scheme();
         iLine=0;
         updatedTotal=0;
+        
         tfDescription.clear();
         tfLineDescription.clear();
         tfDiscount.clear();
@@ -353,6 +357,7 @@ public class ViewNewOrderController implements Initializable {
         dpDateOrder.setValue(LocalDate.now());
         cbCustomProvs.setValue(null);
         cbSchemes.setValue(null);
+        
         createTableItems();
         
         tfDescription.getStyleClass().remove("error");

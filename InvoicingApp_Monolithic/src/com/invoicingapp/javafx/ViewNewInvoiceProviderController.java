@@ -220,7 +220,7 @@ public class ViewNewInvoiceProviderController implements Initializable {
             }
         
             controller=loader.getController();
-            controller.initData(invoice);
+            controller.initData(invoice,lastView);
             home.setCenter(invoiceProviderView);
         }else{
             labelError.setText(invoiceNotSaved);

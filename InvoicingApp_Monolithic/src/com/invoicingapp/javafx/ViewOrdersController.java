@@ -81,22 +81,24 @@ public class ViewOrdersController implements Initializable {
     }
     
     @FXML protected void onSeeOrder(){
-        FXMLLoader loader=new FXMLLoader();
-        Parent orderView=null;
-        ViewOrderController controller=null;
-        BorderPane home=null;
+        if(tableOrders.getSelectionModel().getSelectedItem()!=null){
+            FXMLLoader loader=new FXMLLoader();
+            Parent orderView=null;
+            ViewOrderController controller=null;
+            BorderPane home=null;
         
-        loader.setLocation(getClass().getResource("viewOrder.fxml"));
-        try {
-            orderView=loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewOrdersController.class.getName()).log(Level.SEVERE, null, ex);
+            loader.setLocation(getClass().getResource("viewOrder.fxml"));
+            try {
+                orderView=loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ViewOrdersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+            controller=loader.getController();
+            controller.initData(tableOrders.getSelectionModel().getSelectedItem());
+            home=(BorderPane)paneOrders.getParent();
+            home.setCenter(orderView);
         }
-        
-        controller=loader.getController();
-        controller.initData(tableOrders.getSelectionModel().getSelectedItem());
-        home=(BorderPane)paneOrders.getParent();
-        home.setCenter(orderView);
     }
     
     @FXML protected void onClicCustomers(){

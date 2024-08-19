@@ -216,6 +216,7 @@ public class Scheme {
         }catch (SQLException ex) {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
         } 
+        con.closeConnection();
     }
     
     /**

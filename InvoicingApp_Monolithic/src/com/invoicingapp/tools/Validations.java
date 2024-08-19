@@ -33,7 +33,7 @@ public class Validations {
         return control;
     }
     
-    public static boolean isDouble(Label field,Label lbError,String message){
+    public static boolean isDouble(Label field,Label lbError, String message){
         String text=field.getText();
         double result;
         boolean control=true;

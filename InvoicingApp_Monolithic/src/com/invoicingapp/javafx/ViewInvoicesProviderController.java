@@ -84,22 +84,24 @@ public class ViewInvoicesProviderController implements Initializable {
     }
     
     @FXML protected void onSeeInvoice(){
-        FXMLLoader loader=new FXMLLoader();
-        Parent invoiceView=null;
-        ViewInvoiceProviderController controller=null;
-        BorderPane home=null;
+        if(tableInvoices.getSelectionModel().getSelectedItem()!=null){
+            FXMLLoader loader=new FXMLLoader();
+            Parent invoiceView=null;
+            ViewInvoiceProviderController controller=null;
+            BorderPane home=null;
         
-        loader.setLocation(getClass().getResource("viewInvoiceProvider.fxml"));
-        try {
-            invoiceView=loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewInvoicesProviderController.class.getName()).log(Level.SEVERE, null, ex);
+            loader.setLocation(getClass().getResource("viewInvoiceProvider.fxml"));
+            try {
+                invoiceView=loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ViewInvoicesProviderController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+            controller=loader.getController();
+            controller.initData(tableInvoices.getSelectionModel().getSelectedItem(),2);
+            home=(BorderPane)paneInvoicesProvider.getParent();
+            home.setCenter(invoiceView);
         }
-        
-        controller=loader.getController();
-        controller.initData(tableInvoices.getSelectionModel().getSelectedItem());
-        home=(BorderPane)paneInvoicesProvider.getParent();
-        home.setCenter(invoiceView);
     }
     
     @FXML protected void getSelectionCBProviders(){

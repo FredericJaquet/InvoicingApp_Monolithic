@@ -307,6 +307,7 @@ public class Customer extends CustomProv {
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
     }
     
     /**
@@ -329,6 +330,7 @@ public class Customer extends CustomProv {
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
     }
     
     /**
@@ -352,6 +354,7 @@ public class Customer extends CustomProv {
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
     }
 
     /**

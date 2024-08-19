@@ -78,22 +78,24 @@ public class ViewInvoicesCustomerController implements Initializable {
     }
     
     @FXML protected void onSeeInvoice(){
-        FXMLLoader loader=new FXMLLoader();
-        Parent invoiceView=null;
-        ViewInvoiceCustomerController controller=null;
-        BorderPane home=null;
+        if(tableInvoices.getSelectionModel().getSelectedItem()!=null){
+            FXMLLoader loader=new FXMLLoader();
+            Parent invoiceView=null;
+            ViewInvoiceCustomerController controller=null;
+            BorderPane home=null;
         
-        loader.setLocation(getClass().getResource("viewInvoiceCustomer.fxml"));
-        try {
-            invoiceView=loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(ViewInvoicesCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            loader.setLocation(getClass().getResource("viewInvoiceCustomer.fxml"));
+            try {
+                invoiceView=loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ViewInvoicesCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+            controller=loader.getController();
+            controller.initData(tableInvoices.getSelectionModel().getSelectedItem(),2);
+            home=(BorderPane)paneInvoicesCustomer.getParent();
+            home.setCenter(invoiceView);
         }
-        
-        controller=loader.getController();
-        controller.initData(tableInvoices.getSelectionModel().getSelectedItem());
-        home=(BorderPane)paneInvoicesCustomer.getParent();
-        home.setCenter(invoiceView);
     }
     
     @FXML protected void onClicPaid(){

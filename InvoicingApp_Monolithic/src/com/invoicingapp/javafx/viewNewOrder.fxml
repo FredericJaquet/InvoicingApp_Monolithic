@@ -57,6 +57,8 @@
       <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="2" />
       <Label styleClass="labels" text="Descripción" GridPane.rowIndex="3" />
       <TextField fx:id="tfDescription" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+      <Label styleClass="labels" text="Fecha" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+      <DatePicker fx:id="dpDateOrder" GridPane.columnIndex="5" GridPane.rowIndex="3" />
       <Label styleClass="labels" text="Precio" GridPane.rowIndex="4" />
       <TextField fx:id="tfPrice" promptText="Obligatorio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Label styleClass="labels" text="Unidades" GridPane.columnIndex="2" GridPane.rowIndex="4" />
@@ -67,8 +69,6 @@
       <TextField fx:id="tfSourceLanguage" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <Label styleClass="labels" text="Idioma Destino" GridPane.columnIndex="2" GridPane.rowIndex="5" />
       <TextField fx:id="tfTargetLanguage" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-      <Label styleClass="labels" text="Fecha" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-      <DatePicker fx:id="dpDateOrder" GridPane.columnIndex="5" GridPane.rowIndex="3" />
       <Separator prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6" />
       <Label styleClass="labels" text="Artículos" GridPane.rowIndex="7" />
       <Label styleClass="labels" text="Total" GridPane.columnIndex="4" GridPane.rowIndex="7" />
