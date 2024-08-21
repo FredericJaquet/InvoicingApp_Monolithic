@@ -147,6 +147,11 @@ public class ViewInvoiceCustomerController implements Initializable {
         Printer printer = Printer.getDefaultPrinter();
         PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
         PrinterJob job = PrinterJob.createPrinterJob();
+        page=1;
+        btnPrev.setVisible(false);
+        btnNext.setVisible(true);
+        lbPageNumber.setText(String.valueOf(page));
+        setOrders();
         
         if (job != null && job.showPrintDialog(paneInvoice.getScene().getWindow())) {
             boolean success = true;

@@ -29,3 +29,7 @@
 .labels{
     -fx-font-weight:bold;
 }
+
+.whiteBackground{
+    -fx-background-color:white;
+}
