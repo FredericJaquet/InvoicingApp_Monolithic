@@ -271,6 +271,10 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
         
         return totalWithholdingInvoiceCustomer;
     }
+    
+    public double getTotalWithholdingInLocalCurrency(){
+        return getTotalWithholding()*getChangeRate().getRate();
+    }
 
     public double getTotalToPay(){
         double total=0;

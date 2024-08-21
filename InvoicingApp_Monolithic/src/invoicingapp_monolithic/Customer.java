@@ -256,35 +256,6 @@ public class Customer extends CustomProv {
     }
     
     /**
-    * Gets the VAT total of all the invoices for this customer instance for 
-    * the time frame strating on the initialDate and ending on the finalDate
-    * @return the VAT total
-    */
-    public double getTotalVATCustomer(){
-        double totalVAT=0;
-        
-        for(int i=0;i<invoicesCustomer.size();i++){
-            totalVAT=totalVAT+invoicesCustomer.get(i).getTotalVAT();
-        }
-
-        return totalVAT;
-    }
-    
-    /**
-    * Gets the total of Withholding of all the invoices for this customer instance for 
-    * the time frame starting on the initialDate and ending on the finalDate
-    * @return the total of Withholding 
-    */
-    public double getTotalWithholdingCustomer(){
-        double totalWithholding=0;
-        
-        for(int i=0;i<invoicesCustomer.size();i++){            
-            totalWithholding=totalWithholding+invoicesCustomer.get(i).getTotalWithholding();
-        }
-        return totalWithholding;
-    }
-    
-    /**
     * gets all the invoices of this customer instance for the time frame 
     * starting on the initialDate and ending on the finalDate.
     * @param initialDate
@@ -355,6 +326,54 @@ public class Customer extends CustomProv {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+    }
+    
+    /**
+    * Gets the NET total of all the invoices for this customer instance for 
+    * the time frame strating on the initialDate and ending on the finalDate
+    * @return the NET total
+    */
+    public double getTotalNetCustomer(){
+        double totalNet=0;
+        
+        for(int i=0;i<invoicesCustomer.size();i++){
+            totalNet=totalNet+invoicesCustomer.get(i).getTotalInLocalCurrency();
+        }
+
+        return totalNet;
+    }
+    
+    /**
+    * Gets the VAT total of all the invoices for this customer instance for 
+    * the time frame strating on the initialDate and ending on the finalDate
+    * @return the VAT total
+    */
+    public double getTotalVATCustomer(){
+        double totalVAT=0;
+        
+        for(int i=0;i<invoicesCustomer.size();i++){
+            totalVAT=totalVAT+invoicesCustomer.get(i).getTotalVATInLocalCurrency();
+        }
+
+        return totalVAT;
+    }
+    
+    /**
+    * Gets the total of Withholding of all the invoices for this customer instance for 
+    * the time frame starting on the initialDate and ending on the finalDate
+    * @return the total of Withholding 
+    */
+    public double getTotalWithholdingCustomer(){
+        double totalWithholding=0;
+        
+        for(int i=0;i<invoicesCustomer.size();i++){            
+            totalWithholding=totalWithholding+invoicesCustomer.get(i).getTotalWithholdingInLocalCurrency();
+        }
+        return totalWithholding;
+    }
+    
+    public void addInvoice(InvoiceCustomer invoice){
+        invoicesCustomer.add(invoice);
     }
 
     /**

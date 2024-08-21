@@ -264,6 +264,9 @@ public class Document {
         
         return totalDocument;
     }
+    public double getTotalInLocalCurrency(){
+        return getTotal()*changeRate.getRate();
+    }
     
     public void setTotalString(){
         totalString=String.format("%.2f"+changeRate.getCurrency1(),getTotal());
@@ -283,6 +286,10 @@ public class Document {
         totalVATDocument=getTotal()*vat/100;
         
         return totalVATDocument;
+    }
+    
+    public double getTotalVATInLocalCurrency(){
+        return getTotalVAT()*changeRate.getRate();
     }
     
     /**

@@ -229,6 +229,37 @@ public class CustomProv extends Company{
         }catch (SQLException ex) {
             Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
         }
+        con.closeConnection();
+        
+        return orders;
+    }
+    
+    public ArrayList<Orders> getOrdersFromDB(int billed,LocalDate from, LocalDate untill){
+        String query="SELECT idOrders FROM Orders WHERE idCustomProv="+idCustomProv+" AND (dateOrder BETWEEN "+from.toString()+" AND "+untill.toString()+")";
+        ConnectionDB con=new ConnectionDB();
+        ResultSet result=null;
+        Orders order=new Orders();
+        
+        orders.clear();
+        
+        switch(billed){
+            case(1):query=query.concat(" AND billed=true;");break;
+            case(2):query=query.concat(" AND billed=false;");break;
+            case(3):query=query.concat(";");
+        }
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        
+        try {
+            while(result.next()){
+                order=new Orders();
+                order.getFromDB(result.getInt(1));
+                orders.add(order);
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(CustomProv.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         con.closeConnection();
         return orders;

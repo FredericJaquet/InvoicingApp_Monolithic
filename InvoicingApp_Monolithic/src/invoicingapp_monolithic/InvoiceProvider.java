@@ -190,6 +190,10 @@ public class InvoiceProvider extends Document{
         return totalWithholdingInvoiceProvider;
     }
     
+    public double getTotalWithholdingInLocalCurrency(){
+        return getTotalWithholding()*getChangeRate().getRate();
+    }
+    
     public double getTotalToPay(){
         double total=0;
         

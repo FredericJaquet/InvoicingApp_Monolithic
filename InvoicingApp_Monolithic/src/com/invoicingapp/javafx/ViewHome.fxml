@@ -175,7 +175,7 @@
                      </image>
                   </ImageView>
                   <Label styleClass="labelMenu" stylesheets="@viewhome.css" text="Informes" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                  <Button mnemonicParsing="false" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Ingresos" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                  <Button fx:id="bReportIncomes" mnemonicParsing="false" onAction="#onItemLatMenu" onMouseEntered="#onFocus" onMouseExited="#onExit" styleClass="btnMenu" stylesheets="@viewhome.css" text="Ingresos" GridPane.columnIndex="1" GridPane.rowIndex="14">
                      <effect>
                         <ColorAdjust />
                      </effect>
@@ -348,7 +348,7 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnReportIncomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <Button fx:id="btnReportIncomes" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onItemCentralMenu" styleClass="centralMenu" stylesheets="@viewhome.css" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets bottom="10.0" />
                     </GridPane.margin>

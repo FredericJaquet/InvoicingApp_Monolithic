@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -7,7 +8,7 @@
 
 <VBox fx:id="viewMonthlyReport" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="25.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewMonthlyReportPendingController">
    <children>
-      <HBox spacing="100.0">
+      <HBox spacing="100.0" styleClass="title2" stylesheets="@viewreportpending.css">
          <children>
             <HBox spacing="5.0">
                <children>
@@ -43,6 +44,9 @@
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
       </HBox>
       <VBox fx:id="paneMonthlyReport" spacing="10.0" />
    </children>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="15.0" stylesheets="@viewreportinoutcomesinvoices.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewReportInOutcomesInvoicesController">
+   <children>
+      <HBox spacing="15.0">
+         <children>
+            <Label fx:id="lbDocNumber" prefWidth="100.0" text="Label" />
+            <Label fx:id="lbDate" prefWidth="150.0" text="Label" />
+            <Label fx:id="lbTotalNet" prefWidth="75.0" text="Label" />
+            <Label fx:id="lbTotalVAT" prefWidth="75.0" text="Label" />
+            <Label fx:id="lbTotalWithholding" prefWidth="100.0" text="Label" />
+         </children>
+         <padding>
+            <Insets left="15.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

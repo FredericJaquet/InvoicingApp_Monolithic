@@ -246,6 +246,21 @@ public class Provider extends CustomProv{
     }
     
     /**
+    * Gets the NET total of all the invoices for this customer instance for 
+    * the time frame strating on the initialDate and ending on the finalDate
+    * @return the NET total
+    */
+    public double getTotalNetProvider(){
+        double totalNet=0;
+        
+        for(int i=0;i<invoicesProvider.size();i++){
+            totalNet=totalNet+invoicesProvider.get(i).getTotalInLocalCurrency();
+        }
+
+        return totalNet;
+    }
+    
+    /**
     * Gets the VAT total of the invoices for this provider instance for 
     * the time frame strating on the initialDate and ending on the finalDate
     * @return the VAT total
@@ -254,7 +269,7 @@ public class Provider extends CustomProv{
         double totalVAT=0;
         
         for(int i=0;i<invoicesProvider.size();i++){
-            totalVAT=totalVAT+invoicesProvider.get(i).getTotalVAT();
+            totalVAT=totalVAT+invoicesProvider.get(i).getTotalVATInLocalCurrency();
         }
         return totalVAT;
     }
@@ -268,7 +283,7 @@ public class Provider extends CustomProv{
         double totalWithholding=0;
         
         for(int i=0;i<invoicesProvider.size();i++){
-            totalWithholding=totalWithholding+invoicesProvider.get(i).getTotalWithholding();
+            totalWithholding=totalWithholding+invoicesProvider.get(i).getTotalWithholdingInLocalCurrency();
         }
         return totalWithholding;
     }

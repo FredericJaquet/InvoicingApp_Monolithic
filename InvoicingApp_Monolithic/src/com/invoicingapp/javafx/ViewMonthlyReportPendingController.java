@@ -25,9 +25,11 @@ import javafx.scene.layout.VBox;
  */
 public class ViewMonthlyReportPendingController implements Initializable {
 
+    private int lines=1;
     private ReportPendingPerMonth report;
+    private final String[] styles={"lineUneven","lineEven"};
     
-    @FXML Label lbYear,lbMonth,lbTotal;
+    @FXML private Label lbYear,lbMonth,lbTotal;
     @FXML private VBox paneMonthlyReport;
     
     public void initData(ReportPendingPerMonth report){
@@ -87,8 +89,9 @@ public class ViewMonthlyReportPendingController implements Initializable {
         
         controller=loader.getController();
         controller.initData(invoice);
+        invoicePendingView.getStyleClass().add(styles[lines%2]);
+        lines++;
         paneMonthlyReport.getChildren().add(invoicePendingView);
-        
     }
     
 }

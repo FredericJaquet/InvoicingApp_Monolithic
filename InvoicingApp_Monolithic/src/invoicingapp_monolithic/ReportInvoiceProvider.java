@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +43,7 @@ public class ReportInvoiceProvider extends ReportInvoice{
             Logger.getLogger(ReportInvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+        Collections.sort(providers);
     }
     
     public double getTotalInvoices(){

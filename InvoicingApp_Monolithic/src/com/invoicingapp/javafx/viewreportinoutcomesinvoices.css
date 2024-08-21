@@ -1,0 +1,14 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+
+.lineUneven{
+    -fx-background-color:white;
+}
+.lineEven{
+    -fx-background-color:#ECECEC;
+}

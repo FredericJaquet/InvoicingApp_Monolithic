@@ -19,10 +19,10 @@
     -fx-border-width:2;
 }
 
-.lineUneven{
+.lineEven{
     -fx-background-color:white;
 }
-.lineEven{
+.lineUneven{
     -fx-background-color:#ECECEC;
 }
 
