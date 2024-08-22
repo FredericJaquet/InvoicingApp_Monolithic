@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="paneMain" alignment="TOP_CENTER" maxWidth="700.0" spacing="15.0" stylesheets="@viewreportoutcomes.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.invoicingapp.javafx.ViewReportOutcomesController">
+   <children>
+      <VBox spacing="15.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button fx:id="btnExcludeOrders" mnemonicParsing="false" onAction="#onClicExcludePendingOrders" text="Excluir pedidos" />
+                  <Button fx:id="btnIncludeOrders" mnemonicParsing="false" onAction="#onClicAddPendingOrders" text="Incluir pedidos" />
+                  <Button mnemonicParsing="false" onAction="#onClicPrint" text="Imprimir" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Label styleClass="labels" text="Desde" />
+                  <DatePicker fx:id="dpFrom" onAction="#getReport" />
+                  <Label styleClass="labels" text="Hasta" />
+                  <DatePicker fx:id="dpUntill" onAction="#getReport" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Button fx:id="btnThisYear" mnemonicParsing="false" onAction="#onClicThisYear" text="Este año" />
+                  <Button fx:id="btnThisQ" mnemonicParsing="false" onAction="#onClicThisQ" text="Este trimestre" />
+                  <Button fx:id="btnThisMonth" mnemonicParsing="false" onAction="#onClicThisMonth" text="Este mes" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox fx:id="paneReport" alignment="TOP_CENTER" spacing="15.0" styleClass="whiteBackground">
+         <children>
+            <HBox alignment="CENTER" spacing="5.0" styleClass="title1">
+               <children>
+                  <Label styleClass="labels" text="Informe de Ingresos:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbTitleFrom" styleClass="labels" text="Desde">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbFrom" styleClass="labels" text="Label">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbTitleUntill" styleClass="labels" text="Hasta">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbUntill" styleClass="labels" text="Label">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Label styleClass="labels" text="Total:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbTotal">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox spacing="15.0" styleClass="labels">
+               <children>
+                  <Label prefWidth="250.0" text="Cliente" />
+                  <Label prefWidth="75.0" text="Total Neto" />
+                  <Label prefWidth="75.0" text="Total IVA" />
+                  <Label prefWidth="100.0" text="Total Retención" />
+               </children>
+            </HBox>
+            <ScrollPane fx:id="paneScroll" maxHeight="1.7976931348623157E308" styleClass="whiteBackground">
+               <content>
+                  <VBox fx:id="paneReports" spacing="25.0" styleClass="whiteBackground">
+                     <children>
+                        <VBox spacing="25.0" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+</VBox>

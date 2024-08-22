@@ -305,6 +305,7 @@ public class Provider extends CustomProv{
         
         try {
             while(result.next()){
+                invoiceProvider=new InvoiceProvider();
                 invoiceProvider.getFromDB(result.getInt(1));
                 invoicesProvider.add(invoiceProvider);
             }
@@ -359,6 +360,10 @@ public class Provider extends CustomProv{
             Logger.getLogger(Provider.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
+    }
+    
+    public void addInvoice(InvoiceProvider invoice){
+        invoicesProvider.add(invoice);
     }
     
     public ArrayList<InvoiceProvider> getInvoices(){

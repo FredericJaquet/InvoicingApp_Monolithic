@@ -31,6 +31,7 @@ public class ReportInvoiceProvider extends ReportInvoice{
         ResultSet result=null;
         Provider provider=new Provider();
         
+        con.openConnection();
         result=con.getResultSet(query);
         try{
             while(result.next()){
@@ -40,7 +41,50 @@ public class ReportInvoiceProvider extends ReportInvoice{
                 providers.add(provider);                
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ReportInvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReportInvoiceProvider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        con.closeConnection();
+        Collections.sort(providers);
+    }
+    
+    public void getProvidersWithPendingOrdersFromDB(){
+        boolean control=false;
+        ArrayList<Provider>newProviders=new ArrayList();
+        ConnectionDB con=new ConnectionDB();
+        String query="SELECT Customer.idCustomer FROM Customer JOIN CustomProv ON (Customer.idCustomProv=CustomProv.idCustomProv) JOIN Orders ON (CustomProv.idCustomProv=Orders.idCustomProv) AND Orders.billed=0 GROUP BY Customer.idCustomer;";
+        ResultSet result=null;
+        Provider provider=new Provider();
+        InvoiceProvider invoice=new InvoiceProvider();
+        
+        con.openConnection();
+        result=con.getResultSet(query);
+        try{
+            while(result.next()){
+                int a=result.getInt(1);
+                control=false;
+                invoice=new InvoiceProvider();
+                invoice.setDocNumber("Pendientes");
+                invoice.setDocDate(LocalDate.now());
+                for(int i=0;i<providers.size();i++){
+                    if(providers.get(i).getIdProvider()==a){
+                        control=true;
+                        providers.get(i).getOrdersFromDB(2);
+                        invoice.getOrders().addAll(providers.get(i).getOrders());
+                        providers.get(i).addInvoice(invoice);
+                    }
+                }
+                if(!control){
+                    provider=new Provider();
+                    provider.getFromDB(result.getInt(1));
+                    provider.getOrdersFromDB(2);
+                    invoice.getOrders().addAll(provider.getOrders());
+                    provider.addInvoice(invoice);
+                    newProviders.add(provider);
+                }                   
+            }
+            providers.addAll(newProviders);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportInvoiceProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         con.closeConnection();
         Collections.sort(providers);
@@ -50,7 +94,9 @@ public class ReportInvoiceProvider extends ReportInvoice{
         double totalInvoices=0;
         
         for (int i=0;i<providers.size();i++){
-            totalInvoices=totalInvoices+providers.get(i).getTotalCustomProv(getInitialDate(), getFinalDate());
+            for(int j=0;j<providers.get(i).getInvoices().size();j++){
+                totalInvoices=totalInvoices+providers.get(i).getInvoices().get(j).getTotal();
+            }
         }
     
         return totalInvoices;
@@ -82,6 +128,20 @@ public class ReportInvoiceProvider extends ReportInvoice{
     
     public void addProvider(Provider provider){
         providers.add(provider);
+    }
+
+    /**
+     * @return the providers
+     */
+    public ArrayList<Provider> getProviders() {
+        return providers;
+    }
+
+    /**
+     * @param providers the providers to set
+     */
+    public void setProviders(ArrayList<Provider> providers) {
+        this.providers = providers;
     }
 
 }

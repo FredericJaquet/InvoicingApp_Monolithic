@@ -1,0 +1,35 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+
+.title1{
+    -fx-border-color:#4A98FF;
+    -fx-border-radius:10;
+    -fx-border-width:2;
+}
+
+.title2{
+    -fx-border-color:#4A98FF;
+    -fx-background-color:#FFF5E2;
+    -fx-border-radius:10;
+    -fx-border-width:2;
+}
+
+.lineEven{
+    -fx-background-color:white;
+}
+.lineUneven{
+    -fx-background-color:#ECECEC;
+}
+
+.labels{
+    -fx-font-weight:bold;
+}
+
+.whiteBackground{
+    -fx-background-color:white;
+}
