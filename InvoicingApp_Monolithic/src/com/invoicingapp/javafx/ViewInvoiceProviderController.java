@@ -105,7 +105,7 @@ public class ViewInvoiceProviderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         btnPrev.setVisible(false);
         btnNext.setVisible(true);
-        config=Configuration.getConfiguration();
+        config=Configuration.loadConfiguration();
     }
     
     @FXML protected void onClicPrev(){

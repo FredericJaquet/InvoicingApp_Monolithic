@@ -6,15 +6,10 @@ package com.invoicingapp.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.Expose;
-import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 /**
  *
@@ -22,8 +17,84 @@ import java.util.ArrayList;
  */
 public class Configuration {
     
+    private boolean reminder;
+    private int idUser;
+    private String logoPath;
+
+    // Constructor por defecto
+    public Configuration() {
+        // Valores por defecto
+        this.reminder = false;
+        this.idUser = 0;
+        this.logoPath = "";
+    }
+
+    // Constructor con parámetros
+    public Configuration(boolean reminder, int idUser, String logoPath) {
+        this.reminder = reminder;
+        this.idUser = idUser;
+        this.logoPath = logoPath;
+    }
+
+    // Getters y Setters
+    public boolean isReminder() {
+        return reminder;
+    }
+
+    public void setReminder(boolean reminder) {
+        this.reminder = reminder;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public void save() {
+        String userDir = System.getProperty("user.dir");
+        File configFile = new File(userDir, "config.txt");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        try (FileWriter writer = new FileWriter(configFile)) {
+            gson.toJson(this, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
-    @Expose private boolean reminder=false;
+    public static Configuration loadConfiguration() {
+        String userDir = System.getProperty("user.dir");
+        File configFile = new File(userDir, "config.txt");
+        Configuration config=new Configuration();
+        Gson gson = new Gson();
+
+        if (!configFile.exists()) {
+            System.out.println("No se encontró el archivo de configuración, se usarán valores por defecto.");
+        }
+        else{
+            try (FileReader reader = new FileReader(configFile)) {
+                config = gson.fromJson(reader, Configuration.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return config;   
+    }
+
+
+    
+    /*@Expose private boolean reminder=false;
     @Expose private int idUser=0;
     @Expose private String logoPath;
     
@@ -115,42 +186,42 @@ public class Configuration {
 	       	e2.printStackTrace();
 	    }
 	}
-    }
+    }*/
     
     /**
      * @return the reminder
      */
-    public boolean isReminder() {
+    /*public boolean isReminder() {
         return reminder;
-    }
+    }*/
 
     /**
      * @param reminder the reminder to set
      */
-    public void setReminder(boolean reminder) {
+    /*public void setReminder(boolean reminder) {
         this.reminder = reminder;
-    }
+    }*/
 
     /**
      * @return the user
      */
-    public int getIdUser() {
+    /*public int getIdUser() {
         return idUser;
-    }
+    }*/
 
     /**
      * @param idUser the user to set
      */
-    public void setIdUser(int idUser) {
+    /*public void setIdUser(int idUser) {
         this.idUser = idUser;
-    }
+    }*/
     
-    public void setLogoPath(String logoPath){
+    /*public void setLogoPath(String logoPath){
         this.logoPath=logoPath;
     }
     
     public String getLogoPath(){
         return logoPath;
-    }
+    }*/
     
 }

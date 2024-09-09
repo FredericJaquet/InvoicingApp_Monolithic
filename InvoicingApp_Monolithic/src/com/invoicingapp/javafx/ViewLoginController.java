@@ -34,7 +34,7 @@ import javafx.stage.Stage;
  */
 public class ViewLoginController implements Initializable {
 
-    private Configuration config=Configuration.getConfiguration();
+    private Configuration config;
     private boolean control=false;
     private Users user=new Users();
     
@@ -50,7 +50,7 @@ public class ViewLoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        config=Configuration.loadConfiguration();
         textFieldPW.setVisible(false);
         user.getFromDB(config.getIdUser());
         
@@ -114,12 +114,20 @@ public class ViewLoginController implements Initializable {
     }
     
     @FXML protected void onActionCreate(){
+        FXMLLoader loader=new FXMLLoader();
         Parent root=null;
+        ViewCreateUserController controller=null;
+        
+        loader.setLocation(getClass().getResource(PathNames.CREATEUSERVIEW));
         try {
-            root = FXMLLoader.load(getClass().getResource(PathNames.CREATEUSERVIEW));
+            root=loader.load();
         } catch (IOException ex) {
             Logger.getLogger(ViewLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        controller=loader.getController();
+        controller.initData(config);
+        
         Scene scene=new Scene(root);
         Stage stage=new Stage();
         stage.getIcons().add(new Image(getClass().getResourceAsStream(PathNames.ICON))); 

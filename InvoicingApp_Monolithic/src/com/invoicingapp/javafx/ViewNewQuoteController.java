@@ -111,7 +111,7 @@ public class ViewNewQuoteController implements Initializable {
         InputStream isImage=null;
         File img=null;
         
-        config=Configuration.getConfiguration();
+        config=Configuration.loadConfiguration();
         logoPath=config.getLogoPath();
         user.getFromDB(config.getIdUser());
         companies=Customer.getAllCustomersFromDB(CustomProv.ENABLED);

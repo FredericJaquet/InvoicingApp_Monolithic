@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
+import com.invoicingapp.config.PathNames;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
@@ -51,7 +52,7 @@ import javafx.util.Callback;
  */
 public class ViewCreateUserController implements Initializable {
 
-    private Configuration config=Configuration.getConfiguration();
+    private Configuration config;
     private Users user=new Users();
     private ArrayList<Company> companies=new ArrayList();
     private Stage stage;
@@ -73,13 +74,17 @@ public class ViewCreateUserController implements Initializable {
     @FXML private VBox paneCreateUser;
     @FXML Button btnImportLogo;
     
+    public void initData(Configuration config){
+        this.config=config;
+    }
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        config=Configuration.loadConfiguration();
         companies=Company.getAllFromDB();
-        
         textFieldPW1.setVisible(false);
         textFieldPW2.setVisible(false);
         labelIntro.setText(introUser);
@@ -267,24 +272,10 @@ public class ViewCreateUserController implements Initializable {
         );
 
         Stage stage=(Stage) btnImportLogo.getScene().getWindow();
-        File selectedFile=fileChooser.showOpenDialog(stage);
+        File selectedFile=fileChooser.showOpenDialog(stage);        
 
         if (selectedFile!=null) {
-            try {
-                File destDir = new File("src/com/invoicingapp/img/");
-                if (!destDir.exists()) {
-                    destDir.mkdirs(); 
-                }
-
-                File destFile=new File(destDir, selectedFile.getName());
-                Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-                logoPath=destFile.getAbsolutePath();
-                
-                labelError.setText("Logo importado correctamente");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            logoPath=selectedFile.getAbsolutePath();
         }
     }
     

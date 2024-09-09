@@ -111,7 +111,7 @@ public class ViewNewInvoiceProviderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        config=Configuration.getConfiguration();
+        config=Configuration.loadConfiguration();
         logoPath=config.getLogoPath();
         user.getFromDB(config.getIdUser());
         companies=Provider.getAllProvidersFromDB(CustomProv.ENABLED);

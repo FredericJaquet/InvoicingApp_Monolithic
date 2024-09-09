@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
+import com.invoicingapp.config.PathNames;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
@@ -65,13 +66,13 @@ public class ViewNewInvoiceCustomerController implements Initializable {
     private Users user=new Users();
     private InvoiceCustomer invoice=new InvoiceCustomer();
     private Configuration config;
-    private String logoPath;
     private final String errorDate="Falta la fecha.";
     private final String errorNumber="Falta el numero de factura.";
     private final String errorNoOrders="La factura no tiene pedidos asignados.";
     private final String invoiceSaved="La factura se ha guardado correctamente.";
     private final String invoiceNotSaved="La factura no se ha guardado, es necesario guadar la factura antes de poder verla.";
     private final int imgSize=150;
+    private String logoPath;
     private int language=1;
     private int lastView;
     private boolean saved=false;
@@ -127,7 +128,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         InputStream isImage=null;
         File img=null;
         
-        config=Configuration.getConfiguration();
+        config=Configuration.loadConfiguration();
         logoPath=config.getLogoPath();
         user.getFromDB(config.getIdUser());
         accounts=user.getBankAccounts();
@@ -152,17 +153,18 @@ public class ViewNewInvoiceCustomerController implements Initializable {
         lbCountry.setText(user.getAddress().getCountry());
         lbEmail.setText(user.getEmail());
         lbWeb.setText(user.getWeb());
+        
         try {
-            img=new File(logoPath);
-            isImage = (InputStream) new FileInputStream(img);
+            isImage = new FileInputStream(new File(logoPath));
             ivLogo.setImage(new Image(isImage));
             ivLogo.setFitWidth(imgSize);
             ivLogo.setFitHeight(imgSize);
             ivLogo.setPreserveRatio(true);
-            
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+                Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(isImage!=null){
             try {
                 isImage.close();
             } catch (IOException ex) {
