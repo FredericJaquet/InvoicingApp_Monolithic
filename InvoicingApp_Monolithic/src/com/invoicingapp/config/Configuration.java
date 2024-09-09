@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class Configuration {
     
-    private static String path="src/com/invoicingapp/config/config.txt";
+    
     @Expose private boolean reminder=false;
     @Expose private int idUser=0;
     @Expose private String logoPath;
@@ -32,7 +32,7 @@ public class Configuration {
         ArrayList<Configuration> configList=new ArrayList();
         Configuration config=new Configuration();
         
-        File configFile=new File(path);
+        File configFile=new File(PathNames.CONFIG);
         
         json=Configuration.readFile(configFile);
         configList = new Gson().fromJson(json, new TypeToken<ArrayList<Configuration>>() {}.getType());
@@ -45,7 +45,7 @@ public class Configuration {
     
     public void save(){
         Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        File configFile=new File(path);
+        File configFile=new File(PathNames.CONFIG);
         String json=gson.toJson(this);
         
         Configuration.writeFile(configFile, json);

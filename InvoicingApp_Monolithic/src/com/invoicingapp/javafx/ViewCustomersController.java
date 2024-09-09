@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.PathNames;
 import invoicingapp_monolithic.Customer;
 import java.io.IOException;
 import java.net.URL;
@@ -56,7 +57,7 @@ public class ViewCustomersController implements Initializable {
         }
         
         scene=new Scene(root);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
+        stage.getIcons().add(new Image(getClass().getResourceAsStream(PathNames.ICON))); 
         stage.setScene(scene);
         
         stage.setOnHiding(event -> {

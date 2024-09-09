@@ -231,7 +231,6 @@ public class ViewCreateCustomerController implements Initializable {
         Parent root=null;
         Scene scene;
         Stage newStage=new Stage();
-        //stage=(Stage)paneCreateCustomer.getScene().getWindow();
         
         loader.setLocation(getClass().getResource(path));
         try {

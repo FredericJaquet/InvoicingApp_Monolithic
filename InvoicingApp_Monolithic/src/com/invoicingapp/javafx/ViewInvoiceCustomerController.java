@@ -337,6 +337,7 @@ public class ViewInvoiceCustomerController implements Initializable {
         InputStream isImage=null;
         File img=null;
         try {
+            System.out.println("ViewInvoiceCustomer linea 340: "+config.getLogoPath());
             img=new File(config.getLogoPath());
             isImage = (InputStream) new FileInputStream(img);
             ivLogo.setImage(new Image(isImage));

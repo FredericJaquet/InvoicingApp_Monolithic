@@ -8,6 +8,7 @@ import com.invoicingapp.bbdd.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class Orders {
     private boolean selected=false;
     private int idOrders, idCustomProv;
     private LocalDate dateOrder;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private ArrayList<Item> items=new ArrayList();
     
     public Orders(){}
@@ -186,7 +188,8 @@ public class Orders {
     */
     public void deleteFromDB(){
         ConnectionDB con=new ConnectionDB();
-        String query="DELETE FROM Orders where idOrders="+idOrders;
+        String query="DELETE FROM Orders WHERE idOrders="+idOrders;
+        String queryDocumentOrders="DELETE FROM documentOrders WHERE idOrders="+idOrders;
         String queryGetIdItem="SELECT idItem FROM Item WHERE idOrders="+idOrders;
         int idItem;
         Item item=new Item();
@@ -205,6 +208,7 @@ public class Orders {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        con.executeUpdate(queryDocumentOrders);
         con.executeUpdate(query);
         con.closeConnection();
     }
@@ -509,6 +513,10 @@ public class Orders {
      */
     public LocalDate getDateOrder() {
         return dateOrder;
+    }
+    
+    public String getDateString(){
+        return dateOrder.format(formatter);
     }
 
     /**

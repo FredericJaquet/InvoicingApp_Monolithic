@@ -5,6 +5,7 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
+import com.invoicingapp.config.PathNames;
 import invoicingapp_monolithic.Password;
 import invoicingapp_monolithic.Users;
 import java.io.IOException;
@@ -96,13 +97,13 @@ public class ViewLoginController implements Initializable {
             
             Parent root=null;
             try {
-                root = FXMLLoader.load(getClass().getResource("viewHome.fxml"));
+                root = FXMLLoader.load(getClass().getResource(PathNames.HOMEVIEW));
             } catch (IOException ex) {
                 Logger.getLogger(ViewLoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
             Scene scene=new Scene(root);
             Stage stageHome=new Stage();
-            stageHome.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
+            stageHome.getIcons().add(new Image(getClass().getResourceAsStream(PathNames.ICON))); 
             stageHome.setScene(scene);
             stageHome.setMaximized(true);
             stageHome.show();
@@ -115,13 +116,13 @@ public class ViewLoginController implements Initializable {
     @FXML protected void onActionCreate(){
         Parent root=null;
         try {
-            root = FXMLLoader.load(getClass().getResource("viewCreateUser.fxml"));
+            root = FXMLLoader.load(getClass().getResource(PathNames.CREATEUSERVIEW));
         } catch (IOException ex) {
             Logger.getLogger(ViewLoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         Scene scene=new Scene(root);
         Stage stage=new Stage();
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
+        stage.getIcons().add(new Image(getClass().getResourceAsStream(PathNames.ICON))); 
         stage.setScene(scene);
         
         stage.setOnHiding(event -> {

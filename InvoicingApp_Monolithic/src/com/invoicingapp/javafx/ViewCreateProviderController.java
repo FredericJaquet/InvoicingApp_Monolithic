@@ -229,8 +229,6 @@ public class ViewCreateProviderController implements Initializable {
         Scene scene;
         Stage newStage=new Stage();
         
-        //stage=(Stage)paneCreateProvider.getScene().getWindow();
-        
         loader.setLocation(getClass().getResource(path));
         try {
             root=loader.load();

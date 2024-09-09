@@ -204,7 +204,7 @@ FOREIGN KEY	(idOrders)	REFERENCES Orders(idOrders) ON UPDATE CASCADE
 
 CREATE TABLE IF NOT EXISTS Item(
 idItem		INT(10) AUTO_INCREMENT, 
-descrip		VARCHAR(100),
+descrip		VARCHAR(255),
 qty		DOUBLE,
 discount	DOUBLE,
 idOrders	INT(10),

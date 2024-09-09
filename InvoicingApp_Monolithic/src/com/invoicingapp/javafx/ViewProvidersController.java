@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.PathNames;
 import invoicingapp_monolithic.Provider;
 import java.io.IOException;
 import java.net.URL;
@@ -54,7 +55,7 @@ public class ViewProvidersController implements Initializable {
             Logger.getLogger(ViewProvidersController.class.getName()).log(Level.SEVERE, null, ex);
         }
         scene=new Scene(root);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
+        stage.getIcons().add(new Image(getClass().getResourceAsStream(PathNames.ICON))); 
         stage.setScene(scene);
         
         stage.setOnHiding(event -> {
@@ -102,9 +103,9 @@ public class ViewProvidersController implements Initializable {
     
     private void createTableProviders(){        
         columnComName.setCellValueFactory(new PropertyValueFactory<Provider, String>("comName"));
-        columnVATNbr.setCellValueFactory(new PropertyValueFactory<Provider, String>("vatNumber"));;
-        columnEmail.setCellValueFactory(new PropertyValueFactory<Provider, String>("email"));;
-        ColumnWeb.setCellValueFactory(new PropertyValueFactory<Provider, String>("web"));;
+        columnVATNbr.setCellValueFactory(new PropertyValueFactory<Provider, String>("vatNumber"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<Provider, String>("email"));
+        ColumnWeb.setCellValueFactory(new PropertyValueFactory<Provider, String>("web"));
                 
         tableProviders.setItems(providers);
     }

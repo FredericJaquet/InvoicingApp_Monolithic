@@ -49,18 +49,18 @@ public class ViewHomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ButtonFeatures.makeButtonFocusable(btnCustomers,"Clientes","../img/Customers.png","../img/Customers_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnProviders,"Proveedores","../img/Providers.png","../img/Providers_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnOrders,"Pedidos","../img/NewOrder.png","../img/NewOrder_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnInvoicesCustomer,"Facturas Clientes","../img/NewInvoiceCustomer.png","../img/NewInvoiceCustomer_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnInvoicesProvider,"Facturas Proveedores","../img/NewInvoiceProvider.png","../img/NewInvoiceProvider_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnQuotes,"Presupuesto","../img/NewQuote.png","../img/NewQuote_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnPOs,"Orden de Pedido","../img/NewPo.png","../img/NewPo_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnReportIncomes,"Informe Ingresos","../img/ReportIncomes.png","../img/ReportIncomes_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnReportOutcomes,"Informe Gastos","../img/ReportOutcomes.png","../img/ReportOutcomes_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnReportPending,"Informes Pagos Pendientes","../img/ReportPendings.png","../img/ReportPendings_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnGrafIncomes,"Gráfico Ingresos","../img/GrafIncomes.png","../img/GrafIncomes_Focused.png");
-        ButtonFeatures.makeButtonFocusable(btnGrafOutcomes,"Gráfico Gastos","../img/GrafOutcomes.png","../img/GrafOutcomes_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnCustomers,"Clientes","/com/invoicingapp/img/Customers.png","/com/invoicingapp/img/Customers_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnProviders,"Proveedores","/com/invoicingapp/img/Providers.png","/com/invoicingapp/img/Providers_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnOrders,"Pedidos","/com/invoicingapp/img/NewOrder.png","/com/invoicingapp/img/NewOrder_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnInvoicesCustomer,"Facturas Clientes","/com/invoicingapp/img/NewInvoiceCustomer.png","/com/invoicingapp/img/NewInvoiceCustomer_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnInvoicesProvider,"Facturas Proveedores","/com/invoicingapp/img/NewInvoiceProvider.png","/com/invoicingapp/img/NewInvoiceProvider_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnQuotes,"Presupuesto","/com/invoicingapp/img/NewQuote.png","/com/invoicingapp/img/NewQuote_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnPOs,"Orden de Pedido","/com/invoicingapp/img/NewPo.png","/com/invoicingapp/img/NewPo_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnReportIncomes,"Informe Ingresos","/com/invoicingapp/img/ReportIncomes.png","/com/invoicingapp/img/ReportIncomes_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnReportOutcomes,"Informe Gastos","/com/invoicingapp/img/ReportOutcomes.png","/com/invoicingapp/img/ReportOutcomes_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnReportPending,"Informes Pagos Pendientes","/com/invoicingapp/img/ReportPendings.png","/com/invoicingapp/img/ReportPendings_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnGrafIncomes,"Gráfico Ingresos","/com/invoicingapp/img/GrafIncomes.png","/com/invoicingapp/img/GrafIncomes_Focused.png");
+        ButtonFeatures.makeButtonFocusable(btnGrafOutcomes,"Gráfico Gastos","/com/invoicingapp/img/GrafOutcomes.png","/com/invoicingapp/img/GrafOutcomes_Focused.png");
     }
     
     @FXML protected void onFocus(MouseEvent e){
@@ -109,7 +109,7 @@ public class ViewHomeController implements Initializable {
     @FXML protected void onItemLatMenu(ActionEvent e){
         Button button=(Button) e.getSource();
         String idBtn=button.getId().substring(1);
-        String window="View"+idBtn+".fxml";
+        String window="view"+idBtn+".fxml";
         Parent customersView;
         try {
             customersView=FXMLLoader.load(getClass().getResource(window));

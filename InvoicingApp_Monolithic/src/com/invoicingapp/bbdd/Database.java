@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.bbdd;
 
+import com.invoicingapp.config.PathNames;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,8 +24,6 @@ public class Database {
     
     protected static final String DB_USER="Frederic";
     protected static final String DB_PASSWORD="Frederic";
-    
-    public static final String CREATETABLEFILEPATH="ScriptCreateTables.sql";
     
     public static void createUser(){
 
@@ -77,7 +76,7 @@ public class Database {
         String line;
 
         try {
-            br = new BufferedReader(new FileReader(CREATETABLEFILEPATH));
+            br = new BufferedReader(new FileReader(PathNames.CREATETABLEFILEPATH));
         
             while ((line = br.readLine()) != null) {
                 content.append(line).append("\n");

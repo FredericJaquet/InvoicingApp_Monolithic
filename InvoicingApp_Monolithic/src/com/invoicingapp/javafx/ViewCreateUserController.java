@@ -57,7 +57,6 @@ public class ViewCreateUserController implements Initializable {
     private Stage stage;
     private String logoPath;
     private final String introUser="Datos del usuario";
-    private final String introCompany="Datos de la Empresa";
     private final String errorEmpty="Falta un dato obligatorio.";
     private final String errorAddress="Es obligatorio añadir una dirección.";
     private final String errorPassword="Las contraseñas no coinciden.";

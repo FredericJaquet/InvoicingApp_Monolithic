@@ -111,7 +111,7 @@ public class ViewOrderController implements Initializable {
     }
     
     @FXML protected void onClicDelete(){
-        ConfirmationDialog.show("Hay cambios sin guardar. ¿Está seguro de querer eliminar este pedido?", this::deleteOrder, () -> {});
+        ConfirmationDialog.show("¿Está seguro de querer eliminar este pedido?", this::deleteOrder, () -> {});
     }
     
     private void setData(){
