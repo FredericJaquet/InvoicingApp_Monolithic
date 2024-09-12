@@ -5,7 +5,6 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
-import com.invoicingapp.config.PathNames;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -80,6 +78,8 @@ public class ViewCreateUserController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

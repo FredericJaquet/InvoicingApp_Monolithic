@@ -13,6 +13,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -66,7 +67,11 @@
                               <Label fx:id="lbTitleCPCity" styleClass="title" text="CP / Población" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label fx:id="lbTitleEmail" styleClass="title" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <Label fx:id="lbTitleWeb" styleClass="title" text="Web" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <ImageView fx:id="ivLogo" pickOnBounds="true" preserveRatio="true" styleClass="logo" GridPane.rowSpan="6" />
+                              <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.rowSpan="7">
+                                 <children>
+                                    <ImageView fx:id="ivLogo" fitHeight="150.0" fitWidth="150.0" onDragDropped="#handleDragAndDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" styleClass="logo" />
+                                 </children>
+                              </FlowPane>
                               <Label fx:id="lbLegalName" GridPane.columnIndex="2" />
                               <Label fx:id="lbVATNumber" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Label fx:id="lbStreet" GridPane.columnIndex="2" GridPane.rowIndex="2" />

@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.tools;
 
+import java.io.File;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
@@ -114,4 +115,18 @@ public class Validations {
         
         return control;
     }
+    
+    public static boolean isImageFile(File file){
+        String[] validExtensions = {"jpg","jpeg","png"};
+        String fileName = file.getName().toLowerCase();
+        boolean control=false;
+    
+        for (String ext : validExtensions) {
+            if (fileName.endsWith("." + ext)) {
+                control=true;
+            }
+        }
+        return control;
+    }
+    
 }

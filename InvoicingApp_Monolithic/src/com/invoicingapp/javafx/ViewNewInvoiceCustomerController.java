@@ -5,7 +5,6 @@
 package com.invoicingapp.javafx;
 
 import com.invoicingapp.config.Configuration;
-import com.invoicingapp.config.PathNames;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
@@ -22,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +43,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -311,7 +313,7 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             saved=true;
             labelError.setText(invoiceSaved);
             labelError.setVisible(true);
-            
+            config.save();
         }
     }
     
@@ -320,6 +322,28 @@ public class ViewNewInvoiceCustomerController implements Initializable {
             ConfirmationDialog.show("¿Está seguro de querer volver sin guardar?", this::backToPrevious, () -> {});
         }else{
             backToPrevious();
+        }
+    }
+    
+    @FXML protected void handleDragOver(DragEvent event){
+        if(event.getDragboard().hasFiles()){
+            event.acceptTransferModes(TransferMode.ANY);
+        }
+    }
+    
+    @FXML protected void handleDragAndDrop(DragEvent event){
+        List<File> files=event.getDragboard().getFiles();
+        File imageFile=files.get(0);
+        Image img;
+        if(Validations.isImageFile(imageFile)){
+            try {
+                img=new Image(new FileInputStream(imageFile));
+                logoPath=imageFile.getAbsolutePath();
+                ivLogo.setImage(img);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            config.setLogoPath(logoPath);
         }
     }
     
