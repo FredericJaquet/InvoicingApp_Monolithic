@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.PathNames;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
@@ -237,7 +238,7 @@ public class ViewCreateProviderController implements Initializable {
         }
         
         scene=new Scene(root);
-        newStage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
+        newStage.getIcons().add(new Image(getClass().getResourceAsStream(PathNames.ICON))); 
         newStage.setScene(scene);
         newStage.show();
         

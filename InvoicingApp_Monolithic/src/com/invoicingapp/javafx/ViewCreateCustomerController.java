@@ -4,6 +4,7 @@
  */
 package com.invoicingapp.javafx;
 
+import com.invoicingapp.config.PathNames;
 import com.invoicingapp.config.Translations;
 import com.invoicingapp.tools.Validations;
 import invoicingapp_monolithic.BankAccount;
@@ -41,12 +42,11 @@ import javafx.util.Callback;
 
 
 public class ViewCreateCustomerController implements Initializable {
-
-    private String introCompany="Datos de la Empresa";
-    private String introFiscalData="Datos fiscales";
+    
     private Customer customer=new Customer();
     private ArrayList<CustomProv> companies=new ArrayList();
     private Stage stage;
+    private final String introCompany="Datos de la Empresa";
     private final String errorFormat="Uno de los datos introducidos no es correcto.";
     private final String errorEmpty="Falta un dato obligatorio.";
     private final String errorAddress="Es obligatorio añadir una dirección.";
@@ -242,7 +242,7 @@ public class ViewCreateCustomerController implements Initializable {
         scene=new Scene(root);
         
         newStage.setScene(scene);
-        newStage.getIcons().add(new Image(getClass().getResourceAsStream("../img/Icon.png"))); 
+        newStage.getIcons().add(new Image(getClass().getResourceAsStream(PathNames.ICON))); 
         newStage.show();
         
         newStage.setOnHiding(event -> {

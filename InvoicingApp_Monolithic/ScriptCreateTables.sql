@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS Address(
 idAddress	INT(10) AUTO_INCREMENT,
 street		VARCHAR(100),
 stNumber	VARCHAR(10),
-apt		VARCHAR(40),
+apt		VARCHAR(100),
 cp		VARCHAR(10),
 city		VARCHAR(40),
 state		VARCHAR(40),
