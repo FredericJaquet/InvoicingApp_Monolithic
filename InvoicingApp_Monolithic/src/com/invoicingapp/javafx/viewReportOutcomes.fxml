@@ -41,7 +41,7 @@
          <children>
             <HBox alignment="CENTER" spacing="5.0" styleClass="title1">
                <children>
-                  <Label styleClass="labels" text="Informe de Ingresos:">
+                  <Label styleClass="labels" text="Informe de Gastos:">
                      <font>
                         <Font size="18.0" />
                      </font>

@@ -287,6 +287,7 @@ public class ViewDetailsProviderController implements Initializable {
                     newSchemes.add(scheme);
                 }                
                 showSchemes();
+                System.out.println("Details Provider linea 354: "+newSchemes.size());
             });
         
         paneDetailsProvider.getParent().setDisable(true);
@@ -350,24 +351,29 @@ public class ViewDetailsProviderController implements Initializable {
                 accountsController.resetQuery();
                 lbFeatures.resetQuery();
                 query.clear();
-                for(int i=0;i<newContacts.size();i++){
-                    newContacts.get(i).addToDB();
-                }
-        
-                for(int j=0;j<newPhones.size();j++){
-                    newPhones.get(j).addToDB();
-                }
-                
-                for(int k=0;k<newSchemes.size();k++){
-                    newSchemes.get(k).addToDB();
-                }
-                
-                for(int l=0;l<newAccounts.size();l++){
-                    newAccounts.get(l).addToDB();
-                }
-                changes=false;
             }
         }
+        
+        for(int i=0;i<newContacts.size();i++){
+            newContacts.get(i).addToDB();
+        }
+        
+        for(int j=0;j<newPhones.size();j++){
+            newPhones.get(j).addToDB();
+        }
+                
+        for(int k=0;k<newSchemes.size();k++){
+            newSchemes.get(k).addToDB();
+        }
+                
+        for(int l=0;l<newAccounts.size();l++){
+            newAccounts.get(l).addToDB();
+        }
+        newContacts.clear();
+        newPhones.clear();
+        newSchemes.clear();
+        newAccounts.clear();
+        changes=false;
     }
     
     @FXML protected void onClicDelete(){
@@ -530,13 +536,14 @@ public class ViewDetailsProviderController implements Initializable {
         btnSchemeRight.setVisible(true);
         btnDeleteScheme.setVisible(true);
         
+        if(iSchemes==0){
+            btnSchemeLeft.setVisible(false);
+        }
+        
         if(iSchemes<schemes.size()){
             paneSchemes.setDisable(false);
             btnNewScheme.setVisible(false);
             schemesController.initData(schemes.get(iSchemes));
-            if(iSchemes==0){
-               btnSchemeLeft.setVisible(false);
-            }
         }else{
             paneSchemes.setDisable(true);
             btnNewScheme.setVisible(true);

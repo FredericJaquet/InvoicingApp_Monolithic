@@ -337,7 +337,6 @@ public class ViewInvoiceCustomerController implements Initializable {
         InputStream isImage=null;
         File img=null;
         try {
-            System.out.println("ViewInvoiceCustomer linea 340: "+config.getLogoPath());
             img=new File(config.getLogoPath());
             isImage = (InputStream) new FileInputStream(img);
             ivLogo.setImage(new Image(isImage));
@@ -345,12 +344,12 @@ public class ViewInvoiceCustomerController implements Initializable {
             ivLogo.setFitHeight(imgSize);
             ivLogo.setPreserveRatio(true);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 isImage.close();
             } catch (IOException ex) {
-                Logger.getLogger(ViewNewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ViewInvoiceCustomerController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
