@@ -49,18 +49,6 @@ public class ConnectionDB {
         }
         return results;
     }
-    
-    /*public void noReturnQuery(String query){
-        PreparedStatement stmnt=null;
-                
-        try{
-            stmnt=con.prepareStatement(query);
-            stmnt.executeUpdate();
-        
-        }catch (SQLException ex) {
-            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
 
     /**
      * @return the con
@@ -79,7 +67,7 @@ public class ConnectionDB {
     public void executeUpdate(String sql) {
         Statement statement = null;
         try {
-            statement = con.createStatement();
+            statement=con.createStatement();
             statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();

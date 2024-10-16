@@ -108,6 +108,6 @@ public class Database {
             con.executeUpdate(block);
         }
         con.closeConnection();
-}
+    }
     
 }

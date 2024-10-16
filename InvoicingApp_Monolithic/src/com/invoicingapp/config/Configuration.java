@@ -65,7 +65,7 @@ public class Configuration {
         String userDir = System.getProperty("user.dir");
         File configFile = new File(userDir, "config.txt");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
+        
         try (FileWriter writer = new FileWriter(configFile)) {
             gson.toJson(this, writer);
         } catch (IOException e) {
