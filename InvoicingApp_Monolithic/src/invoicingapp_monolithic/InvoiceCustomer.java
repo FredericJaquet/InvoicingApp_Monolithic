@@ -101,7 +101,7 @@ public class InvoiceCustomer extends Document implements Comparable<InvoiceCusto
             if(result.next()){
                 customer.getFromDB(result.getInt(1));
                 super.setCompany(customer);
-                duedate=getDocDate().plusDays(customer.getDuedate());
+                duedate=getDocDate().plusDays(customer.getDuedate()+7);
             }
         }catch (SQLException ex) {
             Logger.getLogger(InvoiceCustomer.class.getName()).log(Level.SEVERE, null, ex);
